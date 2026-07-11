@@ -1,0 +1,268 @@
+/* ============================================================
+   onetimesuite.com — "the price sticker"
+   Retail ownership. Receipts. The moment you buy something once
+   and it's yours. Single, committed light theme.
+   ============================================================ */
+
+:root {
+  --paper: #f4f5f2;        /* cool paper ground */
+  --ink: #17191d;          /* near-black text */
+  --ink-soft: #4b4e55;     /* secondary text */
+  --ink-faint: #85888f;    /* metadata, captions */
+  --accent: #2b4bdd;       /* stamp / ballpoint blue — links, interactive */
+  --price: #e8420c;        /* price-sticker orange-red — prices & "once" ONLY */
+  --line: #d8dad4;         /* hairlines */
+  --paper-raised: #ffffff; /* cards */
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Instrument Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+/* ---------- type ---------- */
+h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 1.08; letter-spacing: -0.015em; text-wrap: balance; }
+h1 { font-size: clamp(2.4rem, 6vw, 4.25rem); }
+h2 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); }
+h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.005em; }
+p  { max-width: 65ch; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+.num, .price-fig, td, th { font-variant-numeric: tabular-nums; }
+
+/* ---------- layout ---------- */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+.wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+section { padding: 4.5rem 0; }
+section + section { border-top: 1px solid var(--line); }
+
+/* stamped section label — small uppercase mono tag */
+.stamp {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  border: 1px solid var(--ink-soft);
+  border-radius: 3px;
+  padding: 0.2rem 0.6rem;
+  margin-bottom: 1.1rem;
+}
+.stamp.blue { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- nav ---------- */
+.site-nav {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: sticky; top: 0; z-index: 40;
+}
+.site-nav .wrap { display: flex; align-items: center; gap: 1.6rem; height: 62px; }
+.wordmark {
+  font-family: var(--display); font-weight: 800; font-size: 1.18rem;
+  color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
+  margin-right: auto; white-space: nowrap;
+}
+.wordmark .tm { color: var(--price); }
+.site-nav a.nav-link { color: var(--ink); text-decoration: none; font-size: 0.92rem; font-weight: 500; }
+.site-nav a.nav-link:hover { color: var(--accent); }
+.nav-buy {
+  font-family: var(--mono); font-size: 0.82rem; font-weight: 600;
+  background: var(--ink); color: var(--paper) !important; text-decoration: none;
+  padding: 0.5rem 1rem; border-radius: 6px; white-space: nowrap;
+}
+.nav-buy:hover { background: var(--accent); }
+@media (max-width: 660px) { .site-nav a.nav-link { display: none; } }
+
+/* ---------- the price sticker ---------- */
+.sticker {
+  display: inline-flex; flex-direction: column; align-items: center;
+  font-family: var(--mono); background: var(--price); color: #fff;
+  padding: 0.5rem 0.95rem 0.55rem; border-radius: 10px;
+  transform: rotate(-2.5deg);
+  box-shadow: 0 1px 0 rgba(23,25,29,0.18);
+  line-height: 1.05; text-align: center;
+}
+.sticker .amt { font-weight: 600; font-size: 1.45rem; letter-spacing: -0.02em; }
+.sticker .once { font-size: 0.58rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; margin-top: 0.22rem; }
+.sticker.big .amt { font-size: 2.3rem; }
+.sticker.sm { padding: 0.32rem 0.65rem 0.38rem; border-radius: 7px; }
+.sticker.sm .amt { font-size: 1.02rem; }
+.sticker.sm .once { font-size: 0.5rem; }
+
+/* struck-through subscription price next to a sticker */
+.was {
+  font-family: var(--mono); font-size: 0.88rem; color: var(--ink-faint);
+  text-decoration: line-through; text-decoration-color: var(--price); text-decoration-thickness: 1.5px;
+  white-space: nowrap;
+}
+.price-pair { display: inline-flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block; font-family: var(--body); font-weight: 600; font-size: 0.98rem;
+  padding: 0.78rem 1.5rem; border-radius: 8px; text-decoration: none;
+  border: 1.5px solid var(--ink);
+}
+.btn-solid { background: var(--ink); color: var(--paper); }
+.btn-solid:hover { background: var(--accent); border-color: var(--accent); }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-row { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+
+/* ---------- hero ---------- */
+.hero { padding: 5.5rem 0 4.5rem; }
+.hero .lead { font-size: 1.18rem; color: var(--ink-soft); margin: 1.4rem 0 2rem; }
+.crumbs { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-faint); margin-bottom: 1.6rem; }
+.crumbs a { color: var(--ink-faint); }
+.crumbs a:hover { color: var(--accent); }
+
+/* ---------- product cards ---------- */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.p-card {
+  background: var(--paper-raised); padding: 1.5rem 1.4rem 1.3rem;
+  text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 0.45rem;
+  transition: background 0.15s;
+}
+.p-card:hover { background: #fbfbf9; }
+.p-card:hover h3 { color: var(--accent); }
+.p-card .ico { font-size: 1.35rem; }
+.p-card h3 { font-size: 1.08rem; }
+.p-card .one { font-size: 0.87rem; color: var(--ink-soft); flex: 1; }
+.p-card .foot { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.7rem; }
+.p-card .replaces { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint); text-align: right; line-height: 1.45; }
+
+/* category heading rows */
+.cat-head { display: flex; align-items: baseline; gap: 1rem; margin: 3.2rem 0 1.4rem; }
+.cat-head:first-of-type { margin-top: 0; }
+.cat-head h2 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+.cat-head .count { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-faint); }
+
+/* ---------- screenshot in thin ink-line browser chrome ---------- */
+.shot-frame { border: 1.5px solid var(--ink); border-radius: 10px; overflow: hidden; background: var(--paper-raised); }
+.shot-frame .bar { display: flex; gap: 0.38rem; padding: 0.55rem 0.8rem; border-bottom: 1.5px solid var(--ink); }
+.shot-frame .bar i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink); }
+.shot-frame img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top; }
+.shot-frame .placeholder {
+  aspect-ratio: 2 / 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.6rem;
+  background: repeating-linear-gradient(-45deg, var(--paper-raised) 0 14px, #f7f8f5 14px 28px);
+}
+.shot-frame .placeholder .ico { font-size: 2.6rem; }
+.shot-frame .placeholder .note { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); }
+
+/* ---------- showcase rows ---------- */
+.show-rows { display: flex; flex-direction: column; gap: 4.5rem; }
+.show-row { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3rem; align-items: center; }
+.show-row.flip .media { order: 2; }
+.show-row .brand-line { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
+.show-row .brand-line .ico { font-size: 1.3rem; }
+.show-row .brand-line .name { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
+.show-row h3 { font-size: clamp(1.35rem, 2.4vw, 1.75rem); margin-bottom: 0.55rem; font-weight: 800; }
+.show-row h3 a { color: inherit; text-decoration: none; }
+.show-row h3 a:hover { color: var(--accent); }
+.show-row .tag { color: var(--ink-soft); margin-bottom: 1rem; }
+.show-row ul { list-style: none; display: grid; gap: 0.45rem; margin-bottom: 1.3rem; }
+.show-row ul li { font-size: 0.93rem; color: var(--ink-soft); padding-left: 1.15rem; position: relative; }
+.show-row ul li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+.show-row .meta { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+.show-row .meta .link { font-weight: 600; font-size: 0.93rem; }
+@media (max-width: 780px) { .show-row, .show-row.flip { grid-template-columns: 1fr; } .show-row.flip .media { order: 0; } }
+
+/* ---------- receipt tables ---------- */
+.tbl-wrap { overflow-x: auto; }
+table.receipt { width: 100%; border-collapse: collapse; font-size: 0.93rem; min-width: 540px; background: var(--paper-raised); border: 1px solid var(--line); }
+table.receipt th, table.receipt td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.receipt thead th { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); border-bottom: 1.5px solid var(--ink); }
+table.receipt thead th.us { color: var(--ink); }
+table.receipt td.us { font-weight: 600; }
+table.receipt td:first-child { color: var(--ink-soft); }
+table.receipt .price-fig { font-family: var(--mono); color: var(--price); font-weight: 600; }
+table.receipt tr.total td { border-top: 1.5px solid var(--ink); border-bottom: none; font-weight: 700; }
+
+/* ---------- feature grid ---------- */
+.feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.feat { background: var(--paper-raised); padding: 1.5rem 1.4rem; }
+.feat .fi { font-size: 1.25rem; margin-bottom: 0.55rem; }
+.feat h3 { font-size: 1.02rem; margin-bottom: 0.35rem; }
+.feat p { font-size: 0.9rem; color: var(--ink-soft); }
+
+/* ---------- steps ---------- */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 2rem; counter-reset: step; }
+.step .n { font-family: var(--mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; display: inline-block; padding: 0.12rem 0.5rem; margin-bottom: 0.7rem; }
+.step h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+.step p { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ---------- FAQ ---------- */
+.faq-item { border-top: 1px solid var(--line); padding: 1.4rem 0; }
+.faq-item:last-child { border-bottom: 1px solid var(--line); }
+.faq-item h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+.faq-item p { color: var(--ink-soft); font-size: 0.96rem; }
+
+/* ---------- article / post body ---------- */
+.post-body { max-width: 700px; }
+.post-body h2 { font-size: clamp(1.35rem, 2.6vw, 1.8rem); margin: 2.6rem 0 0.9rem; }
+.post-body h3 { margin: 1.8rem 0 0.6rem; }
+.post-body p { color: var(--ink-soft); margin-bottom: 1.15rem; }
+.post-body p strong { color: var(--ink); }
+.post-body ul { margin: 0 0 1.25rem 1.3rem; display: grid; gap: 0.5rem; }
+.post-body ul li { color: var(--ink-soft); }
+.post-body ul li strong { color: var(--ink); }
+.post-body blockquote { border-left: 3px solid var(--accent); padding: 0.4rem 0 0.4rem 1.1rem; margin: 1.4rem 0; color: var(--ink-soft); font-size: 0.96rem; }
+.post-body table { margin: 1.4rem 0; }
+.post-meta { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-faint); margin-bottom: 2.2rem; }
+
+/* inline CTA card inside posts */
+.cta-card { background: var(--paper-raised); border: 1.5px solid var(--ink); border-radius: 10px; padding: 2rem; margin: 2.6rem 0; }
+.cta-card h3 { margin-bottom: 0.4rem; }
+.cta-card p { margin-bottom: 1.2rem; }
+
+/* ---------- post list ---------- */
+.post-list { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.post-list a { display: block; background: var(--paper-raised); padding: 1.15rem 1.4rem; text-decoration: none; color: inherit; }
+.post-list a:hover h3 { color: var(--accent); }
+.post-list h3 { font-size: 1rem; font-family: var(--body); font-weight: 600; margin-bottom: 0.2rem; }
+.post-list p { font-size: 0.86rem; color: var(--ink-soft); }
+
+.related-strip { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.related-strip a { font-family: var(--mono); font-size: 0.73rem; padding: 0.38rem 0.75rem; border: 1px solid var(--line); background: var(--paper-raised); border-radius: 4px; text-decoration: none; color: var(--ink-soft); }
+.related-strip a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- bundle callout ---------- */
+.bundle-box { background: var(--paper-raised); border: 1.5px solid var(--ink); border-radius: 12px; padding: 2.6rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; }
+@media (max-width: 720px) { .bundle-box { grid-template-columns: 1fr; } }
+
+/* ---------- footer ---------- */
+.site-footer { border-top: 1.5px solid var(--ink); padding: 3rem 0 2.2rem; margin-top: 4rem; }
+.site-footer .cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2.2rem; }
+@media (max-width: 720px) { .site-footer .cols { grid-template-columns: 1fr 1fr; } }
+.site-footer h4 { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); margin-bottom: 0.8rem; }
+.site-footer a { display: block; color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; margin-bottom: 0.45rem; }
+.site-footer a:hover { color: var(--accent); }
+.site-footer .blurb { font-size: 0.9rem; color: var(--ink-soft); max-width: 34ch; }
+.site-footer .bottom { border-top: 1px solid var(--line); padding-top: 1.4rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.site-footer .bottom a { display: inline; font-size: inherit; color: var(--ink-faint); margin: 0; }
+
+/* ---------- misc ---------- */
+.section-head { margin-bottom: 2.2rem; }
+.section-head p { color: var(--ink-soft); margin-top: 0.6rem; }
+.mono-note { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-faint); }
+.center { text-align: center; }
+.center p { margin-left: auto; margin-right: auto; }

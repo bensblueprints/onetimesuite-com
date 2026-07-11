@@ -28,6 +28,11 @@ const posts = [
 ];
 const bySlug = Object.fromEntries(products.map(p => [p.slug, p]));
 
+/* planned catalog (products 51–100 + Dealstack) — caution-taped cards, no pages */
+const comingSoon = require('./src/coming-soon.js');
+const soonDesktop = comingSoon.filter(p => p.kind === 'desktop');
+const soonWeb = comingSoon.filter(p => p.kind === 'web');
+
 /* Shipped apps that live outside products.js (BloomRecorder, WisperTalk) —
    first-class product pages, but NOT part of the $997 bundle receipt. */
 const extras = require('./src/extra-products.js');
@@ -267,6 +272,7 @@ function reg(relPath) { urls.push(relPath); }
 (function hub() {
   const cardsFor = list => list.map(p => `
         <a class="p-card" href="/${p.slug}/">
+          <span class="avail"><span class="dot" aria-hidden="true"></span>Available now</span>
           <span class="ico" aria-hidden="true">${p.icon}</span>
           <h3>${p.brand}</h3>
           <p class="one">${esc(p.oneliner)}</p>
@@ -275,6 +281,19 @@ function reg(relPath) { urls.push(relPath); }
             <span class="replaces">replaces ${esc(p.competitor)}<br>${esc(p.compPrice)}</span>
           </div>
         </a>`).join('');
+
+  const soonCardsFor = list => list.map(p => `
+        <div class="p-card soon" aria-label="${attr(p.brand)} — coming soon">
+          <span class="tape" aria-hidden="true"><b>&#128679; Coming soon</b></span>
+          <span class="ico" aria-hidden="true">${p.icon}</span>
+          <h3>${esc(p.brand)}</h3>
+          <p class="one">${esc(p.one)}</p>
+          <div class="foot">
+            <span class="sticker sm"><span class="amt">$${p.price}</span><span class="once">planned</span></span>
+            <span class="replaces">will replace ${esc(p.vs)}<br>${esc(p.vsPrice)}</span>
+          </div>
+          ${p.repoLive ? '<p class="soon-note">code already live on GitHub — product page on the way</p>' : ''}
+        </div>`).join('');
 
   const showRow = (p, i) => `
       <div class="show-row${i % 2 ? ' flip' : ''}">
@@ -306,7 +325,7 @@ function reg(relPath) { urls.push(relPath); }
       <div class="wrap">
         <span class="stamp">One price on the sticker · No renewal date</span>
         <h1>Buy software the way you buy a hammer. Once.</h1>
-        <p class="lead">${allProducts.length} apps that replace your subscription SaaS — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. ${desktopProducts.length} desktop apps you install, ${webProducts.length} web apps you host. Every one is a one-time purchase — nearly all with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
+        <p class="lead">A ${allProducts.length + comingSoon.length}-app catalog that replaces your subscription SaaS — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. <strong>${allProducts.length} apps are available right now</strong> (${desktopProducts.length} desktop, ${webProducts.length} self-hosted web) and ${comingSoon.length} more are on the build sheet. Every one is a one-time purchase — nearly all with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
         <div class="btn-row">
           <a class="btn btn-solid" href="${WHOP}" rel="noopener">Buy on Whop &rarr;</a>
           <a class="btn btn-ghost" href="/${BUNDLE.slug}/">The ${fmt(BUNDLE.price)} everything bundle</a>
@@ -328,6 +347,28 @@ function reg(relPath) { urls.push(relPath); }
           <span class="count">${webProducts.length} apps · self-hosted on your own server</span>
         </div>
         <div class="card-grid">${cardsFor(webProducts)}
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Coming soon">
+      <div class="wrap">
+        <div class="section-head" id="coming-soon" style="scroll-margin-top:80px;">
+          <span class="stamp">&#128679; On the build sheet</span>
+          <h2>Coming soon — ${comingSoon.length} more apps</h2>
+          <p>The catalog is headed to 100+. These are planned, priced and next in the build queue — every one joins the ${fmt(BUNDLE.price)} bundle at no extra cost the day it ships. Buy the bundle now and you own all of these too.</p>
+        </div>
+        <div class="cat-head">
+          <h2 style="font-size:1.35rem;">Desktop</h2>
+          <span class="count">${soonDesktop.length} planned</span>
+        </div>
+        <div class="card-grid">${soonCardsFor(soonDesktop)}
+        </div>
+        <div class="cat-head">
+          <h2 style="font-size:1.35rem;">Web-hosted</h2>
+          <span class="count">${soonWeb.length} planned</span>
+        </div>
+        <div class="card-grid">${soonCardsFor(soonWeb)}
         </div>
       </div>
     </section>
@@ -391,8 +432,8 @@ function reg(relPath) { urls.push(relPath); }
     </section>`;
 
   write('', page({
-    title: `OneTimeSuite — ${allProducts.length} Pay-Once Apps That Replace Subscription SaaS`,
-    desc: `${allProducts.length} desktop & self-hosted apps that replace monthly SaaS bills — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, or the ${products.length}-app catalog for ${fmt(BUNDLE.price)}.`,
+    title: `OneTimeSuite — ${allProducts.length} Pay-Once Apps Available Now, ${allProducts.length + comingSoon.length}+ Total Catalog`,
+    desc: `${allProducts.length} desktop & self-hosted apps available today, ${comingSoon.length} more coming — all replacing monthly SaaS bills: PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, or everything (including every future app) for ${fmt(BUNDLE.price)}.`,
     canonical: `${SITE}/`,
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'ItemList',
@@ -429,7 +470,10 @@ allProducts.forEach(p => {
     <section class="hero" aria-label="${attr(p.brand)}">
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/#${isDesktop ? 'desktop' : 'web-hosted'}">${isDesktop ? 'Desktop apps' : 'Web-hosted apps'}</a> / ${p.brand}</nav>
-        <span class="stamp">${stampText}</span>
+        <div style="display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;">
+          <span class="avail lg"><span class="dot" aria-hidden="true"></span>Available now</span>
+          <span class="stamp">${stampText}</span>
+        </div>
         <h1>${p.icon} ${p.brand}</h1>
         <p class="lead">${esc(p.tagline)}</p>
         <p style="color:var(--ink-soft);max-width:62ch;margin-bottom:1.8rem;">${esc(p.heroLead)}</p>

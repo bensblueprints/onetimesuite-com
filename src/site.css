@@ -266,3 +266,42 @@ table.receipt tr.total td { border-top: 1.5px solid var(--ink); border-bottom: n
 .mono-note { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-faint); }
 .center { text-align: center; }
 .center p { margin-left: auto; margin-right: auto; }
+
+/* ---------- availability ---------- */
+/* green "available now" chip — shipped products, on cards and product heroes */
+.avail {
+  display: inline-flex; align-items: center; gap: 0.42rem;
+  font-family: var(--mono); font-size: 0.66rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.11em;
+  color: #156d31; background: #e4f4e7; border: 1px solid #b5dfc0;
+  border-radius: 4px; padding: 0.26rem 0.6rem; width: fit-content;
+}
+.avail .dot { width: 7px; height: 7px; border-radius: 50%; background: #1c8a3f; box-shadow: 0 0 0 2.5px rgba(28, 138, 63, 0.18); }
+.avail.lg { font-size: 0.74rem; padding: 0.34rem 0.8rem; }
+
+/* coming-soon card: caution tape across a dimmed, non-clickable card */
+.p-card.soon { overflow: hidden; cursor: default; }
+.p-card.soon:hover { background: var(--paper-raised); }
+.p-card.soon:hover h3 { color: inherit; }
+.p-card.soon > *:not(.tape) { opacity: 0.55; }
+.p-card.soon .sticker { background: var(--ink-faint); transform: rotate(-2.5deg); }
+.tape {
+  position: absolute; top: 1.35rem; left: -12%; right: -12%;
+  transform: rotate(-4deg);
+  display: flex; align-items: center; justify-content: center;
+  background: repeating-linear-gradient(-45deg, #f5c400 0 14px, #17191d 14px 28px);
+  border-top: 2px solid #17191d; border-bottom: 2px solid #17191d;
+  padding: 0.42rem 0; z-index: 2;
+  box-shadow: 0 3px 10px rgba(23, 25, 29, 0.22);
+  pointer-events: none;
+}
+.tape b {
+  font-family: var(--mono); font-size: 0.66rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: #17191d; background: #f5c400; padding: 0.14rem 0.85rem;
+  border-radius: 2px; white-space: nowrap;
+}
+.p-card { position: relative; }
+.p-card.soon .ico, .p-card.soon h3 { margin-top: 1.6rem; }
+.p-card.soon .ico + h3 { margin-top: 0; }
+.soon-note { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint); }

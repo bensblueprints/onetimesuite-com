@@ -22,11 +22,23 @@ const WHOP = 'https://whop.com/onetime-suite';
 const GH = 'https://github.com/bensblueprints';
 
 const products = require('./src/products.js');
+/* Products 51–100 wave (45 newly-launched apps), full landing-page shape with a
+   `kind` field. They join the catalog, the bundle receipt, hub grids, sitemap
+   and ItemList exactly like the original products.js entries. */
+const products51 = require('./src/products-51-100.js');
 const posts = [
   ...require('./src/posts-1.js'), ...require('./src/posts-2.js'), ...require('./src/posts-3.js'),
   ...require('./src/posts-4.js'), ...require('./src/posts-5.js'), ...require('./src/posts-6.js'),
 ];
 const bySlug = Object.fromEntries(products.map(p => [p.slug, p]));
+
+/* merge in the products 51–100 wave */
+for (const p of products51) {
+  if (!p.slug || !p.brand || !p.features || !p.faq) throw new Error('bad products-51-100 entry: ' + JSON.stringify(p).slice(0, 80));
+  if (bySlug[p.slug]) throw new Error('products-51-100 slug collides with existing product: ' + p.slug);
+  products.push(p);
+  bySlug[p.slug] = p;
+}
 
 /* Newly launched apps (products 51–100 wave): drop each app's landing-data.json
    into src/launched/ (with a "kind": "desktop"|"web" field) and it becomes a
@@ -61,6 +73,7 @@ const DESKTOP_SLUGS = new Set([
   'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'orgtree', 'renewcheck',
   'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk',
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
+  ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
 ]);
 const desktopProducts = allProducts.filter(p => DESKTOP_SLUGS.has(p.slug));
 const webProducts = allProducts.filter(p => !DESKTOP_SLUGS.has(p.slug));
@@ -71,8 +84,8 @@ const BUNDLE = {
   price: 997,
   tagline: 'Every app in the suite. One payment. Own it all, forever.',
 };
-const bundleValue = products.reduce((s, p) => s + p.price, 0); // $1,727
-const bundleSavings = bundleValue - BUNDLE.price;              // $730
+const bundleValue = products.reduce((s, p) => s + p.price, 0); // à-la-carte total of the full catalog (computed)
+const bundleSavings = bundleValue - BUNDLE.price;              // savings vs the flat $997 bundle
 
 const fmt = n => '$' + n.toLocaleString('en-US');
 const art = name => (/^[aeiou]/i.test(name) ? 'an' : 'a');
@@ -343,7 +356,7 @@ function reg(relPath) { urls.push(relPath); }
       <div class="wrap">
         <span class="stamp">One price on the sticker · No renewal date</span>
         <h1>Buy software the way you buy a hammer. Once.</h1>
-        <p class="lead">A ${allProducts.length + comingSoon.length}-app catalog that replaces your subscription SaaS — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. <strong>${allProducts.length} apps are available right now</strong> (${desktopProducts.length} desktop, ${webProducts.length} self-hosted web) and ${comingSoon.length} more are on the build sheet. Every one is a one-time purchase — nearly all with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
+        <p class="lead">A ${allProducts.length + comingSoon.length}-app catalog that replaces your subscription SaaS — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. <strong>${allProducts.length} apps are available right now</strong> (${desktopProducts.length} desktop, ${webProducts.length} self-hosted web) and ${comingSoon.length} more ${comingSoon.length === 1 ? 'is' : 'are'} on the build sheet. Every one is a one-time purchase — nearly all with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
         <div class="btn-row">
           <a class="btn btn-solid" href="${WHOP}" rel="noopener">Buy on Whop &rarr;</a>
           <a class="btn btn-ghost" href="/${BUNDLE.slug}/">The ${fmt(BUNDLE.price)} everything bundle</a>
@@ -373,21 +386,21 @@ function reg(relPath) { urls.push(relPath); }
       <div class="wrap">
         <div class="section-head" id="coming-soon" style="scroll-margin-top:80px;">
           <span class="stamp">&#128679; On the build sheet</span>
-          <h2>Coming soon — ${comingSoon.length} more apps</h2>
-          <p>The catalog is headed to 100+. These are planned, priced and next in the build queue — every one joins the ${fmt(BUNDLE.price)} bundle at no extra cost the day it ships. Buy the bundle now and you own all of these too.</p>
+          <h2>Coming soon — ${comingSoon.length} more app${comingSoon.length === 1 ? '' : 's'}</h2>
+          <p>The catalog is headed to 100+. ${comingSoon.length === 1 ? 'This one is' : 'These are'} planned, priced and next in the build queue — every one joins the ${fmt(BUNDLE.price)} bundle at no extra cost the day it ships. Buy the bundle now and you own ${comingSoon.length === 1 ? 'it' : 'all of these'} too.</p>
         </div>
-        <div class="cat-head">
+        ${soonDesktop.length ? `<div class="cat-head">
           <h2 style="font-size:1.35rem;">Desktop</h2>
           <span class="count">${soonDesktop.length} planned</span>
         </div>
         <div class="card-grid">${soonCardsFor(soonDesktop)}
-        </div>
-        <div class="cat-head">
+        </div>` : ''}
+        ${soonWeb.length ? `<div class="cat-head">
           <h2 style="font-size:1.35rem;">Web-hosted</h2>
           <span class="count">${soonWeb.length} planned</span>
         </div>
         <div class="card-grid">${soonCardsFor(soonWeb)}
-        </div>
+        </div>` : ''}
       </div>
     </section>
 

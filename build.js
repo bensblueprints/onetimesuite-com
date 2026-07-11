@@ -28,8 +28,25 @@ const posts = [
 ];
 const bySlug = Object.fromEntries(products.map(p => [p.slug, p]));
 
+/* Newly launched apps (products 51–100 wave): drop each app's landing-data.json
+   into src/launched/ (with a "kind": "desktop"|"web" field) and it becomes a
+   full catalog product — bundle receipt included — and its caution-taped
+   coming-soon card is removed automatically (matched by brand). */
+const LAUNCHED_DIR = path.join(ROOT, 'src', 'launched');
+const launched = fs.existsSync(LAUNCHED_DIR)
+  ? fs.readdirSync(LAUNCHED_DIR).filter(f => f.endsWith('.json'))
+      .map(f => JSON.parse(fs.readFileSync(path.join(LAUNCHED_DIR, f), 'utf8')))
+  : [];
+for (const l of launched) {
+  if (!l.slug || !l.brand || !l.features || !l.faq) throw new Error('bad launched entry: ' + JSON.stringify(l).slice(0, 80));
+  if (bySlug[l.slug]) throw new Error('launched slug collides with existing product: ' + l.slug);
+  products.push(l);
+  bySlug[l.slug] = l;
+}
+
 /* planned catalog (products 51–100 + Dealstack) — caution-taped cards, no pages */
-const comingSoon = require('./src/coming-soon.js');
+const launchedBrands = new Set(launched.map(l => l.brand.toLowerCase()));
+const comingSoon = require('./src/coming-soon.js').filter(p => !launchedBrands.has(p.brand.toLowerCase()));
 const soonDesktop = comingSoon.filter(p => p.kind === 'desktop');
 const soonWeb = comingSoon.filter(p => p.kind === 'web');
 
@@ -43,6 +60,7 @@ const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
   'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'orgtree', 'renewcheck',
   'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk',
+  ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
 ]);
 const desktopProducts = allProducts.filter(p => DESKTOP_SLUGS.has(p.slug));
 const webProducts = allProducts.filter(p => !DESKTOP_SLUGS.has(p.slug));

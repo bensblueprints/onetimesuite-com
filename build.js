@@ -211,6 +211,7 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body })
   <meta property="og:url" content="${canonical}">
   <meta property="og:site_name" content="OneTimeSuite">
   <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="application/rss+xml" title="OneTimeSuite — Pay-Once vs Subscription" href="/rss.xml">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e8420c'/%3E%3Ctext x='50' y='68' font-size='52' font-family='monospace' font-weight='700' fill='white' text-anchor='middle'%3E%241%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -994,6 +995,31 @@ fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   urls.map(u => `  <url><loc>${SITE}${u}</loc></url>`).join('\n') +
   `\n</urlset>\n`, 'utf8');
+
+/* rss.xml — all blog content, newest batch first */
+const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const rssItems = [
+  ...seoPosts.map(x => ({
+    title: x.title, url: `${SITE}/${x.slug}/`, desc: x.metaDesc,
+    date: 'Fri, 11 Jul 2026 00:00:00 GMT',
+  })),
+  ...posts.map(x => {
+    const p = bySlug[x.product];
+    return {
+      title: `Looking for ${art(x.competitor)} ${x.competitor} Alternative? Meet ${p.brand} — Pay Once, Own It Forever`,
+      url: `${SITE}/comparison/${x.slug}/`, desc: x.metaDesc,
+      date: 'Mon, 06 Jul 2026 00:00:00 GMT',
+    };
+  }),
+];
+fs.writeFileSync(path.join(OUT, 'rss.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>\n` +
+  `<title>OneTimeSuite — Pay-Once vs Subscription</title>\n` +
+  `<link>${SITE}/comparison/</link>\n` +
+  `<description>Honest comparisons of subscription SaaS tools vs pay-once desktop and self-hosted alternatives.</description>\n` +
+  `<language>en</language>\n` +
+  rssItems.map(i => `<item><title>${xmlEsc(i.title)}</title><link>${i.url}</link><guid>${i.url}</guid><pubDate>${i.date}</pubDate><description>${xmlEsc(i.desc)}</description></item>`).join('\n') +
+  `\n</channel></rss>\n`, 'utf8');
 
 /* css + screenshots */
 fs.mkdirSync(path.join(OUT, 'css'), { recursive: true });

@@ -101,6 +101,15 @@ const shotsAvailable = new Set(
 );
 const hasShot = slug => shotsAvailable.has(slug);
 
+/* ---------- retail box art (assets/boxes/<slug>.png) ---------- */
+const BOXES_SRC = path.join(ROOT, 'assets', 'boxes');
+const boxesAvailable = new Set(
+  fs.existsSync(BOXES_SRC)
+    ? fs.readdirSync(BOXES_SRC).filter(f => /\.png$/i.test(f)).map(f => f.replace(/\.png$/i, ''))
+    : []
+);
+const hasBox = slug => boxesAvailable.has(slug);
+
 /* ---------- competitor columns for the 76 comparison posts ---------- */
 const POST_TABLE = {
   'smallpdf-alternative':            { price: '$12–15/mo', yr3: '~$432–540', limits: 'Task/file limits on free tier', cloud: 'Uploaded to their servers', offline: 'No', src: 'Closed' },
@@ -501,6 +510,8 @@ allProducts.forEach(p => {
     <section class="hero" aria-label="${attr(p.brand)}">
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/#${isDesktop ? 'desktop' : 'web-hosted'}">${isDesktop ? 'Desktop apps' : 'Web-hosted apps'}</a> / ${p.brand}</nav>
+        <div style="display:flex;gap:2.5rem;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex:1 1 480px;min-width:0;">
         <div style="display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;">
           <span class="avail lg"><span class="dot" aria-hidden="true"></span>Available now</span>
           <span class="stamp">${stampText}</span>
@@ -514,6 +525,9 @@ allProducts.forEach(p => {
         <div class="btn-row">
           <a class="btn btn-solid" href="${buy}" rel="noopener">Get ${p.brand} on ${buyHost} — $${p.price} &rarr;</a>
           ${isClosed ? '' : `<a class="btn btn-ghost" href="${GH}/${p.repo}" rel="noopener">Source on GitHub</a>`}
+        </div>
+        </div>
+        ${hasBox(p.slug) ? `<div style="flex:0 0 280px;max-width:280px;margin-inline:auto;"><img src="/assets/boxes/${p.slug}.png" alt="${attr(p.brand)} retail software box" width="280" height="373" style="width:100%;height:auto;filter:drop-shadow(0 18px 30px rgba(0,0,0,0.18));" loading="eager"></div>` : ''}
         </div>
       </div>
     </section>
@@ -1103,6 +1117,13 @@ const shotsOut = path.join(OUT, 'assets', 'shots');
 fs.mkdirSync(shotsOut, { recursive: true });
 for (const f of fs.readdirSync(SHOTS_SRC)) {
   if (/\.png$/i.test(f)) fs.copyFileSync(path.join(SHOTS_SRC, f), path.join(shotsOut, f));
+}
+if (fs.existsSync(BOXES_SRC)) {
+  const boxesOut = path.join(OUT, 'assets', 'boxes');
+  fs.mkdirSync(boxesOut, { recursive: true });
+  for (const f of fs.readdirSync(BOXES_SRC)) {
+    if (/\.png$/i.test(f)) fs.copyFileSync(path.join(BOXES_SRC, f), path.join(boxesOut, f));
+  }
 }
 
 console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);

@@ -57,5 +57,4 @@ If you dictate every day, you'll use this tool for years — which is exactly wh
 
 **Related:**
 - [WisperTalk: The Wispr Flow Alternative You Buy Once ($49 Lifetime) →](/wispr-flow-alternative/)
-
----
+- [See the WisperTalk product page →](/wispertalk/)

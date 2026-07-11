@@ -45,3 +45,4 @@ Do the math once: Wispr Flow is ~$180 every year, forever, with no way to buy ou
 
 **Related:**
 - [WisperTalk vs Wispr Flow: Why a One-Time Purchase Beats a Monthly Dictation Subscription →](/wispertalk-vs-wispr-flow/)
+- [See the WisperTalk product page →](/wispertalk/)

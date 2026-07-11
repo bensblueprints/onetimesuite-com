@@ -53,3 +53,4 @@ Stop paying $180 a year to record your own screen. Grab **BloomRecorder for a on
 **Related:**
 - [BloomRecorder: The Free, Open-Source Loom Alternative →](/open-source-loom-alternative/)
 - [BloomRecorder vs Vidyard: A Local Screen Recorder You Own →](/vidyard-alternative/)
+- [See the BloomRecorder product page →](/bloomrecorder/)

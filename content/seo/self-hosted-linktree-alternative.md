@@ -48,3 +48,4 @@ Grab the open-source, MIT-licensed code and deploy with Docker on your own domai
 **Related:**
 - [LinkLeaf: The Free, Open-Source Linktree Alternative (No Monthly Fee) →](/linktree-alternative/)
 - [LinkLeaf vs Beacons: A Link-in-Bio You Actually Own →](/beacons-alternative/)
+- [See the LinkLeaf product page →](/linkleaf/)

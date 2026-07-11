@@ -28,14 +28,19 @@ const posts = [
 ];
 const bySlug = Object.fromEntries(products.map(p => [p.slug, p]));
 
+/* Shipped apps that live outside products.js (BloomRecorder, WisperTalk) —
+   first-class product pages, but NOT part of the $997 bundle receipt. */
+const extras = require('./src/extra-products.js');
+const allProducts = [...products, ...extras];
+
 /* Desktop (Electron, no server) vs web-hosted (self-hosted on your own VPS) */
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
   'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'orgtree', 'renewcheck',
-  'paletteforge', 'iconforge',
+  'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk',
 ]);
-const desktopProducts = products.filter(p => DESKTOP_SLUGS.has(p.slug));
-const webProducts = products.filter(p => !DESKTOP_SLUGS.has(p.slug));
+const desktopProducts = allProducts.filter(p => DESKTOP_SLUGS.has(p.slug));
+const webProducts = allProducts.filter(p => !DESKTOP_SLUGS.has(p.slug));
 
 const BUNDLE = {
   slug: 'onetime-suite-bundle',
@@ -161,7 +166,7 @@ const FOOTER = `
       <div class="cols">
         <div>
           <a class="wordmark" href="/" style="margin:0 0 0.8rem;display:inline-block;">OneTime<span class="tm">Suite</span></a>
-          <p class="blurb">${products.length} apps that replace subscription SaaS. Pay once, own forever. MIT source on GitHub — build it yourself if you'd rather.</p>
+          <p class="blurb">${allProducts.length} apps that replace subscription SaaS. Pay once, own forever. Almost all of them are MIT source on GitHub — build them yourself if you'd rather.</p>
         </div>
         <div>
           <h4>Apps</h4>
@@ -300,7 +305,7 @@ function reg(relPath) { urls.push(relPath); }
       <div class="wrap">
         <span class="stamp">One price on the sticker · No renewal date</span>
         <h1>Buy software the way you buy a hammer. Once.</h1>
-        <p class="lead">${products.length} apps that replace your subscription SaaS — PDF tools, screen recording, analytics, invoicing, email campaigns, uptime monitoring and more. ${desktopProducts.length} desktop apps you install, ${webProducts.length} web apps you host. Every one is a one-time purchase with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
+        <p class="lead">${allProducts.length} apps that replace your subscription SaaS — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. ${desktopProducts.length} desktop apps you install, ${webProducts.length} web apps you host. Every one is a one-time purchase — nearly all with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
         <div class="btn-row">
           <a class="btn btn-solid" href="${WHOP}" rel="noopener">Buy on Whop &rarr;</a>
           <a class="btn btn-ghost" href="/${BUNDLE.slug}/">The ${fmt(BUNDLE.price)} everything bundle</a>
@@ -331,7 +336,7 @@ function reg(relPath) { urls.push(relPath); }
         <div class="section-head">
           <span class="stamp blue">As it actually looks</span>
           <h2>Real screenshots, not mockups</h2>
-          <p>A few of the ${shotsAvailable.size - 1} apps we've screenshotted so far. Every product page has one.</p>
+          <p>A few of the ${allProducts.filter(p => hasShot(p.slug)).length} apps we've screenshotted so far. Every product page has one.</p>
         </div>
         <div class="show-rows">${showcase.map(showRow).join('')}
         </div>
@@ -342,9 +347,9 @@ function reg(relPath) { urls.push(relPath); }
       <div class="wrap">
         <div class="bundle-box">
           <div>
-            <span class="stamp">All ${products.length} apps · one receipt</span>
+            <span class="stamp">All ${products.length} catalog apps · one receipt</span>
             <h2 style="margin:0.4rem 0 0.7rem;">${BUNDLE.name}</h2>
-            <p style="color:var(--ink-soft);">Bought one at a time, the suite adds up to <span class="price-fig" style="font-family:var(--mono);">${fmt(bundleValue)}</span>. The bundle is ${fmt(BUNDLE.price)} flat — ${fmt(bundleSavings)} off — and every app we ship later joins it for free.</p>
+            <p style="color:var(--ink-soft);">Bought one at a time, the ${products.length}-app catalog adds up to <span class="price-fig" style="font-family:var(--mono);">${fmt(bundleValue)}</span>. The bundle is ${fmt(BUNDLE.price)} flat — ${fmt(bundleSavings)} off — and every app we ship later joins it for free.</p>
             <div class="btn-row" style="margin-top:1.3rem;">
               <a class="btn btn-solid" href="/${BUNDLE.slug}/">See what's inside &rarr;</a>
               <a class="btn btn-ghost" href="${WHOP}" rel="noopener">Buy it on Whop</a>
@@ -385,12 +390,12 @@ function reg(relPath) { urls.push(relPath); }
     </section>`;
 
   write('', page({
-    title: `OneTimeSuite — ${products.length} Pay-Once Apps That Replace Subscription SaaS`,
-    desc: `${products.length} desktop & self-hosted apps that replace monthly SaaS bills — PDF tools, screen recording, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, MIT source on GitHub, or everything for ${fmt(BUNDLE.price)}.`,
+    title: `OneTimeSuite — ${allProducts.length} Pay-Once Apps That Replace Subscription SaaS`,
+    desc: `${allProducts.length} desktop & self-hosted apps that replace monthly SaaS bills — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, or the ${products.length}-app catalog for ${fmt(BUNDLE.price)}.`,
     canonical: `${SITE}/`,
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'ItemList',
-      itemListElement: products.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/${p.slug}/`, name: p.brand })),
+      itemListElement: allProducts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/${p.slug}/`, name: p.brand })),
     }],
     body,
   }));
@@ -400,9 +405,14 @@ function reg(relPath) { urls.push(relPath); }
 /* ============================================================
  * 2. product pages  /<slug>/
  * ============================================================ */
-products.forEach(p => {
+allProducts.forEach(p => {
   const isDesktop = DESKTOP_SLUGS.has(p.slug);
   const relatedPosts = posts.filter(x => x.product === p.slug);
+  const isClosed = !!p.closedSource;                 // paid, closed-source (WisperTalk)
+  const buy = p.buyUrl || WHOP;                      // some apps have their own checkout
+  const buyHost = p.buyUrl ? p.buyUrl.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : 'Whop';
+  const stampText = p.stamp || (isDesktop ? 'Desktop app · runs offline' : 'Web app · self-hosted on your server');
+  const seoRelated = p.seoRelated || [];
 
   const compTable = `
       <div class="tbl-wrap">
@@ -418,7 +428,7 @@ products.forEach(p => {
     <section class="hero" aria-label="${attr(p.brand)}">
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/#${isDesktop ? 'desktop' : 'web-hosted'}">${isDesktop ? 'Desktop apps' : 'Web-hosted apps'}</a> / ${p.brand}</nav>
-        <span class="stamp">${isDesktop ? 'Desktop app · runs offline' : 'Web app · self-hosted on your server'}</span>
+        <span class="stamp">${stampText}</span>
         <h1>${p.icon} ${p.brand}</h1>
         <p class="lead">${esc(p.tagline)}</p>
         <p style="color:var(--ink-soft);max-width:62ch;margin-bottom:1.8rem;">${esc(p.heroLead)}</p>
@@ -426,8 +436,8 @@ products.forEach(p => {
           ${pricePair(p, true)}
         </div>
         <div class="btn-row">
-          <a class="btn btn-solid" href="${WHOP}" rel="noopener">Get ${p.brand} on Whop — $${p.price} &rarr;</a>
-          <a class="btn btn-ghost" href="${GH}/${p.repo}" rel="noopener">Source on GitHub</a>
+          <a class="btn btn-solid" href="${buy}" rel="noopener">Get ${p.brand} on ${buyHost} — $${p.price} &rarr;</a>
+          ${isClosed ? '' : `<a class="btn btn-ghost" href="${GH}/${p.repo}" rel="noopener">Source on GitHub</a>`}
         </div>
       </div>
     </section>
@@ -482,10 +492,13 @@ products.forEach(p => {
           <h2>Honest answers</h2>
         </div>
         ${p.faq.map(q => `<div class="faq-item"><h3>${esc(q[0])}</h3><p>${esc(q[1])}</p></div>`).join('\n        ')}
-        ${relatedPosts.length ? `
+        ${(relatedPosts.length || seoRelated.length) ? `
         <p class="mono-note" style="margin-top:1.6rem;">Deep-dive comparisons:</p>
         <div class="related-strip">
-          ${relatedPosts.map(x => `<a href="/comparison/${x.slug}/">${esc(x.competitor)} alternative</a>`).join('\n          ')}
+          ${[
+            ...relatedPosts.map(x => `<a href="/comparison/${x.slug}/">${esc(x.competitor)} alternative</a>`),
+            ...seoRelated.map(([href, label]) => `<a href="${href}">${esc(label)}</a>`),
+          ].join('\n          ')}
         </div>` : ''}
       </div>
     </section>
@@ -493,17 +506,17 @@ products.forEach(p => {
     <section aria-label="Get ${attr(p.brand)}" class="center">
       <div class="wrap">
         <h2>Own ${p.brand} forever</h2>
-        <p style="color:var(--ink-soft);margin:0.8rem auto 1.6rem;">$${p.price} once. ${isDesktop ? 'Signed installer, 1-click setup, updates included.' : 'Deploy on your own server — your data never leaves it.'} No renewal, no account with us, no meter. Or build it yourself from the MIT source — it's the same app.</p>
+        <p style="color:var(--ink-soft);margin:0.8rem auto 1.6rem;">$${p.price} once. ${isDesktop ? 'Signed installer, 1-click setup, updates included.' : 'Deploy on your own server — your data never leaves it.'} No renewal, ${isClosed ? 'no meter, no annual price creep — a lifetime license you actually own.' : "no account with us, no meter. Or build it yourself from the MIT source — it's the same app."}</p>
         <div class="btn-row" style="justify-content:center;">
-          <a class="btn btn-solid" href="${WHOP}" rel="noopener">Get it on Whop — $${p.price} &rarr;</a>
-          <a class="btn btn-ghost" href="${GH}/${p.repo}" rel="noopener">View source on GitHub</a>
+          <a class="btn btn-solid" href="${buy}" rel="noopener">Get it on ${buyHost} — $${p.price} &rarr;</a>
+          ${isClosed ? `<a class="btn btn-ghost" href="/comparison/">Read the honest comparisons</a>` : `<a class="btn btn-ghost" href="${GH}/${p.repo}" rel="noopener">View source on GitHub</a>`}
         </div>
       </div>
     </section>`;
 
   write(p.slug, page({
     title: `${p.brand} — ${p.competitor} Alternative, $${p.price} One-Time | OneTimeSuite`,
-    desc: `${p.oneliner} Pay once ($${p.price}), own it forever. Replaces ${p.competitor} (${p.compPrice}). MIT source on GitHub.`,
+    desc: `${p.oneliner} Pay once ($${p.price}), own it forever. Replaces ${p.competitor} (${p.compPrice}).${isClosed ? '' : ' MIT source on GitHub.'}`,
     canonical: `${SITE}/${p.slug}/`,
     ogType: 'product',
     jsonld: [
@@ -513,7 +526,7 @@ products.forEach(p => {
         brand: { '@type': 'Brand', name: 'OneTimeSuite' },
         url: `${SITE}/${p.slug}/`,
         image: hasShot(p.slug) ? `${SITE}/assets/shots/${p.slug}.png` : undefined,
-        offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: WHOP },
+        offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: buy },
       },
       {
         '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -751,7 +764,7 @@ seoPosts.forEach(post => {
           ${articleHtml}
           <div class="cta-card">
             <h3>The whole suite works this way</h3>
-            <p>${products.length} pay-once apps that replace subscription SaaS — one price on the sticker, paid once. Browse the suite or grab everything for ${fmt(BUNDLE.price)}.</p>
+            <p>${allProducts.length} pay-once apps that replace subscription SaaS — one price on the sticker, paid once. Browse the suite, or grab the ${products.length}-app catalog for ${fmt(BUNDLE.price)}.</p>
             <div class="btn-row">
               <a class="btn btn-solid" href="/">Browse the suite &rarr;</a>
               <a class="btn btn-ghost" href="${WHOP}" rel="noopener">Buy on Whop</a>
@@ -965,7 +978,7 @@ fs.writeFileSync(path.join(OUT, '404.html'), page({
       <div class="wrap">
         <span class="stamp">404 · not on the shelf</span>
         <h1>This page isn't in stock</h1>
-        <p class="lead" style="margin-left:auto;margin-right:auto;">The URL you followed doesn't exist. The ${products.length} pay-once apps, however, do.</p>
+        <p class="lead" style="margin-left:auto;margin-right:auto;">The URL you followed doesn't exist. The ${allProducts.length} pay-once apps, however, do.</p>
         <div class="btn-row" style="justify-content:center;">
           <a class="btn btn-solid" href="/">Browse the suite &rarr;</a>
           <a class="btn btn-ghost" href="/comparison/">Read the comparisons</a>
@@ -991,4 +1004,4 @@ for (const f of fs.readdirSync(SHOTS_SRC)) {
   if (/\.png$/i.test(f)) fs.copyFileSync(path.join(SHOTS_SRC, f), path.join(shotsOut, f));
 }
 
-console.log(`Done: 1 hub + ${products.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);
+console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);

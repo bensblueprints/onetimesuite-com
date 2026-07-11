@@ -49,3 +49,4 @@ Stop paying $180 a year for a page of links. Claim your handle at **[linkleaf.im
 **Related:**
 - [LinkLeaf: The Free, Self-Hostable Linktree Alternative →](/self-hosted-linktree-alternative/)
 - [LinkLeaf vs Beacons: A Link-in-Bio You Actually Own →](/beacons-alternative/)
+- [See the LinkLeaf product page →](/linkleaf/)

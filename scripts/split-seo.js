@@ -52,9 +52,13 @@ sections.forEach((sec, i) => {
   const title = sec.match(/\*\*SEO title:\*\*\s*(.+)/)[1].trim();
   const metaDesc = sec.match(/\*\*Meta description:\*\*\s*(.+)/)[1].trim();
 
-  /* body = from the first "# " H1 to the trailing "---" separator */
+  /* body = from the first "# " H1 to the trailing "---" separator.
+     Group-final sections run on into the next "## PRODUCT" block (the split
+     is on "### Post" only) — cut at the double "---" group boundary, then
+     strip ALL trailing separators. */
   let body = sec.slice(sec.indexOf('\n# ') + 1);
-  body = body.replace(/\n---+\s*$/g, '').trim();
+  body = body.split(/\n---+\s*\n---+/)[0];
+  body = body.replace(/(\n---+\s*)+$/g, '').trim();
 
   /* drop the editorial "Repositioned" note (meta-commentary, not for publishing) */
   body = body.replace(/^> \*\*Repositioned:\*\*.*\n+/m, '');

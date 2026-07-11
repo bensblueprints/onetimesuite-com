@@ -49,10 +49,4 @@ There's no reason to hand a platform 9% of your sales or $90/mo for a page of li
 **Related:**
 - [LinkLeaf: The Free, Open-Source Linktree Alternative (No Monthly Fee) →](/linktree-alternative/)
 - [Self-Hosted Linktree Alternative — LinkLeaf (Open Source, Docker-Ready) →](/self-hosted-linktree-alternative/)
-
----
----
-
-## BLOOMRECORDER (3 posts)
-
-Product facts used throughout: BloomRecorder is "the Loom replacement you buy once." **$29 one-time via Whop** for the packaged installer — or **free if you clone and build from source** (MIT-licensed on GitHub). **100% local:** zero telemetry, zero network calls, zero accounts; recordings save to your own disk. Features: record screen, camera, or both (split files or picture-in-picture combined); source picker with live thumbnails; device selection for camera/mic; system + mic audio mixed into every output; choose your own output folder; floating always-on-top recording pill with timer + stop; local library with auto-thumbnails; MP4 export (H.264, faststart, plays everywhere); optimized two-pass GIF export (palettegen/paletteuse — not muddy single-pass); trim before export.
+- [See the LinkLeaf product page →](/linkleaf/)

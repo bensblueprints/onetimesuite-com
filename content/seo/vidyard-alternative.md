@@ -53,10 +53,4 @@ You don't need a per-seat video platform to capture your screen. Buy **BloomReco
 **Related:**
 - [BloomRecorder: The Loom Alternative You Buy Once ($29, No Subscription) →](/loom-alternative/)
 - [Open-Source Loom Alternative — BloomRecorder (100% Local, MIT) →](/open-source-loom-alternative/)
-
----
----
-
-## WISPERTALK (2 posts — repositioned, see corrections)
-
-Product facts used throughout: WisperTalk is a **paid** AI dictation app — **$49 one-time (lifetime), plus $10 per additional device license.** One device per license, enforced **server-side.** Transcription runs on **Groq Whisper**, with **Llama 3.3** cleaning up the raw transcript into polished text. **It is NOT free and NOT open source** — source repos are private; only compiled binaries are publicly released. The honest, powerful angle is **own-it-once vs rent-forever.**
+- [See the BloomRecorder product page →](/bloomrecorder/)

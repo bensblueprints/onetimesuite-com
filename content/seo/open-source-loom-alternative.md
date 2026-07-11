@@ -50,3 +50,4 @@ If your recordings shouldn't be sitting on someone else's servers, they shouldn'
 **Related:**
 - [BloomRecorder: The Loom Alternative You Buy Once ($29, No Subscription) →](/loom-alternative/)
 - [BloomRecorder vs Vidyard: A Local Screen Recorder You Own →](/vidyard-alternative/)
+- [See the BloomRecorder product page →](/bloomrecorder/)

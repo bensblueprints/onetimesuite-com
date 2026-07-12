@@ -36,6 +36,7 @@ const posts = [
   ...require('./src/posts-1.js'), ...require('./src/posts-2.js'), ...require('./src/posts-3.js'),
   ...require('./src/posts-4.js'), ...require('./src/posts-5.js'), ...require('./src/posts-6.js'),
 ];
+const CSS_V = require('crypto').createHash('md5').update(fs.readFileSync(path.join(__dirname, 'src', 'site.css'))).digest('hex').slice(0, 8);
 const bySlug = Object.fromEntries(products.map(p => [p.slug, p]));
 
 /* merge in the products 51–100 wave */
@@ -278,7 +279,7 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body })
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/site.css?v=${CSS_V}">
 ${ld}
 </head>
 <body>

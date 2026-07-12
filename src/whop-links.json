@@ -1,0 +1,1016 @@
+{
+  "pdfsmith": {
+    "productId": "prod_8h9pPamZQSYxS",
+    "planId": "plan_1QZSasjD36NL7",
+    "checkoutUrl": "https://whop.com/checkout/plan_1QZSasjD36NL7",
+    "descriptionSet": true,
+    "title": "PDFsmith — Offline PDF Toolkit (Merge, Split, Watermark, Convert)",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/pdfsmith"
+  },
+  "cutaway": {
+    "productId": "prod_W6vk2gCI69ubU",
+    "descriptionSet": true,
+    "planId": "plan_u5DBIBmqL6hSV",
+    "checkoutUrl": "https://whop.com/checkout/plan_u5DBIBmqL6hSV",
+    "title": "Cutaway — Local AI Background Remover",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/cutaway"
+  },
+  "whisperdesk": {
+    "productId": "prod_gstaRjCeNqLOu",
+    "descriptionSet": true,
+    "planId": "plan_3d0X0pmELK5aq",
+    "checkoutUrl": "https://whop.com/checkout/plan_3d0X0pmELK5aq",
+    "title": "WhisperDesk — Unlimited Local Audio & Video Transcription",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/whisperdesk"
+  },
+  "shrinkray": {
+    "productId": "prod_2i9WirlNncI4A",
+    "descriptionSet": true,
+    "planId": "plan_UAKkLOV0Bmwr5",
+    "checkoutUrl": "https://whop.com/checkout/plan_UAKkLOV0Bmwr5",
+    "title": "Shrinkray — Unlimited Local Image Compression & Conversion",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/shrinkray"
+  },
+  "clipdeck": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "clipdeck-app",
+    "productId": "prod_gmbuJMNyDHdFC",
+    "descriptionSet": true,
+    "planId": "plan_kC6dfxWRVnTnr",
+    "checkoutUrl": "https://whop.com/checkout/plan_kC6dfxWRVnTnr",
+    "title": "ClipDeck — Local Screen Recorder with MP4 & GIF Export",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/clipdeck-app"
+  },
+  "upwatch": {
+    "productId": "prod_vJcpRS2dhFCIo",
+    "descriptionSet": true,
+    "planId": "plan_ZfyjAnp3FYHXT",
+    "checkoutUrl": "https://whop.com/checkout/plan_ZfyjAnp3FYHXT",
+    "title": "Upwatch — Self-Hosted Uptime Monitoring + Status Page",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/upwatch"
+  },
+  "trimly": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "trimly-app",
+    "productId": "prod_uKhf5ztCNRFnN",
+    "descriptionSet": true,
+    "planId": "plan_0zA8uOHiWHuuq",
+    "checkoutUrl": "https://whop.com/checkout/plan_0zA8uOHiWHuuq",
+    "title": "Trimly — Self-Hosted Branded Link Shortener + Analytics",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/trimly-app"
+  },
+  "billcraft": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"The description cannot contain HTML or script tags.\"}}",
+    "route": "billcraft",
+    "productId": "prod_6Imx27jeD2csL",
+    "descriptionSet": true,
+    "planId": "plan_qHLPiGxv2OByt",
+    "checkoutUrl": "https://whop.com/checkout/plan_qHLPiGxv2OByt",
+    "title": "Billcraft — Self-Hosted Invoicing for Freelancers",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/billcraft"
+  },
+  "bookslot": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Shortened description is too long (maximum is 1500 characters)\"}}",
+    "route": "bookslot",
+    "productId": "prod_CD30HLTnBsxdP",
+    "descriptionSet": true,
+    "planId": "plan_xL33UqjncpnMM",
+    "checkoutUrl": "https://whop.com/checkout/plan_xL33UqjncpnMM",
+    "title": "Bookslot — Self-Hosted Scheduling & Booking Page",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/bookslot"
+  },
+  "formforge": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use by another creator. Please choose a different one.\"}}",
+    "route": "formforge-app",
+    "productId": "prod_9fPwiTW2CNU79",
+    "descriptionSet": true,
+    "planId": "plan_4etbdC35hv1cq",
+    "checkoutUrl": "https://whop.com/checkout/plan_4etbdC35hv1cq",
+    "title": "Formforge — Self-Hosted Form Builder + Submissions Inbox",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/formforge-app"
+  },
+  "postdock": {
+    "productId": "prod_jl46kAqjX9Qya",
+    "descriptionSet": true,
+    "planId": "plan_ZdbBjB8MnhpGU",
+    "checkoutUrl": "https://whop.com/checkout/plan_ZdbBjB8MnhpGU",
+    "title": "PostDock — Self-Hosted Social Media Scheduler",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/postdock"
+  },
+  "linkleaf": {
+    "productId": "prod_5x2EvMMJ26DHe",
+    "descriptionSet": true,
+    "planId": "plan_LZhiwagfsXe04",
+    "checkoutUrl": "https://whop.com/checkout/plan_LZhiwagfsXe04",
+    "title": "Linkleaf — Self-Hosted Link-in-Bio Page Builder",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/linkleaf"
+  },
+  "scantrail": {
+    "productId": "prod_tTdoGtoqiK9K7",
+    "descriptionSet": true,
+    "planId": "plan_KdSUR66r0Hq3Z",
+    "checkoutUrl": "https://whop.com/checkout/plan_KdSUR66r0Hq3Z",
+    "title": "Scantrail — Self-Hosted Dynamic QR Codes + Scan Analytics",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/scantrail"
+  },
+  "cardsmith": {
+    "productId": "prod_W0KGTl4vc3XVn",
+    "descriptionSet": true,
+    "planId": "plan_itgK637cAUQgy",
+    "checkoutUrl": "https://whop.com/checkout/plan_itgK637cAUQgy",
+    "title": "Cardsmith — Self-Hosted Social Card / OG Image API",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/cardsmith"
+  },
+  "sigcraft": {
+    "productId": "prod_XdEWEK1LmcdjM",
+    "descriptionSet": true,
+    "planId": "plan_05UmFVPca75iX",
+    "checkoutUrl": "https://whop.com/checkout/plan_05UmFVPca75iX",
+    "title": "SigCraft — Team Email Signature Studio",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/sigcraft"
+  },
+  "statfox": {
+    "productId": "prod_dCSBa0h2l3aey",
+    "descriptionSet": true,
+    "planId": "plan_aBWBu4qmc4YqN",
+    "checkoutUrl": "https://whop.com/checkout/plan_aBWBu4qmc4YqN",
+    "title": "Statfox — Self-Hosted Privacy-First Web Analytics",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/statfox"
+  },
+  "shipnotes": {
+    "productId": "prod_CQVNjMSMNgxmt",
+    "descriptionSet": true,
+    "planId": "plan_FWAqx43k8Nx7U",
+    "checkoutUrl": "https://whop.com/checkout/plan_FWAqx43k8Nx7U",
+    "title": "Shipnotes — Self-Hosted Changelog + Roadmap + Feature Voting",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/shipnotes"
+  },
+  "hearback": {
+    "productId": "prod_ygpTC29OuYybb",
+    "descriptionSet": true,
+    "planId": "plan_ryCkIHIaV6JdJ",
+    "checkoutUrl": "https://whop.com/checkout/plan_ryCkIHIaV6JdJ",
+    "title": "Hearback — Self-Hosted Feedback + NPS Widget",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/hearback"
+  },
+  "docwell": {
+    "productId": "prod_XgizOxnsQdzb2",
+    "descriptionSet": true,
+    "planId": "plan_cVrNBPxnIKJWF",
+    "checkoutUrl": "https://whop.com/checkout/plan_cVrNBPxnIKJWF",
+    "title": "Docwell — Self-Hosted Knowledge Base & Help Center",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/docwell"
+  },
+  "chatlet": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "chatlet-app",
+    "productId": "prod_CF7Z7hlEDJJiZ",
+    "descriptionSet": true,
+    "planId": "plan_MUXM7Q3RL9Y6f",
+    "checkoutUrl": "https://whop.com/checkout/plan_MUXM7Q3RL9Y6f",
+    "title": "Chatlet — Self-Hosted Live Chat for Your Website",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/chatlet-app"
+  },
+  "boardly": {
+    "productId": "prod_VeFIinvVGZM86",
+    "descriptionSet": true,
+    "planId": "plan_ZFG2xO3ra8lVG",
+    "checkoutUrl": "https://whop.com/checkout/plan_ZFG2xO3ra8lVG",
+    "title": "Boardly — Self-Hosted Kanban Boards (Trello Replacement)",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/boardly"
+  },
+  "timevault": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "timevault-app",
+    "productId": "prod_rE5YBLfVmYobG",
+    "descriptionSet": true,
+    "planId": "plan_LEMs0K0nJmifv",
+    "checkoutUrl": "https://whop.com/checkout/plan_LEMs0K0nJmifv",
+    "title": "Timevault — Self-Hosted Time Tracking for Freelancers",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/timevault-app"
+  },
+  "streakly": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use by another creator. Please choose a different one.\"}}",
+    "route": "streakly-app",
+    "productId": "prod_GnQWvNqEJ80pJ",
+    "descriptionSet": true,
+    "planId": "plan_adupeKtrEj8je",
+    "checkoutUrl": "https://whop.com/checkout/plan_adupeKtrEj8je",
+    "title": "Streakly — Desktop Habit Tracker You Own Forever",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/streakly-app"
+  },
+  "deepdesk": {
+    "productId": "prod_QsDc3UOwL4IEc",
+    "descriptionSet": true,
+    "planId": "plan_w8vDW1b1BC6u9",
+    "checkoutUrl": "https://whop.com/checkout/plan_w8vDW1b1BC6u9",
+    "title": "Deepdesk — Local-First Focus Dashboard (Pomodoro + Ambient Noise)",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/deepdesk"
+  },
+  "quillpad": {
+    "productId": "prod_7QGet7tCMxJLc",
+    "descriptionSet": true,
+    "planId": "plan_kYzFPgIEXypL4",
+    "checkoutUrl": "https://whop.com/checkout/plan_kYzFPgIEXypL4",
+    "title": "Quillpad — Local-First Markdown Notes (Your Vault Is a Folder)",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/quillpad"
+  },
+  "pingcron": {
+    "productId": "prod_rrKzYM6ZluzXd",
+    "descriptionSet": true,
+    "planId": "plan_HeBFV49AS5U4t",
+    "checkoutUrl": "https://whop.com/checkout/plan_HeBFV49AS5U4t",
+    "title": "Pingcron — Self-Hosted Cron Job Monitoring (Dead-Man's Switch)",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/pingcron"
+  },
+  "hookscope": {
+    "productId": "prod_EtXvzAEKd5RqK",
+    "descriptionSet": true,
+    "planId": "plan_iAW1RJULqbJKQ",
+    "checkoutUrl": "https://whop.com/checkout/plan_iAW1RJULqbJKQ",
+    "title": "Hookscope — Self-Hosted Webhook Inspector (Capture + Replay)",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/hookscope"
+  },
+  "snapfleet": {
+    "productId": "prod_B3Uq2WjaX024o",
+    "descriptionSet": true,
+    "planId": "plan_dDVO4oxhZ75uT",
+    "checkoutUrl": "https://whop.com/checkout/plan_dDVO4oxhZ75uT",
+    "title": "Snapfleet — Self-Hosted Screenshot API (Unlimited Renders)",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/snapfleet"
+  },
+  "wrangle": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use by another creator. Please choose a different one.\"}}",
+    "route": "wrangle-app",
+    "productId": "prod_1rnGpxdJyEq2u",
+    "descriptionSet": true,
+    "planId": "plan_Hm6MaLK221Gff",
+    "checkoutUrl": "https://whop.com/checkout/plan_Hm6MaLK221Gff",
+    "title": "Wrangle — The Offline Developer Data Toolbox (10 Tools)",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/wrangle-app"
+  },
+  "vaultkeeper": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Shortened description is too long (maximum is 1500 characters)\"}}",
+    "route": "vaultkeeper",
+    "productId": "prod_x6Nv9ye2YnLW3",
+    "descriptionSet": true,
+    "planId": "plan_p5iZuZn2oIbQH",
+    "checkoutUrl": "https://whop.com/checkout/plan_p5iZuZn2oIbQH",
+    "title": "Vaultkeeper — Scheduled, Encrypted Database Backups You Own",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/vaultkeeper"
+  },
+  "queuecraft": {
+    "productId": "prod_1K1wXA5pb7lUr",
+    "descriptionSet": true,
+    "planId": "plan_SToy5AddSEo4M",
+    "checkoutUrl": "https://whop.com/checkout/plan_SToy5AddSEo4M",
+    "title": "Queuecraft — Self-Hosted Viral Waitlist + Referral Queue-Jumping",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/queuecraft"
+  },
+  "bravowall": {
+    "productId": "prod_ZirH6BKoQfoqH",
+    "descriptionSet": true,
+    "planId": "plan_5h3xwDCTo8X67",
+    "checkoutUrl": "https://whop.com/checkout/plan_5h3xwDCTo8X67",
+    "title": "Bravowall — Self-Hosted Testimonial Walls + PNG Card Export",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/bravowall"
+  },
+  "hawkwatch": {
+    "productId": "prod_w8Ks1eZFBjOGz",
+    "descriptionSet": true,
+    "planId": "plan_a6OolQdmTNnMO",
+    "checkoutUrl": "https://whop.com/checkout/plan_a6OolQdmTNnMO",
+    "title": "Hawkwatch — Self-Hosted Price & Stock Monitoring",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/hawkwatch"
+  },
+  "postbird": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Shortened description is too long (maximum is 1500 characters)\"}}",
+    "route": "postbird",
+    "productId": "prod_IoPxi97BYaT2b",
+    "descriptionSet": true,
+    "planId": "plan_0tXxbwKuLomPh",
+    "checkoutUrl": "https://whop.com/checkout/plan_0tXxbwKuLomPh",
+    "title": "Postbird — Self-Hosted Email Campaigns Over Your Own SMTP",
+    "price": 59,
+    "productUrl": "https://whop.com/benjisaiempire/postbird"
+  },
+  "keymaster": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "keymaster-app",
+    "productId": "prod_IWhJawww8QSKJ",
+    "descriptionSet": true,
+    "planId": "plan_vlp4bcvqKw6yi",
+    "checkoutUrl": "https://whop.com/checkout/plan_vlp4bcvqKw6yi",
+    "title": "Keymaster — Self-Hosted License Key Server for Software Sellers",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/keymaster-app"
+  },
+  "castport": {
+    "productId": "prod_ov2m17TbLy4nV",
+    "descriptionSet": true,
+    "planId": "plan_yzJcQeZmKVGoH",
+    "checkoutUrl": "https://whop.com/checkout/plan_yzJcQeZmKVGoH",
+    "title": "Castport — Self-Hosted Podcast Hosting + Valid RSS",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/castport"
+  },
+  "inkpress": {
+    "productId": "prod_cVH9OKQpvMZGE",
+    "descriptionSet": true,
+    "planId": "plan_0xi4TmFTkXEJe",
+    "checkoutUrl": "https://whop.com/checkout/plan_0xi4TmFTkXEJe",
+    "title": "Inkpress — Self-Hosted Markdown Blog Engine",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/inkpress"
+  },
+  "feedloft": {
+    "productId": "prod_zkwqgU4ROq3Um",
+    "descriptionSet": true,
+    "planId": "plan_o4fZJADYiAff8",
+    "checkoutUrl": "https://whop.com/checkout/plan_o4fZJADYiAff8",
+    "title": "Feedloft — Self-Hosted Keyboard-First RSS Reader",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/feedloft"
+  },
+  "reelsnag": {
+    "productId": "prod_Pjz4AQILul9bf",
+    "descriptionSet": true,
+    "planId": "plan_X3EJTKr3rqlvu",
+    "checkoutUrl": "https://whop.com/checkout/plan_X3EJTKr3rqlvu",
+    "title": "Reelsnag — Desktop yt-dlp GUI for Backing Up Your Own Videos",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/reelsnag"
+  },
+  "voicebarn": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"The description cannot contain HTML or script tags.\"}}",
+    "route": "voicebarn",
+    "productId": "prod_k3GkeRZIyskBy",
+    "descriptionSet": true,
+    "planId": "plan_gxIWSK51WNs2n",
+    "checkoutUrl": "https://whop.com/checkout/plan_gxIWSK51WNs2n",
+    "title": "Voicebarn — Unlimited Offline Text-to-Speech Studio",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/voicebarn"
+  },
+  "droplink": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "droplink-app",
+    "productId": "prod_9lqPbRqsWyQIE",
+    "descriptionSet": true,
+    "planId": "plan_QSlKHmJsfRCb9",
+    "checkoutUrl": "https://whop.com/checkout/plan_QSlKHmJsfRCb9",
+    "title": "Droplink — Self-Hosted Big-File Transfer",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/droplink-app"
+  },
+  "snipvault": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use by another creator. Please choose a different one.\"}}",
+    "route": "snipvault-app",
+    "productId": "prod_JP2I7P9qn14zP",
+    "descriptionSet": true,
+    "planId": "plan_TGaeF0MnkcpSS",
+    "checkoutUrl": "https://whop.com/checkout/plan_TGaeF0MnkcpSS",
+    "title": "Snipvault — Self-Hosted Code Snippet Manager",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/snipvault-app"
+  },
+  "inkseal": {
+    "productId": "prod_ZcjNuH1rHmOXa",
+    "descriptionSet": true,
+    "planId": "plan_xRtPj9lTHiX0x",
+    "checkoutUrl": "https://whop.com/checkout/plan_xRtPj9lTHiX0x",
+    "title": "Inkseal — Self-Hosted E-Signature Platform",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/inkseal"
+  },
+  "overlayr": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Shortened description is too long (maximum is 1500 characters)\"}}",
+    "route": "overlayr",
+    "productId": "prod_D6riLCZKLyWrZ",
+    "descriptionSet": true,
+    "planId": "plan_EilSQF3f5APgE",
+    "checkoutUrl": "https://whop.com/checkout/plan_EilSQF3f5APgE",
+    "title": "Overlayr — Self-Hosted OBS Stream Overlays",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/overlayr"
+  },
+  "signboard": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Shortened description is too long (maximum is 1500 characters)\"}}",
+    "route": "signboard",
+    "productId": "prod_IsjahvO2AAH77",
+    "descriptionSet": true,
+    "planId": "plan_ugqi6pWCRpAEg",
+    "checkoutUrl": "https://whop.com/checkout/plan_ugqi6pWCRpAEg",
+    "title": "Signboard — Self-Hosted Digital Signage",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/signboard"
+  },
+  "serpdeck": {
+    "productId": "prod_Zi0im0jpPs9I0",
+    "descriptionSet": true,
+    "planId": "plan_JZLTEWTXwsEmS",
+    "checkoutUrl": "https://whop.com/checkout/plan_JZLTEWTXwsEmS",
+    "title": "Serpdeck — Self-Hosted Keyword Rank Tracker",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/serpdeck"
+  },
+  "chatterbox": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "chatterbox-app",
+    "productId": "prod_tlbqdimeCVYYV",
+    "descriptionSet": true,
+    "planId": "plan_XP3ZaoFf6Ty0Y",
+    "checkoutUrl": "https://whop.com/checkout/plan_XP3ZaoFf6Ty0Y",
+    "title": "Chatterbox — Self-Hosted Embeddable Comments",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/chatterbox-app"
+  },
+  "textract": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Shortened description is too long (maximum is 1500 characters)\"}}",
+    "route": "textract",
+    "productId": "prod_by5Rpxn7Q65DS",
+    "descriptionSet": true,
+    "planId": "plan_HfRzfGnro8UOS",
+    "checkoutUrl": "https://whop.com/checkout/plan_HfRzfGnro8UOS",
+    "title": "Textract — Offline Desktop OCR",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/textract"
+  },
+  "ledgerly": {
+    "error": "POST /products -> 400: {\"error\":{\"type\":\"bad_request\",\"message\":\"This whop link is already in use. Please choose a different one.\"}}",
+    "route": "ledgerly-app",
+    "productId": "prod_8RZ85AkN1hpSV",
+    "descriptionSet": true,
+    "planId": "plan_3GB0of5k43MDx",
+    "checkoutUrl": "https://whop.com/checkout/plan_3GB0of5k43MDx",
+    "title": "Ledgerly — Expense Tracker with Receipt OCR",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/ledgerly-app"
+  },
+  "deskly": {
+    "route": "deskly-app",
+    "productId": "prod_aOIWfdOzZHhPm",
+    "descriptionSet": true,
+    "planId": "plan_sctjXpnyVyTbp",
+    "checkoutUrl": "https://whop.com/checkout/plan_sctjXpnyVyTbp",
+    "title": "Deskly — The email-to-ticket help desk you own forever.",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/deskly-app"
+  },
+  "upkeepstatus": {
+    "route": "upkeepstatus",
+    "productId": "prod_2Qtem3mHv1r81",
+    "descriptionSet": true,
+    "planId": "plan_3Wkd1AYDPd42b",
+    "checkoutUrl": "https://whop.com/checkout/plan_3Wkd1AYDPd42b",
+    "title": "Upkeep Status — The public status page you own forever.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/upkeepstatus"
+  },
+  "maptrail": {
+    "route": "maptrail",
+    "productId": "prod_3ppYYNSJ8ZusW",
+    "descriptionSet": true,
+    "planId": "plan_zbCIiAlVwEtdB",
+    "checkoutUrl": "https://whop.com/checkout/plan_zbCIiAlVwEtdB",
+    "title": "Maptrail — Crawl any site on your own machine and ship a clean sitemap.",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/maptrail"
+  },
+  "linkguard": {
+    "route": "linkguard",
+    "productId": "prod_QChSWyu1XT5wq",
+    "descriptionSet": true,
+    "planId": "plan_QEQX9rU2yMDn0",
+    "checkoutUrl": "https://whop.com/checkout/plan_QEQX9rU2yMDn0",
+    "title": "Linkguard — The site-wide broken-link and redirect crawler you own forever.",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/linkguard"
+  },
+  "docsmithapi": {
+    "route": "docsmithapi",
+    "productId": "prod_7cUccwH9yDRI4",
+    "descriptionSet": true,
+    "planId": "plan_OTJuSpHfAQ84Z",
+    "checkoutUrl": "https://whop.com/checkout/plan_OTJuSpHfAQ84Z",
+    "title": "Docsmith API — Turn any OpenAPI spec into branded, Stripe-style API docs,…",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/docsmithapi"
+  },
+  "vaultly": {
+    "route": "vaultly-app",
+    "productId": "prod_IZEvyyFdpe86N",
+    "descriptionSet": true,
+    "planId": "plan_KYwselBWshnUs",
+    "checkoutUrl": "https://whop.com/checkout/plan_KYwselBWshnUs",
+    "title": "Vaultly — The zero-knowledge team password manager you own forever.",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/vaultly-app"
+  },
+  "keyloop": {
+    "route": "keyloop",
+    "productId": "prod_1RSDj0lR216gF",
+    "descriptionSet": true,
+    "planId": "plan_Zw68xNIiTSdO8",
+    "checkoutUrl": "https://whop.com/checkout/plan_Zw68xNIiTSdO8",
+    "title": "Keyloop — The 2FA authenticator that never holds your codes hostage.",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/keyloop"
+  },
+  "secretbox": {
+    "route": "secretbox",
+    "productId": "prod_l4XepqHG4ZvLM",
+    "descriptionSet": true,
+    "planId": "plan_Kw54pNhDqwYPE",
+    "checkoutUrl": "https://whop.com/checkout/plan_Kw54pNhDqwYPE",
+    "title": "Secretbox — Self-hosted team secrets and env-var manager, no per-seat…",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/secretbox"
+  },
+  "certwatch": {
+    "route": "certwatch",
+    "productId": "prod_ZfIr22IT0uBX8",
+    "descriptionSet": true,
+    "planId": "plan_LquyxWCub7VBG",
+    "checkoutUrl": "https://whop.com/checkout/plan_LquyxWCub7VBG",
+    "title": "Certwatch — SSL certificate and domain expiry monitoring you own forever.",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/certwatch"
+  },
+  "logbin": {
+    "route": "logbin",
+    "productId": "prod_dPrmQqky5gO9k",
+    "descriptionSet": true,
+    "planId": "plan_jB31XBHzMMqXA",
+    "checkoutUrl": "https://whop.com/checkout/plan_jB31XBHzMMqXA",
+    "title": "Logbin — Self-hosted log aggregation with live tail, search and alert rules.",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/logbin"
+  },
+  "resumecraft": {
+    "route": "resumecraft-app",
+    "productId": "prod_EQ5Gwcjp43Ngf",
+    "descriptionSet": true,
+    "planId": "plan_LFlkwCmFfHnbW",
+    "checkoutUrl": "https://whop.com/checkout/plan_LFlkwCmFfHnbW",
+    "title": "Resumecraft — Build a resume you own forever, on your own machine.",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/resumecraft-app"
+  },
+  "pitchcraft": {
+    "route": "pitchcraft-app",
+    "productId": "prod_pDTgRCoWY8LdR",
+    "descriptionSet": true,
+    "planId": "plan_21Du6cAf38mmr",
+    "checkoutUrl": "https://whop.com/checkout/plan_21Du6cAf38mmr",
+    "title": "Pitchcraft — Send trackable, sign-ready proposals from your own server.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/pitchcraft-app"
+  },
+  "contractly": {
+    "route": "contractly",
+    "productId": "prod_ZyxJ5m7SOqKcN",
+    "descriptionSet": true,
+    "planId": "plan_OYtCfuoCatDFi",
+    "checkoutUrl": "https://whop.com/checkout/plan_OYtCfuoCatDFi",
+    "title": "Contractly — Sixteen plain-language contract templates you fill in and own.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/contractly"
+  },
+  "captionly": {
+    "route": "captionly",
+    "productId": "prod_BzGH5FfR4dOVf",
+    "descriptionSet": true,
+    "planId": "plan_jPOUQnfoKZsOm",
+    "checkoutUrl": "https://whop.com/checkout/plan_jPOUQnfoKZsOm",
+    "title": "Captionly — Burn karaoke captions onto your clips, all on your own hardware.",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/captionly"
+  },
+  "utmcraft": {
+    "route": "utmcraft",
+    "productId": "prod_Th8lelGsz4j2m",
+    "descriptionSet": true,
+    "planId": "plan_EbL7zx54fjEql",
+    "checkoutUrl": "https://whop.com/checkout/plan_EbL7zx54fjEql",
+    "title": "UTMcraft — Consistent campaign links and honest click counts on your own domain.",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/utmcraft"
+  },
+  "reflink": {
+    "route": "reflink",
+    "productId": "prod_mzCZjH8oJo4By",
+    "descriptionSet": true,
+    "planId": "plan_LneO8IOnx45Rx",
+    "checkoutUrl": "https://whop.com/checkout/plan_LneO8IOnx45Rx",
+    "title": "Reflink — Run your affiliate program from one Node process and one SQLite file.",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/reflink"
+  },
+  "starstack": {
+    "route": "starstack",
+    "productId": "prod_yjiT1xjDh7Dxs",
+    "descriptionSet": true,
+    "planId": "plan_A7Vhs6bhZo6zK",
+    "checkoutUrl": "https://whop.com/checkout/plan_A7Vhs6bhZo6zK",
+    "title": "Star Stack — Show the five stars you already earned, on your own site.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/starstack"
+  },
+  "clickmap": {
+    "route": "clickmap",
+    "productId": "prod_koRf47gAsPffk",
+    "descriptionSet": true,
+    "planId": "plan_sojHeP0uKUIqu",
+    "checkoutUrl": "https://whop.com/checkout/plan_sojHeP0uKUIqu",
+    "title": "Clickmap — Click heatmaps and session replay you own forever.",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/clickmap"
+  },
+  "splitpoint": {
+    "route": "splitpoint",
+    "productId": "prod_Uv4IocygH6knB",
+    "descriptionSet": true,
+    "planId": "plan_mO9n4bOJkddzJ",
+    "checkoutUrl": "https://whop.com/checkout/plan_mO9n4bOJkddzJ",
+    "title": "Splitpoint — A/B testing and feature flags you own forever.",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/splitpoint"
+  },
+  "hirestack": {
+    "route": "hirestack-app",
+    "productId": "prod_6CtRBfyS08CY2",
+    "descriptionSet": true,
+    "planId": "plan_gNSgdPpM2I3Lj",
+    "checkoutUrl": "https://whop.com/checkout/plan_gNSgdPpM2I3Lj",
+    "title": "Hirestack — The hiring pipeline a small company actually needs.",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/hirestack-app"
+  },
+  "shiftly": {
+    "route": "shiftly-app",
+    "productId": "prod_aTL9ohDTFl5gG",
+    "descriptionSet": true,
+    "planId": "plan_ZBKnMDqtZEcQa",
+    "checkoutUrl": "https://whop.com/checkout/plan_ZBKnMDqtZEcQa",
+    "title": "Shiftly — Employee shift scheduling you own forever.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/shiftly-app"
+  },
+  "rampcheck": {
+    "route": "rampcheck",
+    "productId": "prod_mxuNdHJ8MlbDc",
+    "descriptionSet": true,
+    "planId": "plan_3Q3xYnWkaAd5u",
+    "checkoutUrl": "https://whop.com/checkout/plan_3Q3xYnWkaAd5u",
+    "title": "Rampcheck — New-hire onboarding you own forever.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/rampcheck"
+  },
+  "punchcard": {
+    "route": "punchcard",
+    "productId": "prod_rEaj1MRTNldQg",
+    "descriptionSet": true,
+    "planId": "plan_qB0ZtICxNMDnX",
+    "checkoutUrl": "https://whop.com/checkout/plan_qB0ZtICxNMDnX",
+    "title": "Punchcard — Time tracking and timesheet approval you own forever.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/punchcard"
+  },
+  "ledgerlitehome": {
+    "route": "ledgerlitehome",
+    "productId": "prod_NTq1RsAM0Y8nD",
+    "descriptionSet": true,
+    "planId": "plan_wwZ77y5Jym68q",
+    "checkoutUrl": "https://whop.com/checkout/plan_wwZ77y5Jym68q",
+    "title": "Ledgerlite Home — Envelope budgeting that lives on your computer, not a…",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/ledgerlitehome"
+  },
+  "lessonforge": {
+    "route": "lessonforge",
+    "productId": "prod_hFGuBEuWVN2ek",
+    "descriptionSet": true,
+    "planId": "plan_W8Uc7DuIQo7wm",
+    "checkoutUrl": "https://whop.com/checkout/plan_W8Uc7DuIQo7wm",
+    "title": "Lessonforge — The course platform you own forever — no monthly fee, no cut…",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/lessonforge"
+  },
+  "quizcraft": {
+    "route": "quizcraft",
+    "productId": "prod_tum6sHlmJdqX3",
+    "descriptionSet": true,
+    "planId": "plan_ZYtj2QDEjjnVr",
+    "checkoutUrl": "https://whop.com/checkout/plan_ZYtj2QDEjjnVr",
+    "title": "Quizcraft — Lead-gen quizzes you own — never metered per response.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/quizcraft"
+  },
+  "forumly": {
+    "route": "forumly",
+    "productId": "prod_177UcXFtqcFhw",
+    "descriptionSet": true,
+    "planId": "plan_I9vE1ALKDwOCu",
+    "checkoutUrl": "https://whop.com/checkout/plan_I9vE1ALKDwOCu",
+    "title": "Forumly — Your community, your server — forums existed before SaaS pricing did.",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/forumly"
+  },
+  "roster": {
+    "route": "roster-app",
+    "productId": "prod_Ecyjq6QKZdncq",
+    "descriptionSet": true,
+    "planId": "plan_UHgEOQkXhhgKv",
+    "checkoutUrl": "https://whop.com/checkout/plan_UHgEOQkXhhgKv",
+    "title": "Roster — The member directory you buy once and own forever.",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/roster-app"
+  },
+  "eventcraft": {
+    "route": "eventcraft-app",
+    "productId": "prod_ME8Mj3S8bUMid",
+    "descriptionSet": true,
+    "planId": "plan_3SYoI2t7ubvu6",
+    "checkoutUrl": "https://whop.com/checkout/plan_3SYoI2t7ubvu6",
+    "title": "Eventcraft — Event registration and ticketing you buy once — with zero…",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/eventcraft-app"
+  },
+  "mockcraft": {
+    "route": "mockcraft",
+    "productId": "prod_bjzr4UJy0krOT",
+    "descriptionSet": true,
+    "planId": "plan_8VOd9eUw3RKKP",
+    "checkoutUrl": "https://whop.com/checkout/plan_8VOd9eUw3RKKP",
+    "title": "Mockcraft — The product mockup generator you buy once and own forever.",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/mockcraft"
+  },
+  "postcraft": {
+    "route": "postcraft-app",
+    "productId": "prod_sDuWvW7YuG78e",
+    "descriptionSet": true,
+    "planId": "plan_Bs22asr53LB6u",
+    "checkoutUrl": "https://whop.com/checkout/plan_Bs22asr53LB6u",
+    "title": "Postcraft Templates — Turn a spreadsheet into a quarter of on-brand posts —…",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/postcraft-app"
+  },
+  "slidecraft": {
+    "route": "slidecraft",
+    "productId": "prod_Ka2hvJbcWkqA4",
+    "descriptionSet": true,
+    "planId": "plan_uypKrWVZUrHpH",
+    "checkoutUrl": "https://whop.com/checkout/plan_uypKrWVZUrHpH",
+    "title": "Slidecraft — The auto-layout deck builder you buy once.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/slidecraft"
+  },
+  "redirectly": {
+    "route": "redirectly",
+    "productId": "prod_yXe9so8OgaAD0",
+    "descriptionSet": true,
+    "planId": "plan_AfyOZjW3oBMJ6",
+    "checkoutUrl": "https://whop.com/checkout/plan_AfyOZjW3oBMJ6",
+    "title": "Redirectly — Bulk 301/302 redirect management you own forever.",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/redirectly"
+  },
+  "clientdesk": {
+    "route": "clientdesk",
+    "productId": "prod_OEiTSRE7pEL7h",
+    "descriptionSet": true,
+    "planId": "plan_AhTEhLpccMlw4",
+    "checkoutUrl": "https://whop.com/checkout/plan_AhTEhLpccMlw4",
+    "title": "Clientdesk — Revenue analytics and a customer portal on your own Stripe data.",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/clientdesk"
+  },
+  "pulsecheck": {
+    "route": "pulsecheck-app",
+    "productId": "prod_pmWxWorqQY8TD",
+    "descriptionSet": true,
+    "planId": "plan_dmhxQhWZHWYdY",
+    "checkoutUrl": "https://whop.com/checkout/plan_dmhxQhWZHWYdY",
+    "title": "Pulsecheck — NPS, CSAT and CES surveys you own forever.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/pulsecheck-app"
+  },
+  "billoop": {
+    "route": "billoop",
+    "productId": "prod_uakpw2syrAs8d",
+    "descriptionSet": true,
+    "planId": "plan_vYAM7uZMhOLmS",
+    "checkoutUrl": "https://whop.com/checkout/plan_vYAM7uZMhOLmS",
+    "title": "Billoop — Recurring billing on your own Stripe, owned forever.",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/billoop"
+  },
+  "askback": {
+    "route": "askback-app",
+    "productId": "prod_FDuZPEmtLHMbW",
+    "descriptionSet": true,
+    "planId": "plan_N6qhTfZeesD00",
+    "checkoutUrl": "https://whop.com/checkout/plan_N6qhTfZeesD00",
+    "title": "Askback — More Google reviews on autopilot, owned forever.",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/askback-app"
+  },
+  "citewatch": {
+    "route": "citewatch",
+    "productId": "prod_Gk88MtaX1rnoh",
+    "descriptionSet": true,
+    "planId": "plan_xqXTLEgEcKcdL",
+    "checkoutUrl": "https://whop.com/checkout/plan_xqXTLEgEcKcdL",
+    "title": "Citewatch — One NAP, everywhere, always, owned forever.",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/citewatch"
+  },
+  "syncvault": {
+    "route": "syncvault-app",
+    "productId": "prod_q58TAcnXCvUJ6",
+    "descriptionSet": true,
+    "planId": "plan_ClCbDTCAHSXC7",
+    "checkoutUrl": "https://whop.com/checkout/plan_ClCbDTCAHSXC7",
+    "title": "Syncvault — Encrypted backups to storage you already own — no Backblaze…",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/syncvault-app"
+  },
+  "voicebox": {
+    "route": "voicebox",
+    "productId": "prod_d9YFso71bwhud",
+    "descriptionSet": true,
+    "planId": "plan_sT4DY9262gp08",
+    "checkoutUrl": "https://whop.com/checkout/plan_sT4DY9262gp08",
+    "title": "Voicebox — A self-hosted feedback board and public roadmap on your own box.",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/voicebox"
+  },
+  "quotewell": {
+    "route": "quotewell",
+    "productId": "prod_oIMn2pjXSucew",
+    "descriptionSet": true,
+    "planId": "plan_perIakqgM6iWg",
+    "checkoutUrl": "https://whop.com/checkout/plan_perIakqgM6iWg",
+    "title": "Quotewell — Build a price catalog once and turn out branded PDF quotes offline.",
+    "price": 29,
+    "productUrl": "https://whop.com/benjisaiempire/quotewell"
+  },
+  "snapreceipt": {
+    "route": "snapreceipt",
+    "productId": "prod_g70jQMsQGb63m",
+    "descriptionSet": true,
+    "planId": "plan_OpfuE5kYrUm4a",
+    "checkoutUrl": "https://whop.com/checkout/plan_OpfuE5kYrUm4a",
+    "title": "Snapreceipt — Scan receipts with local OCR and export tax-ready reports —…",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/snapreceipt"
+  },
+  "listcraft": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Headline is too long (maximum is 80 characters)\"}}",
+    "route": "listcraft",
+    "productId": "prod_oCDuTaj8iWyiJ",
+    "descriptionSet": true,
+    "planId": "plan_mv3SM5xMF2CFh",
+    "checkoutUrl": "https://whop.com/checkout/plan_mv3SM5xMF2CFh",
+    "title": "Listcraft — A self-hosted property listing website — your listings, your…",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/listcraft"
+  },
+  "menuly": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Headline is too long (maximum is 80 characters)\"}}",
+    "route": "menuly",
+    "productId": "prod_X0V56g8JMwvRj",
+    "descriptionSet": true,
+    "planId": "plan_6SiTx1DNVOuPU",
+    "checkoutUrl": "https://whop.com/checkout/plan_6SiTx1DNVOuPU",
+    "title": "Menuly — QR menus you own forever — update a price and the guest sees it the…",
+    "price": 24,
+    "productUrl": "https://whop.com/benjisaiempire/menuly"
+  },
+  "remindly": {
+    "route": "remindly-app",
+    "productId": "prod_WY38oEYALWGr8",
+    "descriptionSet": true,
+    "planId": "plan_lPE1BTIbsjQBV",
+    "checkoutUrl": "https://whop.com/checkout/plan_lPE1BTIbsjQBV",
+    "title": "Remindly — SMS and email appointment reminders on your own Twilio account —…",
+    "price": 34,
+    "productUrl": "https://whop.com/benjisaiempire/remindly-app"
+  },
+  "memeforge": {
+    "route": "memeforge-app",
+    "productId": "prod_S6cB6DeeVP642",
+    "descriptionSet": true,
+    "planId": "plan_s6YtBMHiAkzpc",
+    "checkoutUrl": "https://whop.com/checkout/plan_s6YtBMHiAkzpc",
+    "title": "Memeforge — Classic meme captioning with a real template library — no…",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/memeforge-app"
+  },
+  "orgtree": {
+    "route": "orgtree",
+    "productId": "prod_gNs4rmqxP2ijw",
+    "descriptionSet": true,
+    "planId": "plan_0fSK0MjU750Wv",
+    "checkoutUrl": "https://whop.com/checkout/plan_0fSK0MjU750Wv",
+    "title": "Orgtree — Build and maintain your org chart without a seat-priced diagram tool.",
+    "price": 19,
+    "productUrl": "https://whop.com/benjisaiempire/orgtree"
+  },
+  "renewcheck": {
+    "route": "renewcheck",
+    "productId": "prod_WMqqNOhqpf4uc",
+    "descriptionSet": true,
+    "planId": "plan_6LMRBODaniESu",
+    "checkoutUrl": "https://whop.com/checkout/plan_6LMRBODaniESu",
+    "title": "Renewcheck — Track every subscription's renewal date without linking your…",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/renewcheck"
+  },
+  "paletteforge": {
+    "route": "paletteforge",
+    "productId": "prod_l1gYHuTaqG7zr",
+    "descriptionSet": true,
+    "planId": "plan_5AjPsmhJ12wWB",
+    "checkoutUrl": "https://whop.com/checkout/plan_5AjPsmhJ12wWB",
+    "title": "Paletteforge — Generate, lock and export brand color palettes — no account,…",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/paletteforge"
+  },
+  "iconforge": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Headline is too long (maximum is 80 characters)\"}}",
+    "route": "iconforge-app",
+    "productId": "prod_Y0wmFMkQs0qNp",
+    "descriptionSet": true,
+    "planId": "plan_N8HRTgeFf4wjT",
+    "checkoutUrl": "https://whop.com/checkout/plan_N8HRTgeFf4wjT",
+    "title": "Iconforge — One image in, every favicon and app-icon size out — batched,…",
+    "price": 15,
+    "productUrl": "https://whop.com/benjisaiempire/iconforge-app"
+  },
+  "famping": {
+    "error": "POST /products -> 422: {\"error\":{\"type\":\"unprocessable_entity\",\"message\":\"Headline is too long (maximum is 80 characters)\"}}",
+    "route": "famping",
+    "productId": "prod_aJPeDOmfLZCga",
+    "descriptionSet": true,
+    "planId": "plan_3qEX64z5tVTIj",
+    "checkoutUrl": "https://whop.com/checkout/plan_3qEX64z5tVTIj",
+    "title": "FamPing — Real-time family locations and place alerts — without selling your…",
+    "price": 39,
+    "productUrl": "https://whop.com/benjisaiempire/famping"
+  },
+  "doortracker": {
+    "route": "doortracker",
+    "productId": "prod_PngjvWeS38wwC",
+    "descriptionSet": true,
+    "planId": "plan_geWRcv1puOeJb",
+    "checkoutUrl": "https://whop.com/checkout/plan_geWRcv1puOeJb",
+    "title": "Door Tracker — Prove the route was actually walked — not just driven.",
+    "price": 49,
+    "productUrl": "https://whop.com/benjisaiempire/doortracker"
+  },
+  "onetimesuite-complete": {
+    "productId": "prod_deLvZPOasRITY",
+    "planId": "plan_5Mv4jYmDfZH3a",
+    "checkoutUrl": "https://whop.com/checkout/plan_5Mv4jYmDfZH3a",
+    "productUrl": "https://whop.com/benjisaiempire/onetimesuite-complete",
+    "title": "OneTimeSuite Complete — All 101 Apps + Every Future Release",
+    "price": 997,
+    "descriptionSet": true
+  }
+}

@@ -21,6 +21,12 @@ const SITE = 'https://onetimesuite.com';
 const WHOP = 'https://whop.com/onetime-suite';
 const GH = 'https://github.com/bensblueprints';
 
+/* Real Whop product listings (slug -> { productUrl, checkoutUrl, ... }).
+   Source of truth: onetime-suite/whop-publish-results.json. */
+const whopLinks = require('./src/whop-links.json');
+/* Apps with their own pre-existing checkout — never remap to whopLinks. */
+const OWN_CHECKOUT = new Set(['wispertalk', 'bloomrecorder']);
+
 const products = require('./src/products.js');
 /* Products 51–100 wave (45 newly-launched apps), full landing-page shape with a
    `kind` field. They join the catalog, the bundle receipt, hub grids, sitemap
@@ -83,6 +89,7 @@ const BUNDLE = {
   name: 'OneTimeSuite Complete',
   price: 997,
   tagline: 'Every app in the suite. One payment. Own it all, forever.',
+  checkoutUrl: (whopLinks['onetimesuite-complete'] && whopLinks['onetimesuite-complete'].checkoutUrl) || 'https://whop.com/checkout/plan_5Mv4jYmDfZH3a',
 };
 const bundleValue = products.reduce((s, p) => s + p.price, 0); // à-la-carte total of the full catalog (computed)
 const bundleSavings = bundleValue - BUNDLE.price;              // savings vs the flat $997 bundle
@@ -491,8 +498,9 @@ allProducts.forEach(p => {
   const isDesktop = DESKTOP_SLUGS.has(p.slug);
   const relatedPosts = posts.filter(x => x.product === p.slug);
   const isClosed = !!p.closedSource;                 // paid, closed-source (WisperTalk)
-  const buy = p.buyUrl || WHOP;                      // some apps have their own checkout
-  const buyHost = p.buyUrl ? p.buyUrl.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : 'Whop';
+  const whopLink = OWN_CHECKOUT.has(p.slug) ? null : whopLinks[p.slug];
+  const buy = (whopLink && whopLink.productUrl) || p.buyUrl || WHOP; // some apps have their own checkout
+  const buyHost = /(^|\/\/)whop\.com\//.test(buy) ? 'Whop' : buy.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
   const stampText = p.stamp || (isDesktop ? 'Desktop app · runs offline' : 'Web app · self-hosted on your server');
   const seoRelated = p.seoRelated || [];
 
@@ -650,7 +658,7 @@ allProducts.forEach(p => {
           </span>
         </div>
         <div class="btn-row">
-          <a class="btn btn-solid" href="${WHOP}" rel="noopener">Get the bundle on Whop — ${fmt(BUNDLE.price)} &rarr;</a>
+          <a class="btn btn-solid" href="${BUNDLE.checkoutUrl}" rel="noopener">Get the bundle on Whop — ${fmt(BUNDLE.price)} &rarr;</a>
           <a class="btn btn-ghost" href="/">Browse apps individually</a>
         </div>
       </div>
@@ -717,7 +725,7 @@ allProducts.forEach(p => {
         <h2>Own the whole suite</h2>
         <p style="color:var(--ink-soft);margin:0.8rem auto 1.6rem;">${fmt(BUNDLE.price)} once. Every app, every future release, installers and MIT source. No renewal, no per-app upsell, no meter.</p>
         <div class="btn-row" style="justify-content:center;">
-          <a class="btn btn-solid" href="${WHOP}" rel="noopener">Get the bundle on Whop — ${fmt(BUNDLE.price)} &rarr;</a>
+          <a class="btn btn-solid" href="${BUNDLE.checkoutUrl}" rel="noopener">Get the bundle on Whop — ${fmt(BUNDLE.price)} &rarr;</a>
           <a class="btn btn-ghost" href="/">Browse apps individually</a>
         </div>
       </div>
@@ -733,7 +741,7 @@ allProducts.forEach(p => {
       name: BUNDLE.name, description: BUNDLE.tagline,
       brand: { '@type': 'Brand', name: 'OneTimeSuite' },
       url: `${SITE}/${BUNDLE.slug}/`,
-      offers: { '@type': 'Offer', price: String(BUNDLE.price), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: WHOP },
+      offers: { '@type': 'Offer', price: String(BUNDLE.price), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: BUNDLE.checkoutUrl },
     }],
     body,
   }));

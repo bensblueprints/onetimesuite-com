@@ -208,11 +208,15 @@ const NAV = `
   <nav class="site-nav" aria-label="Main navigation">
     <div class="wrap">
       <a class="wordmark" href="/">OneTime<span class="tm">Suite</span></a>
+      <input type="checkbox" id="navtoggle" class="nav-toggle" aria-hidden="true">
+      <label for="navtoggle" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></label>
+      <div class="nav-links">
       <a class="nav-link" href="/#desktop">Desktop apps</a>
       <a class="nav-link" href="/#web-hosted">Web apps</a>
       <a class="nav-link" href="/${BUNDLE.slug}/">The bundle</a>
       <a class="nav-link" href="/comparison/">Comparisons</a>
       <a class="nav-link nav-login" href="https://dashboard.onetimesuite.com/" rel="noopener">Log in</a>
+      </div>
       <a class="nav-buy" href="${WHOP}" rel="noopener">Buy on Whop</a>
     </div>
   </nav>`;
@@ -241,6 +245,7 @@ const FOOTER = `
         <div>
           <h4>Get it</h4>
           <a href="${WHOP}" rel="noopener">Buy on Whop</a>
+          <a href="https://dashboard.onetimesuite.com/" rel="noopener">Log in — your library</a>
           <a href="${GH}" rel="noopener">Source on GitHub</a>
         </div>
       </div>

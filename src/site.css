@@ -89,7 +89,17 @@ section + section { border-top: 1px solid var(--line); }
   padding: 0.5rem 1rem; border-radius: 6px; white-space: nowrap;
 }
 .nav-buy:hover { background: var(--accent); }
-@media (max-width: 660px) { .site-nav a.nav-link { display: none; } .site-nav a.nav-link.nav-login { display: inline; } }
+.nav-toggle { display: none; }
+.hamburger { display: none; cursor: pointer; padding: 0.4rem; margin-left: auto; }
+.hamburger span { display: block; width: 22px; height: 2.5px; background: var(--ink); margin: 4.5px 0; border-radius: 2px; }
+.nav-links { display: contents; }
+@media (max-width: 660px) {
+  .hamburger { display: block; }
+  .site-nav .wrap { flex-wrap: wrap; }
+  .nav-links { display: none; width: 100%; flex-direction: column; gap: 0.15rem; padding: 0.6rem 0 0.4rem; border-top: 1.5px solid var(--ink); margin-top: 0.6rem; }
+  .nav-toggle:checked ~ .nav-links { display: flex; }
+  .nav-links a.nav-link { display: block !important; padding: 0.45rem 0; font-size: 1.05rem; }
+}
 
 /* ---------- the price sticker ---------- */
 .sticker {

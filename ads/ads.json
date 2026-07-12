@@ -1,0 +1,19 @@
+{
+  "_comment": "Central ad config for all OneTimeSuite demo sites. Edit here + redeploy onetimesuite-com; every embedded slot updates. Slot key = creative size.",
+  "slots": {
+    "728x90": {
+      "img": "https://onetimesuite.com/assets/ads/leaderboard-728.png",
+      "href": "https://onetimesuite.com/",
+      "alt": "I cancelled $2,847/yr of software subscriptions — see the apps I replaced them with.",
+      "width": 728,
+      "height": 90
+    },
+    "500x500": {
+      "img": "https://onetimesuite.com/assets/ads/box-500.png",
+      "href": "https://onetimesuite.com/",
+      "alt": "I cancelled $2,847/yr of software subscriptions — see the catalog. Software you own, not rent.",
+      "width": 500,
+      "height": 500
+    }
+  }
+}

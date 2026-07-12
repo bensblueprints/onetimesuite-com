@@ -1140,6 +1140,13 @@ if (fs.existsSync(ADS_SRC)) {
   fs.mkdirSync(adsOut, { recursive: true });
   for (const f of fs.readdirSync(ADS_SRC)) fs.copyFileSync(path.join(ADS_SRC, f), path.join(adsOut, f));
 }
+/* central ad server: /ads/ad.js + /ads/ads.json (CORS-open in nginx) */
+const ADSRV_SRC = path.join(ROOT, 'ads');
+if (fs.existsSync(ADSRV_SRC)) {
+  const adsrvOut = path.join(OUT, 'ads');
+  fs.mkdirSync(adsrvOut, { recursive: true });
+  for (const f of fs.readdirSync(ADSRV_SRC)) fs.copyFileSync(path.join(ADSRV_SRC, f), path.join(adsrvOut, f));
+}
 const demoSrc = path.join(ROOT, 'src', 'iconforge-demo.html');
 if (fs.existsSync(demoSrc)) {
   fs.mkdirSync(path.join(OUT, 'iconforge', 'demo'), { recursive: true });

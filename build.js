@@ -242,12 +242,18 @@ const FOOTER = `
           <a href="/loom-alternative/">Loom alternative</a>
           <a href="/linktree-alternative/">Linktree alternative</a>
           <a href="/wispr-flow-alternative/">Wispr Flow alternative</a>
+          <a href="/inkseal/compliance/">E-signature compliance</a>
         </div>
         <div>
           <h4>Get it</h4>
           <a href="${WHOP}" rel="noopener">Buy on Whop</a>
           <a href="https://dashboard.onetimesuite.com/" rel="noopener">Log in — your library</a>
           <a href="${GH}" rel="noopener">Source on GitHub</a>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <a href="/terms/">Terms of use</a>
+          <a href="/privacy/">Privacy</a>
         </div>
       </div>
       <div class="bottom">
@@ -770,6 +776,128 @@ allProducts.forEach(p => {
   }));
   reg(`/${BUNDLE.slug}/`);
 })();
+
+/* ============================================================
+ * 3b. legal + compliance pages  /terms/ /privacy/ /inkseal/compliance/
+ * ============================================================ */
+function docPage({ rel, crumb, stamp, h1, title, desc, article }) {
+  const body = `
+    <section class="hero" aria-label="${attr(h1)}" style="padding-bottom:2.5rem;">
+      <div class="wrap-narrow">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / ${crumb}</nav>
+        <span class="stamp">${stamp}</span>
+        <h1 style="font-size:clamp(1.9rem,4.4vw,3rem);">${esc(h1)}</h1>
+      </div>
+    </section>
+
+    <section aria-label="Document body" style="padding-top:2.5rem;">
+      <div class="wrap-narrow">
+        <article class="post-body">
+          <p class="post-meta">OneTimeSuite · Last updated July 2026</p>
+          ${article}
+        </article>
+      </div>
+    </section>`;
+  write(rel, page({ title, desc, canonical: `${SITE}/${rel}/`, ogType: 'article', body }));
+  reg(`/${rel}/`);
+}
+
+docPage({
+  rel: 'terms', crumb: 'Terms of use', stamp: 'Legal', h1: 'Terms of use',
+  title: 'Terms of Use | OneTimeSuite',
+  desc: 'Terms of use for onetimesuite.com and OneTimeSuite software purchases: MIT-licensed source, one-time licenses, as-is installers, refunds.',
+  article: `
+          <p>These terms cover your use of onetimesuite.com and your purchase of OneTimeSuite software. They're written to be read, not to scare you.</p>
+          <h2>The software</h2>
+          <ul>
+            <li><strong>Source code is MIT-licensed.</strong> Nearly every app in the suite has its full source published on <a href="${GH}" rel="noopener">GitHub</a> under the MIT license. The MIT license — not these terms — governs the source code: you can use, modify and redistribute it per that license, free, forever.</li>
+            <li><strong>What you're buying.</strong> A purchase buys the packaged, signed installers (or deployable builds), 1-click setup, updates, and where applicable a license key — convenience on top of the free source.</li>
+            <li><strong>Installers are sold as-is.</strong> The packaged software is provided "as is", without warranty of any kind, express or implied, to the maximum extent permitted by law. We work hard to make it good; we don't promise it's fit for any particular purpose.</li>
+            <li><strong>One license per person.</strong> A purchase is a lifetime license for you — install it on your own machines and servers. It isn't a site license or a right to resell, redistribute or share the packaged builds or license keys.</li>
+          </ul>
+          <h2>Purchases and refunds</h2>
+          <ul>
+            <li>Checkout and payment are handled by <a href="https://whop.com" rel="noopener">Whop</a> under Whop's own terms and policies.</li>
+            <li>Something wrong with your purchase? Email <a href="mailto:ben@advancedmarketing.co">ben@advancedmarketing.co</a> and we'll sort out a fix or a refund.</li>
+          </ul>
+          <h2>The website</h2>
+          <ul>
+            <li>Content on onetimesuite.com (comparisons, pricing of competitors, feature claims) is provided in good faith and checked at the date shown on each page, but competitors change prices and plans — verify anything you're relying on.</li>
+            <li>Nothing on this site is legal, financial or compliance advice. In particular, e-signature legal sufficiency depends on your jurisdiction and document type — see the <a href="/inkseal/compliance/">Inkseal compliance page</a> and consult a lawyer for regulated documents.</li>
+          </ul>
+          <h2>Liability</h2>
+          <p>To the maximum extent permitted by law, our total liability for any claim connected to the site or the software is limited to the amount you paid us for the product concerned.</p>
+          <h2>Contact</h2>
+          <p>Questions about these terms: <a href="mailto:ben@advancedmarketing.co">ben@advancedmarketing.co</a>. OneTimeSuite is operated by <a href="https://advancedmarketing.co" rel="noopener">Advanced Marketing</a>.</p>`,
+});
+
+docPage({
+  rel: 'privacy', crumb: 'Privacy', stamp: 'Legal', h1: 'Privacy policy',
+  title: 'Privacy Policy | OneTimeSuite',
+  desc: 'OneTimeSuite privacy policy: static site, no accounts, no tracking cookies. Whop handles checkout under its own policy; the dashboard uses one session cookie.',
+  article: `
+          <p>Short version: this site barely collects anything, and the apps we sell are built not to phone home.</p>
+          <h2>onetimesuite.com (this site)</h2>
+          <ul>
+            <li><strong>Static site.</strong> These pages are plain generated HTML. There are no user accounts on onetimesuite.com.</li>
+            <li><strong>No tracking cookies.</strong> onetimesuite.com sets no tracking or advertising cookies and runs no third-party analytics scripts.</li>
+            <li><strong>Server logs.</strong> Like any web server, ours keeps standard access logs (IP address, requested URL, user agent) for security and operations.</li>
+            <li><strong>Fonts.</strong> Pages load webfonts from Google Fonts, which means your browser requests files from Google's servers subject to Google's privacy policy.</li>
+          </ul>
+          <h2>Checkout (Whop)</h2>
+          <p>Purchases happen on <a href="https://whop.com" rel="noopener">Whop</a>. Whop collects and processes your checkout and payment data under <a href="https://whop.com/privacy" rel="noopener">Whop's own privacy policy</a> — we never see your card details.</p>
+          <h2>dashboard.onetimesuite.com (your library)</h2>
+          <p>The customer dashboard signs you in via Whop OAuth and then uses a single session cookie to keep you logged in. That cookie exists to make login work; it isn't used for tracking or advertising.</p>
+          <h2>The apps themselves</h2>
+          <p>OneTimeSuite apps run on your own machine or server. They don't require an account with us and don't send telemetry. Your documents and data stay on your hardware.</p>
+          <h2>Contact</h2>
+          <p>Privacy questions: <a href="mailto:ben@advancedmarketing.co">ben@advancedmarketing.co</a>.</p>`,
+});
+
+docPage({
+  rel: 'inkseal/compliance', crumb: '<a href="/inkseal/">Inkseal</a> / Compliance', stamp: 'E-signature compliance',
+  h1: 'Inkseal e-signature compliance',
+  title: 'Inkseal E-Signature Compliance — ESIGN, UETA & eIDAS (Simple Electronic Signatures) | OneTimeSuite',
+  desc: 'How Inkseal supports ESIGN Act, UETA and eIDAS simple-electronic-signature requirements: intent, consent, record association, hash-chained audit trail, retention — and its honest limits (no QES, no KBA, no certifications).',
+  article: `
+          <p>How <a href="/inkseal/">Inkseal</a> supports the requirements commonly associated with the <strong>US ESIGN Act</strong>, <strong>UETA</strong> and <strong>eIDAS</strong> (at the <em>simple electronic signature</em> level) — and, just as importantly, what it does <strong>not</strong> do. Every claim below maps to code you can read in the <a href="${GH}/inkseal" rel="noopener">MIT-licensed source</a>.</p>
+
+          <h2>What kind of signature Inkseal produces</h2>
+          <p>Inkseal produces <strong>simple electronic signatures (SES)</strong>: a drawn or typed signature embedded into the PDF, backed by a tamper-evident audit trail. It does <strong>not</strong> produce Advanced or Qualified Electronic Signatures (eIDAS AES/QES) — there are no certificate-based digital signatures and no Qualified Trust Service Provider. There is no Knowledge-Based Authentication (KBA) or government-ID verification: signer identity rests on control of the unique signing link, typically delivered to the signer's email. Inkseal holds <strong>no SOC 2, ISO 27001 or GDPR certification</strong> and claims none.</p>
+          <p>Under ESIGN/UETA, simple electronic signatures are broadly enforceable for everyday agreements (NDAs, leases, contracts, internal approvals). Legal sufficiency always depends on your jurisdiction and document type — some documents (wills, certain notarized or court filings, some regulated financial or healthcare documents) have special requirements. <strong>Consult a lawyer before relying on any e-signature tool for regulated documents.</strong></p>
+
+          <h2>How Inkseal maps to the core requirements</h2>
+          <h3>1. Intent to sign</h3>
+          <p>Each signer performs explicit, deliberate actions — opening their unique link, drawing or typing a signature into each field, clicking a final complete action — and every one is recorded as a distinct audit event. A signer can also formally decline, recorded with their stated reason.</p>
+          <h3>2. Consent to do business electronically</h3>
+          <p>Before completing, every signer must check an explicit "I agree to sign electronically" box. The server refuses completion without it, and the consent is recorded as its own timestamped audit event with the signer's email, IP address and browser user agent.</p>
+          <h3>3. Association of signature with the record</h3>
+          <p>Signatures are flattened into the PDF itself at the exact placed coordinates, producing a single final file. The audit trail is cryptographically rooted in the document: the hash chain's genesis value is the SHA-256 of the original uploaded PDF, and the completion event records the SHA-256 of the final signed PDF.</p>
+          <h3>4. Tamper-evident audit trail</h3>
+          <p>Every event — created, sent, viewed, consented, each field signed, signer completed, envelope completed, declined, voided — records the UTC timestamp, actor and signer email, IP address and user agent, and is chained with sha256(prev_hash + event). Any modification breaks the chain from that point forward; a one-click Verify recomputes the whole chain and reports exactly where it breaks.</p>
+          <h3>5. Certificate of Completion</h3>
+          <p>Every final PDF has an appended certificate page listing the envelope ID, original document SHA-256, completion time, every signer with their email / consent time / signing time, and the full audit trail with chain hashes.</p>
+          <h3>6. Record retention and copies</h3>
+          <p>The final PDF and complete audit trail are retained in your own database and data directory — you self-host, so retention isn't subject to a vendor subscription lapsing. With SMTP configured, every signer with an email address automatically receives a copy of the completed document.</p>
+
+          <h2>Honest limitations</h2>
+          <ul>
+            <li><strong>Identity assurance is link-based.</strong> Whoever controls the signing link (and typically the email inbox it was sent to) can sign. No 2FA, KBA or ID verification.</li>
+            <li><strong>Tamper-evident, not tamper-proof.</strong> A database administrator could rewrite the whole chain from genesis; the hash chain proves internal consistency. Archive the completed PDF (which embeds the certificate) somewhere the DB admin can't reach for stronger guarantees.</li>
+            <li><strong>No qualified timestamps.</strong> Event times come from your server's clock.</li>
+            <li><strong>Not QES.</strong> If a counterparty or regulation requires eIDAS Advanced or Qualified signatures, Inkseal is not sufficient.</li>
+          </ul>
+          <p>When in doubt about whether a simple electronic signature is legally sufficient for your document and jurisdiction, ask a lawyer.</p>
+
+          <div class="cta-card">
+            <h3>Try Inkseal — first document free</h3>
+            <p>Run one envelope end to end free, then $59 once for unlimited documents forever. MIT source on GitHub.</p>
+            <div class="btn-row">
+              <a class="btn btn-solid" href="/inkseal/">See Inkseal &rarr;</a>
+              <a class="btn btn-ghost" href="${GH}/inkseal" rel="noopener">Read the source</a>
+            </div>
+          </div>`,
+});
 
 /* ============================================================
  * 4. markdown -> HTML (for the 8 hand-written SEO posts)

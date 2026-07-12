@@ -261,7 +261,7 @@ table.receipt tr.total td { border-top: 1.5px solid var(--ink); border-bottom: n
 
 /* ---------- footer ---------- */
 .site-footer { border-top: 1.5px solid var(--ink); padding: 3rem 0 2.2rem; margin-top: 4rem; }
-.site-footer .cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2.2rem; }
+.site-footer .cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2.2rem; }
 @media (max-width: 720px) { .site-footer .cols { grid-template-columns: 1fr 1fr; } }
 .site-footer h4 { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); margin-bottom: 0.8rem; }
 .site-footer a { display: block; color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; margin-bottom: 0.45rem; }

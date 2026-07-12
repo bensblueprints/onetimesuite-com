@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Email Signature Generator — SigCraft Demo | OneTimeSuite</title>
+<meta name="description" content="Free in-browser email signature generator. Fill in your details, pick a template, and copy a professional email-safe HTML signature — table layout, inline styles, works in Gmail, Outlook and Apple Mail. No upload, no account.">
+<link rel="canonical" href="https://onetimesuite.com/sigcraft/demo/">
+<meta property="og:title" content="Free Email Signature Generator — SigCraft Demo">
+<meta property="og:description" content="Build a professional email signature in your browser and copy it straight into Gmail or Outlook. Free, no account.">
+<meta property="og:url" content="https://onetimesuite.com/sigcraft/demo/">
+<link rel="icon" href="/assets/boxes/sigcraft.png">
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .field{margin-top:0.85rem}
+  .field:first-child{margin-top:0}
+  .field label{display:block;font-size:0.85rem;font-weight:700;margin-bottom:0.3rem}
+  .field input[type=text],.field input[type=email],.field input[type=url],.field input[type=tel]{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.55rem 0.7rem;color:var(--ink);font:inherit;font-size:0.92rem}
+  .field input:focus{outline:none;border-color:var(--accent)}
+  .tpls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.4rem;margin-top:0.35rem}
+  .tpl{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.5rem 0.3rem;text-align:center;font-size:0.8rem;font-weight:600;color:var(--soft);cursor:pointer;transition:border-color .12s,color .12s}
+  .tpl.on{border-color:var(--accent);color:var(--ink)}
+  .colorrow{display:flex;align-items:center;gap:0.6rem}
+  .colorrow input[type=color]{width:44px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);cursor:pointer;padding:2px}
+  .colorrow .hex{color:var(--soft);font-size:0.85rem}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen.alt{background:#1f2937;margin-top:0.55rem;font-size:0.9rem;font-weight:700}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem}
+  .previewbox{background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:1.4rem;min-height:200px;overflow-x:auto}
+  .previewbox .fromline{font:13px/1.4 Arial,Helvetica,sans-serif;color:#9ca3af;border-bottom:1px solid #e5e7eb;padding-bottom:0.6rem;margin-bottom:1rem}
+  .copied{display:none;margin-top:0.6rem;text-align:center;color:#3ddc84;font-size:0.85rem;font-weight:700}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>SigCraft <span class="tag">Free demo — professional email signatures, in your browser</span></div>
+  <a class="cta" href="/sigcraft/">Get the desktop app — $15 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="field">
+      <label for="f-name">Full name</label>
+      <input type="text" id="f-name" value="Alex Rivera" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-title">Job title</label>
+      <input type="text" id="f-title" value="Head of Growth" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-company">Company</label>
+      <input type="text" id="f-company" value="Northwind Labs" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-phone">Phone</label>
+      <input type="tel" id="f-phone" value="+1 (555) 010-2030" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-email">Email</label>
+      <input type="email" id="f-email" value="alex@northwindlabs.com" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-website">Website</label>
+      <input type="url" id="f-website" value="northwindlabs.com" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-linkedin">LinkedIn URL</label>
+      <input type="url" id="f-linkedin" placeholder="https://linkedin.com/in/you" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-twitter">X / Twitter URL</label>
+      <input type="url" id="f-twitter" placeholder="https://x.com/you" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Accent color</label>
+      <div class="colorrow">
+        <input type="color" id="f-accent" value="#2563EB">
+        <span class="hex" id="accent-hex">#2563EB</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Template</label>
+      <div class="tpls" id="tpls">
+        <div class="tpl on" data-tpl="classic">Classic</div>
+        <div class="tpl" data-tpl="modern-sidebar">Sidebar</div>
+        <div class="tpl" data-tpl="compact">Compact</div>
+      </div>
+    </div>
+    <button class="gen" id="copy-rich">Copy signature</button>
+    <button class="gen alt" id="copy-html">Copy raw HTML</button>
+    <p class="copied" id="copied-msg">Copied! Paste it into your email client's signature settings.</p>
+    <p class="note">100% private — nothing leaves this page. No upload, no account.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free Email Signature Generator</h1>
+    <p class="sub">Fill in your details, pick a template, copy the signature straight into Gmail, Outlook or Apple Mail. Email-safe HTML — table layout, 100% inline styles — generated locally in your browser.</p>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead">Live preview — how it looks in an email</div>
+        <div class="previewbox">
+          <div class="fromline">To: team@example.com &nbsp;&middot;&nbsp; Subject: Quick update</div>
+          <div id="preview"></div>
+        </div>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/sigcraft.png" alt="SigCraft desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Need 10 templates, photos, CTA buttons &amp; team-wide batch export?</h2>
+        <p>The SigCraft desktop app does everything this demo does plus 10 email-safe templates, profile photos, banners, CTA buttons, social icon rows for 12 networks and CSV batch export for your whole team — offline, forever, for <strong>$15 once</strong>. MIT-licensed source included.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/sigcraft" rel="noopener">Get SigCraft — $15 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/sigcraft/">SigCraft product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+  var FONT = "Arial, Helvetica, sans-serif";
+
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+  function telHref(phone){return 'tel:'+String(phone||'').replace(/[^+\d]/g,'')}
+  function webHref(url){var u=String(url||'').trim();if(!u)return '';if(!/^https?:\/\//i.test(u))u='https://'+u;return u}
+  function webLabel(url){return String(url||'').trim().replace(/^https?:\/\//i,'').replace(/\/$/,'')}
+
+  // Social badge row — colored table cells with glyphs, zero external images.
+  // Ported from the SigCraft engine (LinkedIn + X for the demo).
+  var SOCIALS=[
+    {id:'linkedin',label:'LinkedIn',color:'#0A66C2',glyph:'in'},
+    {id:'twitter',label:'X / Twitter',color:'#000000',glyph:'X'}
+  ];
+  function socialRow(p,opts){
+    var cells=[];
+    SOCIALS.forEach(function(net){
+      var url=p.socials[net.id];
+      if(!url)return;
+      cells.push('<td style="padding:0 6px 0 0;">'+
+        '<a href="'+esc(webHref(url))+'" target="_blank" title="'+esc(net.label)+'" '+
+          'style="display:inline-block;width:24px;height:24px;background-color:'+net.color+';'+
+          'border-radius:4px;text-align:center;text-decoration:none;">'+
+          '<span style="font-family:'+FONT+';font-size:12px;font-weight:bold;color:#ffffff;line-height:24px;">'+
+            esc(net.glyph)+'</span></a></td>');
+    });
+    if(!cells.length)return '';
+    return '<table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>'+cells.join('')+'</tr></table>';
+  }
+
+  function contactBits(p,opts,sep){
+    sep=sep||('<span style="color:'+opts.mutedColor+';">&nbsp;&nbsp;|&nbsp;&nbsp;</span>');
+    var linkStyle='color:'+opts.textColor+';text-decoration:none;';
+    var bits=[];
+    if(p.phone)bits.push('<a href="'+telHref(p.phone)+'" style="'+linkStyle+'">'+esc(p.phone)+'</a>');
+    if(p.email)bits.push('<a href="mailto:'+esc(p.email)+'" style="'+linkStyle+'">'+esc(p.email)+'</a>');
+    if(p.website)bits.push('<a href="'+esc(webHref(p.website))+'" target="_blank" style="color:'+opts.accentColor+';text-decoration:none;">'+esc(webLabel(p.website))+'</a>');
+    return bits.join(sep);
+  }
+
+  function contactStack(p,opts){
+    var rows=[];
+    var style='font-family:'+FONT+';font-size:12px;line-height:20px;color:'+opts.textColor+';';
+    var linkStyle='color:'+opts.textColor+';text-decoration:none;';
+    function row(iconChar,inner){
+      var icon='<span style="color:'+opts.accentColor+';font-weight:bold;">'+iconChar+'&nbsp;&nbsp;</span>';
+      rows.push('<tr><td style="'+style+'">'+icon+inner+'</td></tr>');
+    }
+    if(p.phone)row('T','<a href="'+telHref(p.phone)+'" style="'+linkStyle+'">'+esc(p.phone)+'</a>');
+    if(p.email)row('E','<a href="mailto:'+esc(p.email)+'" style="'+linkStyle+'">'+esc(p.email)+'</a>');
+    if(p.website)row('W','<a href="'+esc(webHref(p.website))+'" target="_blank" style="color:'+opts.accentColor+';text-decoration:none;">'+esc(webLabel(p.website))+'</a>');
+    if(!rows.length)return '';
+    return '<table cellpadding="0" cellspacing="0" border="0" role="presentation">'+rows.join('')+'</table>';
+  }
+
+  function nameBlock(p,opts,nameSize){
+    var html='<p style="margin:0;font-family:'+FONT+';font-size:'+(nameSize||17)+
+      'px;font-weight:bold;color:'+opts.textColor+';line-height:1.3;">'+esc(p.name)+'</p>';
+    var sub=[];
+    if(p.title)sub.push(esc(p.title));
+    if(p.company)sub.push('<span style="color:'+opts.accentColor+';font-weight:bold;">'+esc(p.company)+'</span>');
+    if(sub.length){
+      html+='<p style="margin:2px 0 0 0;font-family:'+FONT+';font-size:12px;color:'+
+        opts.mutedColor+';line-height:1.4;">'+sub.join('&nbsp;&nbsp;&middot;&nbsp;&nbsp;')+'</p>';
+    }
+    return html;
+  }
+
+  function wrap(inner,width){
+    return '<table cellpadding="0" cellspacing="0" border="0" role="presentation" '+
+      'style="width:'+width+'px;max-width:100%;border-collapse:collapse;">'+inner+'</table>';
+  }
+
+  // Three templates ported from the SigCraft desktop engine.
+  var TEMPLATES={
+    'classic':function(p,opts){
+      var inner=
+        '<tr><td valign="top">'+
+          nameBlock(p,opts,17)+
+          '<p style="margin:8px 0 0 0;font-family:'+FONT+';font-size:12px;color:'+opts.textColor+';line-height:1.6;">'+
+            contactBits(p,opts)+'</p>'+
+          '<div style="padding-top:10px;">'+socialRow(p,opts)+'</div>'+
+        '</td></tr>';
+      return wrap(inner,520);
+    },
+    'modern-sidebar':function(p,opts){
+      var inner=
+        '<tr>'+
+          '<td width="4" style="width:4px;background-color:'+opts.accentColor+';font-size:0;line-height:0;">&nbsp;</td>'+
+          '<td width="16" style="width:16px;font-size:0;">&nbsp;</td>'+
+          '<td valign="top">'+
+            nameBlock(p,opts,18)+
+            '<div style="padding-top:8px;">'+contactStack(p,opts)+'</div>'+
+            '<div style="padding-top:10px;">'+socialRow(p,opts)+'</div>'+
+          '</td>'+
+        '</tr>';
+      return wrap(inner,520);
+    },
+    'compact':function(p,opts){
+      var pieces=['<span style="font-weight:bold;color:'+opts.textColor+';">'+esc(p.name)+'</span>'];
+      if(p.title||p.company)pieces.push('<span style="color:'+opts.mutedColor+';">'+esc([p.title,p.company].filter(Boolean).join(', '))+'</span>');
+      var contact=contactBits(p,opts);
+      var social=socialRow(p,opts);
+      var inner=
+        '<tr><td valign="middle">'+
+          '<p style="margin:0;font-family:'+FONT+';font-size:12px;line-height:1.5;">'+pieces.join('&nbsp;&nbsp;|&nbsp;&nbsp;')+
+          (contact?'<br />'+contact:'')+'</p>'+
+          (social?'<div style="padding-top:6px;">'+social+'</div>':'')+
+        '</td></tr>';
+      return wrap(inner,560);
+    }
+  };
+
+  // ------------------------------------------------------------- live state
+  var tplId='classic';
+  var preview=document.getElementById('preview');
+  var accentHex=document.getElementById('accent-hex');
+  var fields=['name','title','company','phone','email','website','linkedin','twitter'].reduce(function(m,k){
+    m[k]=document.getElementById('f-'+k);return m;
+  },{});
+  var accent=document.getElementById('f-accent');
+
+  function profile(){
+    return {
+      name:fields.name.value.trim(),
+      title:fields.title.value.trim(),
+      company:fields.company.value.trim(),
+      phone:fields.phone.value.trim(),
+      email:fields.email.value.trim(),
+      website:fields.website.value.trim(),
+      socials:{
+        linkedin:fields.linkedin.value.trim(),
+        twitter:fields.twitter.value.trim()
+      }
+    };
+  }
+  function options(){
+    return {accentColor:accent.value,textColor:'#1F2937',mutedColor:'#6B7280'};
+  }
+  function signatureHtml(){
+    return (TEMPLATES[tplId]||TEMPLATES.classic)(profile(),options());
+  }
+  function render(){
+    accentHex.textContent=accent.value.toUpperCase();
+    preview.innerHTML=signatureHtml();
+  }
+
+  Object.keys(fields).forEach(function(k){fields[k].addEventListener('input',render)});
+  accent.addEventListener('input',render);
+  document.getElementById('tpls').addEventListener('click',function(e){
+    var t=e.target.closest('.tpl');
+    if(!t)return;
+    tplId=t.getAttribute('data-tpl');
+    [].slice.call(document.querySelectorAll('.tpl')).forEach(function(el){el.classList.toggle('on',el===t)});
+    render();
+  });
+  render();
+
+  // ----------------------------------------------------- one free copy gate
+  function used(){try{return localStorage.getItem('sigcraft_demo_used')==='1'}catch(e){return false}}
+  function markUsed(){try{localStorage.setItem('sigcraft_demo_used','1')}catch(e){}}
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">✒️</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free signature!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it looks sharp. The SigCraft desktop app makes <strong style="color:#eef1f6">unlimited signatures</strong>, has 10 email-safe templates, profile photos, CTA buttons and CSV batch export for your whole team — offline, forever.</p>'+
+      '<a href="https://whop.com/benjisaiempire/sigcraft" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get SigCraft — $15 once, own forever →</a>'+
+      '<a href="/sigcraft/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  // ------------------------------------------------------------ copy logic
+  function flashCopied(){
+    var el=document.getElementById('copied-msg');
+    el.style.display='block';
+    clearTimeout(flashCopied.t);
+    flashCopied.t=setTimeout(function(){el.style.display='none'},2600);
+  }
+
+  // Copies rendered rich HTML so pasting into Gmail/Outlook keeps formatting.
+  function copyRich(html){
+    var done=function(){flashCopied();markUsed()};
+    var fallback=function(){
+      var div=document.createElement('div');
+      div.contentEditable='true';
+      div.style.cssText='position:fixed;left:-9999px;top:0;background:#fff;color:#000';
+      div.innerHTML=html;
+      document.body.appendChild(div);
+      var range=document.createRange();
+      range.selectNodeContents(div);
+      var sel=window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      try{document.execCommand('copy')}catch(e){}
+      sel.removeAllRanges();
+      div.remove();
+      done();
+    };
+    if(navigator.clipboard&&navigator.clipboard.write&&typeof ClipboardItem!=='undefined'){
+      var item=new ClipboardItem({
+        'text/html':new Blob([html],{type:'text/html'}),
+        'text/plain':new Blob([html],{type:'text/plain'})
+      });
+      navigator.clipboard.write([item]).then(done,fallback);
+    }else{
+      fallback();
+    }
+  }
+
+  function copyPlain(text){
+    var done=function(){flashCopied();markUsed()};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done,function(){
+        var ta=document.createElement('textarea');
+        ta.value=text;ta.style.cssText='position:fixed;left:-9999px;top:0';
+        document.body.appendChild(ta);ta.select();
+        try{document.execCommand('copy')}catch(e){}
+        ta.remove();done();
+      });
+    }else{
+      var ta=document.createElement('textarea');
+      ta.value=text;ta.style.cssText='position:fixed;left:-9999px;top:0';
+      document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy')}catch(e){}
+      ta.remove();done();
+    }
+  }
+
+  document.getElementById('copy-rich').addEventListener('click',function(){
+    if(used()){paywall();return}
+    copyRich(signatureHtml());
+  });
+  document.getElementById('copy-html').addEventListener('click',function(){
+    if(used()){paywall();return}
+    copyPlain(signatureHtml());
+  });
+})();
+</script>
+</body>
+</html>

@@ -81,6 +81,9 @@ const DESKTOP_SLUGS = new Set([
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
 ]);
+/* Products with a free in-browser demo at /<slug>/demo/ (src/<slug>-demo.html) */
+const DEMOS = new Set(['iconforge', 'sigcraft']);
+
 const desktopProducts = allProducts.filter(p => DESKTOP_SLUGS.has(p.slug));
 const webProducts = allProducts.filter(p => !DESKTOP_SLUGS.has(p.slug));
 
@@ -380,6 +383,18 @@ function reg(relPath) { urls.push(relPath); }
       </div>
     </section>
 
+    <section aria-label="Watch: The Open Source Exit">
+      <div class="wrap" style="max-width:920px;">
+        <div class="section-head">
+          <span class="stamp">Watch — 4 minutes</span>
+          <h2>The Open Source Exit: breaking the SaaS rent cycle</h2>
+        </div>
+        <video controls preload="metadata" poster="/assets/video/open-source-exit-poster.jpg" style="width:100%;border:1.5px solid var(--ink);border-radius:12px;background:#000;">
+          <source src="/assets/video/open-source-exit.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
     <section aria-label="All products">
       <div class="wrap">
         <div class="cat-head" id="desktop" style="scroll-margin-top:80px;">
@@ -532,7 +547,7 @@ allProducts.forEach(p => {
         </div>
         <div class="btn-row">
           <a class="btn btn-solid" href="${buy}" rel="noopener">Get ${p.brand} on ${buyHost} — $${p.price} &rarr;</a>
-          ${p.slug === 'iconforge' ? `<a class="btn btn-ghost" href="/iconforge/demo/">Try the free web demo</a>` : ''}
+          ${DEMOS.has(p.slug) ? `<a class="btn btn-ghost" href="/${p.slug}/demo/">Try the free web demo</a>` : ''}
           ${isClosed ? '' : `<a class="btn btn-ghost" href="${GH}/${p.repo}" rel="noopener">Source on GitHub</a>`}
         </div>
         </div>
@@ -1142,6 +1157,12 @@ if (fs.existsSync(JS_SRC)) {
   fs.mkdirSync(jsOut, { recursive: true });
   for (const f of fs.readdirSync(JS_SRC)) fs.copyFileSync(path.join(JS_SRC, f), path.join(jsOut, f));
 }
+const VIDEO_SRC = path.join(ROOT, 'assets', 'video');
+if (fs.existsSync(VIDEO_SRC)) {
+  const vOut = path.join(OUT, 'assets', 'video');
+  fs.mkdirSync(vOut, { recursive: true });
+  for (const f of fs.readdirSync(VIDEO_SRC)) fs.copyFileSync(path.join(VIDEO_SRC, f), path.join(vOut, f));
+}
 const ADS_SRC = path.join(ROOT, 'assets', 'ads');
 if (fs.existsSync(ADS_SRC)) {
   const adsOut = path.join(OUT, 'assets', 'ads');
@@ -1155,10 +1176,12 @@ if (fs.existsSync(ADSRV_SRC)) {
   fs.mkdirSync(adsrvOut, { recursive: true });
   for (const f of fs.readdirSync(ADSRV_SRC)) fs.copyFileSync(path.join(ADSRV_SRC, f), path.join(adsrvOut, f));
 }
-const demoSrc = path.join(ROOT, 'src', 'iconforge-demo.html');
-if (fs.existsSync(demoSrc)) {
-  fs.mkdirSync(path.join(OUT, 'iconforge', 'demo'), { recursive: true });
-  fs.copyFileSync(demoSrc, path.join(OUT, 'iconforge', 'demo', 'index.html'));
+for (const demoSlug of DEMOS) {
+  const demoSrc = path.join(ROOT, 'src', `${demoSlug}-demo.html`);
+  if (fs.existsSync(demoSrc)) {
+    fs.mkdirSync(path.join(OUT, demoSlug, 'demo'), { recursive: true });
+    fs.copyFileSync(demoSrc, path.join(OUT, demoSlug, 'demo', 'index.html'));
+  }
 }
 
 console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);

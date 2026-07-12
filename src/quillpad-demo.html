@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Markdown Editor with Live Preview — Quillpad Demo | OneTimeSuite</title>
+<meta name="description" content="Free in-browser markdown editor with live preview. Type markdown, watch it render instantly, copy the HTML or download a .md file. 100% local — nothing is uploaded, your draft auto-saves in your browser.">
+<link rel="canonical" href="https://onetimesuite.com/quillpad/demo/">
+<meta property="og:title" content="Free Markdown Editor with Live Preview — Quillpad Demo">
+<meta property="og:description" content="Type markdown, watch it render live, copy the HTML or download .md. 100% in your browser — nothing is uploaded.">
+<meta property="og:url" content="https://onetimesuite.com/quillpad/demo/">
+<link rel="icon" href="/assets/boxes/quillpad.png">
+<script src="/assets/js/marked.min.js"></script>
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1.1rem;font-size:0.95rem}
+  .editor{display:flex;gap:1.2rem;align-items:stretch;flex-wrap:wrap}
+  .pane{flex:1 1 420px;min-width:0;display:flex;flex-direction:column}
+  .panehead{display:flex;align-items:center;justify-content:space-between;font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.5rem}
+  .panehead .count{letter-spacing:0;text-transform:none;font-weight:500;font-size:0.78rem}
+  textarea#md{width:100%;min-height:460px;flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;color:var(--ink);font:14px/1.6 "SF Mono",ui-monospace,Menlo,Consolas,monospace;resize:vertical;tab-size:2}
+  textarea#md:focus{outline:none;border-color:var(--accent)}
+  .previewbox{background:#ffffff;color:#1f2430;border:1px solid var(--line);border-radius:12px;padding:1.3rem 1.5rem;min-height:460px;flex:1;overflow-x:auto}
+  .previewbox h1,.previewbox h2,.previewbox h3{color:#111827;line-height:1.25;margin:1.2rem 0 0.6rem}
+  .previewbox h1{font-size:1.7rem;border-bottom:1px solid #e5e7eb;padding-bottom:0.3rem}
+  .previewbox h2{font-size:1.35rem;border-bottom:1px solid #eef0f3;padding-bottom:0.25rem}
+  .previewbox h3{font-size:1.12rem}
+  .previewbox p{margin:0.7rem 0}
+  .previewbox a{color:#2563eb}
+  .previewbox code{background:#f3f4f6;color:#b91c1c;padding:0.12em 0.35em;border-radius:5px;font:0.88em ui-monospace,Menlo,Consolas,monospace}
+  .previewbox pre{background:#0f1523;color:#e6edf3;padding:0.9rem 1.1rem;border-radius:9px;overflow-x:auto;margin:0.9rem 0}
+  .previewbox pre code{background:none;color:inherit;padding:0}
+  .previewbox blockquote{border-left:4px solid #d1d5db;color:#4b5563;margin:0.9rem 0;padding:0.2rem 0 0.2rem 1rem}
+  .previewbox ul,.previewbox ol{margin:0.7rem 0 0.7rem 1.4rem}
+  .previewbox li{margin:0.25rem 0}
+  .previewbox table{border-collapse:collapse;margin:0.9rem 0}
+  .previewbox th,.previewbox td{border:1px solid #e5e7eb;padding:0.4rem 0.7rem;text-align:left}
+  .previewbox th{background:#f9fafb}
+  .previewbox hr{border:none;border-top:1px solid #e5e7eb;margin:1.2rem 0}
+  .previewbox img{max-width:100%}
+  .actions{display:flex;gap:0.7rem;flex-wrap:wrap;margin:1.3rem 0 0.4rem}
+  .btn{background:var(--accent);border:none;color:#fff;font-weight:800;font-size:0.95rem;padding:0.7rem 1.2rem;border-radius:10px;cursor:pointer}
+  .btn.alt{background:#1f2937}
+  .btn.ghost{background:none;border:1px solid var(--line);color:var(--soft);font-weight:600}
+  .flash{display:none;color:#3ddc84;font-size:0.85rem;font-weight:700;align-self:center}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.5rem}
+  .adrow{margin:1.6rem 0;display:flex;justify-content:center}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:160px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Quillpad <span class="tag">Free demo — markdown editor with live preview, in your browser</span></div>
+  <a class="cta" href="/quillpad/">Get the desktop app — $29 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <h1>Free Markdown Editor with Live Preview</h1>
+  <p class="sub">Type markdown on the left, watch it render live on the right. Copy the HTML or download a <code>.md</code> file. Your draft auto-saves in this browser — everything runs locally, nothing is uploaded.</p>
+
+  <div class="editor">
+    <div class="pane">
+      <div class="panehead"><span>Markdown</span><span class="count" id="count">0 words · 0 chars</span></div>
+      <textarea id="md" spellcheck="false" placeholder="# Start typing markdown…"></textarea>
+    </div>
+    <div class="pane">
+      <div class="panehead"><span>Live preview</span><span class="count">rendered locally</span></div>
+      <div class="previewbox" id="preview"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="copy-html">Copy HTML</button>
+    <button class="btn alt" id="download-md">Download .md</button>
+    <button class="btn ghost" id="reset">Reset sample</button>
+    <span class="flash" id="flash">Copied!</span>
+  </div>
+  <p class="note">100% private — your text never leaves this page, and your draft is auto-saved to this browser only. No upload, no account.</p>
+
+  <div class="adrow"><div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div></div>
+
+  <div class="upsell">
+    <img src="/assets/boxes/quillpad.png" alt="Quillpad desktop app">
+    <div>
+      <h2>Want a real notes vault — wikilinks, backlinks &amp; full-text search?</h2>
+      <p>The Quillpad desktop app turns this editor into a local-first knowledge base: your vault is just a folder of real <strong>.md files</strong> you own, with <strong>[[wikilinks]]</strong>, automatic backlinks, instant full-text search, daily notes and a graph view — 100% local, no cloud, no sync account, for <strong>$29 once</strong>. MIT-licensed source included.</p>
+    </div>
+    <a class="buy" href="https://whop.com/benjisaiempire/quillpad" rel="noopener">Get Quillpad — $29 →</a>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/quillpad/">Quillpad product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+
+  var SAMPLE = [
+    '# Welcome to Quillpad',
+    '',
+    'A **local-first** markdown editor. Type on the left, see it render on the right.',
+    '',
+    '## What you can do',
+    '',
+    '- Write in plain **markdown**',
+    '- See a *live* preview as you type',
+    '- Copy the HTML or download a `.md` file',
+    '- Your draft **auto-saves** in this browser',
+    '',
+    '## A quick example',
+    '',
+    '> Your vault should be a folder of files you actually own.',
+    '',
+    '```js',
+    'function hello(name) {',
+    '  return `Hi, ${name}!`;',
+    '}',
+    '```',
+    '',
+    '| Feature      | Demo | Desktop app |',
+    '|--------------|:----:|:-----------:|',
+    '| Live preview |  ✓   |      ✓      |',
+    '| Wikilinks    |      |      ✓      |',
+    '| Backlinks    |      |      ✓      |',
+    '| Full-text search |  |      ✓      |',
+    '',
+    'Learn more at [onetimesuite.com](https://onetimesuite.com).',
+    ''
+  ].join('\n');
+
+  var STORAGE_KEY = 'quillpad_demo_draft';
+  var USED_KEY = 'quillpad_demo_used';
+
+  var ta = document.getElementById('md');
+  var preview = document.getElementById('preview');
+  var count = document.getElementById('count');
+  var flash = document.getElementById('flash');
+
+  // ---- XSS SAFETY -------------------------------------------------------
+  // marked passes raw HTML through by default. Before rendering, we escape
+  // every angle bracket in the SOURCE so any user-typed <script>, <img onerror>,
+  // <iframe> etc. becomes inert text (&lt;script&gt;) that marked treats as
+  // literal characters — it can never become a live DOM node. Markdown syntax
+  // (#, *, [](), ``` , tables) uses no angle brackets, so it still renders.
+  function escapeHtml(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  marked.setOptions({ gfm:true, breaks:false });
+
+  function toHtml(src){
+    // Escape first, THEN parse — guarantees no raw HTML/script survives.
+    return marked.parse(escapeHtml(src));
+  }
+
+  function render(){
+    var src = ta.value;
+    preview.innerHTML = toHtml(src);
+    var words = (src.trim().match(/\S+/g) || []).length;
+    count.textContent = words + (words===1?' word · ':' words · ') + src.length + ' chars';
+    try{ localStorage.setItem(STORAGE_KEY, src); }catch(e){}
+  }
+
+  // ---- load saved draft or sample --------------------------------------
+  var saved = null;
+  try{ saved = localStorage.getItem(STORAGE_KEY); }catch(e){}
+  ta.value = (saved !== null) ? saved : SAMPLE;
+  render();
+
+  ta.addEventListener('input', render);
+
+  document.getElementById('reset').addEventListener('click', function(){
+    ta.value = SAMPLE;
+    render();
+  });
+
+  function flashMsg(text){
+    flash.textContent = text;
+    flash.style.display = 'inline';
+    clearTimeout(flashMsg.t);
+    flashMsg.t = setTimeout(function(){ flash.style.display='none'; }, 2400);
+  }
+
+  // ---- one free export gate --------------------------------------------
+  function used(){ try{ return localStorage.getItem(USED_KEY)==='1'; }catch(e){ return false; } }
+  function markUsed(){ try{ localStorage.setItem(USED_KEY,'1'); }catch(e){} }
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:460px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">🪶</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free export!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Keep writing here for free anytime. When you want a real notes <strong style="color:#eef1f6">vault</strong> — a folder of <strong style="color:#eef1f6">.md files you own</strong>, with <strong style="color:#eef1f6">[[wikilinks]]</strong>, automatic backlinks, instant full-text search and daily notes — grab the Quillpad desktop app. 100% local, no cloud, no account.</p>'+
+      '<a href="https://whop.com/benjisaiempire/quillpad" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Quillpad — $29 once, own forever →</a>'+
+      '<a href="/quillpad/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){ m.remove(); });
+  }
+
+  // ---- copy HTML --------------------------------------------------------
+  function copyText(text, okMsg){
+    var done=function(){ flashMsg(okMsg); markUsed(); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ legacyCopy(text); done(); });
+    }else{ legacyCopy(text); done(); }
+  }
+  function legacyCopy(text){
+    var t=document.createElement('textarea');
+    t.value=text; t.style.cssText='position:fixed;left:-9999px;top:0';
+    document.body.appendChild(t); t.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    t.remove();
+  }
+
+  document.getElementById('copy-html').addEventListener('click', function(){
+    if(used()){ paywall(); return; }
+    copyText(toHtml(ta.value), 'HTML copied!');
+  });
+
+  // ---- download .md -----------------------------------------------------
+  document.getElementById('download-md').addEventListener('click', function(){
+    if(used()){ paywall(); return; }
+    var firstLine = (ta.value.split('\n').find(function(l){return l.trim();}) || 'document')
+      .replace(/^#+\s*/,'').trim();
+    var name = (firstLine || 'document').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40) || 'document';
+    var blob = new Blob([ta.value], {type:'text/markdown;charset=utf-8'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=name+'.md';
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+    flashMsg('Downloaded '+name+'.md');
+    markUsed();
+  });
+})();
+</script>
+</body>
+</html>

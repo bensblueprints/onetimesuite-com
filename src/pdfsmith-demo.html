@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free PDF Merge, Split &amp; Rotate — PDFsmith Demo | OneTimeSuite</title>
+<meta name="description" content="Free in-browser PDF toolkit. Merge multiple PDFs into one, split out page ranges, or rotate pages — 100% in your browser. Nothing is uploaded, no account, no watermark.">
+<link rel="canonical" href="https://onetimesuite.com/pdfsmith/demo/">
+<meta property="og:title" content="Free PDF Merge, Split & Rotate — PDFsmith Demo">
+<meta property="og:description" content="Merge, split and rotate PDFs entirely in your browser. Nothing is uploaded — your files never leave your computer.">
+<meta property="og:url" content="https://onetimesuite.com/pdfsmith/demo/">
+<link rel="icon" href="/assets/boxes/pdfsmith.png">
+<script src="/assets/js/pdf-lib.min.js"></script>
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.4rem;margin-bottom:1rem}
+  .tab{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.55rem 0.3rem;text-align:center;font-size:0.88rem;font-weight:700;color:var(--soft);cursor:pointer;transition:border-color .12s,color .12s}
+  .tab.on{border-color:var(--accent);color:var(--ink)}
+  .drop{border:2px dashed #2c384e;border-radius:14px;padding:1.4rem;text-align:center;cursor:pointer;transition:border-color .15s;background:var(--panel2)}
+  .drop.on{border-color:var(--accent)}
+  .drop p{color:var(--soft);font-size:0.9rem}
+  .drop strong{color:var(--ink)}
+  .filelist{list-style:none;margin:1rem 0 0}
+  .filelist li{display:flex;align-items:center;gap:0.5rem;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.5rem 0.6rem;margin-bottom:0.45rem;font-size:0.85rem}
+  .filelist .fn{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .filelist .pc{color:var(--soft);font-size:0.78rem;white-space:nowrap}
+  .filelist button{background:none;border:1px solid var(--line);color:var(--soft);border-radius:6px;width:24px;height:24px;cursor:pointer;font-size:0.85rem;line-height:1;flex:0 0 auto}
+  .filelist button:hover{color:var(--ink);border-color:var(--accent)}
+  .field{margin-top:1rem}
+  .field label{display:block;font-size:0.85rem;font-weight:700;margin-bottom:0.3rem}
+  .field small{color:var(--soft);display:block;margin-bottom:0.35rem}
+  .field input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.55rem 0.7rem;color:var(--ink);font:inherit;font-size:0.92rem}
+  .field input:focus{outline:none;border-color:var(--accent)}
+  .field select{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.55rem 0.7rem;color:var(--ink);font:inherit;font-size:0.92rem}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen:disabled{opacity:0.45;cursor:not-allowed}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem}
+  .statusbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1.4rem;min-height:200px}
+  .statusbox .empty{color:var(--soft);font-size:0.92rem;text-align:center;padding:2rem 0}
+  .summary{list-style:none}
+  .summary li{display:flex;justify-content:space-between;gap:0.8rem;padding:0.5rem 0;border-bottom:1px solid var(--line);font-size:0.9rem}
+  .summary li:last-child{border-bottom:none}
+  .summary .k{color:var(--soft)}
+  .summary .v{font-weight:700}
+  .result{margin-top:1rem;background:linear-gradient(135deg,#14251c,#101a15);border:1px solid #22402f;border-radius:12px;padding:1.1rem;text-align:center}
+  .result h3{font-size:1rem;margin-bottom:0.3rem;color:#3ddc84}
+  .result p{color:var(--soft);font-size:0.85rem;margin-bottom:0.8rem}
+  .dl{display:inline-block;background:#3ddc84;color:#05130c;font-weight:800;padding:0.7rem 1.4rem;border-radius:9px;font-size:0.95rem}
+  .err{color:#ff7a7a;font-size:0.85rem;margin-top:0.7rem;text-align:center}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>PDFsmith <span class="tag">Free demo — merge, split &amp; rotate PDFs in your browser</span></div>
+  <a class="cta" href="/pdfsmith/">Get the desktop app — $29 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="tabs" id="tabs">
+      <div class="tab on" data-mode="merge">Merge</div>
+      <div class="tab" data-mode="split">Split</div>
+      <div class="tab" data-mode="rotate">Rotate</div>
+    </div>
+
+    <div class="drop" id="drop">
+      <input type="file" id="file" accept="application/pdf,.pdf" hidden>
+      <p id="dropmsg"><strong>Drop PDF files here</strong><br>or click to choose (multiple for merge)</p>
+    </div>
+
+    <ul class="filelist" id="filelist"></ul>
+
+    <!-- Split options -->
+    <div class="field" id="opt-split" style="display:none">
+      <label for="ranges">Pages to extract</label>
+      <small>e.g. <code>1-3, 5, 8-10</code> — commas separate ranges</small>
+      <input type="text" id="ranges" placeholder="1-3, 5">
+    </div>
+
+    <!-- Rotate options -->
+    <div class="field" id="opt-rotate" style="display:none">
+      <label for="rot-deg">Rotation</label>
+      <select id="rot-deg">
+        <option value="90">90° clockwise</option>
+        <option value="180">180°</option>
+        <option value="270">270° (90° counter-clockwise)</option>
+      </select>
+      <div style="margin-top:0.7rem">
+        <label for="rot-range">Pages (blank = all)</label>
+        <small>e.g. <code>2-4</code> or <code>1, 3, 5</code></small>
+        <input type="text" id="rot-range" placeholder="all pages">
+      </div>
+    </div>
+
+    <button class="gen" id="run" disabled>Merge PDFs</button>
+    <p class="note">100% private — your PDFs never leave this page. No upload, no account.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free PDF Merge, Split &amp; Rotate</h1>
+    <p class="sub">Combine several PDFs into one, pull out the pages you need, or rotate pages that scanned in sideways — all locally in your browser. Files are never uploaded to any server.</p>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead">Result</div>
+        <div class="statusbox" id="status">
+          <div class="empty">Drop one or more PDFs on the left to get started.</div>
+        </div>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/pdfsmith.png" alt="PDFsmith desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Need watermarking, images-to-PDF &amp; a metadata editor?</h2>
+        <p>The PDFsmith desktop app does everything this demo does plus batch-merge unlimited PDFs, add text/image watermarks, convert images to PDF, edit document metadata and compress — 100% offline, forever, for <strong>$29 once</strong>. No subscription, no upload, no page limits.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/pdfsmith" rel="noopener">Get PDFsmith — $29 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/pdfsmith/">PDFsmith product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+  var PDFLib = window.PDFLib;
+  var degrees = PDFLib.degrees;
+
+  var mode = 'merge';
+  var files = []; // {name, size, bytes(ArrayBuffer), pageCount}
+
+  var tabs = document.getElementById('tabs');
+  var drop = document.getElementById('drop');
+  var fileInput = document.getElementById('file');
+  var dropmsg = document.getElementById('dropmsg');
+  var filelist = document.getElementById('filelist');
+  var run = document.getElementById('run');
+  var statusEl = document.getElementById('status');
+  var optSplit = document.getElementById('opt-split');
+  var optRotate = document.getElementById('opt-rotate');
+
+  // ---------------------------------------------------------------- helpers
+  function fmtSize(b){
+    if(b<1024) return b+' B';
+    if(b<1024*1024) return (b/1024).toFixed(0)+' KB';
+    return (b/1024/1024).toFixed(1)+' MB';
+  }
+
+  // Parse "1-3, 5, 8-10" into a 1-based, de-duped, ordered page list.
+  function parseRanges(str, max){
+    var out = [], seen = {};
+    String(str||'').split(',').forEach(function(part){
+      part = part.trim();
+      if(!part) return;
+      var m = part.match(/^(\d+)\s*-\s*(\d+)$/);
+      if(m){
+        var a = parseInt(m[1],10), b = parseInt(m[2],10);
+        if(a>b){ var t=a; a=b; b=t; }
+        for(var i=a;i<=b;i++){ if(i>=1 && i<=max && !seen[i]){ seen[i]=1; out.push(i); } }
+      } else if(/^\d+$/.test(part)){
+        var n = parseInt(part,10);
+        if(n>=1 && n<=max && !seen[n]){ seen[n]=1; out.push(n); }
+      } else {
+        throw new Error('Could not understand "'+part+'". Use formats like 1-3, 5.');
+      }
+    });
+    return out;
+  }
+
+  function setEmpty(msg){
+    statusEl.innerHTML = '<div class="empty">'+msg+'</div>';
+  }
+
+  // ---------------------------------------------------------------- UI state
+  function labelFor(m){
+    return m==='merge' ? 'Merge PDFs' : (m==='split' ? 'Split PDF' : 'Rotate PDF');
+  }
+  function refresh(){
+    // options visibility
+    optSplit.style.display  = mode==='split'  ? 'block' : 'none';
+    optRotate.style.display = mode==='rotate' ? 'block' : 'none';
+    run.textContent = labelFor(mode);
+
+    // drop message
+    if(mode==='merge'){
+      dropmsg.innerHTML = '<strong>Drop PDF files here</strong><br>or click to choose (add several to combine)';
+      fileInput.multiple = true;
+    } else {
+      dropmsg.innerHTML = '<strong>Drop one PDF here</strong><br>or click to choose';
+      fileInput.multiple = false;
+    }
+
+    // file list
+    filelist.innerHTML = '';
+    files.forEach(function(f, idx){
+      var li = document.createElement('li');
+      var controls = '';
+      if(mode==='merge'){
+        controls =
+          '<button data-act="up" data-i="'+idx+'" title="Move up"'+(idx===0?' disabled style="opacity:.3"':'')+'>&#9650;</button>'+
+          '<button data-act="down" data-i="'+idx+'" title="Move down"'+(idx===files.length-1?' disabled style="opacity:.3"':'')+'>&#9660;</button>';
+      }
+      controls += '<button data-act="del" data-i="'+idx+'" title="Remove">&times;</button>';
+      li.innerHTML =
+        '<span class="fn" title="'+f.name.replace(/"/g,'&quot;')+'">'+f.name+'</span>'+
+        '<span class="pc">'+f.pageCount+'p &middot; '+fmtSize(f.size)+'</span>'+
+        controls;
+      filelist.appendChild(li);
+    });
+
+    // run enabled? merge needs >=1 file, split/rotate need exactly 1
+    run.disabled = mode==='merge' ? files.length<1 : files.length!==1;
+  }
+
+  // ------------------------------------------------------------- file intake
+  function addFiles(list){
+    var arr = [].slice.call(list).filter(function(f){
+      return f.type==='application/pdf' || /\.pdf$/i.test(f.name);
+    });
+    if(!arr.length) return;
+    if(mode!=='merge'){ files = []; arr = arr.slice(0,1); }
+
+    var jobs = arr.map(function(f){
+      return f.arrayBuffer().then(function(buf){
+        return PDFLib.PDFDocument.load(buf, {ignoreEncryption:true}).then(function(doc){
+          return {name:f.name, size:f.size, bytes:buf, pageCount:doc.getPageCount()};
+        });
+      }).catch(function(e){
+        return {name:f.name, size:f.size, bytes:null, pageCount:0, error:true};
+      });
+    });
+
+    Promise.all(jobs).then(function(items){
+      var bad = items.filter(function(i){return i.error});
+      var good = items.filter(function(i){return !i.error});
+      if(mode==='merge') files = files.concat(good);
+      else files = good.slice(0,1);
+      refresh();
+      if(bad.length){
+        setEmpty('Could not read '+bad.length+' file'+(bad.length>1?'s':'')+' — is it a valid PDF?');
+      } else {
+        setEmpty('Ready. Adjust options and press '+labelFor(mode)+'.');
+      }
+    });
+  }
+
+  drop.addEventListener('click', function(){ fileInput.click(); });
+  drop.addEventListener('dragover', function(e){ e.preventDefault(); drop.classList.add('on'); });
+  drop.addEventListener('dragleave', function(){ drop.classList.remove('on'); });
+  drop.addEventListener('drop', function(e){
+    e.preventDefault(); drop.classList.remove('on');
+    if(e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', function(){
+    if(fileInput.files.length) addFiles(fileInput.files);
+    fileInput.value='';
+  });
+
+  filelist.addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if(!b || b.disabled) return;
+    var i = parseInt(b.getAttribute('data-i'),10);
+    var act = b.getAttribute('data-act');
+    if(act==='del') files.splice(i,1);
+    else if(act==='up' && i>0){ var t=files[i-1]; files[i-1]=files[i]; files[i]=t; }
+    else if(act==='down' && i<files.length-1){ var u=files[i+1]; files[i+1]=files[i]; files[i]=u; }
+    refresh();
+  });
+
+  tabs.addEventListener('click', function(e){
+    var t = e.target.closest('.tab');
+    if(!t) return;
+    mode = t.getAttribute('data-mode');
+    [].slice.call(tabs.querySelectorAll('.tab')).forEach(function(el){ el.classList.toggle('on', el===t); });
+    // switching to a single-file mode drops extras
+    if(mode!=='merge' && files.length>1) files = files.slice(0,1);
+    refresh();
+    setEmpty('Drop '+(mode==='merge'?'one or more PDFs':'a PDF')+' on the left to get started.');
+  });
+
+  // --------------------------------------------------------- one free export
+  function used(){ try{return localStorage.getItem('pdfsmith_demo_used')==='1'}catch(e){return false} }
+  function markUsed(){ try{localStorage.setItem('pdfsmith_demo_used','1')}catch(e){} }
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">&#128196;</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free export!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it saved you a trip to a sketchy upload site. The PDFsmith desktop app handles <strong style="color:#eef1f6">unlimited PDFs</strong> plus watermarking, images-to-PDF, a metadata editor and compression — 100% offline, forever.</p>'+
+      '<a href="https://whop.com/benjisaiempire/pdfsmith" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get PDFsmith — $29 once, own forever &rarr;</a>'+
+      '<a href="/pdfsmith/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  // ------------------------------------------------------------- operations
+  function showResult(summaryRows, blob, filename){
+    var rows = summaryRows.map(function(r){
+      return '<li><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></li>';
+    }).join('');
+    var url = URL.createObjectURL(blob);
+    statusEl.innerHTML =
+      '<ul class="summary">'+rows+'</ul>'+
+      '<div class="result">'+
+        '<h3>&#10003; Your PDF is ready</h3>'+
+        '<p>'+(blob.size>0?fmtSize(blob.size):'')+' &middot; generated locally, nothing uploaded</p>'+
+        '<a class="dl" id="dl-link" href="'+url+'" download="'+filename+'">Download PDF</a>'+
+      '</div>';
+    // gate the download itself so the first click is free
+    document.getElementById('dl-link').addEventListener('click', function(ev){
+      if(used()){ ev.preventDefault(); paywall(); return; }
+      markUsed();
+    });
+  }
+
+  function fail(msg){
+    var e = statusEl.querySelector('.err');
+    if(!e){ e=document.createElement('div'); e.className='err'; statusEl.appendChild(e); }
+    e.textContent = msg;
+  }
+
+  function doMerge(){
+    return PDFLib.PDFDocument.create().then(function(out){
+      var chain = Promise.resolve();
+      var total = 0;
+      files.forEach(function(f){
+        chain = chain.then(function(){
+          return PDFLib.PDFDocument.load(f.bytes, {ignoreEncryption:true}).then(function(src){
+            var idx = src.getPageIndices();
+            return out.copyPages(src, idx).then(function(pages){
+              pages.forEach(function(p){ out.addPage(p); });
+              total += idx.length;
+            });
+          });
+        });
+      });
+      return chain.then(function(){
+        return out.save().then(function(bytes){
+          return {
+            blob:new Blob([bytes],{type:'application/pdf'}),
+            filename:'merged.pdf',
+            summary:[['Files merged', files.length],['Total pages', total]]
+          };
+        });
+      });
+    });
+  }
+
+  function doSplit(){
+    var f = files[0];
+    return PDFLib.PDFDocument.load(f.bytes, {ignoreEncryption:true}).then(function(src){
+      var max = src.getPageCount();
+      var pages1 = parseRanges(document.getElementById('ranges').value, max);
+      if(!pages1.length) throw new Error('Enter at least one valid page (1–'+max+'), e.g. 1-3, 5.');
+      return PDFLib.PDFDocument.create().then(function(out){
+        var idx0 = pages1.map(function(n){return n-1;});
+        return out.copyPages(src, idx0).then(function(pages){
+          pages.forEach(function(p){ out.addPage(p); });
+          return out.save().then(function(bytes){
+            return {
+              blob:new Blob([bytes],{type:'application/pdf'}),
+              filename:(f.name.replace(/\.pdf$/i,''))+'-pages.pdf',
+              summary:[['Source pages', max],['Extracted', pages1.length+' ('+pages1.join(', ')+')']]
+            };
+          });
+        });
+      });
+    });
+  }
+
+  function doRotate(){
+    var f = files[0];
+    var deg = parseInt(document.getElementById('rot-deg').value,10);
+    return PDFLib.PDFDocument.load(f.bytes, {ignoreEncryption:true}).then(function(doc){
+      var max = doc.getPageCount();
+      var raw = document.getElementById('rot-range').value.trim();
+      var targets1 = raw ? parseRanges(raw, max) : null; // null = all
+      if(raw && !targets1.length) throw new Error('Enter valid pages (1–'+max+') or leave blank for all.');
+      var pages = doc.getPages();
+      var count = 0;
+      pages.forEach(function(pg, i){
+        if(!targets1 || targets1.indexOf(i+1)>-1){
+          var cur = pg.getRotation().angle || 0;
+          pg.setRotation(degrees((cur + deg) % 360));
+          count++;
+        }
+      });
+      return doc.save().then(function(bytes){
+        return {
+          blob:new Blob([bytes],{type:'application/pdf'}),
+          filename:(f.name.replace(/\.pdf$/i,''))+'-rotated.pdf',
+          summary:[['Total pages', max],['Rotated', count+(targets1?' ('+targets1.join(', ')+')':' (all)')],['Angle', deg+'°']]
+        };
+      });
+    });
+  }
+
+  run.addEventListener('click', function(){
+    if(!files.length) return;
+    setEmpty('Working…');
+    var op = mode==='merge' ? doMerge : (mode==='split' ? doSplit : doRotate);
+    Promise.resolve().then(op).then(function(res){
+      showResult(res.summary, res.blob, res.filename);
+    }).catch(function(e){
+      setEmpty('');
+      fail(e && e.message ? e.message : 'Something went wrong processing that PDF.');
+    });
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Color Palette Generator — Paletteforge Demo | OneTimeSuite</title>
+<meta name="description" content="Free in-browser color palette generator. Hit generate for harmonious 5-color schemes, lock the ones you love, check WCAG AA contrast, copy hex codes and export CSS variables or a PNG — everything runs locally in your browser. No upload, no account.">
+<link rel="canonical" href="https://onetimesuite.com/paletteforge/demo/">
+<meta property="og:title" content="Free Color Palette Generator — Paletteforge Demo">
+<meta property="og:description" content="Generate harmonious color palettes, lock your favorites, check contrast and export CSS — free, 100% in your browser.">
+<meta property="og:url" content="https://onetimesuite.com/paletteforge/demo/">
+<link rel="icon" href="/assets/boxes/paletteforge.png">
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:conic-gradient(from 45deg,#ff5a5f,#ffb400,#3ddc84,#4a8cff,#a855f7,#ff5a5f);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .field{margin-top:0.95rem}
+  .field:first-child{margin-top:0}
+  .field label{display:block;font-size:0.85rem;font-weight:700;margin-bottom:0.3rem}
+  .field small{color:var(--soft);display:block;margin-bottom:0.35rem;font-size:0.8rem}
+  .schemes{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.35rem}
+  .scheme{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.4rem 0.6rem;font-size:0.78rem;font-weight:600;color:var(--soft);cursor:pointer;transition:border-color .12s,color .12s}
+  .scheme.on{border-color:var(--accent);color:var(--ink)}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen.alt{background:#1f2937;margin-top:0.55rem;font-size:0.9rem;font-weight:700}
+  .gen:disabled{opacity:0.45;cursor:not-allowed}
+  .kbd{display:inline-block;background:#0a0e15;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 0.35rem;font:600 0.72rem/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--soft)}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem}
+  .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:0.6rem}
+  .swatch{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column}
+  .swatch .chip{position:relative;height:150px;cursor:pointer;display:flex;align-items:flex-start;justify-content:flex-end;padding:0.5rem}
+  .swatch .lock{width:26px;height:26px;border-radius:7px;background:rgba(10,14,21,0.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.85rem;opacity:0;transition:opacity .12s}
+  .swatch .chip:hover .lock{opacity:1}
+  .swatch.locked .lock{opacity:1;background:rgba(10,14,21,0.78)}
+  .swatch .contrast{position:absolute;left:0.5rem;bottom:0.5rem;font:700 0.7rem/1 Arial,sans-serif;padding:0.28rem 0.4rem;border-radius:6px;letter-spacing:0.02em}
+  .swatch .meta{padding:0.55rem 0.5rem 0.65rem;text-align:center}
+  .swatch .hex{font:700 0.9rem/1 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);cursor:pointer;letter-spacing:0.03em;display:inline-flex;align-items:center;gap:0.3rem}
+  .swatch .hex:hover{color:var(--accent)}
+  .swatch .hex .copied{font:600 0.66rem/1 Arial,sans-serif;color:#3ddc84}
+  .swatch .ratio{font-size:0.68rem;color:var(--soft);margin-top:0.3rem}
+  .hint{color:var(--soft);font-size:0.8rem;margin-top:0.7rem}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+  @media(max-width:620px){.palette{grid-template-columns:repeat(5,1fr);gap:0.3rem}.swatch .chip{height:110px}.swatch .hex{font-size:0.72rem}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Paletteforge <span class="tag">Free demo — harmonious color palettes, in your browser</span></div>
+  <a class="cta" href="/paletteforge/">Get the desktop app — $15 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="field">
+      <label>Generate a palette</label>
+      <small>Each generate builds a harmonious 5-color scheme. Locked colors stay put.</small>
+      <button class="gen" id="gen">Generate palette</button>
+      <p class="hint" style="text-align:center;margin-top:0.55rem">or press <span class="kbd">Space</span> to reroll</p>
+    </div>
+    <div class="field">
+      <label>Harmony</label>
+      <small>Pick a scheme, or leave on Random for variety.</small>
+      <div class="schemes" id="schemes">
+        <div class="scheme on" data-scheme="random">Random</div>
+        <div class="scheme" data-scheme="analogous">Analogous</div>
+        <div class="scheme" data-scheme="complementary">Complementary</div>
+        <div class="scheme" data-scheme="triadic">Triadic</div>
+        <div class="scheme" data-scheme="monochrome">Monochrome</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Export</label>
+      <small>First export is free.</small>
+      <button class="gen alt" id="copy-css">Copy CSS variables</button>
+      <button class="gen alt" id="dl-png">Download palette (PNG)</button>
+      <button class="gen alt" id="dl-json">Download palette (JSON)</button>
+    </div>
+    <p class="note">100% private — nothing leaves this page. No upload, no account.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free Color Palette Generator</h1>
+    <p class="sub">Hit generate for a harmonious 5-color scheme. Click a swatch to lock it, click its hex to copy, and see instantly whether white or black text passes WCAG AA on each color. Export CSS variables, a PNG or JSON — all generated locally in your browser.</p>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead">Your palette — click swatch to lock, click hex to copy</div>
+        <div class="palette" id="palette"></div>
+        <p class="hint">The contrast badge shows the best passing text color and its ratio against the swatch. WCAG AA needs at least 4.5:1 for normal text.</p>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/paletteforge.png" alt="Paletteforge desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Need brand kits, shade ramps &amp; unlimited exports?</h2>
+        <p>The Paletteforge desktop app does everything this demo does plus save unlimited palettes, generate full tint/shade ramps, export brand kits to CSS / SCSS / Tailwind / Figma tokens / Adobe .ase, and pull palettes from any image — offline, forever, for <strong>$15 once</strong>. MIT-licensed source included.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/paletteforge" rel="noopener">Get Paletteforge — $15 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/paletteforge/">Paletteforge product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+  var COUNT=5;
+  // palette state: array of {hex, locked}
+  var swatches=[];
+  var scheme='random';
+  var paletteEl=document.getElementById('palette');
+
+  // ---------------------------------------------------------- color helpers
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+  function hslToRgb(h,s,l){
+    h=((h%360)+360)%360; s=clamp(s,0,100)/100; l=clamp(l,0,100)/100;
+    var c=(1-Math.abs(2*l-1))*s, x=c*(1-Math.abs((h/60)%2-1)), m=l-c/2, r=0,g=0,b=0;
+    if(h<60){r=c;g=x}else if(h<120){r=x;g=c}else if(h<180){g=c;b=x}
+    else if(h<240){g=x;b=c}else if(h<300){r=x;b=c}else{r=c;b=x}
+    return [Math.round((r+m)*255),Math.round((g+m)*255),Math.round((b+m)*255)];
+  }
+  function rgbToHex(rgb){
+    return '#'+rgb.map(function(v){return ('0'+clamp(v,0,255).toString(16)).slice(-2)}).join('').toUpperCase();
+  }
+  function hexToRgb(hex){
+    var h=hex.replace('#','');
+    return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];
+  }
+  function hslHex(h,s,l){return rgbToHex(hslToRgb(h,s,l))}
+
+  // WCAG relative luminance + contrast ratio
+  function relLum(rgb){
+    var a=rgb.map(function(v){v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)});
+    return 0.2126*a[0]+0.7152*a[1]+0.0722*a[2];
+  }
+  function contrast(rgb1,rgb2){
+    var l1=relLum(rgb1),l2=relLum(rgb2);
+    var hi=Math.max(l1,l2),lo=Math.min(l1,l2);
+    return (hi+0.05)/(lo+0.05);
+  }
+  // best of white/black text on a background; returns {color,ratio,pass}
+  function bestText(hex){
+    var bg=hexToRgb(hex);
+    var white=contrast(bg,[255,255,255]);
+    var black=contrast(bg,[0,0,0]);
+    if(white>=black){return {color:'#FFFFFF',label:'White',ratio:white,pass:white>=4.5}}
+    return {color:'#000000',label:'Black',ratio:black,pass:black>=4.5};
+  }
+
+  function rand(a,b){return a+Math.random()*(b-a)}
+
+  // ------------------------------------------------- harmonious generation
+  // Produces an array of 5 hex strings for a base hue + chosen scheme.
+  function buildScheme(kind){
+    var base=Math.random()*360;
+    var out=[];
+    function push(h,s,l){out.push(hslHex(h,s,l))}
+    if(kind==='monochrome'){
+      var s=rand(45,75);
+      for(var i=0;i<COUNT;i++)push(base+rand(-8,8), s+rand(-8,8), 22+i*15);
+    }else if(kind==='analogous'){
+      var s2=rand(55,80), spread=rand(18,32);
+      for(var j=0;j<COUNT;j++)push(base+(j-2)*spread, s2+rand(-10,10), 40+rand(-6,6)+(j-2)*4);
+    }else if(kind==='complementary'){
+      var hues=[base,base,base+180,base+180,base+ (Math.random()<0.5?30:-30)];
+      hues.forEach(function(h,k){push(h+rand(-6,6), rand(55,82), [30,55,42,68,48][k]);});
+    }else if(kind==='triadic'){
+      var hs=[base,base+120,base+240,base+rand(-20,20),base+120+rand(-20,20)];
+      hs.forEach(function(h,k){push(h, rand(52,80), [38,52,46,64,58][k]);});
+    }else{ // random but still tasteful — random pick among the others
+      var kinds=['analogous','complementary','triadic','monochrome'];
+      return buildScheme(kinds[Math.floor(Math.random()*kinds.length)]);
+    }
+    return out.slice(0,COUNT);
+  }
+
+  function generate(){
+    var fresh=buildScheme(scheme);
+    for(var i=0;i<COUNT;i++){
+      if(swatches[i]&&swatches[i].locked)continue; // keep locked colors
+      swatches[i]={hex:fresh[i],locked:swatches[i]?swatches[i].locked:false};
+    }
+    render();
+  }
+
+  // ---------------------------------------------------------------- render
+  function render(){
+    paletteEl.innerHTML='';
+    swatches.forEach(function(sw,idx){
+      var t=bestText(sw.hex);
+      var cell=document.createElement('div');
+      cell.className='swatch'+(sw.locked?' locked':'');
+      cell.innerHTML=
+        '<div class="chip" data-idx="'+idx+'" style="background:'+sw.hex+'" title="Click to '+(sw.locked?'unlock':'lock')+'">'+
+          '<span class="lock">'+(sw.locked?'&#128274;':'&#128275;')+'</span>'+
+          '<span class="contrast" style="background:'+t.color+';color:'+(t.color==='#FFFFFF'?'#000':'#fff')+'">'+
+            t.label+' '+t.ratio.toFixed(1)+' '+(t.pass?'AA':'&#10007;')+'</span>'+
+        '</div>'+
+        '<div class="meta">'+
+          '<span class="hex" data-hex="'+sw.hex+'">'+sw.hex+'</span>'+
+          '<div class="ratio">'+(t.pass?'passes AA':'below AA (needs 4.5)')+'</div>'+
+        '</div>';
+      paletteEl.appendChild(cell);
+    });
+  }
+
+  // toggle lock
+  paletteEl.addEventListener('click',function(e){
+    var chip=e.target.closest('.chip');
+    if(chip){
+      var i=+chip.getAttribute('data-idx');
+      swatches[i].locked=!swatches[i].locked;
+      render();
+      return;
+    }
+    var hex=e.target.closest('.hex');
+    if(hex){
+      copyText(hex.getAttribute('data-hex'),hex);
+    }
+  });
+
+  function copyText(text,el){
+    var flash=function(){
+      if(!el)return;
+      var old=el.querySelector('.copied');
+      if(old)return;
+      var s=document.createElement('span');s.className='copied';s.textContent='copied';
+      el.appendChild(s);
+      setTimeout(function(){s.remove()},1200);
+    };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(flash,function(){legacyCopy(text);flash()});
+    }else{legacyCopy(text);flash()}
+  }
+  function legacyCopy(text){
+    var ta=document.createElement('textarea');ta.value=text;
+    ta.style.cssText='position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy')}catch(e){}
+    ta.remove();
+  }
+
+  // ---------------------------------------------------------- generate btn
+  document.getElementById('gen').addEventListener('click',generate);
+  // spacebar rerolls (unless typing in a field)
+  document.addEventListener('keydown',function(e){
+    if(e.code==='Space'&&!/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName||''))){
+      e.preventDefault();generate();
+    }
+  });
+  document.getElementById('schemes').addEventListener('click',function(e){
+    var s=e.target.closest('.scheme');
+    if(!s)return;
+    scheme=s.getAttribute('data-scheme');
+    [].slice.call(document.querySelectorAll('.scheme')).forEach(function(el){el.classList.toggle('on',el===s)});
+  });
+
+  // --------------------------------------------------- one free export gate
+  function used(){try{return localStorage.getItem('paletteforge_demo_used')==='1'}catch(e){return false}}
+  function markUsed(){try{localStorage.setItem('paletteforge_demo_used','1')}catch(e){}}
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">&#127912;</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free export!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Keep generating and copying hex codes free, anytime. The Paletteforge desktop app adds <strong style="color:#eef1f6">unlimited exports</strong>, saved palettes, full tint/shade ramps, image color extraction and brand-kit export to CSS, SCSS, Tailwind, Figma tokens and Adobe .ase — offline, forever.</p>'+
+      '<a href="https://whop.com/benjisaiempire/paletteforge" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Paletteforge — $15 once, own forever &#8594;</a>'+
+      '<a href="/paletteforge/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+  // returns true if allowed to export (and burns the free use); false if gated
+  function gateExport(){
+    if(used()){paywall();return false}
+    markUsed();
+    return true;
+  }
+
+  function hexes(){return swatches.map(function(s){return s.hex})}
+
+  // ------------------------------------------------------------ CSS export
+  document.getElementById('copy-css').addEventListener('click',function(){
+    if(!gateExport())return;
+    var lines=[':root {'];
+    hexes().forEach(function(hex,i){lines.push('  --color-'+(i+1)+': '+hex+';')});
+    lines.push('}');
+    copyText(lines.join('\n'),null);
+    toast('CSS variables copied to clipboard');
+  });
+
+  // ------------------------------------------------------------ PNG export
+  document.getElementById('dl-png').addEventListener('click',function(){
+    if(!gateExport())return;
+    var sw=260,h=340,pad=0,W=COUNT*sw,H=h;
+    var c=document.createElement('canvas');c.width=W;c.height=H;
+    var x=c.getContext('2d');
+    hexes().forEach(function(hex,i){
+      x.fillStyle=hex;x.fillRect(i*sw,0,sw,h);
+      var t=bestText(hex);
+      x.fillStyle=t.color;
+      x.font='bold 34px Arial, sans-serif';
+      x.textAlign='center';x.textBaseline='alphabetic';
+      x.fillText(hex,i*sw+sw/2,h-70);
+      x.font='500 22px Arial, sans-serif';
+      x.fillText(t.label+' text '+t.ratio.toFixed(1)+':1',i*sw+sw/2,h-38);
+    });
+    c.toBlob(function(b){
+      var a=document.createElement('a');a.href=URL.createObjectURL(b);
+      a.download='paletteforge-palette.png';a.click();
+      setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+    },'image/png');
+    toast('Palette PNG downloaded');
+  });
+
+  // ----------------------------------------------------------- JSON export
+  document.getElementById('dl-json').addEventListener('click',function(){
+    if(!gateExport())return;
+    var data={
+      generatedAt:new Date().toISOString(),
+      source:'onetimesuite.com/paletteforge/demo',
+      scheme:scheme,
+      colors:swatches.map(function(s){
+        var t=bestText(s.hex);
+        return {hex:s.hex,rgb:hexToRgb(s.hex),locked:s.locked,bestText:t.color,contrast:+t.ratio.toFixed(2),passesAA:t.pass};
+      })
+    };
+    var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='paletteforge-palette.json';a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+    toast('Palette JSON downloaded');
+  });
+
+  function toast(msg){
+    var t=document.createElement('div');
+    t.textContent=msg;
+    t.style.cssText='position:fixed;left:50%;bottom:1.4rem;transform:translateX(-50%);background:#121826;border:1px solid #232c3d;color:#eef1f6;padding:0.65rem 1.1rem;border-radius:10px;font-size:0.9rem;z-index:60;box-shadow:0 8px 30px rgba(0,0,0,0.4)';
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.transition='opacity .4s';t.style.opacity='0'},1600);
+    setTimeout(function(){t.remove()},2100);
+  }
+
+  // ------------------------------------------------------------- kick off
+  generate();
+})();
+</script>
+</body>
+</html>

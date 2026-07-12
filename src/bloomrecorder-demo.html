@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Online Screen Recorder — No Watermark | Bloom Recorder Demo — OneTimeSuite</title>
+<meta name="description" content="Free in-browser screen recorder. Capture your screen, a window or a tab with system audio and optional microphone, then download a clean WebM — no watermark, no time limit, no upload. Everything runs locally in your browser.">
+<link rel="canonical" href="https://onetimesuite.com/bloomrecorder/demo/">
+<meta property="og:title" content="Free Online Screen Recorder — No Watermark | Bloom Recorder Demo">
+<meta property="og:description" content="Record your screen right in the browser and download a clean WebM. Free, no watermark, nothing uploaded.">
+<meta property="og:url" content="https://onetimesuite.com/bloomrecorder/demo/">
+<link rel="icon" href="/assets/boxes/bloomrecorder.png">
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;--red:#ff4d4d;--green:#3ddc84;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .opts{margin-bottom:0.4rem}
+  .opts .optlabel{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin-bottom:0.6rem}
+  .checks{display:flex;flex-direction:column;gap:0.55rem}
+  .checks label{display:flex;gap:0.6rem;align-items:flex-start;font-size:0.92rem;font-weight:500;color:var(--ink);cursor:pointer}
+  .checks label input{margin-top:0.2rem;flex:0 0 auto}
+  .checks label small{display:block;color:var(--soft);font-size:0.78rem;font-weight:400}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen:disabled{opacity:0.45;cursor:not-allowed}
+  .gen.rec{background:var(--red)}
+  .gen.alt{background:#1f2937;margin-top:0.55rem;font-size:0.9rem;font-weight:700}
+  .gen.hidden{display:none}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  .status{margin-top:1rem;padding:0.7rem 0.9rem;border:1px solid var(--line);border-radius:10px;background:var(--panel2);font-size:0.88rem;color:var(--soft);display:flex;align-items:center;gap:0.6rem}
+  .status .dot{width:10px;height:10px;border-radius:50%;background:#55617a;flex:0 0 auto}
+  .status.live .dot{background:var(--red);animation:pulse 1s infinite}
+  .status.done .dot{background:var(--green)}
+  .status .time{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink);font-size:1rem}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem}
+  .stage{background:#000;border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative;min-height:240px;display:flex;align-items:center;justify-content:center}
+  .stage video{display:block;width:100%;max-height:520px;background:#000}
+  .stage .empty{color:#55617a;font-size:0.9rem;text-align:center;padding:2.5rem 1.5rem}
+  .stage .liveflag{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;padding:0.25rem 0.55rem;border-radius:6px;display:none;align-items:center;gap:0.35rem}
+  .stage .liveflag .b{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1s infinite}
+  .stage.islive .liveflag{display:flex}
+  .unsupported{background:linear-gradient(135deg,#2a1518,#161022);border:1px solid #40202a;border-radius:12px;padding:1.4rem;color:#f4c7c7;font-size:0.92rem;display:none}
+  .unsupported strong{color:#fff}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Bloom Recorder <span class="tag">Free demo — record your screen, right in the browser</span></div>
+  <a class="cta" href="/bloomrecorder/">Get the desktop app — $29 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="opts">
+      <div class="optlabel">What to capture</div>
+      <div class="checks">
+        <label>
+          <input type="checkbox" id="opt-sysaudio" checked>
+          <span>System / tab audio<small>Capture sound playing on the screen you pick (browser-dependent).</small></span>
+        </label>
+        <label>
+          <input type="checkbox" id="opt-mic">
+          <span>Microphone<small>Narrate over your recording — mixed in with system audio.</small></span>
+        </label>
+      </div>
+    </div>
+    <button class="gen" id="start">● Start recording</button>
+    <button class="gen rec hidden" id="stop">■ Stop recording</button>
+    <button class="gen alt hidden" id="download">⬇ Download recording</button>
+    <div class="status" id="status"><span class="dot"></span><span id="status-text">Ready when you are.</span><span class="time" id="timer"></span></div>
+    <p class="note">100% private — your recording is assembled in this page and never uploaded. No account.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free Online Screen Recorder — No Watermark</h1>
+    <p class="sub">Record your whole screen, a single window or a browser tab — with system audio and an optional microphone — then play it back and download a clean WebM. No watermark, no time limit, nothing uploaded. It all runs locally in your browser.</p>
+
+    <div class="unsupported" id="unsupported"></div>
+
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead" id="stagehead">Preview</div>
+        <div class="stage" id="stage">
+          <div class="liveflag"><span class="b"></span>REC</div>
+          <div class="empty" id="stage-empty">Your capture preview will appear here.<br>Hit <strong>Start recording</strong> and pick a screen, window or tab.</div>
+          <video id="livevideo" muted autoplay playsinline style="display:none"></video>
+          <video id="playback" controls playsinline style="display:none"></video>
+        </div>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/bloomrecorder.png" alt="Bloom Recorder desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Want MP4 &amp; optimized GIF export, trimming and a local library?</h2>
+        <p>The Bloom Recorder desktop app does everything this demo does plus true MP4 and optimized GIF export, in-app trimming, a searchable local recording library, no length limits and no watermark — offline, forever, for <strong>$29 once</strong>. Own it, no subscription.</p>
+      </div>
+      <a class="buy" href="https://whop.com/checkout/plan_Ma48eglvyofUF" rel="noopener">Get Bloom Recorder — $29 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/bloomrecorder/">Bloom Recorder product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+
+  var startBtn=document.getElementById('start'),
+      stopBtn=document.getElementById('stop'),
+      dlBtn=document.getElementById('download'),
+      optSys=document.getElementById('opt-sysaudio'),
+      optMic=document.getElementById('opt-mic'),
+      statusEl=document.getElementById('status'),
+      statusText=document.getElementById('status-text'),
+      timerEl=document.getElementById('timer'),
+      stage=document.getElementById('stage'),
+      stageEmpty=document.getElementById('stage-empty'),
+      stageHead=document.getElementById('stagehead'),
+      liveVideo=document.getElementById('livevideo'),
+      playback=document.getElementById('playback'),
+      unsupported=document.getElementById('unsupported');
+
+  // ---- feature detection (iOS Safari / http contexts have no getDisplayMedia)
+  var canCapture = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia)
+                   && typeof window.MediaRecorder!=='undefined';
+  if(!canCapture){
+    unsupported.style.display='block';
+    unsupported.innerHTML='<strong>Screen recording isn’t available in this browser.</strong> '+
+      'In-browser screen capture needs the getDisplayMedia API over a secure (https) connection — '+
+      'it works in desktop Chrome, Edge, Firefox and Opera, but not on iOS Safari or most mobile browsers. '+
+      'The <a href="/bloomrecorder/">Bloom Recorder desktop app</a> records natively on any machine.';
+    startBtn.disabled=true;
+    statusText.textContent='Screen recording not supported here.';
+  }
+
+  var displayStream=null, micStream=null, audioCtx=null,
+      recorder=null, chunks=[], recUrl=null, recBlob=null,
+      startTs=0, timerInt=null, mime='';
+
+  function pad(n){return (n<10?'0':'')+n}
+  function fmt(ms){
+    var s=Math.floor(ms/1000), m=Math.floor(s/60), h=Math.floor(m/60);
+    s%=60; m%=60;
+    return (h>0?pad(h)+':':'')+pad(m)+':'+pad(s);
+  }
+  function tick(){ timerEl.textContent=fmt(Date.now()-startTs); }
+
+  function pickMime(){
+    var cands=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+    for(var i=0;i<cands.length;i++){
+      try{ if(window.MediaRecorder.isTypeSupported(cands[i])) return cands[i]; }catch(e){}
+    }
+    return '';
+  }
+
+  function setStatus(kind,text){
+    statusEl.className='status'+(kind?' '+kind:'');
+    statusText.textContent=text;
+  }
+
+  function cleanupStreams(){
+    if(displayStream){ displayStream.getTracks().forEach(function(t){t.stop()}); displayStream=null; }
+    if(micStream){ micStream.getTracks().forEach(function(t){t.stop()}); micStream=null; }
+    if(audioCtx){ try{audioCtx.close()}catch(e){} audioCtx=null; }
+  }
+
+  // Build the combined MediaStream that MediaRecorder will record.
+  // Video always comes from the display capture. Audio is either the
+  // system-audio track alone, the mic alone, or both mixed via WebAudio.
+  function buildRecordStream(){
+    var videoTracks=displayStream.getVideoTracks();
+    var sysAudio=displayStream.getAudioTracks(); // may be empty if user/browser gave no audio
+    var micAudio=micStream?micStream.getAudioTracks():[];
+
+    var out=new MediaStream();
+    videoTracks.forEach(function(t){ out.addTrack(t); });
+
+    var audioSources=[];
+    if(optSys.checked && sysAudio.length) audioSources.push(new MediaStream([sysAudio[0]]));
+    if(micAudio.length) audioSources.push(new MediaStream([micAudio[0]]));
+
+    if(audioSources.length===0){
+      return out; // video only
+    }
+    if(audioSources.length===1){
+      audioSources[0].getAudioTracks().forEach(function(t){ out.addTrack(t); });
+      return out;
+    }
+    // Two sources -> mix them into one track with an AudioContext destination.
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext;
+      audioCtx=new AC();
+      var dest=audioCtx.createMediaStreamDestination();
+      audioSources.forEach(function(s){
+        audioCtx.createMediaStreamSource(s).connect(dest);
+      });
+      dest.stream.getAudioTracks().forEach(function(t){ out.addTrack(t); });
+    }catch(e){
+      // Mixing failed: fall back to just the first available audio source.
+      audioSources[0].getAudioTracks().forEach(function(t){ out.addTrack(t); });
+    }
+    return out;
+  }
+
+  function beginRecording(){
+    var rec=buildRecordStream();
+    mime=pickMime();
+    try{
+      recorder = mime ? new MediaRecorder(rec,{mimeType:mime}) : new MediaRecorder(rec);
+    }catch(e){
+      setStatus('','Could not start the recorder in this browser.');
+      cleanupStreams();
+      resetButtons();
+      return;
+    }
+    chunks=[];
+    recorder.ondataavailable=function(e){ if(e.data && e.data.size>0) chunks.push(e.data); };
+    recorder.onstop=function(){ finalizeRecording(); };
+    recorder.start();
+
+    // live preview
+    liveVideo.srcObject=displayStream;
+    liveVideo.style.display='block';
+    playback.style.display='none';
+    playback.removeAttribute('src');
+    stageEmpty.style.display='none';
+    stage.classList.add('islive');
+    stageHead.textContent='Live capture';
+
+    // if the user stops sharing via the browser's own bar, end cleanly
+    displayStream.getVideoTracks()[0].addEventListener('ended', stopRecording);
+
+    startTs=Date.now();
+    timerEl.textContent='00:00';
+    timerInt=setInterval(tick,250);
+    setStatus('live','Recording… pick another tab and it keeps rolling.');
+
+    startBtn.classList.add('hidden');
+    stopBtn.classList.remove('hidden');
+    dlBtn.classList.add('hidden');
+  }
+
+  function startRecording(){
+    if(!canCapture) return;
+    setStatus('','Choose a screen, window or tab to share…');
+    startBtn.disabled=true;
+
+    var dispOpts={ video:true, audio: optSys.checked };
+    var getMic = optMic.checked
+      ? navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){micStream=s;}).catch(function(){
+          micStream=null; // mic denied -> continue without it
+        })
+      : Promise.resolve();
+
+    navigator.mediaDevices.getDisplayMedia(dispOpts).then(function(stream){
+      displayStream=stream;
+      return getMic;
+    }).then(function(){
+      startBtn.disabled=false;
+      beginRecording();
+    }).catch(function(err){
+      // user cancelled the picker, or permission denied
+      startBtn.disabled=false;
+      cleanupStreams();
+      if(err && (err.name==='NotAllowedError'||err.name==='AbortError'||err.name==='NotFoundError')){
+        setStatus('','No screen selected — hit Start whenever you’re ready.');
+      }else{
+        setStatus('','Couldn’t start capture'+(err&&err.name?(' ('+err.name+')'):'')+'. Try again.');
+      }
+    });
+  }
+
+  function stopRecording(){
+    if(recorder && recorder.state!=='inactive'){
+      try{ recorder.stop(); }catch(e){}
+    }
+  }
+
+  function finalizeRecording(){
+    clearInterval(timerInt); timerInt=null;
+    recBlob=new Blob(chunks,{type:'video/webm'});
+    if(recUrl){ URL.revokeObjectURL(recUrl); }
+    recUrl=URL.createObjectURL(recBlob);
+
+    liveVideo.pause();
+    liveVideo.srcObject=null;
+    liveVideo.style.display='none';
+    stage.classList.remove('islive');
+
+    playback.src=recUrl;
+    playback.style.display='block';
+    stageHead.textContent='Playback — your recording';
+
+    cleanupStreams();
+
+    var dur=fmt(Date.now()-startTs);
+    var kb=Math.round(recBlob.size/1024);
+    var sizeStr=kb>1024?((kb/1024).toFixed(1)+' MB'):(kb+' KB');
+    setStatus('done','Done — '+dur+', '+sizeStr+'. Play it back below or download.');
+
+    stopBtn.classList.add('hidden');
+    startBtn.classList.remove('hidden');
+    startBtn.textContent='● Record again';
+    dlBtn.classList.remove('hidden');
+  }
+
+  function resetButtons(){
+    stopBtn.classList.add('hidden');
+    startBtn.classList.remove('hidden');
+  }
+
+  // ------------------------------------------------- one free download gate
+  function used(){ try{return localStorage.getItem('bloomrecorder_demo_used')==='1'}catch(e){return false} }
+  function markUsed(){ try{localStorage.setItem('bloomrecorder_demo_used','1')}catch(e){} }
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:460px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">🌼</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free recording!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it captured exactly what you needed. The Bloom Recorder desktop app records <strong style="color:#eef1f6">with no length limits and no watermark</strong>, exports true <strong style="color:#eef1f6">MP4 &amp; optimized GIF</strong>, trims in-app and keeps a searchable local library — offline, forever.</p>'+
+      '<a href="https://whop.com/checkout/plan_Ma48eglvyofUF" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Bloom Recorder — $29 once, own forever →</a>'+
+      '<a href="/bloomrecorder/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  function download(){
+    if(!recBlob){ return; }
+    if(used()){ paywall(); return; }
+    var a=document.createElement('a');
+    a.href=recUrl;
+    var stamp=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
+    a.download='bloom-recording-'+stamp+'.webm';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    markUsed();
+  }
+
+  startBtn.addEventListener('click',startRecording);
+  stopBtn.addEventListener('click',stopRecording);
+  dlBtn.addEventListener('click',download);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Developer Tools — JSON, Base64, Hash, JWT | Wrangle Demo — OneTimeSuite</title>
+<meta name="description" content="Free in-browser developer multi-tool. Format &amp; validate JSON, Base64 encode/decode, URL encode, SHA hashes, JWT decode, UUID v4, unix timestamp converter and case conversion — 100% client-side, nothing is uploaded.">
+<link rel="canonical" href="https://onetimesuite.com/wrangle/demo/">
+<meta property="og:title" content="Free Developer Tools — JSON, Base64, Hash, JWT | Wrangle Demo">
+<meta property="og:description" content="A whole box of dev tools that run entirely in your browser — no pasting secrets into random websites. Free, no account.">
+<meta property="og:url" content="https://onetimesuite.com/wrangle/demo/">
+<link rel="icon" href="/assets/boxes/wrangle.png">
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem;flex:0 0 250px;max-width:250px}
+  .panel h3{font-size:0.72rem;letter-spacing:0.12em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem 0.2rem}
+  .tool{display:flex;align-items:center;gap:0.55rem;width:100%;background:transparent;border:1px solid transparent;border-radius:9px;padding:0.55rem 0.6rem;color:var(--soft);font:inherit;font-size:0.94rem;font-weight:600;text-align:left;cursor:pointer;transition:background .12s,color .12s,border-color .12s}
+  .tool:hover{background:var(--panel2);color:var(--ink)}
+  .tool.on{background:var(--panel2);border-color:var(--accent);color:var(--ink)}
+  .tool .ico{width:26px;height:26px;flex:0 0 26px;background:var(--panel2);border:1px solid var(--line);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;color:var(--accent);font-family:"SFMono-Regular",Consolas,monospace}
+  .tool.on .ico{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .main{flex:1 1 480px;min-width:0}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .toolhead{display:flex;align-items:baseline;gap:0.6rem;margin-bottom:0.15rem}
+  .toolhead h2{font-size:1.2rem}
+  .toolhead .badge{font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;font-weight:700;color:var(--soft);background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:0.12rem 0.55rem}
+  .toolsub{color:var(--soft);font-size:0.9rem;margin-bottom:0.9rem}
+  .controls{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.7rem;align-items:center}
+  .btn{background:var(--accent);border:none;color:#fff;font:inherit;font-weight:700;font-size:0.9rem;padding:0.5rem 0.9rem;border-radius:8px;cursor:pointer}
+  .btn.alt{background:#1f2937}
+  select,.controls input[type=text],.controls input[type=number]{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.45rem 0.6rem;color:var(--ink);font:inherit;font-size:0.9rem}
+  .io{display:block}
+  .iolabel{display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);font-weight:700;margin:0.7rem 0 0.35rem}
+  textarea{width:100%;min-height:150px;resize:vertical;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:0.75rem 0.85rem;color:var(--ink);font:13px/1.5 "SFMono-Regular",Consolas,"Liberation Mono",monospace;white-space:pre;overflow-wrap:normal;overflow-x:auto}
+  textarea.out{background:#0a0e15}
+  textarea:focus{outline:none;border-color:var(--accent)}
+  .copybtn{background:var(--panel2);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:0.78rem;font-weight:700;padding:0.28rem 0.7rem;border-radius:7px;cursor:pointer;text-transform:none;letter-spacing:0}
+  .copybtn:hover{border-color:var(--accent)}
+  .err{color:#ff6b6b;font-size:0.85rem;font-weight:600;margin-top:0.5rem;min-height:1.1rem}
+  .ok{color:#3ddc84}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:1rem}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.panel .tools-list{display:grid;grid-template-columns:1fr 1fr;gap:0.3rem}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Wrangle <span class="tag">Free demo — a developer's data toolbox, in your browser</span></div>
+  <a class="cta" href="/wrangle/">Get the desktop app — $15 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <h3>Tools</h3>
+    <div class="tools-list" id="picker"></div>
+  </div>
+
+  <div class="main">
+    <h1>Free Developer Tools</h1>
+    <p class="sub">JSON, Base64, URL, hashing, JWT, UUID, timestamps and case conversion — the little utilities you reach for all day. Everything runs locally in your browser: nothing you paste is ever uploaded.</p>
+
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="toolhead"><h2 id="t-title">JSON</h2><span class="badge" id="t-badge"></span></div>
+        <p class="toolsub" id="t-sub"></p>
+        <div class="controls" id="t-controls"></div>
+
+        <div class="io">
+          <div class="iolabel"><span id="in-label">Input</span></div>
+          <textarea id="input" spellcheck="false" placeholder="Paste here…"></textarea>
+        </div>
+        <div class="io">
+          <div class="iolabel"><span id="out-label">Output</span><button class="copybtn" id="copy">Copy result</button></div>
+          <textarea id="output" class="out" spellcheck="false" readonly placeholder="Result appears here…"></textarea>
+        </div>
+        <div class="err" id="err"></div>
+        <p class="note">100% private — your data never leaves this page. No upload, no account. That's the whole point.</p>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/wrangle.png" alt="Wrangle desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Want all these tools offline, in one keyboard-driven app?</h2>
+        <p>The Wrangle desktop app bundles every tool in this demo plus diff, JSON&harr;YAML&harr;CSV, cron parsing, regex tester, colour tools, hex/base converters and more — all offline, so you never paste an API key or a JWT into a random website again. <strong>$15 once</strong>, own it forever. MIT-licensed source included.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/wrangle-app" rel="noopener">Get Wrangle — $15 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/wrangle/">Wrangle product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+
+  var BUY='https://whop.com/benjisaiempire/wrangle-app';
+
+  // -------------------------------------------------------- encoding helpers
+  function b64EncodeUnicode(str){
+    // handle full unicode (btoa is latin1 only)
+    var bytes=new TextEncoder().encode(str);
+    var bin='';
+    bytes.forEach(function(b){bin+=String.fromCharCode(b)});
+    return btoa(bin);
+  }
+  function b64DecodeUnicode(b64){
+    var bin=atob(b64.replace(/\s+/g,''));
+    var bytes=new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function b64UrlToStr(s){
+    s=s.replace(/-/g,'+').replace(/_/g,'/');
+    while(s.length%4)s+='=';
+    return b64DecodeUnicode(s);
+  }
+  function bufToHex(buf){
+    var v=new Uint8Array(buf),h='';
+    for(var i=0;i<v.length;i++)h+=v[i].toString(16).padStart(2,'0');
+    return h;
+  }
+
+  // ------------------------------------------------------------------- tools
+  // Each tool: {id,title,badge,sub,inLabel,outLabel,placeholder,sample,
+  //   controls:[{type,...}], run(input,state)->{out} or throws Error, auto:true}
+  var TOOLS=[
+    {
+      id:'json', title:'JSON', label:'{ }',
+      badge:'format · validate · minify',
+      sub:'Prettify and validate JSON, or minify it back down to one line.',
+      inLabel:'JSON in', outLabel:'Result',
+      placeholder:'{"hello":"world","nums":[1,2,3]}',
+      sample:'{"name":"Wrangle","tools":8,"offline":true,"tags":["json","base64","jwt"]}',
+      mode:'format',
+      controls:[
+        {type:'seg',key:'mode',options:[['format','Prettify'],['minify','Minify']]},
+        {type:'seg',key:'indent',options:[['2','2 spaces'],['4','4 spaces'],['\t','Tabs']],when:function(s){return s.mode==='format'}}
+      ],
+      run:function(input,s){
+        if(!input.trim())return '';
+        var obj=JSON.parse(input);
+        if(s.mode==='minify')return JSON.stringify(obj);
+        var ind=s.indent==='\t'?'\t':parseInt(s.indent||'2',10);
+        return JSON.stringify(obj,null,ind);
+      }
+    },
+    {
+      id:'base64', title:'Base64', label:'64',
+      badge:'text',
+      sub:'Encode text to Base64 or decode it back. Full Unicode supported.',
+      inLabel:'Text / Base64', outLabel:'Result',
+      placeholder:'Hello, Wrangle!',
+      sample:'Hello, Wrangle! 👋',
+      mode:'encode',
+      controls:[{type:'seg',key:'mode',options:[['encode','Encode'],['decode','Decode']]}],
+      run:function(input,s){
+        if(!input)return '';
+        return s.mode==='encode'?b64EncodeUnicode(input):b64DecodeUnicode(input);
+      }
+    },
+    {
+      id:'url', title:'URL', label:'%',
+      badge:'encode · decode',
+      sub:'Percent-encode text for use in URLs, or decode it back to readable text.',
+      inLabel:'Text / encoded', outLabel:'Result',
+      placeholder:'name=Ben & role=dev',
+      sample:'q=offline dev tools&sort=price',
+      mode:'encode',
+      controls:[
+        {type:'seg',key:'mode',options:[['encode','Encode'],['decode','Decode']]},
+        {type:'seg',key:'kind',options:[['component','Component'],['full','Full URI']]}
+      ],
+      run:function(input,s){
+        if(!input)return '';
+        if(s.mode==='encode')return s.kind==='full'?encodeURI(input):encodeURIComponent(input);
+        return s.kind==='full'?decodeURI(input):decodeURIComponent(input);
+      }
+    },
+    {
+      id:'hash', title:'Hash', label:'#',
+      badge:'SHA-1 · SHA-256 · SHA-512',
+      sub:'Hash text with the browser’s native crypto.subtle. (MD5 isn’t in SubtleCrypto, so it’s not offered here — the desktop app has it.)',
+      inLabel:'Text to hash', outLabel:'Hex digest',
+      placeholder:'The quick brown fox',
+      sample:'The quick brown fox jumps over the lazy dog',
+      algo:'SHA-256',
+      async:true,
+      controls:[{type:'seg',key:'algo',options:[['SHA-1','SHA-1'],['SHA-256','SHA-256'],['SHA-512','SHA-512']]}],
+      run:function(input,s){
+        if(!input)return Promise.resolve('');
+        var data=new TextEncoder().encode(input);
+        return crypto.subtle.digest(s.algo,data).then(function(buf){return bufToHex(buf)});
+      }
+    },
+    {
+      id:'jwt', title:'JWT', label:'JWT',
+      badge:'decode only',
+      sub:'Splits a JWT on the dots and base64url-decodes the header and payload. No signature is verified — this is a decoder, not a validator.',
+      inLabel:'JWT', outLabel:'Header + payload',
+      placeholder:'eyJhbGciOiJ…',
+      sample:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJlbiIsImFkbWluIjp0cnVlLCJpYXQiOjE3MjAwMDAwMDB9.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U',
+      run:function(input){
+        input=input.trim();
+        if(!input)return '';
+        var parts=input.split('.');
+        if(parts.length<2)throw new Error('Not a JWT — expected header.payload.signature');
+        var header=JSON.parse(b64UrlToStr(parts[0]));
+        var payload=JSON.parse(b64UrlToStr(parts[1]));
+        var out='// HEADER\n'+JSON.stringify(header,null,2)+'\n\n// PAYLOAD\n'+JSON.stringify(payload,null,2);
+        // decode common time claims for convenience
+        var times=[];
+        ['iat','exp','nbf'].forEach(function(k){
+          if(typeof payload[k]==='number')times.push(k+': '+new Date(payload[k]*1000).toISOString());
+        });
+        if(times.length)out+='\n\n// TIMESTAMPS (decoded)\n'+times.join('\n');
+        out+='\n\n// signature ('+(parts[2]?parts[2].length+' chars':'missing')+') — not verified';
+        return out;
+      }
+    },
+    {
+      id:'uuid', title:'UUID', label:'ID',
+      badge:'v4 generator',
+      sub:'Generate random RFC-4122 version-4 UUIDs with crypto.randomUUID(). Set how many you need and hit Generate.',
+      inLabel:'(no input needed)', outLabel:'UUIDs',
+      noInput:true,
+      count:5,
+      controls:[
+        {type:'number',key:'count',label:'Count',min:1,max:500,value:5},
+        {type:'button',key:'gen',label:'Generate'}
+      ],
+      run:function(input,s){
+        var n=Math.max(1,Math.min(500,parseInt(s.count,10)||1));
+        var out=[];
+        for(var i=0;i<n;i++)out.push(crypto.randomUUID());
+        return out.join('\n');
+      }
+    },
+    {
+      id:'timestamp', title:'Timestamp', label:'TS',
+      badge:'unix ⇄ date',
+      sub:'Convert a Unix epoch (seconds or milliseconds) to a human date, or a date string back to epoch. Uses your local timezone plus UTC.',
+      inLabel:'Epoch or date', outLabel:'Converted',
+      placeholder:'1720000000  or  2026-07-12 14:30',
+      sample:'1720000000',
+      mode:'toDate',
+      controls:[{type:'seg',key:'mode',options:[['toDate','Epoch → Date'],['toEpoch','Date → Epoch']]},{type:'button',key:'now',label:'Now'}],
+      run:function(input,s){
+        input=input.trim();
+        if(!input)return '';
+        if(s.mode==='toDate'){
+          var num=Number(input);
+          if(!isFinite(num))throw new Error('Not a number — switch to "Date → Epoch" for date strings');
+          // treat 10-digit as seconds, 13-digit as ms
+          var ms=Math.abs(num)<1e12?num*1000:num;
+          var d=new Date(ms);
+          if(isNaN(d.getTime()))throw new Error('Out of range');
+          return 'Local:  '+d.toString()+'\nUTC:    '+d.toUTCString()+'\nISO:    '+d.toISOString()+'\nRel:    '+relTime(d);
+        }else{
+          var d2=new Date(input);
+          if(isNaN(d2.getTime()))throw new Error('Unrecognised date — try "2026-07-12 14:30" or an ISO string');
+          var secs=Math.floor(d2.getTime()/1000);
+          return 'Seconds: '+secs+'\nMillis:  '+d2.getTime()+'\nISO:     '+d2.toISOString();
+        }
+      }
+    },
+    {
+      id:'case', title:'Case', label:'Aa',
+      badge:'convert',
+      sub:'Convert any text between camelCase, snake_case, kebab-case and Title Case. Handles spaces, dashes, underscores and existing camelCase.',
+      inLabel:'Text', outLabel:'All cases',
+      placeholder:'hello there world',
+      sample:'The offline developer data toolbox',
+      run:function(input){
+        if(!input.trim())return '';
+        var words=splitWords(input);
+        function cap(w){return w.charAt(0).toUpperCase()+w.slice(1)}
+        var camel=words.map(function(w,i){return i===0?w:cap(w)}).join('');
+        var pascal=words.map(cap).join('');
+        var snake=words.join('_');
+        var kebab=words.join('-');
+        var title=words.map(cap).join(' ');
+        var constant=words.join('_').toUpperCase();
+        var sentence=words.length?cap(words[0])+(words.length>1?' '+words.slice(1).join(' '):''):'';
+        return 'camelCase:    '+camel+
+             '\nPascalCase:   '+pascal+
+             '\nsnake_case:   '+snake+
+             '\nkebab-case:   '+kebab+
+             '\nCONSTANT:     '+constant+
+             '\nTitle Case:   '+title+
+             '\nSentence:     '+sentence;
+      }
+    }
+  ];
+
+  function splitWords(s){
+    return String(s)
+      .replace(/([a-z0-9])([A-Z])/g,'$1 $2')   // camelCase boundary
+      .replace(/[_\-]+/g,' ')
+      .replace(/[^A-Za-z0-9 ]+/g,' ')
+      .trim().split(/\s+/)
+      .filter(Boolean)
+      .map(function(w){return w.toLowerCase()});
+  }
+  function relTime(d){
+    var diff=d.getTime()-Date.now();
+    var past=diff<0; diff=Math.abs(diff);
+    var units=[['year',31536e6],['day',864e5],['hour',36e5],['minute',6e4],['second',1e3]];
+    for(var i=0;i<units.length;i++){
+      if(diff>=units[i][1]||i===units.length-1){
+        var n=Math.round(diff/units[i][1]);
+        return n+' '+units[i][0]+(n!==1?'s':'')+(past?' ago':' from now');
+      }
+    }
+    return 'now';
+  }
+
+  // ------------------------------------------------------------- DOM refs
+  var picker=document.getElementById('picker'),
+      input=document.getElementById('input'),
+      output=document.getElementById('output'),
+      err=document.getElementById('err'),
+      tTitle=document.getElementById('t-title'),
+      tBadge=document.getElementById('t-badge'),
+      tSub=document.getElementById('t-sub'),
+      tControls=document.getElementById('t-controls'),
+      inLabel=document.getElementById('in-label'),
+      outLabel=document.getElementById('out-label'),
+      copyBtn=document.getElementById('copy'),
+      inGroup=input.parentNode;
+
+  var current=null, state={};
+
+  // build tool picker
+  TOOLS.forEach(function(t){
+    var b=document.createElement('button');
+    b.className='tool';
+    b.innerHTML='<span class="ico">'+t.label+'</span>'+t.title;
+    b.addEventListener('click',function(){select(t)});
+    t._btn=b;
+    picker.appendChild(b);
+  });
+
+  function seedState(t){
+    var s={};
+    (t.controls||[]).forEach(function(c){
+      if(c.key&&c.type!=='button'){
+        s[c.key]= t[c.key]!=null ? String(t[c.key]) : (c.value!=null?String(c.value):(c.options?c.options[0][0]:''));
+      }
+    });
+    return s;
+  }
+
+  function buildControls(t){
+    tControls.innerHTML='';
+    (t.controls||[]).forEach(function(c){
+      if(c.type==='seg'){
+        var visible=!c.when||c.when(state);
+        c.options.forEach(function(opt){
+          var btn=document.createElement('button');
+          btn.className='btn'+(state[c.key]===opt[0]?'':' alt');
+          btn.textContent=opt[1];
+          btn.style.display=visible?'':'none';
+          btn._segKey=c.key;
+          btn.addEventListener('click',function(){
+            state[c.key]=opt[0];
+            buildControls(t);
+            run();
+          });
+          tControls.appendChild(btn);
+        });
+      }else if(c.type==='number'){
+        var lab=document.createElement('span');
+        lab.style.cssText='color:var(--soft);font-size:0.85rem';
+        lab.textContent=c.label+':';
+        tControls.appendChild(lab);
+        var inp=document.createElement('input');
+        inp.type='number';inp.min=c.min;inp.max=c.max;inp.value=state[c.key];inp.style.width='90px';
+        inp.addEventListener('input',function(){state[c.key]=inp.value});
+        tControls.appendChild(inp);
+      }else if(c.type==='button'){
+        var gb=document.createElement('button');
+        gb.className='btn';gb.textContent=c.label;
+        gb.addEventListener('click',function(){
+          if(c.key==='now'){
+            input.value=String(Math.floor(Date.now()/1000));
+          }
+          run();
+        });
+        tControls.appendChild(gb);
+      }
+    });
+  }
+
+  function select(t){
+    current=t; state=seedState(t);
+    TOOLS.forEach(function(x){x._btn.classList.toggle('on',x===t)});
+    tTitle.textContent=t.title;
+    tBadge.textContent=t.badge||'';
+    tSub.textContent=t.sub||'';
+    inLabel.textContent=t.inLabel||'Input';
+    outLabel.textContent=t.outLabel||'Output';
+    input.placeholder=t.placeholder||'Paste here…';
+    input.value=t.sample||'';
+    inGroup.style.display=t.noInput?'none':'block';
+    input.readOnly=false;
+    buildControls(t);
+    run();
+    location.hash=t.id;
+  }
+
+  function run(){
+    if(!current)return;
+    err.textContent='';err.className='err';
+    var val=input.value;
+    try{
+      var res=current.run(val,state);
+      if(res&&typeof res.then==='function'){
+        res.then(function(o){output.value=o||''},function(e){showErr(e)});
+      }else{
+        output.value=res||'';
+      }
+    }catch(e){ showErr(e); }
+  }
+  function showErr(e){
+    output.value='';
+    err.textContent=(current.title==='JSON'?'Invalid JSON: ':'')+(e&&e.message?e.message:String(e));
+  }
+
+  // manual-run tools (UUID) still respond to Generate button via buildControls;
+  // wire a direct run when their generate button is clicked
+  // (handled generically: any button that isn't 'now' triggers run)
+
+  input.addEventListener('input',run);
+
+  // ------------------------------------------------------ one free copy gate
+  function used(){try{return localStorage.getItem('wrangle_demo_used')==='1'}catch(e){return false}}
+  function markUsed(){try{localStorage.setItem('wrangle_demo_used','1')}catch(e){}}
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:460px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">🧰</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free copy!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it saved you a trip to some sketchy online tool. The <strong style="color:#eef1f6">Wrangle</strong> desktop app runs every one of these tools <strong style="color:#eef1f6">100% offline</strong> — so you never paste a JWT, an API key or customer data into a random website again. Unlimited use, plus diff, YAML/CSV, cron, regex and more.</p>'+
+      '<a href="'+BUY+'" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Wrangle — $15 once, own forever →</a>'+
+      '<a href="/wrangle/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  function flashCopied(){
+    var old=copyBtn.textContent;
+    copyBtn.textContent='Copied ✓';
+    copyBtn.style.borderColor='#3ddc84';copyBtn.style.color='#3ddc84';
+    clearTimeout(flashCopied.t);
+    flashCopied.t=setTimeout(function(){copyBtn.textContent=old;copyBtn.style.borderColor='';copyBtn.style.color=''},1800);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(used()){ paywall(); return; }
+    var text=output.value;
+    if(!text){ err.textContent='Nothing to copy yet.'; return; }
+    var done=function(){ flashCopied(); markUsed(); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done,function(){fallbackCopy(text,done)});
+    }else{ fallbackCopy(text,done); }
+  });
+  function fallbackCopy(text,done){
+    var ta=document.createElement('textarea');
+    ta.value=text;ta.style.cssText='position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy')}catch(e){}
+    ta.remove();done();
+  }
+
+  // ------------------------------------------------------------ boot
+  var start=TOOLS[0];
+  var h=(location.hash||'').replace('#','');
+  if(h){var m2=TOOLS.filter(function(t){return t.id===h})[0]; if(m2)start=m2;}
+  select(start);
+})();
+</script>
+</body>
+</html>

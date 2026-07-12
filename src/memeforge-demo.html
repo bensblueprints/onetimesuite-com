@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Meme Generator — No Watermark | Memeforge Demo — OneTimeSuite</title>
+<meta name="description" content="Free in-browser meme generator. Drop an image or start from a blank template, add classic top and bottom text, and download a watermark-free PNG. Everything runs in your browser — no upload, no account.">
+<link rel="canonical" href="https://onetimesuite.com/memeforge/demo/">
+<meta property="og:title" content="Free Meme Generator — No Watermark | Memeforge Demo">
+<meta property="og:description" content="Make a classic meme in your browser and download it watermark-free. 100% local — nothing is uploaded.">
+<meta property="og:url" content="https://onetimesuite.com/memeforge/demo/">
+<link rel="icon" href="/assets/boxes/memeforge.png">
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .drop{border:2px dashed #2c384e;border-radius:14px;padding:1.4rem;text-align:center;cursor:pointer;transition:border-color .15s;background:var(--panel2)}
+  .drop.on{border-color:var(--accent)}
+  .drop p{color:var(--soft);font-size:0.9rem}
+  .blanks{display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem;margin-top:0.55rem}
+  .blank{height:44px;border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:0.72rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 2px rgba(0,0,0,.5);transition:transform .1s,border-color .12s}
+  .blank:hover{border-color:var(--accent)}
+  .blank.on{border-color:var(--accent);transform:scale(0.97)}
+  .field{margin-top:1rem}
+  .field label{display:block;font-size:0.85rem;font-weight:700;margin-bottom:0.3rem}
+  .field small{color:var(--soft);display:block;margin-bottom:0.35rem}
+  .field input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.55rem 0.7rem;color:var(--ink);font:inherit;font-size:0.92rem}
+  .field input[type=text]:focus{outline:none;border-color:var(--accent)}
+  .slider{margin-top:1rem}
+  .slider label{display:flex;justify-content:space-between;font-size:0.85rem;font-weight:700;margin-bottom:0.35rem}
+  .slider label span{color:var(--accent)}
+  .slider input[type=range]{width:100%;accent-color:var(--accent)}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen:disabled{opacity:0.45;cursor:not-allowed}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem}
+  .canvaswrap{background:#0e1420;border:1px solid var(--line);border-radius:12px;padding:1rem;text-align:center}
+  .canvaswrap canvas{max-width:100%;height:auto;border-radius:6px;background:#1c2434}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Memeforge <span class="tag">Free demo — classic meme captions, in your browser</span></div>
+  <a class="cta" href="/memeforge/">Get the desktop app — $15 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="drop" id="drop">
+      <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <p id="dropmsg"><strong>Drop an image here</strong><br>or click to choose (PNG / JPG / WebP)</p>
+    </div>
+    <div class="field">
+      <label>…or start from a blank template</label>
+      <div class="blanks" id="blanks">
+        <div class="blank" data-color="#1c1c1c" style="background:#1c1c1c">Black</div>
+        <div class="blank" data-color="#ffffff" style="background:#ffffff;color:#333;text-shadow:none">White</div>
+        <div class="blank" data-color="#2563eb" style="background:#2563eb">Blue</div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="top">Top text</label>
+      <input type="text" id="top" placeholder="ONE DOES NOT SIMPLY" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="bottom">Bottom text</label>
+      <input type="text" id="bottom" placeholder="MAKE A MEME WITHOUT MEMEFORGE" autocomplete="off">
+    </div>
+    <div class="slider">
+      <label>Font size <span id="fs-val">48px</span></label>
+      <input type="range" id="fontsize" min="24" max="96" value="48">
+    </div>
+    <button class="gen" id="dl" disabled>Download meme (PNG)</button>
+    <p class="note">100% private — your image never leaves this page. No upload, no account, no watermark.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free Meme Generator — No Watermark</h1>
+    <p class="sub">Drop an image or pick a blank template, type your top and bottom lines, and download a clean PNG. Classic Impact caption style — white fill, thick black outline, auto-wrapped — rendered locally in your browser.</p>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead">Live preview</div>
+        <div class="canvaswrap">
+          <canvas id="canvas" width="600" height="600"></canvas>
+        </div>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/memeforge.png" alt="Memeforge desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Need a real template library, custom fonts &amp; batch export?</h2>
+        <p>The Memeforge desktop app does everything this demo does plus a built-in library of dozens of classic meme formats, draggable/resizable text boxes, custom fonts, stroke and shadow controls, and batch export — offline, forever, with no watermark, for <strong>$15 once</strong>. MIT-licensed source included.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/memeforge-app" rel="noopener">Get Memeforge — $15 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/memeforge/">Memeforge product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+  var canvas=document.getElementById('canvas'), ctx=canvas.getContext('2d');
+  var drop=document.getElementById('drop'), file=document.getElementById('file'), msg=document.getElementById('dropmsg');
+  var topEl=document.getElementById('top'), botEl=document.getElementById('bottom');
+  var fsEl=document.getElementById('fontsize'), fsVal=document.getElementById('fs-val');
+  var dl=document.getElementById('dl'), blanks=document.getElementById('blanks');
+
+  var img=null;          // uploaded image (or null)
+  var blankColor=null;   // solid color background (or null)
+  var ready=false;       // something is on the canvas
+
+  // ---- background selection -------------------------------------------------
+  drop.addEventListener('click',function(){file.click()});
+  drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('on')});
+  drop.addEventListener('dragleave',function(){drop.classList.remove('on')});
+  drop.addEventListener('drop',function(e){e.preventDefault();drop.classList.remove('on');if(e.dataTransfer.files[0])load(e.dataTransfer.files[0])});
+  file.addEventListener('change',function(){if(file.files[0])load(file.files[0])});
+
+  function load(f){
+    if(!/^image\//.test(f.type))return;
+    var url=URL.createObjectURL(f);
+    var i=new Image();
+    i.onload=function(){
+      img=i; blankColor=null;
+      [].forEach.call(blanks.children,function(b){b.classList.remove('on')});
+      msg.innerHTML='<strong>'+f.name+'</strong><br>'+i.width+'×'+i.height+' — click to swap';
+      ready=true; dl.disabled=false; draw();
+      URL.revokeObjectURL(url);
+    };
+    i.src=url;
+  }
+
+  blanks.addEventListener('click',function(e){
+    var b=e.target.closest('.blank'); if(!b)return;
+    img=null; blankColor=b.getAttribute('data-color');
+    [].forEach.call(blanks.children,function(x){x.classList.toggle('on',x===b)});
+    msg.innerHTML='<strong>Drop an image here</strong><br>or click to choose (PNG / JPG / WebP)';
+    ready=true; dl.disabled=false; draw();
+  });
+
+  // ---- inputs ---------------------------------------------------------------
+  topEl.addEventListener('input',draw);
+  botEl.addEventListener('input',draw);
+  fsEl.addEventListener('input',function(){fsVal.textContent=fsEl.value+'px';draw()});
+
+  // ---- rendering ------------------------------------------------------------
+  function sizeCanvas(){
+    // Fit canvas to the background image aspect (max 600px on the long edge),
+    // or a square for blank templates.
+    var w=600, h=600;
+    if(img){
+      var scale=600/Math.max(img.width,img.height);
+      w=Math.round(img.width*scale); h=Math.round(img.height*scale);
+    }
+    if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+  }
+
+  function drawBackground(){
+    if(img){
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    }else if(blankColor){
+      ctx.fillStyle=blankColor; ctx.fillRect(0,0,canvas.width,canvas.height);
+    }else{
+      ctx.fillStyle='#1c2434'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    }
+  }
+
+  // Word-wrap a line to fit the canvas width at the current font.
+  function wrapLines(text,maxWidth){
+    var words=text.split(/\s+/), lines=[], cur='';
+    for(var i=0;i<words.length;i++){
+      var test=cur?cur+' '+words[i]:words[i];
+      if(ctx.measureText(test).width>maxWidth && cur){
+        lines.push(cur); cur=words[i];
+      }else{ cur=test; }
+    }
+    if(cur)lines.push(cur);
+    return lines;
+  }
+
+  function drawText(text,anchor){
+    if(!text)return;
+    var fontSize=parseInt(fsEl.value,10);
+    // scale font a touch to canvas width so small canvases stay readable
+    ctx.textAlign='center';
+    ctx.font='900 '+fontSize+'px Impact, "Arial Black", Arial, sans-serif';
+    ctx.lineWidth=Math.max(2,fontSize/8);
+    ctx.lineJoin='round';
+    ctx.miterLimit=2;
+    ctx.strokeStyle='#000';
+    ctx.fillStyle='#fff';
+
+    var pad=Math.round(fontSize*0.35);
+    var maxWidth=canvas.width-pad*2;
+    var lines=wrapLines(text.toUpperCase(),maxWidth);
+    var lineH=fontSize*1.05;
+    var x=canvas.width/2;
+
+    for(var i=0;i<lines.length;i++){
+      var y;
+      if(anchor==='top'){
+        ctx.textBaseline='top';
+        y=pad+i*lineH;
+      }else{
+        ctx.textBaseline='bottom';
+        // stack bottom lines upward from the base
+        y=canvas.height-pad-(lines.length-1-i)*lineH;
+      }
+      ctx.strokeText(lines[i],x,y);
+      ctx.fillText(lines[i],x,y);
+    }
+  }
+
+  function draw(){
+    sizeCanvas();
+    drawBackground();
+    if(!ready)return;
+    drawText(topEl.value.trim(),'top');
+    drawText(botEl.value.trim(),'bottom');
+  }
+
+  // initial placeholder canvas
+  draw();
+
+  // ---- one free download gate ----------------------------------------------
+  function used(){try{return localStorage.getItem('memeforge_demo_used')==='1'}catch(e){return false}}
+  function markUsed(){try{localStorage.setItem('memeforge_demo_used','1')}catch(e){}}
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">😂</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free meme!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it landed. The Memeforge desktop app makes <strong style="color:#eef1f6">unlimited memes</strong> with a real template library, draggable text boxes, custom fonts, stroke and shadow controls and batch export — offline, forever, no watermark.</p>'+
+      '<a href="https://whop.com/benjisaiempire/memeforge-app" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Memeforge — $15 once, own forever →</a>'+
+      '<a href="/memeforge/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  dl.addEventListener('click',function(){
+    if(!ready)return;
+    if(used()){paywall();return;}
+    draw();
+    canvas.toBlob(function(b){
+      if(!b)return;
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(b);
+      a.download='meme.png';
+      a.click();
+      setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+      markUsed();
+    },'image/png');
+  });
+})();
+</script>
+</body>
+</html>

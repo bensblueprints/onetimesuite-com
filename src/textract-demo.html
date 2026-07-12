@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Online OCR — Image to Text | Textract Demo — OneTimeSuite</title>
+<meta name="description" content="Free in-browser OCR. Drop an image and get the text out — PNG, JPG or WebP to editable text, right in your browser. Nothing is uploaded; the recognition runs 100% on your device. Copy or download the extracted text. No account.">
+<link rel="canonical" href="https://onetimesuite.com/textract/demo/">
+<meta property="og:title" content="Free Online OCR — Image to Text | Textract Demo">
+<meta property="og:description" content="Drop an image, get the text out. OCR runs entirely in your browser — nothing is uploaded. Free, no account.">
+<meta property="og:url" content="https://onetimesuite.com/textract/demo/">
+<link rel="icon" href="/assets/boxes/textract.png">
+<script src="/assets/js/tesseract.min.js"></script>
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .drop{border:2px dashed #2c384e;border-radius:14px;padding:1.6rem;text-align:center;cursor:pointer;transition:border-color .15s;background:var(--panel2)}
+  .drop.on{border-color:var(--accent)}
+  .drop img{max-width:100%;max-height:200px;border-radius:10px;display:block;margin:0 auto 0.7rem}
+  .drop p{color:var(--soft);font-size:0.92rem}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen:disabled{opacity:0.45;cursor:not-allowed}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  .modelnote{color:var(--soft);font-size:0.78rem;margin-top:0.9rem;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.6rem 0.7rem;line-height:1.45}
+  .modelnote strong{color:var(--ink)}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem}
+  .progwrap{margin:0 0 0.9rem;display:none}
+  .progwrap.on{display:block}
+  .progbar{height:10px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .progbar > span{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .progtext{color:var(--soft);font-size:0.8rem;margin-top:0.4rem}
+  .outbox{position:relative}
+  textarea#out{width:100%;min-height:280px;background:#ffffff;color:#111827;border:1px solid var(--line);border-radius:12px;padding:1rem;font:14px/1.6 "SFMono-Regular",Consolas,Menlo,monospace;resize:vertical}
+  .outactions{display:flex;gap:0.6rem;margin-top:0.7rem;flex-wrap:wrap}
+  .outactions button{background:#1f2937;border:1px solid var(--line);color:var(--ink);font-weight:700;font-size:0.88rem;padding:0.6rem 0.95rem;border-radius:9px;cursor:pointer}
+  .outactions button:disabled{opacity:0.45;cursor:not-allowed}
+  .copied{display:none;margin-left:auto;align-self:center;color:#3ddc84;font-size:0.85rem;font-weight:700}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Textract <span class="tag">Free demo — image to text, in your browser</span></div>
+  <a class="cta" href="/textract/">Get the desktop app — $19 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="drop" id="drop">
+      <input type="file" id="file" accept="image/png,image/jpeg,image/webp" hidden>
+      <img id="preview" alt="" style="display:none">
+      <p id="dropmsg"><strong>Drop an image here</strong><br>or click to choose (PNG / JPG / WebP) — a screenshot, scan, receipt or photo of text</p>
+    </div>
+    <button class="gen" id="gen" disabled>Extract text</button>
+    <p class="note">100% private — your image never leaves this page. The OCR runs on your device. No upload, no account.</p>
+    <p class="modelnote">First run downloads the English OCR model (~15&nbsp;MB) from a CDN, <strong>then it's cached</strong> for instant reuse. Want a fully offline version with the model bundled in? That's the desktop app below.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free Online OCR — Image to Text</h1>
+    <p class="sub">Drop a screenshot, scan, receipt or photo of text and pull the words straight out into editable text. English recognition runs entirely in your browser — nothing is uploaded, everything happens on your device.</p>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead">Extracted text</div>
+        <div class="progwrap" id="progwrap">
+          <div class="progbar"><span id="progfill"></span></div>
+          <div class="progtext" id="progtext">Starting…</div>
+        </div>
+        <div class="outbox">
+          <textarea id="out" placeholder="Your extracted text will appear here. Drop an image and hit “Extract text”." spellcheck="false"></textarea>
+          <div class="outactions">
+            <button id="copy" disabled>Copy text</button>
+            <button id="download" disabled>Download .txt</button>
+            <span class="copied" id="copied-msg">Copied!</span>
+          </div>
+        </div>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/textract.png" alt="Textract desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Need fully-offline OCR, batch folders &amp; searchable PDFs?</h2>
+        <p>The Textract desktop app does everything this demo does plus a bundled model (no CDN, works on a plane), batch-OCR whole folders, export searchable PDFs, and a screenshot-to-text global hotkey — offline, forever, for <strong>$19 once</strong>. MIT-licensed source included.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/textract" rel="noopener">Get Textract — $19 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/textract/">Textract product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+  var img=null, fileName='', hasResult=false;
+  var drop=document.getElementById('drop'), file=document.getElementById('file'),
+      prev=document.getElementById('preview'), msg=document.getElementById('dropmsg'),
+      gen=document.getElementById('gen'), out=document.getElementById('out'),
+      copyBtn=document.getElementById('copy'), dlBtn=document.getElementById('download'),
+      progwrap=document.getElementById('progwrap'), progfill=document.getElementById('progfill'),
+      progtext=document.getElementById('progtext');
+
+  drop.addEventListener('click',function(){file.click()});
+  drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('on')});
+  drop.addEventListener('dragleave',function(){drop.classList.remove('on')});
+  drop.addEventListener('drop',function(e){e.preventDefault();drop.classList.remove('on');if(e.dataTransfer.files[0])load(e.dataTransfer.files[0])});
+  file.addEventListener('change',function(){if(file.files[0])load(file.files[0])});
+
+  function load(f){
+    if(!/^image\/(png|jpeg|webp)$/.test(f.type)){ msg.innerHTML='<strong>Please choose a PNG, JPG or WebP image.</strong>'; return; }
+    fileName=f.name.replace(/\.[^.]+$/,'')||'ocr';
+    var url=URL.createObjectURL(f);
+    var i=new Image();
+    i.onload=function(){img=i;prev.src=url;prev.style.display='block';msg.innerHTML=f.name+' — '+i.width+'×'+i.height+'px';gen.disabled=false;};
+    i.src=url;
+  }
+
+  function setProgress(pct,label){
+    progfill.style.width=Math.max(0,Math.min(100,Math.round(pct*100)))+'%';
+    if(label)progtext.textContent=label;
+  }
+
+  gen.addEventListener('click',function(){
+    if(!img||gen.disabled)return;
+    gen.disabled=true; gen.textContent='Recognizing…';
+    copyBtn.disabled=true; dlBtn.disabled=true; hasResult=false;
+    out.value='';
+    progwrap.classList.add('on'); setProgress(0,'Loading OCR engine…');
+
+    Tesseract.recognize(img,'eng',{
+      logger:function(m){
+        if(m.status==='downloading traineddata'||/downloading/i.test(m.status)){
+          setProgress(m.progress||0,'Downloading OCR model (~15MB, first run only)… '+Math.round((m.progress||0)*100)+'%');
+        }else if(m.status==='recognizing text'){
+          setProgress(m.progress||0,'Reading text… '+Math.round((m.progress||0)*100)+'%');
+        }else if(m.status){
+          setProgress(m.progress||0, m.status.charAt(0).toUpperCase()+m.status.slice(1)+'…');
+        }
+      }
+    }).then(function(res){
+      var text=(res&&res.data&&res.data.text||'').replace(/\n{3,}/g,'\n\n').trim();
+      out.value=text||'(No readable text found in this image.)';
+      hasResult=!!text;
+      setProgress(1,'Done.');
+      setTimeout(function(){progwrap.classList.remove('on')},700);
+      copyBtn.disabled=false; dlBtn.disabled=false;
+      gen.disabled=false; gen.textContent='Extract text';
+    }).catch(function(err){
+      progtext.textContent='Something went wrong: '+(err&&err.message||err);
+      out.value='';
+      gen.disabled=false; gen.textContent='Extract text';
+    });
+  });
+
+  // -------------------------------------------------- one free extraction gate
+  // The first successful copy/download is free; after that the desktop pitch takes over.
+  function used(){try{return localStorage.getItem('textract_demo_used')==='1'}catch(e){return false}}
+  function markUsed(){try{localStorage.setItem('textract_demo_used','1')}catch(e){}}
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">📄</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free extraction!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it saved you some retyping. The Textract desktop app runs <strong style="color:#eef1f6">unlimited OCR fully offline</strong> — model bundled in (no CDN, works on a plane), batch-OCR whole folders, export searchable PDFs, and a screenshot-to-text global hotkey.</p>'+
+      '<a href="https://whop.com/benjisaiempire/textract" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Textract — $19 once, own forever →</a>'+
+      '<a href="/textract/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  function flashCopied(){
+    var el=document.getElementById('copied-msg');
+    el.style.display='block';
+    clearTimeout(flashCopied.t);
+    flashCopied.t=setTimeout(function(){el.style.display='none'},2200);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!out.value)return;
+    if(used()){paywall();return}
+    var text=out.value;
+    var done=function(){flashCopied();markUsed()};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done,function(){legacyCopy(text);done()});
+    }else{ legacyCopy(text); done(); }
+  });
+  function legacyCopy(text){
+    var ta=document.createElement('textarea');
+    ta.value=text;ta.style.cssText='position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy')}catch(e){}
+    ta.remove();
+  }
+
+  dlBtn.addEventListener('click',function(){
+    if(!out.value)return;
+    if(used()){paywall();return}
+    var blob=new Blob([out.value],{type:'text/plain;charset=utf-8'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=(fileName||'ocr').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.txt';
+    a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+    markUsed();
+  });
+})();
+</script>
+</body>
+</html>

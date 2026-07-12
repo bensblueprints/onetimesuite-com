@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Image Compressor — JPG/PNG/WebP | Shrinkray Demo — OneTimeSuite</title>
+<meta name="description" content="Free in-browser image compressor and converter. Drop JPG, PNG or WebP files, set quality, cap dimensions, convert format — see per-file and total size saved. 100% in your browser, nothing is uploaded.">
+<link rel="canonical" href="https://onetimesuite.com/shrinkray/demo/">
+<meta property="og:title" content="Free Image Compressor — JPG/PNG/WebP | Shrinkray Demo">
+<meta property="og:description" content="Compress and convert images in your browser — JPG, PNG, WebP. See how much you saved. Free, no upload, no account.">
+<meta property="og:url" content="https://onetimesuite.com/shrinkray/demo/">
+<link rel="icon" href="/assets/boxes/shrinkray.png">
+<script src="/assets/js/jszip.min.js"></script>
+<script src="/ads/ad.js" async></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;--green:#3ddc84;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .drop{border:2px dashed #2c384e;border-radius:14px;padding:1.6rem;text-align:center;cursor:pointer;transition:border-color .15s;background:var(--panel2)}
+  .drop.on{border-color:var(--accent)}
+  .drop .ic{font-size:2rem;margin-bottom:0.4rem}
+  .drop p{color:var(--soft);font-size:0.92rem}
+  .field{margin-top:1rem}
+  .field label{display:block;font-size:0.85rem;font-weight:700;margin-bottom:0.3rem}
+  .field small{color:var(--soft);display:block;margin-bottom:0.35rem;font-weight:400}
+  .field input[type=text],.field input[type=number],.field select{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.55rem 0.7rem;color:var(--ink);font:inherit;font-size:0.92rem}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--accent)}
+  .field input[type=range]{width:100%;accent-color:var(--accent)}
+  .qrow{display:flex;align-items:center;justify-content:space-between;font-size:0.85rem;font-weight:700}
+  .qrow .qval{color:var(--accent)}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen:disabled{opacity:0.45;cursor:not-allowed}
+  .gen.alt{background:#1f2937;margin-top:0.55rem;font-size:0.95rem;font-weight:700;display:none}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:1.1rem 0 0.6rem}
+  .dash{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.8rem}
+  .stat{flex:1 1 120px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0.8rem 1rem}
+  .stat .big{font-size:1.55rem;font-weight:800;line-height:1.1}
+  .stat .lbl{font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);margin-top:0.15rem}
+  .stat.saved .big{color:var(--green)}
+  .list{display:flex;flex-direction:column;gap:0.7rem}
+  .row{display:flex;gap:0.9rem;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0.7rem}
+  .row .thumb{width:56px;height:56px;flex:0 0 56px;border-radius:8px;background:conic-gradient(#1c2434 25%,#141b29 0 50%,#1c2434 0 75%,#141b29 0) 0 0/12px 12px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .row .thumb img{max-width:56px;max-height:56px;display:block}
+  .row .meta{flex:1 1 auto;min-width:0}
+  .row .fn{font-size:0.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row .sz{font-size:0.8rem;color:var(--soft);margin-top:0.15rem}
+  .row .sz .arrow{color:#55617a}
+  .row .sz .after{color:var(--ink);font-weight:600}
+  .row .pct{flex:0 0 auto;font-size:0.85rem;font-weight:800;padding:0.25rem 0.55rem;border-radius:7px;background:rgba(61,220,132,0.12);color:var(--green)}
+  .row .pct.up{background:rgba(232,66,12,0.14);color:#ff8a5c}
+  .row .x{flex:0 0 auto;background:none;border:none;color:#55617a;font-size:1.1rem;cursor:pointer;padding:0 0.2rem}
+  .empty{color:#55617a;font-size:0.9rem;text-align:center;padding:2rem 1rem;border:1px dashed var(--line);border-radius:12px}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Shrinkray <span class="tag">Free demo — compress &amp; convert images, in your browser</span></div>
+  <a class="cta" href="/shrinkray/">Get the desktop app — $19 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="drop" id="drop">
+      <input type="file" id="file" accept="image/png,image/jpeg,image/webp" multiple hidden>
+      <div class="ic">🖼️</div>
+      <p id="dropmsg"><strong>Drop images here</strong><br>or click to choose — JPG / PNG / WebP, multiple at once</p>
+    </div>
+    <div class="field">
+      <div class="qrow"><label for="quality" style="margin:0">Quality</label><span class="qval" id="qval">80</span></div>
+      <small>Lower = smaller file. Ignored for PNG output (lossless).</small>
+      <input type="range" id="quality" min="1" max="100" value="80">
+    </div>
+    <div class="field">
+      <label for="format">Output format</label>
+      <select id="format">
+        <option value="keep">Keep original</option>
+        <option value="image/jpeg">JPEG (.jpg)</option>
+        <option value="image/png">PNG (.png)</option>
+        <option value="image/webp">WebP (.webp)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="maxdim">Max dimension (px)</label>
+      <small>Cap the longest edge. Never upscales. Leave blank to keep size.</small>
+      <input type="number" id="maxdim" min="1" placeholder="e.g. 1920 (optional)">
+    </div>
+    <button class="gen" id="gen" disabled>Compress images</button>
+    <button class="gen alt" id="dl">Download all</button>
+    <p class="note">100% private — your images never leave this page. No upload, no account.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free Image Compressor</h1>
+    <p class="sub">Drop JPG, PNG or WebP files, set the quality, optionally convert format or cap the dimensions, and re-encode them right here. See exactly how many kilobytes you saved. It all runs locally in your browser — nothing is uploaded.</p>
+
+    <div class="dash">
+      <div class="stat"><div class="big" id="stat-count">0</div><div class="lbl">Images</div></div>
+      <div class="stat"><div class="big" id="stat-orig">0 KB</div><div class="lbl">Original total</div></div>
+      <div class="stat saved"><div class="big" id="stat-saved">0 KB</div><div class="lbl">Saved (<span id="stat-pct">0%</span>)</div></div>
+    </div>
+
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead">Files</div>
+        <div class="list" id="list"><div class="empty" id="empty">No images yet — drop some on the left to get started.</div></div>
+      </div>
+      <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/boxes/shrinkray.png" alt="Shrinkray desktop app" style="width:160px;border-radius:10px">
+      <div>
+        <h2>Need unlimited batches, AVIF/TIFF &amp; sharp-grade quality?</h2>
+        <p>The Shrinkray desktop app does everything this demo does plus unlimited batch compression of whole folders, AVIF &amp; TIFF support, sharp / mozjpeg-grade encoders, watch-folders and drag-drop presets — offline, forever, for <strong>$19 once</strong>. MIT-licensed source included.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/shrinkray" rel="noopener">Get Shrinkray — $19 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/shrinkray/">Shrinkray product page</a></footer>
+
+<script>
+(function(){
+  'use strict';
+  var items=[]; // {id,name,origBlob,origSize,url,outBlob,outSize,outName,outUrl,w,h,ow,oh}
+  var seq=0;
+  var drop=document.getElementById('drop'), file=document.getElementById('file'),
+      msg=document.getElementById('dropmsg'), gen=document.getElementById('gen'), dl=document.getElementById('dl'),
+      list=document.getElementById('list'), empty=document.getElementById('empty'),
+      quality=document.getElementById('quality'), qval=document.getElementById('qval'),
+      format=document.getElementById('format'), maxdim=document.getElementById('maxdim');
+
+  var EXT={'image/jpeg':'jpg','image/png':'png','image/webp':'webp'};
+
+  function fmtBytes(b){
+    if(b<1024)return b+' B';
+    if(b<1024*1024)return (b/1024).toFixed(b<10240?1:0)+' KB';
+    return (b/1048576).toFixed(2)+' MB';
+  }
+  function baseName(n){return n.replace(/\.[^.]+$/,'')}
+
+  drop.addEventListener('click',function(){file.click()});
+  drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('on')});
+  drop.addEventListener('dragleave',function(){drop.classList.remove('on')});
+  drop.addEventListener('drop',function(e){e.preventDefault();drop.classList.remove('on');addFiles(e.dataTransfer.files)});
+  file.addEventListener('change',function(){addFiles(file.files);file.value=''});
+  quality.addEventListener('input',function(){qval.textContent=quality.value});
+
+  function addFiles(fl){
+    var arr=[].slice.call(fl).filter(function(f){return /^image\/(png|jpeg|webp)$/.test(f.type)});
+    arr.forEach(function(f){
+      var it={id:++seq,name:f.name,origBlob:f,origSize:f.size,url:URL.createObjectURL(f),
+              outBlob:null,outSize:0,outName:'',outUrl:'',w:0,h:0,ow:0,oh:0};
+      items.push(it);
+    });
+    if(arr.length)render();
+  }
+
+  function removeItem(id){
+    items=items.filter(function(it){
+      if(it.id===id){ if(it.url)URL.revokeObjectURL(it.url); if(it.outUrl)URL.revokeObjectURL(it.outUrl); return false; }
+      return true;
+    });
+    render();
+  }
+
+  function render(){
+    gen.disabled=items.length===0;
+    empty.style.display=items.length?'none':'block';
+    // build rows
+    list.querySelectorAll('.row').forEach(function(r){r.remove()});
+    items.forEach(function(it){
+      var row=document.createElement('div');row.className='row';
+      var thumb=(it.outUrl||it.url);
+      var szHtml;
+      if(it.outBlob){
+        var pct=Math.round((1-it.outSize/it.origSize)*100);
+        var cls=pct<0?'pct up':'pct';
+        var label=pct<0?('+'+Math.abs(pct)+'%'):(pct+'% saved');
+        szHtml='<div class="sz">'+fmtBytes(it.origSize)+' <span class="arrow">→</span> <span class="after">'+fmtBytes(it.outSize)+'</span></div>';
+        var pctHtml='<div class="'+cls+'">'+label+'</div>';
+        row.innerHTML='<div class="thumb"><img src="'+thumb+'" alt=""></div>'+
+          '<div class="meta"><div class="fn">'+it.outName+'</div>'+szHtml+'</div>'+pctHtml+
+          '<button class="x" title="remove" data-id="'+it.id+'">&times;</button>';
+      }else{
+        szHtml='<div class="sz">'+fmtBytes(it.origSize)+' · not compressed yet</div>';
+        row.innerHTML='<div class="thumb"><img src="'+thumb+'" alt=""></div>'+
+          '<div class="meta"><div class="fn">'+it.name+'</div>'+szHtml+'</div>'+
+          '<button class="x" title="remove" data-id="'+it.id+'">&times;</button>';
+      }
+      list.appendChild(row);
+    });
+    list.querySelectorAll('.x').forEach(function(b){b.addEventListener('click',function(){removeItem(+b.getAttribute('data-id'))})});
+    updateDash();
+  }
+
+  function updateDash(){
+    var done=items.filter(function(it){return it.outBlob});
+    var orig=done.reduce(function(a,it){return a+it.origSize},0);
+    var out=done.reduce(function(a,it){return a+it.outSize},0);
+    var saved=orig-out;
+    document.getElementById('stat-count').textContent=items.length;
+    document.getElementById('stat-orig').textContent=fmtBytes(items.reduce(function(a,it){return a+it.origSize},0));
+    document.getElementById('stat-saved').textContent=(saved>=0?'':'+')+fmtBytes(Math.abs(saved));
+    document.getElementById('stat-pct').textContent=orig?Math.round(saved/orig*100)+'%':'0%';
+    dl.style.display=done.length?'block':'none';
+    dl.textContent=done.length>1?('Download all ('+done.length+')'):'Download';
+  }
+
+  function loadImage(url){
+    return new Promise(function(res,rej){
+      var i=new Image();i.onload=function(){res(i)};i.onerror=rej;i.src=url;
+    });
+  }
+
+  function targetType(it){
+    if(format.value==='keep'){
+      // canvas can't emit non-standard; map original to a re-encodable type
+      return /png/.test(it.origBlob.type)?'image/png':(/webp/.test(it.origBlob.type)?'image/webp':'image/jpeg');
+    }
+    return format.value;
+  }
+
+  function processOne(it){
+    return loadImage(it.url).then(function(img){
+      it.ow=img.width;it.oh=img.height;
+      var w=img.width, h=img.height;
+      var cap=parseInt(maxdim.value,10);
+      if(cap>0){
+        var longest=Math.max(w,h);
+        if(longest>cap){ // never upscale
+          var s=cap/longest; w=Math.round(w*s); h=Math.round(h*s);
+        }
+      }
+      it.w=w;it.h=h;
+      var c=document.createElement('canvas');c.width=w;c.height=h;
+      var x=c.getContext('2d');x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';
+      var type=targetType(it);
+      if(type==='image/jpeg'){x.fillStyle='#ffffff';x.fillRect(0,0,w,h);} // flatten alpha for JPEG
+      x.drawImage(img,0,0,w,h);
+      var q=Math.min(1,Math.max(0.01,quality.value/100));
+      return new Promise(function(res){
+        c.toBlob(function(b){
+          if(!b){res();return;}
+          if(it.outUrl)URL.revokeObjectURL(it.outUrl);
+          it.outBlob=b;it.outSize=b.size;it.outUrl=URL.createObjectURL(b);
+          it.outName=baseName(it.name)+'.'+(EXT[type]||'img');
+          res();
+        }, type, type==='image/png'?undefined:q);
+      });
+    });
+  }
+
+  gen.addEventListener('click',function(){
+    if(!items.length)return;
+    gen.disabled=true;gen.textContent='Compressing…';
+    Promise.all(items.map(processOne)).then(function(){
+      gen.textContent='Compress images';gen.disabled=false;
+      render();
+    });
+  });
+
+  // re-encode again when settings change is manual (user clicks Compress) — keep simple.
+
+  // ---------------------------------------------------- one free download gate
+  function used(){try{return localStorage.getItem('shrinkray_demo_used')==='1'}catch(e){return false}}
+  function markUsed(){try{localStorage.setItem('shrinkray_demo_used','1')}catch(e){}}
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">🗜️</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free download!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it saved you some megabytes. The Shrinkray desktop app compresses <strong style="color:#eef1f6">unlimited images in batch</strong>, adds AVIF &amp; TIFF, sharp / mozjpeg-grade quality, watch-folders and presets — offline, forever.</p>'+
+      '<a href="https://whop.com/benjisaiempire/shrinkray" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Shrinkray — $19 once, own forever →</a>'+
+      '<a href="/shrinkray/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  function downloadBlob(blob,name){
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(a.href)},4000);
+  }
+
+  dl.addEventListener('click',function(){
+    if(used()){paywall();return}
+    var done=items.filter(function(it){return it.outBlob});
+    if(!done.length)return;
+    if(done.length===1){
+      downloadBlob(done[0].outBlob,done[0].outName);
+      markUsed();
+      return;
+    }
+    // multiple → zip with vendored JSZip (batch note: desktop app does folder-scale zips)
+    if(typeof JSZip==='undefined'){
+      // fallback: download individually
+      done.forEach(function(it){downloadBlob(it.outBlob,it.outName)});
+      markUsed();return;
+    }
+    var zip=new JSZip();
+    var ps=done.map(function(it){
+      return it.outBlob.arrayBuffer().then(function(buf){
+        // guard against duplicate output names in the zip
+        var ext=it.outName.slice(baseName(it.outName).length), uname=it.outName, k=1;
+        while(zip.file(uname)){uname=baseName(it.outName)+'-'+(k++)+ext}
+        zip.file(uname,buf);
+      });
+    });
+    Promise.all(ps).then(function(){
+      return zip.generateAsync({type:'blob'});
+    }).then(function(b){
+      downloadBlob(b,'shrinkray-compressed.zip');
+      markUsed();
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -272,7 +272,7 @@ module.exports = [
     meetExtra: 'Shrinkray gives you the parts of a pro pipeline that matter on the desktop: batch drag-and-drop across five formats, quality control, format conversion (including AVIF, which routinely beats everything on size), longest-edge resizing for web exports, and persistent settings — all offline.',
   },
   {
-    slug: 'loom-alternative', competitor: 'Loom', product: 'clipdeck',
+    slug: 'loom-alternative', competitor: 'Loom', product: 'bloomrecorder',
     metaDesc: 'Loom costs up to $180/year and your videos live on their servers. ClipDeck records screen + mic locally with MP4/GIF export for $29 once. An honest comparison.',
     intro: [
       'Loom made screen recording a verb. Record a quick video, get an instant share link, paste it in Slack — done. It is the async-communication tool of the remote-work era, and after its acquisition by Atlassian it is deeply embedded in team workflows everywhere.',
@@ -299,7 +299,7 @@ module.exports = [
     meetExtra: 'ClipDeck records any screen or window (live-preview picker) with mic audio mixed in, keeps a local library with thumbnails, trims before export, and ships H.264 MP4 with faststart plus palette-optimized GIF. Zero network calls, zero accounts.',
   },
   {
-    slug: 'camtasia-alternative', competitor: 'Camtasia', product: 'clipdeck',
+    slug: 'camtasia-alternative', competitor: 'Camtasia', product: 'bloomrecorder',
     metaDesc: 'Camtasia costs $179+/year and is a full video editor. If you just need clean screen recordings with MP4/GIF export, ClipDeck is $29 once. Honest comparison.',
     intro: [
       'Camtasia has been the standard for polished screen-recorded tutorials for two decades. It is really two products: a capable recorder, and a full timeline video editor with callouts, zoom-and-pan effects, quizzes, and a stock library — which is why training departments everywhere run on it.',
@@ -326,7 +326,7 @@ module.exports = [
     meetExtra: 'ClipDeck boots instantly, records any screen or window with a floating stop-pill that stays out of your shot, and exports H.264 MP4 or properly-paletted GIF. Every recording auto-saves to your Videos folder — no projects, no render queue, no cloud.',
   },
   {
-    slug: 'screen-studio-alternative', competitor: 'Screen Studio', product: 'clipdeck',
+    slug: 'screen-studio-alternative', competitor: 'Screen Studio', product: 'bloomrecorder',
     metaDesc: 'Screen Studio makes gorgeous macOS-only recordings. If you are on Windows — or just want clean local MP4/GIF capture — ClipDeck is $29 once. Honest comparison.',
     intro: [
       'Screen Studio deserves its cult following. Its automatic zoom-follows-cursor effect, smooth motion blur and beautiful backgrounds turn ordinary screen recordings into the kind of product demos that top every launch on X and Product Hunt. Nothing else makes recordings look that good with that little effort.',

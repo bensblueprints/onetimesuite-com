@@ -72,6 +72,7 @@ const soonWeb = comingSoon.filter(p => p.kind === 'web');
    first-class product pages, but NOT part of the $997 bundle receipt. */
 const extras = require('./src/extra-products.js');
 const allProducts = [...products, ...extras];
+for (const p of extras) if (!bySlug[p.slug]) bySlug[p.slug] = p;
 
 /* Desktop (Electron, no server) vs web-hosted (self-hosted on your own VPS) */
 const DESKTOP_SLUGS = new Set([
@@ -1116,7 +1117,7 @@ const rssItems = [
     title: x.title, url: `${SITE}/${x.slug}/`, desc: x.metaDesc,
     date: 'Fri, 11 Jul 2026 00:00:00 GMT',
   })),
-  ...posts.map(x => {
+  ...posts.filter(x => bySlug[x.product]).map(x => {
     const p = bySlug[x.product];
     return {
       title: `Looking for ${art(x.competitor)} ${x.competitor} Alternative? Meet ${p.brand} — Pay Once, Own It Forever`,

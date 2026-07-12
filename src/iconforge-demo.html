@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free App Icon &amp; Favicon Generator — Iconforge Demo | OneTimeSuite</title>
+<meta name="description" content="Free in-browser app icon generator. Drop one image, get every favicon and app-icon size — favicon.ico, apple-touch, Android, Windows tiles — zipped, in seconds. No upload, everything runs in your browser.">
+<link rel="canonical" href="https://onetimesuite.com/iconforge/demo/">
+<meta property="og:title" content="Free App Icon & Favicon Generator — Iconforge Demo">
+<meta property="og:description" content="Drop one image, get every icon size. 100% in your browser — nothing is uploaded.">
+<meta property="og:url" content="https://onetimesuite.com/iconforge/demo/">
+<link rel="icon" href="/assets/boxes/iconforge.png">
+<script src="/assets/js/jszip.min.js"></script>
+<style>
+  :root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,Segoe UI,Arial,sans-serif;}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .top .logo{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.25rem}
+  .top .logo .gem{width:22px;height:22px;background:var(--accent);transform:rotate(45deg);border-radius:4px}
+  .top .tag{color:var(--soft);font-size:0.85rem}
+  .top .cta{margin-left:auto;background:var(--orange);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.9rem}
+  .adbar{max-width:1160px;margin:1.1rem auto 0;padding:0 1.2rem}
+  .ad{border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#55617a;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase}
+  .ad.top728{height:90px;max-width:728px;margin:0 auto}
+  .ad.side300{width:300px;height:250px}
+  .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;flex:0 0 340px;max-width:340px}
+  .main{flex:1 1 480px;min-width:0}
+  .drop{border:2px dashed #2c3okay8;border:2px dashed #2c384e;border-radius:14px;padding:1.6rem;text-align:center;cursor:pointer;transition:border-color .15s;background:var(--panel2)}
+  .drop.on{border-color:var(--accent)}
+  .drop img{max-width:180px;max-height:180px;border-radius:22px;display:block;margin:0 auto 0.7rem}
+  .drop p{color:var(--soft);font-size:0.92rem}
+  .field{margin-top:1rem}
+  .field label{display:block;font-size:0.85rem;font-weight:700;margin-bottom:0.3rem}
+  .field small{color:var(--soft);display:block;margin-bottom:0.35rem}
+  .field input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0.55rem 0.7rem;color:var(--ink)}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:0.35rem;margin-top:0.55rem}
+  .checks label{display:flex;gap:0.45rem;align-items:center;font-size:0.9rem;font-weight:500;color:var(--soft)}
+  .gen{width:100%;margin-top:1.3rem;background:var(--accent);border:none;color:#fff;font-weight:800;font-size:1rem;padding:0.85rem;border-radius:10px;cursor:pointer}
+  .gen:disabled{opacity:0.45;cursor:not-allowed}
+  .note{color:var(--soft);font-size:0.8rem;margin-top:0.6rem;text-align:center}
+  h1{font-size:1.5rem;margin-bottom:0.2rem}
+  .sub{color:var(--soft);margin-bottom:1rem;font-size:0.95rem}
+  .gridhead{font-size:0.8rem;letter-spacing:0.1em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:1.1rem 0 0.6rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.8rem}
+  .cell{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0.9rem;text-align:center}
+  .cell .chk{width:88px;height:88px;margin:0 auto 0.55rem;background:conic-gradient(#1c2434 25%,#141b29 0 50%,#1c2434 0 75%,#141b29 0) 0 0/16px 16px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+  .cell img{max-width:80px;max-height:80px}
+  .cell .n{font-size:0.78rem;color:var(--accent);word-break:break-all}
+  .cell .s{font-size:0.72rem;color:var(--soft)}
+  .upsell{margin:2rem 0;background:linear-gradient(135deg,#1a2130,#121826);border:1px solid var(--line);border-radius:14px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .upsell img{width:120px;border-radius:10px}
+  .upsell h2{font-size:1.15rem;margin-bottom:0.3rem}
+  .upsell p{color:var(--soft);font-size:0.92rem;max-width:52ch}
+  .upsell .buy{background:var(--orange);color:#fff;padding:0.6rem 1.1rem;border-radius:9px;font-weight:800;white-space:nowrap}
+  footer{border-top:1px solid var(--line);color:var(--soft);font-size:0.85rem;padding:1.4rem;text-align:center;margin-top:2rem}
+  @media(max-width:900px){.panel{flex:1 1 100%;max-width:none}.ad.side300{width:100%;height:120px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"><span class="gem"></span>Iconforge <span class="tag">Free demo — every icon size, in your browser</span></div>
+  <a class="cta" href="/iconforge/">Get the desktop app — $15 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="drop" id="drop">
+      <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+      <img id="preview" alt="" style="display:none">
+      <p id="dropmsg"><strong>Drop an image here</strong><br>or click to choose (PNG / JPG / WebP, 1024×1024 recommended)</p>
+    </div>
+    <div class="field">
+      <label for="appname">App / product name</label>
+      <input type="text" id="appname" placeholder="MyApp" value="">
+    </div>
+    <div class="field">
+      <label>Icon sets</label>
+      <div class="checks">
+        <label><input type="checkbox" class="set" value="web" checked> Web favicons</label>
+        <label><input type="checkbox" class="set" value="ios" checked> iOS / Apple</label>
+        <label><input type="checkbox" class="set" value="android" checked> Android</label>
+        <label><input type="checkbox" class="set" value="windows" checked> Windows tiles</label>
+      </div>
+    </div>
+    <button class="gen" id="gen" disabled>Generate all sizes</button>
+    <button class="gen" id="dl" style="background:#1f2937;display:none">Download zip (icons + manifest + &lt;head&gt; snippet)</button>
+    <p class="note">100% private — your image never leaves this page. No upload, no account.</p>
+  </div>
+
+  <div class="main">
+    <h1>Free App Icon &amp; Favicon Generator</h1>
+    <p class="sub">Drop one image, get every size you need — favicon.ico, apple-touch-icon, Android Chrome, Windows tiles, webmanifest and a copy-paste head snippet. It all runs locally in your browser.</p>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1 1 420px;min-width:0">
+        <div class="gridhead">Preview grid</div>
+        <div class="grid" id="grid"></div>
+      </div>
+      <div class="ad side300" id="ad-slot-side">Advertisement</div>
+    </div>
+
+    <div class="upsell">
+      <img src="/assets/shots/iconforge.png" alt="Iconforge desktop app" style="width:220px;border-radius:10px">
+      <div>
+        <h2>Need batch folders, adaptive Android layers &amp; offline use?</h2>
+        <p>The Iconforge desktop app does everything this demo does plus batch-process whole folders, Android adaptive foreground/background layers, theme colors, and true multi-size favicon.ico — offline, forever, for <strong>$15 once</strong>. MIT-licensed source included.</p>
+      </div>
+      <a class="buy" href="https://whop.com/benjisaiempire/iconforge-app" rel="noopener">Get Iconforge — $15 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/iconforge/">Iconforge product page</a></footer>
+
+<script>
+(function(){
+  var SIZES = {
+    web: [['favicon-16x16.png',16],['favicon-32x32.png',32],['favicon-48x48.png',48]],
+    ios: [['apple-touch-icon.png',180],['ios-appstore-1024x1024.png',1024]],
+    android: [['android-chrome-192x192.png',192],['android-chrome-512x512.png',512]],
+    windows: [['mstile-70x70.png',70],['mstile-150x150.png',150],['mstile-310x310.png',310]]
+  };
+  var img=null, results=[];
+  var drop=document.getElementById('drop'), file=document.getElementById('file'),
+      prev=document.getElementById('preview'), msg=document.getElementById('dropmsg'),
+      gen=document.getElementById('gen'), dl=document.getElementById('dl'), grid=document.getElementById('grid');
+
+  drop.addEventListener('click',function(){file.click()});
+  drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('on')});
+  drop.addEventListener('dragleave',function(){drop.classList.remove('on')});
+  drop.addEventListener('drop',function(e){e.preventDefault();drop.classList.remove('on');if(e.dataTransfer.files[0])load(e.dataTransfer.files[0])});
+  file.addEventListener('change',function(){if(file.files[0])load(file.files[0])});
+
+  function load(f){
+    var url=URL.createObjectURL(f);
+    var i=new Image();
+    i.onload=function(){img=i;prev.src=url;prev.style.display='block';msg.innerHTML=f.name+' — '+i.width+'×'+i.height+'px';gen.disabled=false;};
+    i.src=url;
+  }
+
+  function render(size){
+    var c=document.createElement('canvas');c.width=size;c.height=size;
+    var x=c.getContext('2d');x.imageSmoothingQuality='high';
+    var s=Math.min(img.width,img.height);
+    x.drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,size,size);
+    return c;
+  }
+  function blob(c){return new Promise(function(res){c.toBlob(res,'image/png')})}
+
+  // minimal .ico builder: PNG-compressed entries (16/32/48)
+  function buildIco(pngs){
+    var count=pngs.length, offset=6+16*count, total=offset;
+    pngs.forEach(function(p){total+=p.buf.byteLength});
+    var out=new Uint8Array(total), dv=new DataView(out.buffer);
+    dv.setUint16(0,0,true);dv.setUint16(2,1,true);dv.setUint16(4,count,true);
+    var pos=offset;
+    pngs.forEach(function(p,i){
+      var e=6+16*i;
+      out[e]=p.size===256?0:p.size; out[e+1]=p.size===256?0:p.size;
+      out[e+2]=0;out[e+3]=0; dv.setUint16(e+4,1,true); dv.setUint16(e+6,32,true);
+      dv.setUint32(e+8,p.buf.byteLength,true); dv.setUint32(e+12,pos,true);
+      out.set(new Uint8Array(p.buf),pos); pos+=p.buf.byteLength;
+    });
+    return new Blob([out],{type:'image/x-icon'});
+  }
+
+  gen.addEventListener('click',function(){
+    if(!img)return;
+    grid.innerHTML=''; results=[];
+    var sets=[].slice.call(document.querySelectorAll('.set:checked')).map(function(c){return c.value});
+    var jobs=[];
+    sets.forEach(function(s){SIZES[s].forEach(function(d){jobs.push(d)})});
+    Promise.all(jobs.map(function(d){
+      var c=render(d[1]);
+      return blob(c).then(function(b){return{name:d[0],size:d[1],blob:b,url:URL.createObjectURL(b)}});
+    })).then(function(items){
+      results=items;
+      items.forEach(function(it){
+        var cell=document.createElement('div');cell.className='cell';
+        cell.innerHTML='<div class="chk"><img src="'+it.url+'" alt=""></div><div class="n">'+it.name+'</div><div class="s">'+it.size+'×'+it.size+'</div>';
+        grid.appendChild(cell);
+      });
+      // favicon.ico preview cell if web set selected
+      if(sets.indexOf('web')>-1){
+        var cell=document.createElement('div');cell.className='cell';
+        cell.innerHTML='<div class="chk" style="color:#55617a;font-weight:700">ICO</div><div class="n">favicon.ico</div><div class="s">16/32/48 multi-size</div>';
+        grid.appendChild(cell);
+      }
+      dl.style.display='block';
+    });
+  });
+
+  // one free zip per browser — then the desktop app pitch takes over
+  function used(){ try{return localStorage.getItem('iconforge_demo_used')==='1'}catch(e){return false} }
+  function markUsed(){ try{localStorage.setItem('iconforge_demo_used','1')}catch(e){} }
+  function paywall(){
+    var m=document.createElement('div');
+    m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+    m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+      '<div style="font-size:2.4rem;margin-bottom:0.4rem">🔷</div>'+
+      '<h2 style="margin-bottom:0.5rem">That was your free set!</h2>'+
+      '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope it saved you some clicking. The Iconforge desktop app generates <strong style="color:#eef1f6">unlimited icon sets</strong>, batch-processes whole folders, adds Android adaptive layers and theme colors — offline, forever.</p>'+
+      '<a href="https://whop.com/benjisaiempire/iconforge-app" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Iconforge — $15 once, own forever →</a>'+
+      '<a href="/iconforge/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+      '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+  }
+
+  dl.addEventListener('click',function(){
+    if(used()){ paywall(); return; }
+    var zip=new JSZip();
+    var name=(document.getElementById('appname').value||'MyApp').trim();
+    var ps=results.map(function(it){
+      return it.blob.arrayBuffer().then(function(buf){zip.file(it.name,buf);return{name:it.name,size:it.size,buf:buf}});
+    });
+    Promise.all(ps).then(function(items){
+      var icoParts=items.filter(function(i){return /favicon-(16|32|48)/.test(i.name)});
+      var chain=Promise.resolve();
+      if(icoParts.length){
+        var ico=buildIco(icoParts.map(function(i){return{size:i.size,buf:i.buf}}));
+        chain=ico.arrayBuffer().then(function(b){zip.file('favicon.ico',b)});
+      }
+      chain.then(function(){
+        zip.file('site.webmanifest',JSON.stringify({name:name,short_name:name.slice(0,12),icons:[
+          {src:'/android-chrome-192x192.png',sizes:'192x192',type:'image/png'},
+          {src:'/android-chrome-512x512.png',sizes:'512x512',type:'image/png'}],theme_color:'#0b0f16',background_color:'#0b0f16',display:'standalone'},null,2));
+        zip.file('head-snippet.html',[
+          '<!-- '+name+' favicons - generated free at onetimesuite.com/iconforge/demo -->',
+          '<link rel="icon" type="image/x-icon" href="/favicon.ico">',
+          '<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">',
+          '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">',
+          '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">',
+          '<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">',
+          '<link rel="manifest" href="/site.webmanifest">'].join('\n'));
+        return zip.generateAsync({type:'blob'});
+      }).then(function(b){
+        var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-icons.zip';a.click();
+        markUsed();
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

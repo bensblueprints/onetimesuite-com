@@ -524,6 +524,7 @@ allProducts.forEach(p => {
         </div>
         <div class="btn-row">
           <a class="btn btn-solid" href="${buy}" rel="noopener">Get ${p.brand} on ${buyHost} — $${p.price} &rarr;</a>
+          ${p.slug === 'iconforge' ? `<a class="btn btn-ghost" href="/iconforge/demo/">Try the free web demo</a>` : ''}
           ${isClosed ? '' : `<a class="btn btn-ghost" href="${GH}/${p.repo}" rel="noopener">Source on GitHub</a>`}
         </div>
         </div>
@@ -1124,6 +1125,19 @@ if (fs.existsSync(BOXES_SRC)) {
   for (const f of fs.readdirSync(BOXES_SRC)) {
     if (/\.png$/i.test(f)) fs.copyFileSync(path.join(BOXES_SRC, f), path.join(boxesOut, f));
   }
+}
+
+/* iconforge in-browser demo (self-contained page + vendored jszip) */
+const JS_SRC = path.join(ROOT, 'assets', 'js');
+if (fs.existsSync(JS_SRC)) {
+  const jsOut = path.join(OUT, 'assets', 'js');
+  fs.mkdirSync(jsOut, { recursive: true });
+  for (const f of fs.readdirSync(JS_SRC)) fs.copyFileSync(path.join(JS_SRC, f), path.join(jsOut, f));
+}
+const demoSrc = path.join(ROOT, 'src', 'iconforge-demo.html');
+if (fs.existsSync(demoSrc)) {
+  fs.mkdirSync(path.join(OUT, 'iconforge', 'demo'), { recursive: true });
+  fs.copyFileSync(demoSrc, path.join(OUT, 'iconforge', 'demo', 'index.html'));
 }
 
 console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);

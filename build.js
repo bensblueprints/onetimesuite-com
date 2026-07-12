@@ -1134,6 +1134,12 @@ if (fs.existsSync(JS_SRC)) {
   fs.mkdirSync(jsOut, { recursive: true });
   for (const f of fs.readdirSync(JS_SRC)) fs.copyFileSync(path.join(JS_SRC, f), path.join(jsOut, f));
 }
+const ADS_SRC = path.join(ROOT, 'assets', 'ads');
+if (fs.existsSync(ADS_SRC)) {
+  const adsOut = path.join(OUT, 'assets', 'ads');
+  fs.mkdirSync(adsOut, { recursive: true });
+  for (const f of fs.readdirSync(ADS_SRC)) fs.copyFileSync(path.join(ADS_SRC, f), path.join(adsOut, f));
+}
 const demoSrc = path.join(ROOT, 'src', 'iconforge-demo.html');
 if (fs.existsSync(demoSrc)) {
   fs.mkdirSync(path.join(OUT, 'iconforge', 'demo'), { recursive: true });

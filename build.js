@@ -212,7 +212,7 @@ const NAV = `
       <a class="nav-link" href="/#web-hosted">Web apps</a>
       <a class="nav-link" href="/${BUNDLE.slug}/">The bundle</a>
       <a class="nav-link" href="/comparison/">Comparisons</a>
-      <a class="nav-link" href="https://dashboard.onetimesuite.com/" rel="noopener">Log in</a>
+      <a class="nav-link nav-login" href="https://dashboard.onetimesuite.com/" rel="noopener">Log in</a>
       <a class="nav-buy" href="${WHOP}" rel="noopener">Buy on Whop</a>
     </div>
   </nav>`;

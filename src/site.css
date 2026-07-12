@@ -89,7 +89,7 @@ section + section { border-top: 1px solid var(--line); }
   padding: 0.5rem 1rem; border-radius: 6px; white-space: nowrap;
 }
 .nav-buy:hover { background: var(--accent); }
-@media (max-width: 660px) { .site-nav a.nav-link { display: none; } }
+@media (max-width: 660px) { .site-nav a.nav-link { display: none; } .site-nav a.nav-link.nav-login { display: inline; } }
 
 /* ---------- the price sticker ---------- */
 .sticker {

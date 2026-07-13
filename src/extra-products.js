@@ -12,7 +12,7 @@ module.exports = [
   {
     slug: 'bloomrecorder',
     brand: 'BloomRecorder',
-    repo: 'bloomrecorder',
+    repo: 'bloomrecorder-mvp',
     price: 29,
     icon: '🎥',
     tagline: 'The Loom replacement you buy once.',
@@ -53,7 +53,7 @@ module.exports = [
       ['Is there really no account or cloud?', 'Really. BloomRecorder makes zero network calls — no telemetry, no login, no upload. Recordings are files in a folder you chose on your own disk.'],
       ['Is recording length limited?', 'No. There are no plan tiers, so there is nothing to gate. Record as long as your disk has space.'],
       ['Can I record my screen and camera at the same time?', 'Yes — either as separate files or combined picture-in-picture, with system audio and your mic mixed into the output.'],
-      ['Is the source code available?', 'Yes — BloomRecorder is MIT-licensed at github.com/bensblueprints/bloomrecorder. Buying the $29 package gets you the built installer and updates; building from source is free.'],
+      ['Is the source code available?', 'Yes — BloomRecorder is MIT-licensed at github.com/bensblueprints/bloomrecorder-mvp. Buying the $29 package gets you the built installer and updates; building from source is free.'],
       ['How do I share a recording without Loom-style links?', 'Export an MP4 (H.264 faststart plays everywhere) or an optimized GIF and share it however you already share files — Slack, email, Drive, your own server.'],
     ],
     seoRelated: [

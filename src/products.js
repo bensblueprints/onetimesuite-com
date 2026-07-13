@@ -1,7 +1,7 @@
 /* Product data for the /software section — facts sourced from each repo's README */
 module.exports = [
   {
-    slug: 'pdfsmith', brand: 'PDFsmith', repo: 'pdf-toolkit', price: 29, icon: '📄',
+    slug: 'pdfsmith', brand: 'PDFsmith', repo: 'pdf-toolkit-mvp', price: 29, icon: '📄',
     tagline: 'Every PDF tool you actually use — running 100% on your machine.',
     oneliner: 'Merge, split, rotate, watermark & convert PDFs offline. No uploads, ever.',
     competitor: 'SmallPDF', compPrice: '$12–15/mo', compYr: 144,
@@ -33,7 +33,7 @@ module.exports = [
       ['Drop in your PDFs', 'Merge, split, rotate, watermark or convert — everything happens on your machine, instantly, offline.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes. The full source code is MIT-licensed at github.com/bensblueprints/pdf-toolkit and always will be. Buying gets you the signed Windows installer, 1-click setup and updates — pure convenience, zero lock-in.'],
+      ['Is it really free on GitHub?', 'Yes. The full source code is MIT-licensed at github.com/bensblueprints/pdf-toolkit-mvp and always will be. Buying gets you the signed Windows installer, 1-click setup and updates — pure convenience, zero lock-in.'],
       ['Do my PDFs get uploaded anywhere?', 'No. All processing runs locally with pdf-lib, a pure-JavaScript library. The app makes no network calls at all — you can run it with Wi-Fi off.'],
       ['What platforms does it run on?', 'The packaged installer is for Windows. The MIT source runs anywhere Electron does (Windows, macOS, Linux) if you build it yourself with Node 18+.'],
       ['Can it edit text inside a PDF?', 'No — and we\'d rather tell you that upfront. PDFsmith covers merge, split, rotate, watermark, images-to-PDF and metadata. For rewriting body text inside an existing PDF you still need a full editor like Acrobat.'],
@@ -41,7 +41,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'cutaway', brand: 'Cutaway', repo: 'bg-remover', price: 24, icon: '🪄',
+    slug: 'cutaway', brand: 'Cutaway', repo: 'bg-remover-mvp', price: 24, icon: '🪄',
     tagline: 'Remove image backgrounds with local AI. Unlimited images, full resolution, zero uploads.',
     oneliner: 'Local AI background removal — unlimited images, full resolution, nothing uploaded.',
     competitor: 'remove.bg', compPrice: '$9/mo (40 credits)', compYr: 108,
@@ -72,7 +72,7 @@ module.exports = [
       ['Drop images, export cutouts', 'Batch a whole product shoot, preview each result, export transparent PNGs to any folder.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/bg-remover. Paying $24 gets you the signed installer, 1-click setup and updates instead of building from source.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/bg-remover-mvp. Paying $24 gets you the signed installer, 1-click setup and updates instead of building from source.'],
       ['Is the quality as good as remove.bg?', 'It uses the same class of segmentation model (U²-Net family via ONNX). On typical product shots and portraits results are comparable; on very fine edges like wispy hair, remove.bg\'s newest cloud models can still win. You get unlimited retries for free, though.'],
       ['Do my photos get uploaded?', 'Never. Inference runs on your CPU via onnxruntime. The only network call the app ever makes is the one-time model download.'],
       ['Is it fast?', 'It runs on your own hardware, one image at a time by design (predictable memory). A batch takes a few seconds per image on a modern CPU — no queue, no credits, no per-image anxiety.'],
@@ -80,7 +80,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'whisperdesk', brand: 'WhisperDesk', repo: 'whisper-transcriber', price: 39, icon: '🎙️',
+    slug: 'whisperdesk', brand: 'WhisperDesk', repo: 'whisper-transcriber-mvp', price: 39, icon: '🎙️',
     tagline: 'Unlimited local audio & video transcription. Your audio never leaves your machine.',
     oneliner: 'Whisper-powered transcription on your own CPU — unlimited minutes, TXT/SRT/VTT export.',
     competitor: 'Otter.ai', compPrice: '$16.99/mo', compYr: 204,
@@ -112,7 +112,7 @@ module.exports = [
       ['Drop a file, get a transcript', 'Timestamped text in minutes, exportable as TXT, SRT or VTT — all offline.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT-licensed at github.com/bensblueprints/whisper-transcriber, and it always will be. The $39 buys the signed installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT-licensed at github.com/bensblueprints/whisper-transcriber-mvp, and it always will be. The $39 buys the signed installer, 1-click setup and updates.'],
       ['How accurate is it?', 'It runs OpenAI\'s Whisper models — the same family behind most modern transcription tools. Bigger models (small/medium) are more accurate and slower; you pick the trade-off.'],
       ['Does it do live meeting transcription?', 'No — and Otter is genuinely better for that. WhisperDesk transcribes files (recordings, interviews, videos, podcasts). If you need a live meeting assistant with speaker chat, keep Otter.'],
       ['How fast is it?', 'Depends on your CPU and model size. The tiny/base models typically run faster than real time on a modern machine; medium trades speed for accuracy.'],
@@ -120,7 +120,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'shrinkray', brand: 'Shrinkray', repo: 'image-compressor', price: 19, icon: '🗜️',
+    slug: 'shrinkray', brand: 'Shrinkray', repo: 'image-compressor-mvp', price: 19, icon: '🗜️',
     tagline: 'Unlimited local batch image compression & conversion.',
     oneliner: 'Batch-compress a thousand photos locally — JPG, PNG, WebP, AVIF — no upload limits.',
     competitor: 'TinyPNG Pro', compPrice: '~$39/yr + API fees', compYr: 39,
@@ -152,7 +152,7 @@ module.exports = [
       ['Drop a folder, export', 'Set quality and format once; settings persist. Watch the savings counter climb.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/image-compressor. $19 gets you the signed installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/image-compressor-mvp. $19 gets you the signed installer, 1-click setup and updates.'],
       ['Is the compression as good as TinyPNG?', 'It uses sharp/libvips with mozjpeg-grade encoders — the same engines behind most professional pipelines. At equal quality settings, results are comparable; you also get AVIF, which typically beats PNG/JPG sizes outright.'],
       ['Will it overwrite my originals?', 'Never. Output goes to a folder you choose, or next to originals with a _compressed suffix.'],
       ['Is there an API or CLI?', 'Not in the app — it\'s a desktop tool. The MIT source exposes the pure-Node compression pipeline if you want to script it.'],
@@ -161,7 +161,7 @@ module.exports = [
   },
   
   {
-    slug: 'upwatch', brand: 'Upwatch', repo: 'uptime-monitor', price: 39, icon: '📡',
+    slug: 'upwatch', brand: 'Upwatch', repo: 'uptime-monitor-mvp', price: 39, icon: '📡',
     tagline: 'Self-hosted uptime monitoring + a beautiful public status page.',
     oneliner: 'HTTP checks, incident log, alerts and a branded 90-day status page — on your own box.',
     competitor: 'UptimeRobot', compPrice: '$8/mo', compYr: 96,
@@ -192,7 +192,7 @@ module.exports = [
       ['Add monitors, get alerts', 'HTTP checks every 30s, webhook/email pings the second something breaks — and again when it recovers.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/uptime-monitor, always. The paid version is pure convenience: packaged installer, updates, priority support.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/uptime-monitor-mvp, always. The paid version is pure convenience: packaged installer, updates, priority support.'],
       ['Do I need a server?', 'Not necessarily. Desktop mode runs the whole app in an Electron window. For a public status page or 24/7 monitoring you\'ll want a $5 VPS — which is still cheaper per year than one month of most competitors\' higher tiers.'],
       ['What check types are supported?', 'HTTP(S) with status-code and keyword assertions. No ping/port/DNS checks yet — if you need those today, UptimeRobot still has the broader check menu.'],
       ['Where does monitoring run from?', 'From wherever you host it — one location. Cloud services check from multiple regions; that\'s their genuine advantage. For "is my site up and is checkout on the page", one good vantage point covers it.'],
@@ -200,7 +200,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'trimly', brand: 'Trimly', repo: 'link-shortener', price: 29, icon: '🔗',
+    slug: 'trimly', brand: 'Trimly', repo: 'link-shortener-mvp', price: 29, icon: '🔗',
     tagline: 'Your own branded link shortener with full click analytics.',
     oneliner: 'Branded short links, QR codes and click analytics — on your domain, in your SQLite file.',
     competitor: 'Bitly', compPrice: '$29/mo', compYr: 348,
@@ -231,7 +231,7 @@ module.exports = [
       ['Create links, watch clicks', 'Custom slugs, UTM builder, QR codes, and a full analytics dashboard you own.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/link-shortener. The $29 buys the packaged 1-click installer, updates and setup support.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/link-shortener-mvp. The $29 buys the packaged 1-click installer, updates and setup support.'],
       ['Do I need a server for public links?', 'Yes — public short links need a public host, so budget a $5/mo VPS. Desktop mode works fully offline for QR generation and campaign planning. Even VPS + Trimly year one costs less than 3 months of Bitly.'],
       ['Can I migrate from Bitly?', 'Yes — bulk CSV import is built in. Export from Bitly, paste, done. Printed QR codes keep working because destinations stay editable.'],
       ['How accurate is the geo data?', 'Country detection reads Cloudflare\'s free CF-IPCountry header — no paid geo API. Without Cloudflare in front, country data degrades gracefully to unknown.'],
@@ -239,7 +239,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'billcraft', brand: 'Billcraft', repo: 'invoice-generator', price: 39, icon: '🧾',
+    slug: 'billcraft', brand: 'Billcraft', repo: 'invoice-generator-mvp', price: 39, icon: '🧾',
     tagline: 'Self-hosted invoicing for freelancers and small businesses.',
     oneliner: 'Clients, invoices, PDFs, share links & recurring billing — on hardware you control.',
     competitor: 'FreshBooks', compPrice: '$19/mo', compYr: 228,
@@ -271,7 +271,7 @@ module.exports = [
       ['Invoice and get paid', 'Send polished PDF invoices or share links; recurring templates handle your retainers.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/invoice-generator. $39 gets you the signed installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/invoice-generator-mvp. $39 gets you the signed installer, 1-click setup and updates.'],
       ['Does it do accounting / bookkeeping?', 'No — and that matters. Billcraft is invoicing: clients, invoices, PDFs, recurring billing. FreshBooks also does expenses, time tracking and accounting reports. If you need double-entry books, keep an accounting tool.'],
       ['Can clients pay online through it?', 'Invoices carry your payment/bank instructions and share links, but there\'s no built-in card processing. Add your Stripe/PayPal link in the payment instructions.'],
       ['Do invoice emails come from my address?', 'Yes — bring your own SMTP (Gmail app password, Mailgun, Postmark…). Unlike FreshBooks, mail goes out from your own sender.'],
@@ -279,7 +279,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'bookslot', brand: 'Bookslot', repo: 'booking-page', price: 39, icon: '📅',
+    slug: 'bookslot', brand: 'Bookslot', repo: 'booking-page-mvp', price: 39, icon: '📅',
     tagline: 'Your booking page. Your domain. No monthly fee.',
     oneliner: 'The Calendly you actually own — timezone-correct booking with email + ICS invites.',
     competitor: 'Calendly', compPrice: '$10/user/mo', compYr: 120,
@@ -311,7 +311,7 @@ module.exports = [
       ['Share your link', 'Visitors book in their own timezone and get an email with a calendar invite. You get notified.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/booking-page. $39 buys the packaged installer, 1-click setup, updates and priority support.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/booking-page-mvp. $39 buys the packaged installer, 1-click setup, updates and priority support.'],
       ['Does it sync with Google Calendar?', 'Not two-way — that\'s Calendly\'s strongest feature and we\'ll say so. Bookslot sends .ics invites your calendar ingests, and you block busy times manually. If you live across 3 synced calendars, Calendly earns its fee.'],
       ['Do I need a server?', 'For a public booking page, yes — a $5 VPS with the included Docker setup. Desktop mode works for managing availability and bookings locally.'],
       ['Is the timezone handling actually correct?', 'Yes — bookings are stored in UTC, availability is computed DST-safely in your timezone, displayed in the visitor\'s, and the math is unit-tested including DST gap days.'],
@@ -319,7 +319,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'formforge', brand: 'Formforge', repo: 'form-builder', price: 39, icon: '📝',
+    slug: 'formforge', brand: 'Formforge', repo: 'form-builder-mvp', price: 39, icon: '📝',
     tagline: 'Self-hosted form builder + submissions inbox. No response caps.',
     oneliner: 'Typeform-style forms with unlimited responses, file uploads and CSV export — self-hosted.',
     competitor: 'Typeform', compPrice: '$29/mo', compYr: 348,
@@ -351,7 +351,7 @@ module.exports = [
       ['Share or embed', 'Send /f/your-slug or copy the iframe snippet. Responses land in your inbox — unlimited, exportable to CSV.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/form-builder. $39 buys the packaged installer, 1-click setup, updates and setup support.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/form-builder-mvp. $39 buys the packaged installer, 1-click setup, updates and setup support.'],
       ['Does it have logic jumps?', 'Not yet — fields are linear. Typeform\'s conditional logic and calculator are genuinely more advanced; if your forms branch heavily, Typeform still earns its price.'],
       ['Are responses really unlimited?', 'Yes — they\'re rows in your own SQLite file. The only limit is your disk.'],
       ['Do respondents\' files stay private?', 'Yes — uploads are stored on your own server/disk with size and type limits, and never touch a third party.'],
@@ -359,7 +359,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'sigcraft', brand: 'SigCraft', repo: 'email-signature', price: 15, icon: '✒️',
+    slug: 'sigcraft', brand: 'SigCraft', repo: 'email-signature-mvp', price: 15, icon: '✒️',
     tagline: 'Professional email signatures for your whole team — on your desktop, forever.',
     oneliner: 'Email-safe HTML signatures with 10 templates and team CSV batch export — 100% local.',
     competitor: 'WiseStamp', compPrice: '$6/mo/user', compYr: 72,
@@ -391,7 +391,7 @@ module.exports = [
       ['Copy into your email client', 'One-click rich copy pastes straight into Gmail\'s signature box; step-by-step guides cover Outlook, Apple Mail and Thunderbird.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/email-signature. $15 buys the signed Windows installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/email-signature-mvp. $15 buys the signed Windows installer, 1-click setup and updates.'],
       ['Will the signature render correctly in Outlook?', 'Yes — output uses table layouts, fully inline styles and VML conditional comments for the CTA button, the techniques email developers use for Outlook compatibility.'],
       ['Can I make signatures for my whole team?', 'Yes — team mode imports a CSV and batch-exports a folder of .html signatures with your chosen template. No per-user pricing, ever.'],
       ['Does it have as many templates as WiseStamp?', 'No — 10 versus roughly 50. We\'d rather ship 10 templates that render everywhere than 50 that break in Outlook. If you want maximum variety, WiseStamp wins there.'],
@@ -399,7 +399,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'postdock', brand: 'PostDock', repo: 'social-scheduler', price: 49, icon: '📣',
+    slug: 'postdock', brand: 'PostDock', repo: 'social-scheduler-mvp', price: 49, icon: '📣',
     tagline: 'Schedule to X, Facebook, Instagram, LinkedIn and Mastodon from your own box — pay once.',
     oneliner: 'Self-hosted social scheduling — composer, queue, content recycling & webhooks. Your API keys, your data.',
     competitor: 'Buffer', compPrice: '$6/channel/mo', compYr: 360,
@@ -431,7 +431,7 @@ module.exports = [
       ['Compose, schedule, recycle', 'Per-network previews and counters, a timezone-aware queue, and evergreen recycling that keeps your best content circulating.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/social-scheduler. $49 buys the signed installer, 1-click setup and updates — pure convenience, zero lock-in.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/social-scheduler-mvp. $49 buys the signed installer, 1-click setup and updates — pure convenience, zero lock-in.'],
       ['Do I need my own API keys?', 'Yes — that\'s the point. Bring-your-own-keys means every credential stays on your box and nobody can throttle or re-price your channels. In-app guides walk you through each network: Mastodon and webhooks in 2 minutes, Meta in about 20.'],
       ['Does Instagram work from a desktop?', 'Instagram publishing needs a public URL because Meta\'s API downloads your images from it — so IG requires the $5 VPS mode with PUBLIC_BASE_URL set. Every other channel works fine from a desktop behind NAT.'],
       ['What about TikTok, Pinterest or Threads?', 'No native drivers yet — honestly. The webhook driver plus Zapier/Make/n8n covers them today, and drivers are pluggable (one file in server/channels/) if you build from source.'],
@@ -439,7 +439,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'linkleaf', brand: 'Linkleaf', repo: 'link-in-bio', price: 19, icon: '🌿',
+    slug: 'linkleaf', brand: 'Linkleaf', repo: 'Link-Leaf-mvp', price: 19, icon: '🌿',
     tagline: 'Your link-in-bio page on your own domain. No branding, no rent.',
     oneliner: 'Self-hosted link-in-bio with themes, link scheduling, email capture & analytics — no monthly fee.',
     competitor: 'Linktree', compPrice: '$5–9/mo', compYr: 84,
@@ -471,7 +471,7 @@ module.exports = [
       ['Add blocks, share the link', 'Drag to reorder, schedule launch links, collect emails into your own database, and watch analytics you own.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/link-in-bio, always. $19 buys the packaged installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/Link-Leaf-mvp, always. $19 buys the packaged installer, 1-click setup and updates.'],
       ['Do I need a server?', 'For a public page, yes — a $5 VPS with the included Docker setup. Even VPS + Linkleaf in year one costs about what Linktree charges, and after that the app itself is free forever. Desktop mode works for building and previewing your page.'],
       ['Can I migrate from Linktree?', 'There\'s no automatic importer — honestly. You re-add your links in the admin panel; most pages take under ten minutes to rebuild, and then you never pay rent on them again.'],
       ['Is the public page fast?', 'Yes — it\'s server-rendered plain HTML with self-hosted fonts and zero external requests. No framework payload, no Google Fonts ping, no trackers. It loads instantly on mobile.'],
@@ -479,7 +479,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'scantrail', brand: 'Scantrail', repo: 'qr-tracker', price: 24, icon: '🔳',
+    slug: 'scantrail', brand: 'Scantrail', repo: 'qr-tracker-mvp', price: 24, icon: '🔳',
     tagline: 'Dynamic QR codes you print once and re-point forever — with scan analytics you own.',
     oneliner: 'Self-hosted dynamic QR codes with scan analytics, a design studio and batch CSV generation.',
     competitor: 'QR Tiger', compPrice: '$15/mo', compYr: 180,
@@ -511,7 +511,7 @@ module.exports = [
       ['Print once, edit forever', 'Swap destinations any time without reprinting. Put free Cloudflare in front and country analytics light up automatically.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/qr-tracker. $24 buys the signed installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/qr-tracker-mvp. $24 buys the signed installer, 1-click setup and updates.'],
       ['Why do dynamic codes need a server?', 'Because the QR encodes a URL on your domain that redirects to the real destination — that\'s what makes it editable after printing. A $5 VPS covers it; desktop mode is fine for designing, testing and static codes.'],
       ['What happens to my codes if I stop using Scantrail?', 'Nothing — they point at your domain, not ours. As long as your server answers, every printed code keeps working. That\'s the whole difference from hosted services, where codes die with your plan.'],
       ['How does country tracking work?', 'It reads Cloudflare\'s free CF-IPCountry header — put free Cloudflare in front of your VPS and country analytics appear. Without it, country data degrades gracefully to unknown. No paid geo API.'],
@@ -519,7 +519,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'cardsmith', brand: 'Cardsmith', repo: 'og-image-studio', price: 39, icon: '🎴',
+    slug: 'cardsmith', brand: 'Cardsmith', repo: 'og-image-studio-mvp', price: 39, icon: '🎴',
     tagline: 'Design social-card templates visually, render them from a GET request. Your self-hosted Bannerbear.',
     oneliner: 'Visual OG-image templates that become render APIs — unlimited PNGs, bulk CSV, self-hosted.',
     competitor: 'Bannerbear', compPrice: '$49/mo', compYr: 588,
@@ -550,7 +550,7 @@ module.exports = [
       ['Call the API', 'Drop the render URL into your og:image tag, script it from Node or serverless, or bulk-render a CSV into a zip of PNGs.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/og-image-studio. $39 buys the packaged installer with everything pre-wired, plus updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/og-image-studio-mvp. $39 buys the packaged installer with everything pre-wired, plus updates.'],
       ['How are images rendered?', 'Server-side with bundled Chromium (Puppeteer), using the exact same HTML renderer as the editor preview — so WYSIWYG is literal. Fonts are bundled and base64-embedded, making output deterministic and fully offline.'],
       ['Are renders really unlimited?', 'Yes — your CPU does the work, so there\'s no render meter and no rate limit. Bannerbear\'s Starter tier caps you at 1,000 renders and 10 templates a month.'],
       ['Can I use it for live og:image tags?', 'Yes — point your meta tags at the render URL (auth via ?key= or X-Api-Key); images render on demand and log to the gallery. For public traffic, host it on a $5 VPS with the included Docker setup.'],
@@ -558,7 +558,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'statfox', brand: 'Statfox', repo: 'web-analytics', price: 49, icon: '🦊',
+    slug: 'statfox', brand: 'Statfox', repo: 'web-analytics-mvp', price: 49, icon: '🦊',
     tagline: 'Privacy-first web analytics on your own server. Unlimited sites, no cookies, no monthly bill.',
     oneliner: 'Self-hosted, cookie-free web analytics — unlimited sites & traffic, one clean dashboard.',
     competitor: 'Plausible', compPrice: '$9–19/mo', compYr: 108,
@@ -590,7 +590,7 @@ module.exports = [
       ['Paste one script tag', 'Add a site in the dashboard, copy the snippet, paste it into your site\'s head. Numbers start flowing immediately.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/web-analytics, always. $49 buys the packaged version, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/web-analytics-mvp, always. $49 buys the packaged version, 1-click setup and updates.'],
       ['Is it really GDPR-friendly without a banner?', 'Yes — no cookies, no localStorage, no fingerprinting. Uniqueness is a daily-rotating salted hash computed in memory; raw IPs are never written to disk and old salts are deleted, so a visitor hash is meaningless after 24 hours.'],
       ['Do I need a server?', 'For public sites, yes — the collect endpoint must be reachable from your visitors\' browsers, so budget a $5 VPS. That still costs less per year than most Plausible tiers, and it can host half this suite at once.'],
       ['What doesn\'t it do vs GA4?', 'Honestly: no funnels, no e-commerce revenue attribution, no Google Ads integration, no BigQuery export. Statfox covers the numbers most site owners actually check — traffic, sources, pages, countries, UTMs, custom events. If you live in GA4\'s advertising reports, keep GA4.'],
@@ -598,7 +598,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'shipnotes', brand: 'Shipnotes', repo: 'changelog-roadmap', price: 49, icon: '🚢',
+    slug: 'shipnotes', brand: 'Shipnotes', repo: 'changelog-roadmap-mvp', price: 49, icon: '🚢',
     tagline: 'Changelog, public roadmap and feature-request voting — self-hosted, one-time price.',
     oneliner: 'Self-hosted changelog + roadmap + feature voting with email subscribers and an embeddable widget.',
     competitor: 'Canny', compPrice: '$79/mo', compYr: 948,
@@ -630,7 +630,7 @@ module.exports = [
       ['Ship, post, let users vote', 'Write a Markdown post, tag it, publish — subscribers get emailed, the widget badge lights up, and feature requests collect votes while you sleep.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/changelog-roadmap. $49 buys the packaged version, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/changelog-roadmap-mvp. $49 buys the packaged version, 1-click setup and updates.'],
       ['Do voters need accounts?', 'No — and that\'s deliberate. Canny puts votes behind a signup wall; Shipnotes uses a per-visitor token (one vote each, repeat votes rejected server-side). Lower friction means you hear from far more of your users.'],
       ['What doesn\'t it have vs Canny?', 'Honestly: no Jira/Slack/Intercom integrations, no user segmentation or revenue-weighted prioritization, no SSO-identified voters. Shipnotes is the core loop — changelog, roadmap, voting, email — done well. If your PM team lives in Canny\'s integrations, Canny earns its price.'],
       ['Does the widget slow my site down?', 'No — it\'s one small deferred script tag that renders a bell with an unread badge. You can attach it to your own button with data-target and theme it with data-accent.'],
@@ -638,7 +638,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'hearback', brand: 'Hearback', repo: 'feedback-widget', price: 29, icon: '🎧',
+    slug: 'hearback', brand: 'Hearback', repo: 'feedback-widget-mvp', price: 29, icon: '🎧',
     tagline: 'Drop-in feedback & NPS widget, self-hosted. Unlimited responses, one-time price.',
     oneliner: 'Self-hosted feedback + NPS widget with an inbox, dashboard and CSV export — unlimited responses.',
     competitor: 'Hotjar', compPrice: '$32/mo', compYr: 384,
@@ -670,7 +670,7 @@ module.exports = [
       ['Read, triage, act', 'Responses land in your inbox with full context; NPS trends chart themselves; export everything to CSV whenever you like.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/feedback-widget. $29 buys the packaged version, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/feedback-widget-mvp. $29 buys the packaged version, 1-click setup and updates.'],
       ['Does it do heatmaps or session recordings?', 'No — and we\'ll be straight about that. Heatmaps and recordings are Hotjar\'s other half, and Hearback doesn\'t attempt them. If you need to watch session replays, keep Hotjar. If what you actually use is surveys and feedback, Hearback covers it for 1/12th of one year\'s bill.'],
       ['Are responses really unlimited?', 'Yes — they\'re rows in your own SQLite file. Hotjar\'s entry plan caps you at 500 survey responses a month; your disk is the only cap here.'],
       ['Will the widget break my site\'s styles?', 'No — everything renders inside a shadow DOM, so your CSS and the widget\'s can\'t touch each other. The whole thing is ~9 KB of dependency-free vanilla JS.'],
@@ -678,7 +678,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'docwell', brand: 'Docwell', repo: 'knowledge-base', price: 29, icon: '📚',
+    slug: 'docwell', brand: 'Docwell', repo: 'knowledge-base-mvp', price: 29, icon: '📚',
     tagline: 'A complete self-hosted help center — markdown in, branded SEO-ready docs out.',
     oneliner: 'Self-hosted knowledge base with instant FTS5 search, helpful-vote analytics and full SEO.',
     competitor: 'GitBook', compPrice: '$79/mo (Premium)', compYr: 948,
@@ -710,7 +710,7 @@ module.exports = [
       ['Publish on your domain', 'docker compose up -d on a $5 VPS, point help.yourproduct.com at it — SEO meta, sitemap and clean URLs are already done.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/knowledge-base. $29 buys the signed installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/knowledge-base-mvp. $29 buys the signed installer, 1-click setup and updates.'],
       ['Is the public site fast?', 'Yes — it\'s server-rendered plain HTML with no JS framework, which is also why the SEO story is so clean. Search is the only scripted part, and it\'s instant vanilla JS over FTS5.'],
       ['What doesn\'t it do vs GitBook?', 'Honestly: no git-repo sync, no AI answers, no multi-language localization, no multi-author roles — the admin is single-password. GitBook is genuinely better for open-source API docs maintained from a repo by a team. Docwell is better for the product help center you write and own.'],
       ['Can I see which articles are failing?', 'Yes — the feedback report sorts worst-scoring articles first with every thumbs-down comment attached. It\'s the single most useful page in the app.'],
@@ -718,7 +718,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'chatlet', brand: 'Chatlet', repo: 'live-chat', price: 49, icon: '💬',
+    slug: 'chatlet', brand: 'Chatlet', repo: 'live-chat-mvp', price: 49, icon: '💬',
     tagline: 'The live-chat bubble you own — unlimited agents, unlimited sites, no per-seat pricing.',
     oneliner: 'Self-hosted live chat — real-time widget, agent dashboard, canned replies, offline messages.',
     competitor: 'Crisp', compPrice: '$95/mo (Plus)', compYr: 1140,
@@ -750,7 +750,7 @@ module.exports = [
       ['Paste the snippet, start chatting', 'Copy the embed from Sites, paste it before </body>, and conversations land in your dashboard in real time.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/live-chat. $49 buys the packaged version, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/live-chat-mvp. $49 buys the packaged version, 1-click setup and updates.'],
       ['Does it have chatbots or AI answers?', 'No — Chatlet is human-to-human live chat done properly: real-time delivery, typing indicators, canned responses, offline messages. Intercom\'s Fin-style AI agents and workflow bots are genuinely beyond its scope; if you need those, Intercom earns its (considerable) price.'],
       ['Do I need a server?', 'For visitors on the public internet, yes — the widget needs a public address, so budget a $5 VPS. Desktop mode runs the same server locally and doubles as your agent console.'],
       ['Is there a mobile app for agents?', 'Not yet — honestly. The dashboard is responsive and works in a phone browser, with sound and browser notifications, but there\'s no native iOS/Android agent app like Crisp\'s.'],
@@ -758,7 +758,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'boardly', brand: 'Boardly', repo: 'boardly-kanban', price: 19, icon: '📋',
+    slug: 'boardly', brand: 'Boardly', repo: 'boardly-kanban-mvp', price: 19, icon: '📋',
     tagline: 'The self-hosted Trello replacement — unlimited boards, your data in one SQLite file.',
     oneliner: 'Self-hosted kanban — drag & drop boards, checklists, labels, attachments, full JSON export.',
     competitor: 'Trello', compPrice: '$5/user/mo', compYr: 60,
@@ -790,7 +790,7 @@ module.exports = [
       ['Move your boards in', 'Create lists, drag cards, attach files, tick checklists. Export everything to JSON whenever you want proof you own it.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/boardly-kanban, always. $19 buys the packaged installer, updates and setup support.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/boardly-kanban-mvp, always. $19 buys the packaged installer, updates and setup support.'],
       ['How do team members log in?', 'One shared password protects the whole install — there are no per-user accounts, permissions or assignee fields yet. That\'s fine for small teams on a trusted server or VPN; if you need granular roles and member management, Trello still wins there.'],
       ['Does it have automations like Butler?', 'No — no rule engine, no scheduled commands. Boardly bets that most Trello boards never touch Butler, and most don\'t. If yours does, keep Trello.'],
       ['Is there a mobile app?', 'No native app — the web UI works in a phone browser when you host it on a VPS. Desktop mode is Windows-first, and the MIT source builds anywhere Electron runs.'],
@@ -798,7 +798,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'timevault', brand: 'Timevault', repo: 'timevault-tracker', price: 29, icon: '⏱️',
+    slug: 'timevault', brand: 'Timevault', repo: 'timevault-tracker-mvp', price: 29, icon: '⏱️',
     tagline: 'Time tracking for freelancers who bill clients — timers, rates and reports you own.',
     oneliner: 'Self-hosted time tracking — one-click timers, hourly rates, weekly timesheets, billable reports.',
     competitor: 'Toggl', compPrice: '$10/user/mo', compYr: 120,
@@ -830,7 +830,7 @@ module.exports = [
       ['Track, then invoice from the report', 'Run timers or enter time manually, open a report for the billing period, apply 15-minute rounding, and read the exact billable amount off the screen.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/timevault-tracker. $29 buys the packaged installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/timevault-tracker-mvp. $29 buys the packaged installer, 1-click setup and updates.'],
       ['What happens to a running timer if my browser crashes?', 'Nothing — the timer is server state, not a browser widget. Reload the page an hour later and it\'s still counting from the original start.'],
       ['Is there a mobile app or idle detection?', 'No — honestly. Toggl\'s native apps, idle detection and calendar integrations are real advantages if you track from your phone all day. Timevault is browser + desktop, aimed at people who work at a computer and bill for it.'],
       ['Does rounding change my data?', 'Never — rounding is applied at report level only. Your raw entries stay exact, so you can re-run the same period at 5, 15 or no rounding.'],
@@ -838,7 +838,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'streakly', brand: 'Streakly', repo: 'habit-tracker', price: 15, icon: '🔥',
+    slug: 'streakly', brand: 'Streakly', repo: 'habit-tracker-mvp', price: 15, icon: '🔥',
     tagline: 'The desktop habit tracker you buy once — streaks, heatmaps and schedules that match real life.',
     oneliner: 'Local habit tracking with a fair streak engine, GitHub-style heatmaps and reminders.',
     competitor: 'Habitify', compPrice: '$5/mo', compYr: 60,
@@ -870,7 +870,7 @@ module.exports = [
       ['Check in daily', 'Tick habits (or count reps), keep streaks alive fairly, and watch the year heatmap fill in.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/habit-tracker. $15 buys the packaged Windows installer and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/habit-tracker-mvp. $15 buys the packaged Windows installer and updates.'],
       ['Why is the streak engine "fair"?', 'Because most trackers punish you for their own bad math. In Streakly, a weekdays-only habit doesn\'t break over the weekend, an N-per-week habit counts weekly quotas across week boundaries, skip days freeze streaks, and an unfinished today never kills a streak prematurely. The engine is a pure zero-dependency module with its own test suite.'],
       ['Is there a phone app or sync?', 'No — Streakly is desktop-first with no cloud, which is exactly why it can promise zero network calls. Your entire history is one JSON file; sync it yourself via Dropbox, Drive or Syncthing if you want it on two machines. If phone-first tracking matters most, Habitify is the better fit.'],
       ['Do reminders work?', 'Yes — native OS notifications at whatever times you set per habit.'],
@@ -878,7 +878,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'deepdesk', brand: 'Deepdesk', repo: 'focus-dashboard', price: 15, icon: '🎯',
+    slug: 'deepdesk', brand: 'Deepdesk', repo: 'focus-dashboard-mvp', price: 15, icon: '🎯',
     tagline: 'A local-first deep-work dashboard — Pomodoro, intents, ambient noise, streaks. No account.',
     oneliner: 'Pomodoro engine, session intents, floating mini timer, generated ambient noise & focus stats.',
     competitor: 'Centered', compPrice: '~$10/mo', compYr: 120,
@@ -910,7 +910,7 @@ module.exports = [
       ['Watch the streak build', 'Focus minutes, day streaks and a 30-day chart accumulate in your local dashboard — with every intent logged.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/focus-dashboard. $15 buys the signed installer, auto-shortcuts and zero setup.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/focus-dashboard-mvp. $15 buys the signed installer, auto-shortcuts and zero setup.'],
       ['How is the ambient noise generated?', 'Mathematically, in real time — white/pink/brown noise and droplet-synthesized rain as pure sample-buffer math through WebAudio. No audio files are shipped and nothing streams, which is why it works offline forever.'],
       ['Does it block distracting websites or apps?', 'No — Deepdesk is a timer, intent and stats tool, not a blocker. Pair it with a hosts-file blocker if you need hard enforcement. Centered\'s coaching nudges and Flow music are also things Deepdesk deliberately doesn\'t do.'],
       ['Can paused time leak into a session?', 'No — the Pomodoro brain is a pure tick-driven state machine fed wall-clock deltas. Pausing simply stops feeding ticks, so paused minutes can\'t count. The engine has its own test suite.'],
@@ -918,7 +918,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'quillpad', brand: 'Quillpad', repo: 'quillpad-notes', price: 29, icon: '🪶',
+    slug: 'quillpad', brand: 'Quillpad', repo: 'quillpad-notes-mvp', price: 29, icon: '🪶',
     tagline: 'Local-first markdown notes — your knowledge base is a folder of plain .md files you own.',
     oneliner: 'Fast desktop notes with wikilinks, backlinks, tags, daily notes and global quick capture.',
     competitor: 'Notion', compPrice: '$12/mo per seat', compYr: 144,
@@ -950,7 +950,7 @@ module.exports = [
       ['Write, link, capture', 'Wikilinks with autocomplete, backlinks with context, daily notes on Ctrl+D, and quick capture from anywhere in Windows.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/quillpad-notes, always. $29 buys the signed installer with auto-updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/quillpad-notes-mvp, always. $29 buys the signed installer with auto-updates.'],
       ['How do I sync between machines?', 'Your vault is a plain folder, so any file sync works: Dropbox, Google Drive, Syncthing, git. There\'s no built-in sync service — that\'s a feature, not a gap: it\'s why there\'s no account and no monthly fee. If you want turnkey encrypted mobile sync, Obsidian Sync is good at that.'],
       ['Can it replace Notion databases?', 'No — Quillpad is notes, links and tags, not tables, kanbans and formulas. If your workspace is really a database app, Notion earns its seat fee. If it\'s actually a pile of documents, files are better.'],
       ['What happens if Quillpad disappears?', 'Nothing — your notes are already plain markdown files in your own folder. Open them in anything. That\'s the whole point.'],
@@ -959,7 +959,7 @@ module.exports = [
   },
 
   {
-    slug: 'pingcron', brand: 'Pingcron', repo: 'pingcron', price: 29, icon: '🫀',
+    slug: 'pingcron', brand: 'Pingcron', repo: 'pingcron-mvp', price: 29, icon: '🫀',
     tagline: 'Dead-man\'s-switch monitoring for cron jobs & backups. Pay once, own it forever.',
     oneliner: 'Your jobs ping a URL when they run — Pingcron alerts you when a ping is late or missing.',
     competitor: 'Cronitor', compPrice: '$10/mo', compYr: 120,
@@ -991,7 +991,7 @@ module.exports = [
       ['Add one line to your crontab', 'Append && curl -fsS https://your-host/ping/TOKEN to any job. The moment a ping is late or missing, you get alerted.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT-licensed at github.com/bensblueprints/pingcron and always will be. The $29 buys the 1-click Windows installer and lifetime updates for people who don\'t want to touch a terminal.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT-licensed at github.com/bensblueprints/pingcron-mvp and always will be. The $29 buys the 1-click Windows installer and lifetime updates for people who don\'t want to touch a terminal.'],
       ['How is this different from an uptime monitor?', 'Uptime monitors watch whether your site is up. They can\'t see a backup cron that "ran" but wrote to a read-only mount. Pingcron watches for the absence of a signal — your job pings when it finishes, and Pingcron yells when the ping doesn\'t arrive.'],
       ['Will it spam me with repeat alerts?', 'No. Alerts fire only on state transitions — down, recovery, explicit failure — and the state machine is persisted, so a restart never double-alerts. If you want repeat-nagging until acknowledged, that\'s a thing Cronitor does that Pingcron deliberately doesn\'t.'],
       ['Why not just self-host Healthchecks.io?', 'Honestly? Healthchecks.io\'s OSS self-host is excellent and more mature — if you\'re happy assembling a Django/Postgres deployment, use it. Pingcron is the "one process, one file, five minutes" version, with a desktop mode nobody else has.'],
@@ -999,7 +999,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'hookscope', brand: 'Hookscope', repo: 'hookscope', price: 24, icon: '🪝',
+    slug: 'hookscope', brand: 'Hookscope', repo: 'hookscope-mvp', price: 24, icon: '🪝',
     tagline: 'See every webhook. Replay any of them. Pay once.',
     oneliner: 'Self-hosted webhook capture, inspection, replay & forwarding — URLs that never expire.',
     competitor: 'Pipedream', compPrice: '$29/mo', compYr: 348,
@@ -1031,7 +1031,7 @@ module.exports = [
       ['Inspect, replay, forward', 'Watch requests land live, auto-forward to your real endpoint while you inspect a copy, and replay the failed one after you fix your handler.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/hookscope, always. The $24 gets you the 1-click Windows installer and updates instead of npm i && npm start.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/hookscope-mvp, always. The $24 gets you the 1-click Windows installer and updates instead of npm i && npm start.'],
       ['Isn\'t Pipedream way more than a request bin?', 'It is — Pipedream is a full workflow-automation platform, and if you need webhooks to trigger multi-step integrations, it\'s genuinely great. But if you\'re paying $29/mo mostly to inspect and replay JSON, Hookscope does that part for $24 once.'],
       ['Does forwarding retry on failure?', 'No — forwarding is fire-once by design, to keep behavior predictable. The result (status or error) is recorded on each request row, and you can replay any capture manually. If you need a durable retry queue, that\'s the cloud platforms\' territory.'],
       ['Is the live view websockets?', 'It\'s plain 2-second polling — deliberate, to keep the whole thing one simple, hackable process. In practice the request appears about as fast as you can alt-tab to it.'],
@@ -1039,7 +1039,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'snapfleet', brand: 'Snapfleet', repo: 'snapfleet', price: 39, icon: '📸',
+    slug: 'snapfleet', brand: 'Snapfleet', repo: 'snapfleet-mvp', price: 39, icon: '📸',
     tagline: 'Self-hosted screenshot API. Unlimited renders. Pay once.',
     oneliner: 'One endpoint turns any URL into PNG, JPG or PDF — on your own server, $0 per render.',
     competitor: 'Urlbox', compPrice: '$19/mo', compYr: 228,
@@ -1071,7 +1071,7 @@ module.exports = [
       ['Curl your first screenshot', 'One GET request returns the PNG. Use the playground to dial in parameters and copy the exact curl command.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/snapfleet, always. $39 buys the 1-click installer and updates. From source it\'s npm i && npm start (heads-up: Puppeteer downloads ~170MB of Chromium on first install).'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/snapfleet-mvp, always. $39 buys the 1-click installer and updates. From source it\'s npm i && npm start (heads-up: Puppeteer downloads ~170MB of Chromium on first install).'],
       ['Is it as reliable as Urlbox?', 'Urlbox runs a global render fleet with retries and edge caching — for millions of renders a month at five nines, they earn their fee. Snapfleet is one pooled Chromium on your box with queueing, timeouts and crash recovery — for og-images, link previews, PDFs and internal tooling, that\'s honestly all you need.'],
       ['What do people use it for?', 'Open-graph image generation, link previews, PDF invoices and receipts of web pages, visual monitoring, archiving, and thumbnails for directories — anywhere you\'d otherwise pay per render.'],
       ['Can it screenshot pages behind my firewall?', 'Yes — that\'s a headline feature. Because it runs on your infrastructure it can reach localhost and RFC1918 addresses (ALLOW_PRIVATE defaults to on). No cloud screenshot API can do that.'],
@@ -1079,7 +1079,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'wrangle', brand: 'Wrangle', repo: 'wrangle-toolbox', price: 15, icon: '🛠️',
+    slug: 'wrangle', brand: 'Wrangle', repo: 'wrangle-toolbox-mvp', price: 15, icon: '🛠️',
     tagline: 'The offline developer data toolbox. Stop pasting API keys into random websites.',
     oneliner: '10 dev data tools — JSON convert, JWT decode, diff, regex, hash — 100% offline, one app.',
     competitor: 'DevUtils', compPrice: '$29 (macOS only)', compYr: 29,
@@ -1111,7 +1111,7 @@ module.exports = [
       ['Hit Ctrl+K', 'Ten tools one keystroke apart, drag-drop files into any input, copy button on every output, per-tool local history.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/wrangle-toolbox, and the build is genuinely trivial: npm i && npm start, zero native modules. $15 gets you the packaged installer and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/wrangle-toolbox-mvp, and the build is genuinely trivial: npm i && npm start, zero native modules. $15 gets you the packaged installer and updates.'],
       ['Why not DevUtils or DevToys?', 'DevUtils is polished but macOS-only — Wrangle exists largely because Windows devs kept asking for it. DevToys is free and good; Wrangle\'s pitch is one coherent UX across all ten tools, plus enforced guarantees like the network-blocking CSP and regex worker timeout.'],
       ['How is "offline" enforced rather than promised?', 'The renderer ships a strict Content-Security-Policy with connect-src \'none\' — outbound requests are blocked by the browser engine itself, not a privacy policy. You can verify it in the MIT source.'],
       ['Can it verify JWT signatures?', 'HS256 verification is built in; RS256 is on the list but not there yet — we\'d rather say so upfront. Decoding, expiry checks and the expired badge work for any JWT.'],
@@ -1119,7 +1119,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'vaultkeeper', brand: 'Vaultkeeper', repo: 'vaultkeeper', price: 39, icon: '🔐',
+    slug: 'vaultkeeper', brand: 'Vaultkeeper', repo: 'vaultkeeper-mvp', price: 39, icon: '🔐',
     tagline: 'Scheduled, encrypted database backups you actually own.',
     oneliner: 'Postgres, MySQL, SQLite & Mongo dumps on cron — encrypted, shipped to S3/FTP/disk, with failure alerts.',
     competitor: 'SimpleBackups', compPrice: '$29/mo', compYr: 348,
@@ -1151,7 +1151,7 @@ module.exports = [
       ['Schedule, encrypt, sleep', 'Point it at your databases, pick a cron schedule and a destination. If a run ever fails, the webhook and email tell you immediately — with the actual error.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/vaultkeeper, always. The $39 buys the packaged installer and funds development. One month of the competition, forever.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/vaultkeeper-mvp, always. The $39 buys the packaged installer and funds development. One month of the competition, forever.'],
       ['What happens to my backups if Vaultkeeper disappears?', 'They still open. The VK1 encryption format is documented in the README (AES-256-GCM, scrypt key derivation) and the repo ships a zero-dependency decrypt script — plus you can use age instead. Your backups outlive the software by design.'],
       ['Do I need database tools installed?', 'For Postgres/MySQL/Mongo, yes — Vaultkeeper shells out to the official dump tools, and a tool-check panel shows what\'s found on PATH with install hints. SQLite needs nothing installed. The Docker image bundles all of them.'],
       ['Is restore one-click?', 'Deliberately not. The restore helper generates the exact command chain — download, decrypt, gunzip, psql/mysql/mongorestore — so you can read every command before it touches your production database. SimpleBackups\' managed one-click restores are genuinely more convenient; we chose transparency.'],
@@ -1159,7 +1159,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'queuecraft', brand: 'Queuecraft', repo: 'queuecraft', price: 29, icon: '🎟️',
+    slug: 'queuecraft', brand: 'Queuecraft', repo: 'queuecraft-mvp', price: 29, icon: '🎟️',
     tagline: 'Self-hosted viral waitlist with referral queue-jumping. Pay once.',
     oneliner: 'Signup page + embed widget where referring friends moves you up the line — on your server.',
     competitor: 'LaunchList', compPrice: '$29/mo', compYr: 348,
@@ -1191,7 +1191,7 @@ module.exports = [
       ['Drop in one line', 'Paste the script snippet into any site (or share the hosted page) and watch the referral loop run: sign up, share, jump the line.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/queuecraft, always. If you\'re comfortable with npm i && npm start it\'s free forever; the $29 buys the 1-click Windows installer for people who\'d rather not touch a terminal.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/queuecraft-mvp, always. If you\'re comfortable with npm i && npm start it\'s free forever; the $29 buys the 1-click Windows installer for people who\'d rather not touch a terminal.'],
       ['Does the referral mechanic actually work?', '"Refer friends to jump the line" is the exact loop behind Robinhood\'s, Superhuman\'s and Monzo\'s million-person waitlists. Queuecraft implements it with computed ranking — position is always calculated from verified referral points, never stored, so it can\'t drift.'],
       ['What stops people gaming the queue?', 'A lot, honestly: only verified (double-opt-in) signups credit referrers, disposable email domains are blocked, Gmail dot/+tag variants dedupe to one entry, self-referrals are detected, and referral credits are capped per IP. Determined fraudsters exist, but the cheap tricks all bounce.'],
       ['Do I need my own email service?', 'Yes — Queuecraft is deliberately BYO-SMTP (any provider: your host, SES, Postmark, etc.). That\'s a real trade-off versus LaunchList, which sends through their infrastructure with zero setup. In exchange, your sender reputation and your list stay entirely yours.'],
@@ -1200,7 +1200,7 @@ module.exports = [
   },
 
   {
-    slug: 'bravowall', brand: 'Bravowall', repo: 'bravowall', price: 29, icon: '👏',
+    slug: 'bravowall', brand: 'Bravowall', repo: 'bravowall-mvp', price: 29, icon: '👏',
     tagline: 'Collect testimonials, moderate them, embed a Wall of Love anywhere — self-hosted.',
     oneliner: 'Hosted collection forms, moderation queue, shadow-DOM wall embed & PNG cards. No subscription.',
     competitor: 'Senja', compPrice: '$19/mo', compYr: 228,
@@ -1232,7 +1232,7 @@ module.exports = [
       ['Collect, approve, embed', 'Share your /collect link, approve the good ones, and paste one script tag anywhere you want the wall.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/bravowall and always will be. The $29 buys the packaged installer, 1-click setup and updates instead of a terminal session.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/bravowall-mvp and always will be. The $29 buys the packaged installer, 1-click setup and updates instead of a terminal session.'],
       ['Can visitors record video testimonials?', 'No — that\'s a deliberate non-goal, and it\'s Senja\'s genuine edge. Bravowall embeds video links (YouTube, Loom, Vimeo) instead of recording and hosting video itself. If in-form video recording is essential, Senja earns its fee there.'],
       ['Will the embed break my site\'s styling?', 'It can\'t. The wall renders inside shadow DOM, so your CSS can\'t reach in and its styles can\'t leak out. Masonry layout is pure CSS columns — no layout JavaScript.'],
       ['Can I migrate from Senja or Testimonial.to?', 'Yes. CSV import handles their export files in one upload, with per-row error reporting so nothing silently disappears.'],
@@ -1240,7 +1240,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'hawkwatch', brand: 'Hawkwatch', repo: 'hawkwatch', price: 34, icon: '🦅',
+    slug: 'hawkwatch', brand: 'Hawkwatch', repo: 'hawkwatch-mvp', price: 34, icon: '🦅',
     tagline: 'Watch any product page for price or stock changes. Unlimited watchers, your server.',
     oneliner: 'Headless-Chromium price & stock monitoring with screenshot alerts — no quotas, no subscription.',
     competitor: 'Distill', compPrice: '$12/mo', compYr: 144,
@@ -1272,7 +1272,7 @@ module.exports = [
       ['Add a URL, get alerts', 'Hawkwatch auto-detects the price, checks on your schedule, and emails or webhooks you — screenshot included — when something moves.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/hawkwatch, always. The $34 buys the packaged installer, 1-click setup and updates instead of npm and a terminal.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/hawkwatch-mvp, always. The $34 buys the packaged installer, 1-click setup and updates instead of npm and a terminal.'],
       ['Can I monitor Amazon with it?', 'Amazon\'s Terms of Service prohibit automated access, and Hawkwatch won\'t pretend otherwise — there\'s no proxy rotation or captcha solving, and there never will be. For Amazon, use their official Product Advertising API (or camelcamelcamel, which is free).'],
       ['How does it stay polite to the sites I watch?', 'Checks identify themselves as HawkwatchBot/1.0, intervals floor at 5 minutes with jitter, checks run one at a time with exponential backoff, and adding a watcher warns you (non-blocking) if robots.txt disallows the path.'],
       ['Do I need a server?', 'No. Desktop mode runs everything in an Electron window. For 24/7 monitoring while your PC sleeps, a $5 VPS with the included Docker setup is the better home — Distill\'s cloud does have the always-on part built in, to be fair.'],
@@ -1280,7 +1280,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'postbird', brand: 'Postbird', repo: 'postbird', price: 59, icon: '🕊️',
+    slug: 'postbird', brand: 'Postbird', repo: 'postbird-mvp', price: 59, icon: '🕊️',
     tagline: 'Self-hosted email campaigns over your own SMTP. Stop renting your audience back.',
     oneliner: 'Lists, segments, a drag-block builder, throttled sending & open/click tracking — no per-contact pricing.',
     competitor: 'Mailchimp', compPrice: '$20+/mo (grows with your list)', compYr: 240,
@@ -1312,7 +1312,7 @@ module.exports = [
       ['Import, build, send', 'CSV-import your list, drag blocks into an email, and send throttled campaigns with live progress and open/click reports.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/postbird, always. $59 buys the packaged installer, 1-click setup and updates — and funds the open-source version.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/postbird-mvp, always. $59 buys the packaged installer, 1-click setup and updates — and funds the open-source version.'],
       ['Will my emails land in the inbox?', 'Deliverability is your SMTP provider\'s job, and Postbird is honest about that: use SES or Postmark credentials and you inherit their IP reputation. Mailchimp\'s managed sending infrastructure is genuinely convenient if you\'d rather not think about SPF/DKIM at all — that\'s what the monthly fee buys.'],
       ['Is it actually CAN-SPAM / GDPR compliant?', 'The legal minimums are enforced in code, not suggested: the server returns a 400 if you try to send without a physical address configured, the compiler appends an unsubscribe footer if a template lacks one, and every email carries RFC 8058 one-click unsubscribe headers — which Gmail and Yahoo require for bulk senders.'],
       ['Does it do automations and A/B tests?', 'No — drip automations and A/B testing are deliberately out of scope for now. Postbird covers lists, segments, campaigns and tracking. If your marketing lives on complex journey builders, Mailchimp still wins there.'],
@@ -1320,7 +1320,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'keymaster', brand: 'Keymaster', repo: 'keymaster', price: 49, icon: '🔑',
+    slug: 'keymaster', brand: 'Keymaster', repo: 'keymaster-mvp', price: 49, icon: '🔑',
     tagline: 'Self-hosted license server: signed keys, seat limits, secure downloads — no platform cut.',
     oneliner: 'Ed25519-signed license keys your apps verify offline, seat limits, signed downloads & webhooks.',
     competitor: 'Keygen', compPrice: 'from $99/mo', compYr: 1188,
@@ -1352,7 +1352,7 @@ module.exports = [
       ['Issue keys, ship builds', 'Issue or bulk-issue licenses from the dashboard, wire the webhook into Stripe or Whop, and let customers download through expiring signed URLs.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/keymaster, always. $49 buys the packaged installer, updates and priority support. We dogfood it: the onetime-suite\'s own premium tiers run on Keymaster.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/keymaster-mvp, always. $49 buys the packaged installer, updates and priority support. We dogfood it: the onetime-suite\'s own premium tiers run on Keymaster.'],
       ['Can offline validation catch revoked keys?', 'No — and the docs say so upfront. An offline check proves a key is authentic and unexpired; it can\'t see revocations or seat counts. The shipped snippets show the recommended hybrid: verify offline instantly, check in online periodically, apply a grace period.'],
       ['Why not just use Keygen?', 'If you want managed infrastructure, multi-region uptime and someone else holding the pager, Keygen is a solid product — that\'s what $99+/month buys. Keymaster is for sellers who\'d rather own the keypair, the data and the bill: one Node process and a SQLite file on a $5 VPS.'],
       ['What happens if I lose my signing key?', 'Back up data/keys/signing.pem — seriously. Your keys verify against that keypair; lose the private key and you can never issue new keys that pass validation in apps you\'ve already shipped.'],
@@ -1360,7 +1360,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'castport', brand: 'Castport', repo: 'castport', price: 39, icon: '📻',
+    slug: 'castport', brand: 'Castport', repo: 'castport-mvp', price: 39, icon: '📻',
     tagline: 'Host your own podcast: Apple/Spotify-valid RSS, player, stats — on your $5 VPS.',
     oneliner: 'Upload episodes, get a valid RSS feed, public pages, embeddable player & download stats. Pay once.',
     competitor: 'Transistor', compPrice: '$19/mo', compYr: 228,
@@ -1392,7 +1392,7 @@ module.exports = [
       ['Upload and submit', 'Upload your first episode, then submit /feed/your-show.xml to Apple Podcasts Connect and Spotify for Podcasters. Done.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/castport, always. $39 buys the packaged installer, guided deploy and lifetime updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/castport-mvp, always. $39 buys the packaged installer, guided deploy and lifetime updates.'],
       ['Will Apple and Spotify actually accept the feed?', 'That\'s the part we sweated: exact enclosure byte counts (not estimates), permanent GUIDs, real probed audio durations, and proper HTTP Range support on audio — the exact details that get naive feeds rejected. Set BASE_URL to your real domain first; localhost feeds are rejected.'],
       ['Who pays for the bandwidth?', 'You do — that\'s the honest trade-off of self-hosting. A $5 VPS comfortably serves a typical indie show; a genuinely huge audience is where Transistor\'s managed CDN infrastructure earns its monthly fee.'],
       ['What about listener privacy?', 'Download stats hash IPs with a rotating daily salt, so you get unique-downloads-per-day trends without ever storing anything personal — and the data sits in your SQLite file, not a third party\'s dashboard.'],
@@ -1400,7 +1400,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'inkpress', brand: 'Inkpress', repo: 'inkpress', price: 29, icon: '✒️',
+    slug: 'inkpress', brand: 'Inkpress', repo: 'inkpress-mvp', price: 29, icon: '✒️',
     tagline: 'A self-hosted markdown blog with zero-JavaScript public pages. Pay once, publish forever.',
     oneliner: 'Split-pane markdown editor, 3 themes, server-side highlighting, RSS & SEO — one SQLite file.',
     competitor: 'Ghost', compPrice: '$9/mo', compYr: 108,
@@ -1432,7 +1432,7 @@ module.exports = [
       ['Write and publish', 'Markdown in the split-pane editor, drag in images (auto-resized), hit publish — or schedule it and walk away.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/inkpress, always. $29 buys the packaged Windows installer, 1-click setup and lifetime updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/inkpress-mvp, always. $29 buys the packaged Windows installer, 1-click setup and lifetime updates.'],
       ['Why zero JavaScript on the public site?', 'Because a blog is documents, not an app. No client framework means instant loads, perfect crawlability and nothing to break. The test suite literally asserts there\'s no script tag on public pages.'],
       ['Can it do paid newsletters like Ghost or Substack?', 'No — and Ghost is genuinely strong there. Inkpress is a publishing engine: posts, tags, themes, RSS, SEO. If memberships and paid email subscriptions are the core of your business, Ghost\'s built-in monetization is worth its fee.'],
       ['What happens to old links if I rename a post?', 'The slug-rename 301 redirect table catches them automatically — old URLs redirect to the new slug instead of 404ing your inbound links.'],
@@ -1441,7 +1441,7 @@ module.exports = [
   },
 
   {
-    slug: 'feedloft', brand: 'Feedloft', repo: 'feedloft', price: 24, icon: '📰',
+    slug: 'feedloft', brand: 'Feedloft', repo: 'feedloft-mvp', price: 24, icon: '📰',
     tagline: 'A fast, keyboard-first RSS reader you host yourself.',
     oneliner: 'Self-hosted Feedly alternative — folders, OPML, full-text search, one SQLite file.',
     competitor: 'Feedly', compPrice: '$8/mo', compYr: 96,
@@ -1473,7 +1473,7 @@ module.exports = [
       ['Import your OPML, start reading', 'Your Feedly folders come across intact. j/k through your feeds; hit / when you need something from three months ago.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes. The full source is MIT-licensed at github.com/bensblueprints/feedloft and always will be. The self-hosted version is the complete product, not a crippled trial — $24 buys the packaged installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes. The full source is MIT-licensed at github.com/bensblueprints/feedloft-mvp and always will be. The self-hosted version is the complete product, not a crippled trial — $24 buys the packaged installer, 1-click setup and updates.'],
       ['Is there a mobile app?', 'Not a native one. Feedloft is a web app plus an Electron desktop wrapper; if it\'s hosted on a VPS you can read it from your phone\'s browser. Feedly\'s polished iOS/Android apps are a genuine advantage if you read mostly on mobile.'],
       ['What if a feed only publishes summaries?', 'Feedloft pulls the full article with Mozilla Readability — per-article on demand, or always-on for a given feed. Extracted content is sanitized and stored locally, so it\'s searchable too.'],
       ['Will duplicate items pile up?', 'No. Item identity falls back to a stable hash of title + pubDate when a feed omits guids, so items don\'t duplicate on refresh — a bug class the parser was specifically tested against, along with malformed XML and encoding chaos.'],
@@ -1481,7 +1481,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'reelsnag', brand: 'Reelsnag', repo: 'reelsnag', price: 24, icon: '📥',
+    slug: 'reelsnag', brand: 'Reelsnag', repo: 'reelsnag-mvp', price: 24, icon: '📥',
     tagline: 'A clean desktop GUI for yt-dlp. Back up your own videos — $24 once.',
     oneliner: 'Paste a URL, pick a quality, queue it. Trim, MP3, subtitles, batch — all local.',
     competitor: 'Downloader subscription sites', compPrice: '$10–15/mo', compYr: 144,
@@ -1514,7 +1514,7 @@ module.exports = [
       ['Paste, pick, queue', 'Probe a URL, choose quality or audio-only, set trim/subtitles if you want them, and watch the queue work.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/reelsnag and always will be. $24 buys the packaged Windows installer and lifetime updates instead of running npm start yourself.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/reelsnag-mvp and always will be. $24 buys the packaged Windows installer and lifetime updates instead of running npm start yourself.'],
       ['Is this legal to use?', 'Reelsnag is built for personal use: backing up your own uploads, content you have rights to, Creative Commons / public-domain media, and material a platform\'s terms permit you to download. Respect each platform\'s Terms of Service and copyright law — it is not a tool for redistributing or pirating other people\'s content, and that\'s on you to avoid.'],
       ['What happens when a site changes and downloads break?', 'That\'s why the "Update yt-dlp" button exists. The engine is the actively-maintained yt-dlp project, which ships extractor fixes weekly — one click pulls the latest release from GitHub.'],
       ['Does anything get uploaded or tracked?', 'No telemetry, no analytics, no accounts. The only network calls are the one-time yt-dlp binary download and whatever URL you explicitly paste in — both clearly surfaced in the UI.'],
@@ -1522,7 +1522,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'voicebarn', brand: 'Voicebarn', repo: 'voicebarn', price: 34, icon: '🗣️',
+    slug: 'voicebarn', brand: 'Voicebarn', repo: 'voicebarn-mvp', price: 34, icon: '🗣️',
     tagline: 'Unlimited natural-sounding text-to-speech on your own machine.',
     oneliner: 'Local neural TTS via Piper — unlimited characters, per-paragraph voices, WAV/MP3 export.',
     competitor: 'ElevenLabs (Creator)', compPrice: '$22/mo', compYr: 264,
@@ -1554,7 +1554,7 @@ module.exports = [
       ['Write, preview, export', 'Assign voices and speeds per paragraph, drop pause tags where you need a beat, preview any paragraph, export WAV or MP3 — or batch a whole folder.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/voicebarn, always. $34 buys the signed installer, 1-click setup and updates instead of npm i && npm start.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/voicebarn-mvp, always. $34 buys the signed installer, 1-click setup and updates instead of npm i && npm start.'],
       ['Can it clone my voice or sound like a specific person?', 'No — and ElevenLabs is genuinely better if that\'s what you need. Voicebarn ships clean neural narration voices, great for videos, courses, audiobooks, IVR prompts and accessibility — not celebrity impressions or voice cloning. That\'s a different product category.'],
       ['Does it support SSML?', 'Only an SSML-lite pause tag: <pause 500ms> or [pause 1s]. Piper doesn\'t support full SSML, and Voicebarn doesn\'t pretend otherwise — prosody, emphasis and phoneme tags will be read aloud literally. If you need real SSML, Piper isn\'t the right engine.'],
       ['How does the quality compare to ElevenLabs?', 'Piper\'s voices are natural, clean narration voices — very good for the job, but ElevenLabs\' newest cloud models are more expressive. What you get in exchange: unlimited characters, total privacy, offline operation and no bill ever again.'],
@@ -1562,7 +1562,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'droplink', brand: 'Droplink', repo: 'droplink', price: 29, icon: '💧',
+    slug: 'droplink', brand: 'Droplink', repo: 'droplink-mvp', price: 29, icon: '💧',
     tagline: 'Send big files from your own server. Resumable uploads, expiring links, no subscription.',
     oneliner: 'Self-hosted WeTransfer — chunked resumable uploads, password links, download limits.',
     competitor: 'WeTransfer', compPrice: '$12/mo', compYr: 144,
@@ -1594,7 +1594,7 @@ module.exports = [
       ['Upload, set terms, share', 'Drop the files, set expiry/password/download limit, copy the link or email it via your own SMTP.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/droplink, always. $29 buys the packaged installer, guided deploy and lifetime updates instead of building it yourself.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/droplink-mvp, always. $29 buys the packaged installer, guided deploy and lifetime updates instead of building it yourself.'],
       ['Do I need a server?', 'For public share links, yes — a $5 VPS with the included Docker Compose setup does it, with Caddy or nginx in front for TLS. Desktop mode runs the identical app in an Electron window for local use. WeTransfer\'s zero-setup convenience is real; the trade is you rent it forever.'],
       ['What happens if an upload drops at 90%?', 'It resumes. The server tracks exactly which 5MB chunks it already has, so a refresh or dropped connection continues instead of restarting — verified in the test suite with a sha256 byte-identical check, not just eyeballed.'],
       ['What about download speed and bandwidth?', 'It\'s your server\'s bandwidth — a decent VPS handles client-file delivery fine, but a global CDN like WeTransfer\'s will be faster for recipients on the other side of the world. For freelancer/agency client work, one good server covers it.'],
@@ -1602,7 +1602,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'snipvault', brand: 'Snipvault', repo: 'snipvault', price: 19, icon: '📌',
+    slug: 'snipvault', brand: 'Snipvault', repo: 'snipvault-mvp', price: 19, icon: '📌',
     tagline: 'Every snippet you\'ve ever written, searchable in one place. Pay once.',
     oneliner: 'Self-hosted snippet manager — FTS5 search, share links, raw/embed endpoints, Gist import.',
     competitor: 'Cacher', compPrice: '$6/mo', compYr: 72,
@@ -1633,7 +1633,7 @@ module.exports = [
       ['Import your Gists, start searching', 'The idempotent Gist importer pulls your existing snippets across; FTS5 makes all of it — including file contents — instantly searchable.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/snipvault, always. $19 buys the packaged installer and lifetime updates for people who\'d rather click an installer than run docker compose.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/snipvault-mvp, always. $19 buys the packaged installer and lifetime updates for people who\'d rather click an installer than run docker compose.'],
       ['Why not just keep using GitHub Gists?', 'Gists are free and great for quick shares — but they give you no tags, no collections, and only limited search. Snipvault imports them all (idempotently) and adds the organization layer, full-content search and secret/public visibility control.'],
       ['How good is the search really?', 'Two engines merged: instant client-side fuzzy matching over titles, descriptions, filenames and tags, plus server-side SQLite FTS5 over actual file content — with content-only matches clearly labeled so you know why a result appeared.'],
       ['Can my team use it?', 'It\'s single-admin today — one password, one API token. Cacher\'s team features (shared libraries, member roles) are genuinely better for multi-user setups. For a solo dev or a shared internal box, Snipvault covers it.'],
@@ -1641,7 +1641,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'textract', brand: 'Textract', repo: 'textract-ocr', price: 19, icon: '🔎',
+    slug: 'textract', brand: 'Textract', repo: 'textract-ocr-mvp', price: 19, icon: '🔎',
     tagline: 'Every scan, every screenshot, into text. Offline. Once.',
     oneliner: 'Local OCR for images & PDFs — searchable-PDF export, batch folders, screenshot hotkey.',
     competitor: 'Adobe Acrobat Pro', compPrice: '$19.99/mo', compYr: 240,
@@ -1673,7 +1673,7 @@ module.exports = [
       ['Export what you need', 'Copy text per page, save .txt files, batch a whole folder, or export a true searchable PDF you can Ctrl-F in any reader.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/textract-ocr, always. $19 buys the signed installer, 1-click setup and updates instead of npm i && npm start.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/textract-ocr-mvp, always. $19 buys the signed installer, 1-click setup and updates instead of npm i && npm start.'],
       ['How accurate is the OCR?', 'It\'s Tesseract\'s accuracy — excellent on clean scans, screenshots and printed documents, mediocre on handwriting or heavily skewed photos. It\'s not a cloud vision model, and we\'re not claiming it is. For sensitive paperwork the trade-off is worth it: nothing gets uploaded.'],
       ['Is the searchable PDF real or a gimmick?', 'Real. Each page is rebuilt as the original image plus an invisible text layer positioned from OCR word bounding boxes — and the test suite round-trips the output through a PDF parser to prove the text layer extracts correctly, not just eyeballs it in a reader.'],
       ['Does it replace Acrobat Pro?', 'For OCR, yes. But Acrobat is a full PDF editor — forms, signatures, redaction, page editing. Textract does one job (getting text out of images and scans, offline) and does it for the price of one month of Acrobat.'],
@@ -1682,7 +1682,7 @@ module.exports = [
   },
 
   {
-    slug: 'inkseal', brand: 'Inkseal', repo: 'inkseal', price: 59, icon: '✍️',
+    slug: 'inkseal', brand: 'Inkseal', repo: 'inkseal-mvp', price: 59, icon: '✍️',
     tagline: 'Self-hosted e-signatures. First document free, then $59 once for unlimited envelopes.',
     oneliner: 'Upload a PDF, place fields, route signers, get a flattened audit-trailed document — on your own box. First document free.',
     competitor: 'DocuSign', compPrice: '$10/mo', compYr: 120,
@@ -1717,7 +1717,7 @@ module.exports = [
     ],
     faq: [
       ['How does "first document free" work?', 'Every install can create and fully complete one envelope free — send it, collect all signatures, download the flattened PDF with its certificate page. Creating a second envelope asks for a $59 lifetime license key (sold on Whop). One payment, unlimited documents forever.'],
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT-licensed at github.com/bensblueprints/inkseal and always will be. The $59 buys the license key plus the signed Windows installer, 1-click setup and updates instead of running git clone yourself.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT-licensed at github.com/bensblueprints/inkseal-mvp and always will be. The $59 buys the license key plus the signed Windows installer, 1-click setup and updates instead of running git clone yourself.'],
       ['Are the signatures legally valid?', 'Inkseal implements the core requirements commonly associated with ESIGN/UETA (US) and basic eIDAS "simple electronic signature" validity: demonstrated intent via click-to-sign, consent capture (completion is refused without the "I agree to sign electronically" checkbox), association of the signature with the record, a tamper-evident hash-chained audit trail, and copies for all parties. It is NOT a Qualified Electronic Signature (eIDAS QES) — no certificate-based digital signatures, no Qualified Trust Service Provider, no KBA identity verification, and no compliance certification is claimed. That\'s fine for everyday agreements like leases, contracts and NDAs; legal sufficiency depends on jurisdiction and document type, so if you need QES or work in a regulated industry, consult a lawyer first. Full details on the Inkseal compliance page.'],
       ['How does the audit trail compare to DocuSign\'s?', 'Every event (created, sent, viewed, consented, each field signed, completed, declined) records the UTC timestamp, signer email, IP and user agent, chained with sha256(prev_hash + event) and rooted in the SHA-256 of the original uploaded PDF; the final PDF\'s SHA-256 is recorded at completion. Anyone can hit Verify and recompute the whole chain — no need to take a vendor\'s word for it. DocuSign\'s certificate is solid too, but it\'s proprietary; you trust them, not math you can check.'],
       ['Do signers need an account?', 'No. Each signer gets a unique link, signs in the browser, and that\'s it. You need SMTP configured to email invitations automatically — or just copy the links and send them however you like.'],
@@ -1726,7 +1726,7 @@ module.exports = [
     seoRelated: [['/inkseal/compliance/', 'Inkseal compliance — ESIGN / UETA / eIDAS']],
   },
   {
-    slug: 'overlayr', brand: 'Overlayr', repo: 'overlayr', price: 24, icon: '🎛️',
+    slug: 'overlayr', brand: 'Overlayr', repo: 'overlayr-mvp', price: 24, icon: '🎛️',
     tagline: 'Your OBS overlays, your server. No watermarks, no subscription, no desync.',
     oneliner: 'Self-hosted stream overlays — countdowns, goal bars, tickers, alerts — each just a URL in an OBS Browser Source.',
     competitor: 'StreamElements', compPrice: '$19/mo (Streamlabs Ultra)', compYr: 149,
@@ -1758,7 +1758,7 @@ module.exports = [
       ['Paste into OBS and go live', 'Edits push to the overlay instantly over WebSocket — no refreshing Browser Sources mid-stream. Run the Live Control panel for big one-tap buttons during the session.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/overlayr. The $24 buys the packaged installer, guided VPS deploy and lifetime updates instead of running npm and docker yourself.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/overlayr-mvp. The $24 buys the packaged installer, guided VPS deploy and lifetime updates instead of running npm and docker yourself.'],
       ['Isn\'t StreamElements free?', 'The core is, and it\'s genuinely good — that\'s the honest answer. But the polished themes, extras and watermark removal live in paid tiers (Streamlabs Ultra is $19/mo, OWN3D Pro $12.99/mo), and your overlays live on their cloud either way. Overlayr is for streamers who want to own the whole stack and never see a "premium" upsell again.'],
       ['Does it do follower/sub alerts from Twitch automatically?', 'Not natively — alerts fire from the dashboard or a webhook (POST /hook/:token). If you already run Streamer.bot or any EventSub relay, point it at the webhook and platform events flow through. If you want zero-setup native platform alerts, StreamElements still does that out of the box.'],
       ['Why don\'t my timers reset when OBS reloads the source?', 'Because the server owns the clock. Overlayr stores started_at/ends_at in SQLite and recomputes remaining time on every WebSocket reconnect — scene switches and Browser Source reloads always resync to the correct time.'],
@@ -1766,7 +1766,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'signboard', brand: 'Signboard', repo: 'signboard', price: 49, icon: '📺',
+    slug: 'signboard', brand: 'Signboard', repo: 'signboard-mvp', price: 49, icon: '📺',
     tagline: 'Every screen you own, one price, forever. Self-hosted digital signage.',
     oneliner: 'Playlists, scheduling, screen health and emergency takeover — any browser is a player, no per-screen rent.',
     competitor: 'Yodeck', compPrice: '$8/screen/mo', compYr: 96,
@@ -1798,7 +1798,7 @@ module.exports = [
       ['Build playlists and schedules', 'Upload media, drag to reorder, set daypart rules per screen — edits push to players instantly over WebSocket.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/signboard. The $49 buys the packaged installer, guided VPS deploy and lifetime updates instead of doing the docker compose setup yourself.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/signboard-mvp. The $49 buys the packaged installer, guided VPS deploy and lifetime updates instead of doing the docker compose setup yourself.'],
       ['What hardware do the screens need?', 'Anything with a browser: a smart TV\'s built-in browser, a $35 Raspberry Pi in kiosk Chromium, an old Fire tablet. The player is plain ES2017-safe JavaScript built for ancient smart-TV browsers, with double-buffered swaps to avoid flicker.'],
       ['Does offline caching always work?', 'Honest caveat: browsers only allow service workers on HTTPS or localhost. On a plain-http LAN address the player degrades gracefully to no-cache mode — it still plays fine, it just re-fetches media each loop. For real offline resilience put a reverse proxy with TLS (or Tailscale) in front, or run the desktop app, which loads 127.0.0.1 and gets full caching.'],
       ['How does scheduling handle wrong clocks on kiosk devices?', 'All daypart rules are evaluated server-side in each screen\'s own IANA timezone — the kiosk\'s (often drifting, often wrong) hardware clock is never trusted.'],
@@ -1806,7 +1806,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'serpdeck', brand: 'Serpdeck', repo: 'serpdeck', price: 39, icon: '📈',
+    slug: 'serpdeck', brand: 'Serpdeck', repo: 'serpdeck-mvp', price: 39, icon: '📈',
     tagline: 'Self-hosted rank tracking. Unlimited keywords, your own SERP API key, $39 once.',
     oneliner: 'Daily position history, competitor overlays and big-move alerts — BYO SerpAPI/DataForSEO key, pennies per check.',
     competitor: 'AccuRanker', compPrice: '$129/mo', compYr: 1548,
@@ -1838,7 +1838,7 @@ module.exports = [
       ['Add keywords, get history', 'Daily checks run on your schedule; charts, competitor overlays, SERP snapshots and big-move alerts accumulate from day one.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/serpdeck. The $39 buys the packaged installer and updates for people who\'d rather not git clone.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/serpdeck-mvp. The $39 buys the packaged installer and updates for people who\'d rather not git clone.'],
       ['Why do I need my own API key? Why not just scrape Google?', 'Because direct scraping is a non-starter for a product: Google CAPTCHA-walls datacenter IPs within dozens of queries, it violates Google\'s ToS, accurate geo/device targeting needs proxy infrastructure the API providers already run at scale, and every Google markup change would break every install. SERP APIs cost fractions of a cent per keyword — a fairly active install (100 keywords daily via DataForSEO) runs $2-6/month. There is no direct-scrape mode, and there never will be.'],
       ['What does tracking actually cost per month then?', 'DataForSEO is roughly $0.0006-$0.002 per SERP pay-as-you-go; SerpAPI is ~$75 for 5,000 searches. The $39 one-time price works precisely because the recurring metered cost is yours directly, at provider rates, not marked up into a subscription.'],
       ['What does AccuRanker do better?', 'Plenty, honestly — it\'s a polished agency product with integrations, share-of-voice analytics and multi-user features Serpdeck doesn\'t have. Serpdeck is for solo SEOs, lean sites and agencies who want to own the infrastructure and pay API costs directly instead of renting a dashboard.'],
@@ -1846,7 +1846,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'chatterbox', brand: 'Chatterbox', repo: 'chatterbox-comments', price: 24, icon: '💬',
+    slug: 'chatterbox', brand: 'Chatterbox', repo: 'chatterbox-comments-mvp', price: 24, icon: '💬',
     tagline: 'Self-hosted threaded comments for any site. One script tag, one SQLite file, $24 once.',
     oneliner: 'Threaded comments, votes, moderation and Disqus import — embedded with one script tag, hosted by you.',
     competitor: 'Hyvor Talk', compPrice: '$8/mo', compYr: 96,
@@ -1878,7 +1878,7 @@ module.exports = [
       ['Paste the embed snippet', 'Copy the script tag from the Embed tab into any page — blog, static site, anything. Comments, votes and moderation work immediately.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/chatterbox-comments. The $24 buys the packaged installer and updates instead of npm-and-docker setup.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/chatterbox-comments-mvp. The $24 buys the packaged installer and updates instead of npm-and-docker setup.'],
       ['Can I migrate from Disqus?', 'Yes — upload your Disqus XML export, dry-run to see the counts, then commit. The import is idempotent by disqus_id, so re-running the same file never double-imports.'],
       ['Do I need a server?', 'For a public site, yes — a $5 VPS with the included docker compose file covers it. That\'s the honest trade-off vs Hyvor Talk: they host everything for you, and if you never want to touch a server, a hosted service is genuinely simpler. Chatterbox is for people who\'d rather own the data and skip the monthly bill.'],
       ['How does it handle spam without CAPTCHAs?', 'Layered, invisible defenses: a hidden honeypot field, a minimum time-to-submit, per-IP rate limiting (5 per 10 minutes by default), and a link-count threshold — plus an approve-first mode and blocklists when you want a human in the loop.'],
@@ -1886,7 +1886,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'ledgerly', brand: 'Ledgerly', repo: 'ledgerly-expenses', price: 29, icon: '📒',
+    slug: 'ledgerly', brand: 'Ledgerly', repo: 'ledgerly-expenses-mvp', price: 29, icon: '📒',
     tagline: 'Business expense tracking with local receipt OCR. Your data, your one-time price.',
     oneliner: 'Expenses, budgets, multi-currency, recurring templates and in-browser receipt OCR — no cloud, no per-seat fee.',
     competitor: 'Expensify', compPrice: '$5/user/mo', compYr: 60,
@@ -1918,7 +1918,7 @@ module.exports = [
       ['Drop receipts, review, done', 'OCR prefills vendor, amount and date for your review, budgets track themselves, and month-end is one CSV or PDF export.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/ledgerly-expenses. The $29 buys the packaged installer, 1-click setup and lifetime updates.'],
+      ['Is it really free on GitHub?', 'Yes — the full source is MIT at github.com/bensblueprints/ledgerly-expenses-mvp. The $29 buys the packaged installer, 1-click setup and lifetime updates.'],
       ['Does the receipt OCR upload my images anywhere?', 'No. tesseract.js runs client-side — in your browser or inside the desktop app\'s window — and the worker, wasm core and language data are all served from the app itself, never a CDN. Receipts with card numbers and addresses on them stay on your disk.'],
       ['How accurate is the OCR?', 'It parses vendor, amount and date and prefills the form flagged for your review — it never auto-saves an expense. Expensify\'s SmartScan, backed by cloud models and human fallback, is honestly more accurate on crumpled or unusual receipts; the trade is that every one of those receipts goes to their servers.'],
       ['Does it do approval workflows and corporate card feeds?', 'No — Expensify genuinely wins for teams needing multi-level approvals, direct card feeds and reimbursement rails. Ledgerly is built for freelancers, solo consultants and small businesses tracking expenses for taxes and reporting.'],
@@ -1926,7 +1926,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'doortracker', brand: 'Door Tracker', repo: 'door-tracker', price: 49, icon: '🚪',
+    slug: 'doortracker', brand: 'Door Tracker', repo: 'door-tracker-mvp', price: 49, icon: '🚪',
     tagline: 'Prove the route was actually walked — not just driven.',
     oneliner: 'GPS pings every 5 minutes, auto-clustered stops with dwell time, so you can tell a knock from a drive-by.',
     competitor: 'Badger Maps', compPrice: '$58–119/rep/mo', compYr: 696,
@@ -1960,13 +1960,13 @@ module.exports = [
     faq: [
       ['Is the $49 price permanent?', 'No — it\'s an introductory rate for the first 1,000 licenses sold. Once that cap is reached, new licenses are $299. Whatever you paid is yours forever either way, with no renewal.'],
       ['Is it legal to track a field team like this?', 'It\'s built for consenting employees on company devices during work hours — the field app always shows a visible "tracking active" indicator, never runs covertly. Check your local employment law before deploying to a team.'],
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/door-tracker. The Whop price buys the packaged installer, the Android app build and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/door-tracker-mvp. The Whop price buys the packaged installer, the Android app build and updates.'],
       ['Does it charge more as my team grows?', 'No. One license covers the server; add as many reps as you want with no per-seat fee, which is the opposite of how Badger Maps and SalesRabbit price.'],
       ['Can I self-host instead of using a VPS?', 'Yes — same Docker image runs on a spare machine on your own network, or the desktop build runs the whole dashboard locally for a single manager.'],
     ],
   },
   {
-    slug: 'famping', brand: 'FamPing', repo: 'famping', price: 39, icon: '📍',
+    slug: 'famping', brand: 'FamPing', repo: 'famping-mvp', price: 39, icon: '📍',
     tagline: 'Real-time family locations and place alerts — without selling your location data.',
     oneliner: '5-minute GPS pings, named-place geofence alerts, and a full day\'s path per family member — on your own server.',
     competitor: 'Life360', compPrice: '$99.99+/yr (Plus)', compYr: 100,
@@ -2000,13 +2000,13 @@ module.exports = [
     faq: [
       ['Is the $39 price permanent?', 'It\'s an introductory rate for the first 1,000 licenses. After that cap, new licenses are $299 — but your purchase price never changes once you\'ve bought.'],
       ['Does FamPing sell or share location data?', 'It can\'t — there\'s no company in the middle. Location data goes from the family phone straight to the server you deployed, and nowhere else.'],
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/famping. The Whop price buys the packaged installer, Android app build and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/famping-mvp. The Whop price buys the packaged installer, Android app build and updates.'],
       ['How is this different from just sharing location in Find My/Google Maps?', 'Those show a live dot but not history — FamPing keeps a searchable log of where someone was and for how long, plus alerts the moment they arrive or leave a named place.'],
       ['Can I run this fully offline / local network only?', 'Yes — deploy to a machine on your home network instead of a public VPS if you only need in-home dashboard access, or use desktop mode for a single-device setup.'],
     ],
   },
   {
-    slug: 'memeforge', brand: 'Memeforge', repo: 'meme-generator', price: 15, icon: '😂',
+    slug: 'memeforge', brand: 'Memeforge', repo: 'memeforge-mvp', price: 15, icon: '😂',
     tagline: 'Classic meme captioning with a real template library — no watermark, no upload.',
     oneliner: 'Drag-drop meme captions, a built-in template library and custom fonts, instant PNG export — 100% offline.',
     competitor: 'Imgflip Pro', compPrice: '$6.99/mo', compYr: 84,
@@ -2038,7 +2038,7 @@ module.exports = [
       ['Caption, export, done', 'Position your text, export a clean PNG — no watermark, no wait.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/meme-generator. The $15 buys the packaged installer, 1-click setup and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/memeforge-mvp. The $15 buys the packaged installer, 1-click setup and updates.'],
       ['Is there ever a watermark?', 'No, on any tier — there\'s no tier. Every export is a clean file.'],
       ['Can I batch-caption a folder?', 'Yes — queue multiple base images with the same text layout and export them all in one pass.'],
       ['Do my images get uploaded anywhere?', 'No — all rendering happens locally on your machine. The app makes no network calls.'],
@@ -2046,7 +2046,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'orgtree', brand: 'Orgtree', repo: 'org-chart-builder', price: 19, icon: '🌳',
+    slug: 'orgtree', brand: 'Orgtree', repo: 'orgtree-mvp', price: 19, icon: '🌳',
     tagline: 'Build and maintain your org chart without a seat-priced diagram tool.',
     oneliner: 'Drag-drop org chart builder with CSV import, auto-layout and PDF/PNG export — no login, no seats.',
     competitor: 'Lucidchart', compPrice: '$7.95/mo', compYr: 95,
@@ -2078,7 +2078,7 @@ module.exports = [
       ['Adjust and export', 'Drag to fix reporting lines, color by department, export PDF or PNG when it\'s ready.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/org-chart-builder. The $19 buys the packaged installer and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/orgtree-mvp. The $19 buys the packaged installer and updates.'],
       ['Does everyone who edits it need their own license?', 'No — one license covers the app on however many of your own machines you install it on; there\'s no per-editor seat like Lucidchart.'],
       ['Can I import from Excel or Google Sheets?', 'Yes — export either to CSV and Orgtree will parse name/title/manager columns automatically.'],
       ['Does it sync across a team in real time?', 'No — that\'s the honest trade-off. Orgtree is a local-first tool; if live multi-editor collaboration is the priority, Lucidchart\'s cloud sync is genuinely the better fit.'],
@@ -2086,7 +2086,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'renewcheck', brand: 'Renewcheck', repo: 'subscription-tracker', price: 15, icon: '🔔',
+    slug: 'renewcheck', brand: 'Renewcheck', repo: 'renewcheck-mvp', price: 15, icon: '🔔',
     tagline: 'Track every subscription\'s renewal date without linking your bank account.',
     oneliner: 'Manual subscription tracker with renewal reminders, spend totals and category breakdowns — your card numbers never touch a server.',
     competitor: 'Rocket Money', compPrice: '$6–12/mo (Premium)', compYr: 96,
@@ -2118,7 +2118,7 @@ module.exports = [
       ['Get reminded before renewals', 'Native notifications ahead of each charge, plus a running total of what subscriptions actually cost you.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/subscription-tracker. The $15 buys the packaged installer and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/renewcheck-mvp. The $15 buys the packaged installer and updates.'],
       ['Why manual entry instead of bank sync?', 'Because bank sync means handing a third party read access to your entire transaction history to solve a problem that\'s really just "remember these dates." If auto-detection from real transactions matters more to you than privacy, Rocket Money is the better fit.'],
       ['Does it cancel subscriptions for me?', 'No — Renewcheck tracks and reminds; it doesn\'t call vendors on your behalf like Rocket Money\'s paid concierge service does.'],
       ['How do reminders work?', 'Native OS notifications a configurable number of days before each renewal date.'],
@@ -2126,7 +2126,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'paletteforge', brand: 'Paletteforge', repo: 'color-palette-brand-kit', price: 15, icon: '🎨',
+    slug: 'paletteforge', brand: 'Paletteforge', repo: 'paletteforge-mvp', price: 15, icon: '🎨',
     tagline: 'Generate, lock and export brand color palettes — no account, no export limits.',
     oneliner: 'Palette generator with lock/shuffle, contrast checking, and CSS/Tailwind/ASE export — fully offline.',
     competitor: 'Coolors Pro', compPrice: '$5.99/mo', compYr: 72,
@@ -2158,7 +2158,7 @@ module.exports = [
       ['Export where you need it', 'CSS variables, Tailwind config, ASE swatches or PNG — pick the format and go.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/color-palette-brand-kit. The $15 buys the packaged installer and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/paletteforge-mvp. The $15 buys the packaged installer and updates.'],
       ['Are exports ever limited?', 'No — unlimited palettes, unlimited exports, every format, no tier.'],
       ['Can it pull colors from an existing logo?', 'Yes — upload an image and it extracts the dominant palette automatically, entirely on-device.'],
       ['Does it check accessibility contrast?', 'Yes — instant WCAG AA/AAA pass-fail for any two colors in a palette.'],
@@ -2166,7 +2166,7 @@ module.exports = [
     ],
   },
   {
-    slug: 'iconforge', brand: 'Iconforge', repo: 'icon-favicon-generator', price: 15, icon: '🔷',
+    slug: 'iconforge', brand: 'Iconforge', repo: 'iconforge-mvp', price: 15, icon: '🔷',
     tagline: 'One image in, every favicon and app-icon size out — batched, offline, no watermark.',
     oneliner: 'Drop one image, get a full favicon + app-icon set (ICO, PNG, Apple touch, Android, PWA manifest) — zero uploads.',
     competitor: 'Iconscout', compPrice: '$9.99/mo (Unlimited)', compYr: 120,
@@ -2198,7 +2198,7 @@ module.exports = [
       ['Export the full set', 'Favicons, Apple touch icons, Android adaptive icons and a PWA manifest, all at once.'],
     ],
     faq: [
-      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/icon-favicon-generator. The $15 buys the packaged installer and updates.'],
+      ['Is it really free on GitHub?', 'Yes — MIT source at github.com/bensblueprints/iconforge-mvp. The $15 buys the packaged installer and updates.'],
       ['Does my source image get uploaded anywhere?', 'No — every size and format is rendered locally in the app. No network calls.'],
       ['Does it generate a PWA manifest.json?', 'Yes — with correct icon paths and sizes pre-filled, ready to drop into a web app.'],
       ['Can I generate sets for multiple apps at once?', 'Yes — batch mode runs the same source image (or a folder of them) through the full export pipeline in one pass.'],

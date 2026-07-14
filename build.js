@@ -122,6 +122,15 @@ const boxesAvailable = new Set(
 );
 const hasBox = slug => boxesAvailable.has(slug);
 
+/* ---------- per-product demo clips (assets/clips/<slug>.mp4) ---------- */
+const CLIPS_SRC = path.join(ROOT, 'assets', 'clips');
+const clipsAvailable = new Set(
+  fs.existsSync(CLIPS_SRC)
+    ? fs.readdirSync(CLIPS_SRC).filter(f => /\.mp4$/i.test(f)).map(f => f.replace(/\.mp4$/i, ''))
+    : []
+);
+const hasClip = slug => clipsAvailable.has(slug);
+
 /* ---------- competitor columns for the 76 comparison posts ---------- */
 const POST_TABLE = {
   'smallpdf-alternative':            { price: '$12–15/mo', yr3: '~$432–540', limits: 'Task/file limits on free tier', cloud: 'Uploaded to their servers', offline: 'No', src: 'Closed' },
@@ -576,6 +585,16 @@ allProducts.forEach(p => {
         <p class="mono-note" style="margin-top:0.7rem;">${hasShot(p.slug) ? `${p.brand}, as it actually looks — a real screenshot, not a mockup.` : `${p.brand} screenshot is being captured — the app is shipped and real.`}</p>
       </div>
     </section>
+
+    ${hasClip(p.slug) ? `
+    <section aria-label="Demo video">
+      <div class="wrap" style="max-width:920px;">
+        <video controls preload="metadata" width="1280" height="720" style="width:100%;border:1.5px solid var(--ink);border-radius:12px;background:#000;">
+          <source src="/assets/clips/${p.slug}.mp4" type="video/mp4">
+        </video>
+        <p class="mono-note" style="margin-top:0.7rem;">${p.brand} in action — a real demo, not a mockup.</p>
+      </div>
+    </section>` : ''}
 
     <section aria-label="Features">
       <div class="wrap">
@@ -1283,6 +1302,13 @@ if (fs.existsSync(BOXES_SRC)) {
   fs.mkdirSync(boxesOut, { recursive: true });
   for (const f of fs.readdirSync(BOXES_SRC)) {
     if (/\.png$/i.test(f)) fs.copyFileSync(path.join(BOXES_SRC, f), path.join(boxesOut, f));
+  }
+}
+if (fs.existsSync(CLIPS_SRC)) {
+  const clipsOut = path.join(OUT, 'assets', 'clips');
+  fs.mkdirSync(clipsOut, { recursive: true });
+  for (const f of fs.readdirSync(CLIPS_SRC)) {
+    if (/\.mp4$/i.test(f)) fs.copyFileSync(path.join(CLIPS_SRC, f), path.join(clipsOut, f));
   }
 }
 

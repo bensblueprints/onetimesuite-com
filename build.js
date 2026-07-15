@@ -137,6 +137,14 @@ const clipsAvailable = new Set(
 );
 const hasClip = slug => clipsAvailable.has(slug);
 
+/* YouTube demo videos (slug -> videoId), preferred over self-hosted clips.
+   Source of truth: repoclips/state/youtube-uploads.json — re-copy to
+   src/youtube-videos.json after each upload batch. Videos must be UNLISTED
+   (private videos show "Video unavailable" when embedded). */
+const YT_FILE = path.join(ROOT, 'src', 'youtube-videos.json');
+const ytVideos = fs.existsSync(YT_FILE) ? JSON.parse(fs.readFileSync(YT_FILE, 'utf8')) : {};
+const ytId = slug => ytVideos[slug] && ytVideos[slug].videoId;
+
 /* ---------- competitor columns for the 76 comparison posts ---------- */
 const POST_TABLE = {
   'smallpdf-alternative':            { price: '$12–15/mo', yr3: '~$432–540', limits: 'Task/file limits on free tier', cloud: 'Uploaded to their servers', offline: 'No', src: 'Closed' },
@@ -591,7 +599,17 @@ allProducts.forEach(p => {
       </div>
     </section>
 
-    ${hasClip(p.slug) ? `
+    ${ytId(p.slug) ? `
+    <section aria-label="Demo video">
+      <div class="wrap" style="max-width:920px;">
+        <div style="position:relative;padding-top:56.25%;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;background:#000;">
+          <iframe src="https://www.youtube-nocookie.com/embed/${ytId(p.slug)}" title="${attr(p.brand)} demo video"
+            style="position:absolute;inset:0;width:100%;height:100%;border:0;"
+            loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <p class="mono-note" style="margin-top:0.7rem;">${p.brand} in action — a real demo, not a mockup.</p>
+      </div>
+    </section>` : hasClip(p.slug) ? `
     <section aria-label="Demo video">
       <div class="wrap" style="max-width:920px;">
         <video controls preload="metadata" width="1280" height="720" style="width:100%;border:1.5px solid var(--ink);border-radius:12px;background:#000;">

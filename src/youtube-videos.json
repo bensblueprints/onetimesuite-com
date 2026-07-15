@@ -1,0 +1,377 @@
+{
+  "askback": {
+    "videoId": "kX5VrqkI9UY",
+    "title": "Askback — More Google reviews on autopilot, owned forever.",
+    "at": "2026-07-15T17:27:16.441Z"
+  },
+  "billcraft": {
+    "videoId": "XweN57YvmI4",
+    "title": "Billcraft — Self-hosted invoicing for freelancers and small businesses.",
+    "at": "2026-07-15T17:27:21.347Z"
+  },
+  "billoop": {
+    "videoId": "Jx8NzLLEi44",
+    "title": "Billoop — Recurring billing on your own Stripe, owned forever.",
+    "at": "2026-07-15T17:27:28.065Z"
+  },
+  "bloomrecorder": {
+    "videoId": "dhW8mE0wL3Y",
+    "title": "BloomRecorder — The Loom replacement you buy once.",
+    "at": "2026-07-15T17:27:36.726Z"
+  },
+  "boardly": {
+    "videoId": "MKsynnD1UBc",
+    "title": "Boardly — The self-hosted Trello replacement — unlimited boards, your data in one SQLite file.",
+    "at": "2026-07-15T17:27:45.410Z"
+  },
+  "bookslot": {
+    "videoId": "PvzDxt9-2q8",
+    "title": "Bookslot — Your booking page. Your domain. No monthly fee.",
+    "at": "2026-07-15T17:27:53.838Z"
+  },
+  "wispertalk": {
+    "videoId": "1Ph1kNXOrOo",
+    "title": "WisperTalk — Hold a hotkey. Speak. Clean text appears where your cursor is.",
+    "at": "2026-07-15T17:28:13.683Z"
+  },
+  "linkleaf": {
+    "videoId": "YfGTkSjHq4k",
+    "title": "Linkleaf — Your link-in-bio page on your own domain. No branding, no rent.",
+    "at": "2026-07-15T17:28:21.473Z"
+  },
+  "bravowall": {
+    "videoId": "qzkNd6JZJuw",
+    "title": "Bravowall — Collect testimonials, moderate them, embed a Wall of Love anywhere — self-hosted.",
+    "at": "2026-07-15T17:28:29.723Z"
+  },
+  "captionly": {
+    "videoId": "Q1YGt-8JHwk",
+    "title": "Captionly — Burn karaoke captions onto your clips, all on your own hardware.",
+    "at": "2026-07-15T17:28:38.438Z"
+  },
+  "cardsmith": {
+    "videoId": "JmfdWy3_lBk",
+    "title": "Cardsmith — Design social-card templates visually, render them from a GET request. Your self-hosted ",
+    "at": "2026-07-15T17:28:47.098Z"
+  },
+  "castport": {
+    "videoId": "wLbfFkmpSl8",
+    "title": "Castport — Host your own podcast: Apple/Spotify-valid RSS, player, stats — on your $5 VPS.",
+    "at": "2026-07-15T17:28:55.919Z"
+  },
+  "certwatch": {
+    "videoId": "b8Qv7XDFaLs",
+    "title": "Certwatch — SSL certificate and domain expiry monitoring you own forever.",
+    "at": "2026-07-15T17:29:04.562Z"
+  },
+  "chatlet": {
+    "videoId": "CPf-uQCJ9i0",
+    "title": "Chatlet — The live-chat bubble you own — unlimited agents, unlimited sites, no per-seat pricing.",
+    "at": "2026-07-15T17:29:14.144Z"
+  },
+  "chatterbox": {
+    "videoId": "9vCCeoFSfnY",
+    "title": "Chatterbox — Self-hosted threaded comments for any site. One script tag, one SQLite file, $24 once.",
+    "at": "2026-07-15T17:29:23.907Z"
+  },
+  "citewatch": {
+    "videoId": "tZBrhGDq5o4",
+    "title": "Citewatch — One NAP, everywhere, always, owned forever.",
+    "at": "2026-07-15T17:29:33.656Z"
+  },
+  "clickmap": {
+    "videoId": "wu7xOu7yI6U",
+    "title": "Clickmap — Click heatmaps and session replay you own forever.",
+    "at": "2026-07-15T17:29:42.012Z"
+  },
+  "clientdesk": {
+    "videoId": "HVaXL2cK1u4",
+    "title": "Clientdesk — Revenue analytics and a customer portal on your own Stripe data.",
+    "at": "2026-07-15T17:29:50.605Z"
+  },
+  "contractly": {
+    "videoId": "WiH8QIlyIOo",
+    "title": "Contractly — Sixteen plain-language contract templates you fill in and own.",
+    "at": "2026-07-15T17:30:00.474Z"
+  },
+  "cutaway": {
+    "videoId": "w9vDorNQHsg",
+    "title": "Cutaway — Remove image backgrounds with local AI. Unlimited images, full resolution, zero uploads.",
+    "at": "2026-07-15T17:30:09.959Z"
+  },
+  "dealstack": {
+    "videoId": "hvMV9Zs975Y",
+    "title": "Dealstack — Pay-Once App | OneTimeSuite",
+    "at": "2026-07-15T17:30:18.212Z"
+  },
+  "deepdesk": {
+    "videoId": "3eKO7j3rZMk",
+    "title": "Deepdesk — A local-first deep-work dashboard — Pomodoro, intents, ambient noise, streaks. No account",
+    "at": "2026-07-15T17:30:28.639Z"
+  },
+  "deskly": {
+    "videoId": "LKYFeZ6ZfMY",
+    "title": "Deskly — The email-to-ticket help desk you own forever.",
+    "at": "2026-07-15T17:30:38.661Z"
+  },
+  "docsmithapi": {
+    "videoId": "_zryQmILLj4",
+    "title": "Docsmith API — Turn any OpenAPI spec into branded, Stripe-style API docs, locally, forever.",
+    "at": "2026-07-15T17:30:49.460Z"
+  },
+  "docwell": {
+    "videoId": "7_Q3X3XrYfA",
+    "title": "Docwell — A complete self-hosted help center — markdown in, branded SEO-ready docs out.",
+    "at": "2026-07-15T17:30:58.547Z"
+  },
+  "doortracker": {
+    "videoId": "myPKIV-CZHY",
+    "title": "Door Tracker — Prove the route was actually walked — not just driven.",
+    "at": "2026-07-15T17:31:07.650Z"
+  },
+  "droplink": {
+    "videoId": "C61TRUTt0fs",
+    "title": "Droplink — Send big files from your own server. Resumable uploads, expiring links, no subscription.",
+    "at": "2026-07-15T17:31:16.540Z"
+  },
+  "eventcraft": {
+    "videoId": "OYAkBHoWFkM",
+    "title": "Eventcraft — Event registration and ticketing you buy once — with zero per-ticket fees.",
+    "at": "2026-07-15T17:31:25.544Z"
+  },
+  "famping": {
+    "videoId": "6A_5ESRW3v4",
+    "title": "FamPing — Real-time family locations and place alerts — without selling your location data.",
+    "at": "2026-07-15T17:31:36.913Z"
+  },
+  "feedloft": {
+    "videoId": "FRNvwIIONkc",
+    "title": "Feedloft — A fast, keyboard-first RSS reader you host yourself.",
+    "at": "2026-07-15T17:31:45.228Z"
+  },
+  "formforge": {
+    "videoId": "1K6rGvuAXns",
+    "title": "Formforge — Self-hosted form builder + submissions inbox. No response caps.",
+    "at": "2026-07-15T17:31:53.724Z"
+  },
+  "forumly": {
+    "videoId": "5D_6-AvN9UA",
+    "title": "Forumly — Your community, your server — forums existed before SaaS pricing did.",
+    "at": "2026-07-15T17:32:01.148Z"
+  },
+  "hawkwatch": {
+    "videoId": "7MgBGL4dJes",
+    "title": "Hawkwatch — Watch any product page for price or stock changes. Unlimited watchers, your server.",
+    "at": "2026-07-15T17:32:09.248Z"
+  },
+  "hearback": {
+    "videoId": "8ckKH7KqUIk",
+    "title": "Hearback — Drop-in feedback & NPS widget, self-hosted. Unlimited responses, one-time price.",
+    "at": "2026-07-15T17:32:17.707Z"
+  },
+  "hirestack": {
+    "videoId": "o-AV5dNRxOs",
+    "title": "Hirestack — The hiring pipeline a small company actually needs.",
+    "at": "2026-07-15T17:32:26.605Z"
+  },
+  "hookscope": {
+    "videoId": "f0m3J58ImPo",
+    "title": "Hookscope — See every webhook. Replay any of them. Pay once.",
+    "at": "2026-07-15T17:32:34.762Z"
+  },
+  "iconforge": {
+    "videoId": "7mBZEgPp40E",
+    "title": "Iconforge — One image in, every favicon and app-icon size out — batched, offline, no watermark.",
+    "at": "2026-07-15T17:32:42.857Z"
+  },
+  "inkpress": {
+    "videoId": "aWMujFWNWIM",
+    "title": "Inkpress — A self-hosted markdown blog with zero-JavaScript public pages. Pay once, publish forever.",
+    "at": "2026-07-15T17:32:50.496Z"
+  },
+  "inkseal": {
+    "videoId": "G8OkaFi8u3s",
+    "title": "Inkseal — Self-hosted e-signatures. First document free, then $59 once for unlimited envelopes.",
+    "at": "2026-07-15T17:33:01.233Z"
+  },
+  "keyloop": {
+    "videoId": "ew826gIEyoE",
+    "title": "Keyloop — The 2FA authenticator that never holds your codes hostage.",
+    "at": "2026-07-15T17:33:10.535Z"
+  },
+  "keymaster": {
+    "videoId": "gm0yrUncBRE",
+    "title": "Keymaster — Self-hosted license server: signed keys, seat limits, secure downloads — no platform cut",
+    "at": "2026-07-15T17:33:19.265Z"
+  },
+  "ledgerlitehome": {
+    "videoId": "LuEKsnIjUH0",
+    "title": "Ledgerlite Home — Envelope budgeting that lives on your computer, not a server you rent.",
+    "at": "2026-07-15T17:33:28.116Z"
+  },
+  "ledgerly": {
+    "videoId": "p-wE9gY8C9s",
+    "title": "Ledgerly — Business expense tracking with local receipt OCR. Your data, your one-time price.",
+    "at": "2026-07-15T17:33:36.569Z"
+  },
+  "lessonforge": {
+    "videoId": "1ovp64uV6ro",
+    "title": "Lessonforge — The course platform you own forever — no monthly fee, no cut of your sales.",
+    "at": "2026-07-15T17:33:46.260Z"
+  },
+  "linkguard": {
+    "videoId": "AWqMYmXtKWA",
+    "title": "Linkguard — The site-wide broken-link and redirect crawler you own forever.",
+    "at": "2026-07-15T17:33:56.073Z"
+  },
+  "listcraft": {
+    "videoId": "QtTALq7NrYw",
+    "title": "Listcraft — A self-hosted property listing website — your listings, your domain, no monthly IDX bill",
+    "at": "2026-07-15T17:34:06.502Z"
+  },
+  "logbin": {
+    "videoId": "nP1hp6vAgqw",
+    "title": "Logbin — Self-hosted log aggregation with live tail, search and alert rules.",
+    "at": "2026-07-15T17:34:14.573Z"
+  },
+  "maptrail": {
+    "videoId": "12AA9H4rqUk",
+    "title": "Maptrail — Crawl any site on your own machine and ship a clean sitemap.",
+    "at": "2026-07-15T17:34:23.233Z"
+  },
+  "memeforge": {
+    "videoId": "U8ZIMxyyuD4",
+    "title": "Memeforge — Classic meme captioning with a real template library — no watermark, no upload.",
+    "at": "2026-07-15T17:34:31.852Z"
+  },
+  "menuly": {
+    "videoId": "BP1snUS_LL0",
+    "title": "Menuly — QR menus you own forever — update a price and the guest sees it the instant they scan.",
+    "at": "2026-07-15T17:34:41.018Z"
+  },
+  "mockcraft": {
+    "videoId": "ZZqj4boDggM",
+    "title": "Mockcraft — The product mockup generator you buy once and own forever.",
+    "at": "2026-07-15T17:34:50.012Z"
+  },
+  "orgtree": {
+    "videoId": "IM2ml3NUzhM",
+    "title": "Orgtree — Build and maintain your org chart without a seat-priced diagram tool.",
+    "at": "2026-07-15T17:34:58.177Z"
+  },
+  "overlayr": {
+    "videoId": "GbBo7R1SKog",
+    "title": "Overlayr — Your OBS overlays, your server. No watermarks, no subscription, no desync.",
+    "at": "2026-07-15T17:35:08.055Z"
+  },
+  "paletteforge": {
+    "videoId": "EToxD4Q8BTs",
+    "title": "Paletteforge — Generate, lock and export brand color palettes — no account, no export limits.",
+    "at": "2026-07-15T17:35:16.359Z"
+  },
+  "pdfsmith": {
+    "videoId": "tDML8XEbAPY",
+    "title": "PDFsmith — Every PDF tool you actually use — running 100% on your machine.",
+    "at": "2026-07-15T17:35:24.802Z"
+  },
+  "pingcron": {
+    "videoId": "jQNvJHoS9sE",
+    "title": "Pingcron — Dead-man's-switch monitoring for cron jobs & backups. Pay once, own it forever.",
+    "at": "2026-07-15T17:35:32.839Z"
+  },
+  "pitchcraft": {
+    "videoId": "FpIYvC1d3zg",
+    "title": "Pitchcraft — Send trackable, sign-ready proposals from your own server.",
+    "at": "2026-07-15T17:35:42.592Z"
+  },
+  "postbird": {
+    "videoId": "hbXjB7XSIoU",
+    "title": "Postbird — Self-hosted email campaigns over your own SMTP. Stop renting your audience back.",
+    "at": "2026-07-15T17:35:51.018Z"
+  },
+  "postcraft": {
+    "videoId": "vPS7GAF_-4A",
+    "title": "Postcraft Templates — Turn a spreadsheet into a quarter of on-brand posts — bought once.",
+    "at": "2026-07-15T17:35:59.033Z"
+  },
+  "postdock": {
+    "videoId": "0hGdEOsGVqQ",
+    "title": "PostDock — Schedule to X, Facebook, Instagram, LinkedIn and Mastodon from your own box — pay once.",
+    "at": "2026-07-15T17:36:07.182Z"
+  },
+  "pulsecheck": {
+    "videoId": "2o3V9KwSQ3s",
+    "title": "Pulsecheck — NPS, CSAT and CES surveys you own forever.",
+    "at": "2026-07-15T17:36:15.489Z"
+  },
+  "punchcard": {
+    "videoId": "75sV6MLZ5m4",
+    "title": "Punchcard — Time tracking and timesheet approval you own forever.",
+    "at": "2026-07-15T17:36:23.463Z"
+  },
+  "queuecraft": {
+    "videoId": "i5e3cB-gVOM",
+    "title": "Queuecraft — Self-hosted viral waitlist with referral queue-jumping. Pay once.",
+    "at": "2026-07-15T17:36:30.442Z"
+  },
+  "quillpad": {
+    "videoId": "KwYyLOuPWLE",
+    "title": "Quillpad — Local-first markdown notes — your knowledge base is a folder of plain .md files you own.",
+    "at": "2026-07-15T17:36:37.791Z"
+  },
+  "quizcraft": {
+    "videoId": "kQw-TSAIoyA",
+    "title": "Quizcraft — Lead-gen quizzes you own — never metered per response.",
+    "at": "2026-07-15T17:36:45.961Z"
+  },
+  "quotewell": {
+    "videoId": "WwCDUD6Gbk8",
+    "title": "Quotewell — Build a price catalog once and turn out branded PDF quotes offline.",
+    "at": "2026-07-15T17:36:56.767Z"
+  },
+  "rampcheck": {
+    "videoId": "hrvgMD2cv1k",
+    "title": "Rampcheck — New-hire onboarding you own forever.",
+    "at": "2026-07-15T17:37:04.070Z"
+  },
+  "redirectly": {
+    "videoId": "5BUlJ42-wQY",
+    "title": "Redirectly — Bulk 301/302 redirect management you own forever.",
+    "at": "2026-07-15T17:37:15.729Z"
+  },
+  "reelsnag": {
+    "videoId": "6T-FFr_wW9Y",
+    "title": "Reelsnag — A clean desktop GUI for yt-dlp. Back up your own videos — $24 once.",
+    "at": "2026-07-15T17:37:24.338Z"
+  },
+  "reflink": {
+    "videoId": "UeSNaFgUaxE",
+    "title": "Reflink — Run your affiliate program from one Node process and one SQLite file.",
+    "at": "2026-07-15T17:37:33.246Z"
+  },
+  "remindly": {
+    "videoId": "jeocVdn4ONQ",
+    "title": "Remindly — SMS and email appointment reminders on your own Twilio account — no SaaS markup.",
+    "at": "2026-07-15T17:37:41.737Z"
+  },
+  "renewcheck": {
+    "videoId": "4o-DQQs0EEc",
+    "title": "Renewcheck — Track every subscription's renewal date without linking your bank account.",
+    "at": "2026-07-15T17:37:49.846Z"
+  },
+  "resumecraft": {
+    "videoId": "rLtZ4VWCQks",
+    "title": "Resumecraft — Build a resume you own forever, on your own machine.",
+    "at": "2026-07-15T17:37:58.178Z"
+  },
+  "roster": {
+    "videoId": "fYaScy6mVP0",
+    "title": "Roster — The member directory you buy once and own forever.",
+    "at": "2026-07-15T17:38:07.226Z"
+  },
+  "scantrail": {
+    "videoId": "HJi2TpalIEI",
+    "title": "Scantrail — Dynamic QR codes you print once and re-point forever — with scan analytics you own.",
+    "at": "2026-07-15T17:38:16.253Z"
+  }
+}

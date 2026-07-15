@@ -75,6 +75,12 @@ const extras = require('./src/extra-products.js');
 const allProducts = [...products, ...extras];
 for (const p of extras) if (!bySlug[p.slug]) bySlug[p.slug] = p;
 
+/* Public launch state: only these are purchasable today — every other catalog
+   app is shown as a caution-taped "Coming soon" card on the hub. */
+const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf']);
+const availableProducts = allProducts.filter(p => AVAILABLE_SLUGS.has(p.slug));
+const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
+
 /* Desktop (Electron, no server) vs web-hosted (self-hosted on your own VPS) */
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
@@ -221,8 +227,8 @@ const NAV = `
       <input type="checkbox" id="navtoggle" class="nav-toggle" aria-hidden="true">
       <label for="navtoggle" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></label>
       <div class="nav-links">
-      <a class="nav-link" href="/#desktop">Desktop apps</a>
-      <a class="nav-link" href="/#web-hosted">Web apps</a>
+      <a class="nav-link" href="/#available">Available now</a>
+      <a class="nav-link" href="/#coming-soon">Coming soon</a>
       <a class="nav-link" href="/${BUNDLE.slug}/">The bundle</a>
       <a class="nav-link" href="/comparison/">Comparisons</a>
       <a class="nav-link nav-login" href="https://dashboard.onetimesuite.com/" rel="noopener">Log in</a>
@@ -241,8 +247,8 @@ const FOOTER = `
         </div>
         <div>
           <h4>Apps</h4>
-          <a href="/#desktop">Desktop apps (${desktopProducts.length})</a>
-          <a href="/#web-hosted">Web-hosted apps (${webProducts.length})</a>
+          <a href="/#available">Available now (${availableProducts.length})</a>
+          <a href="/#coming-soon">Coming soon (${allProducts.length - availableProducts.length + comingSoon.length})</a>
           <a href="/${BUNDLE.slug}/">${BUNDLE.name} — ${fmt(BUNDLE.price)}</a>
         </div>
         <div>
@@ -383,7 +389,13 @@ function reg(relPath) { urls.push(relPath); }
         </div>
       </div>`;
 
-  const showcase = [...desktopProducts.filter(p => hasShot(p.slug)).slice(0, 2), ...webProducts.filter(p => hasShot(p.slug)).slice(0, 6)];
+  /* shipped-but-not-yet-launched products rendered in the coming-soon card shape */
+  const toSoon = p => ({ brand: p.brand, icon: p.icon, one: p.oneliner, price: p.price, vs: p.competitor, vsPrice: p.compPrice });
+  const soonDesktopAll = [...upcomingProducts.filter(p => DESKTOP_SLUGS.has(p.slug)).map(toSoon), ...soonDesktop];
+  const soonWebAll = [...upcomingProducts.filter(p => !DESKTOP_SLUGS.has(p.slug)).map(toSoon), ...soonWeb];
+  const soonTotal = soonDesktopAll.length + soonWebAll.length;
+
+  const showcase = availableProducts.filter(p => hasShot(p.slug));
 
   const teaserPosts = [
     ['/loom-alternative/', 'BloomRecorder: The Loom Alternative You Buy Once ($29, No Subscription)'],
@@ -398,7 +410,7 @@ function reg(relPath) { urls.push(relPath); }
       <div class="wrap">
         <span class="stamp">One price on the sticker · No renewal date</span>
         <h1>Buy software the way you buy a hammer. Once.</h1>
-        <p class="lead">A ${allProducts.length + comingSoon.length}-app catalog that replaces your subscription SaaS — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. <strong>${allProducts.length} apps are available right now</strong> (${desktopProducts.length} desktop, ${webProducts.length} self-hosted web) and ${comingSoon.length} more ${comingSoon.length === 1 ? 'is' : 'are'} on the build sheet. Every one is a one-time purchase — nearly all with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
+        <p class="lead">A ${allProducts.length + comingSoon.length}-app catalog that replaces your subscription SaaS — PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. <strong>${availableProducts.length} apps are available right now</strong> — ${availableProducts.map(p => p.brand).join(', ')} — and the other ${soonTotal} are in final release prep. Every one is a one-time purchase — nearly all with MIT source on GitHub. No accounts with us, no telemetry, no meter.</p>
         <div class="btn-row">
           <a class="btn btn-solid" href="${WHOP}" rel="noopener">Buy on Whop &rarr;</a>
           <a class="btn btn-ghost" href="/${BUNDLE.slug}/">The ${fmt(BUNDLE.price)} everything bundle</a>
@@ -418,20 +430,13 @@ function reg(relPath) { urls.push(relPath); }
       </div>
     </section>
 
-    <section aria-label="All products">
+    <section aria-label="Available now">
       <div class="wrap">
-        <div class="cat-head" id="desktop" style="scroll-margin-top:80px;">
-          <h2>Desktop apps</h2>
-          <span class="count">${desktopProducts.length} apps · install once, run 100% offline</span>
+        <div class="cat-head" id="available" style="scroll-margin-top:80px;">
+          <h2>Available now</h2>
+          <span class="count">${availableProducts.length} apps · buy today, own forever</span>
         </div>
-        <div class="card-grid">${cardsFor(desktopProducts)}
-        </div>
-
-        <div class="cat-head" id="web-hosted" style="scroll-margin-top:80px;">
-          <h2>Web-hosted apps</h2>
-          <span class="count">${webProducts.length} apps · self-hosted on your own server</span>
-        </div>
-        <div class="card-grid">${cardsFor(webProducts)}
+        <div class="card-grid">${cardsFor(availableProducts)}
         </div>
       </div>
     </section>
@@ -440,35 +445,35 @@ function reg(relPath) { urls.push(relPath); }
       <div class="wrap">
         <div class="section-head" id="coming-soon" style="scroll-margin-top:80px;">
           <span class="stamp">&#128679; On the build sheet</span>
-          <h2>Coming soon — ${comingSoon.length} more app${comingSoon.length === 1 ? '' : 's'}</h2>
-          <p>The catalog is headed to 100+. ${comingSoon.length === 1 ? 'This one is' : 'These are'} planned, priced and next in the build queue — every one joins the ${fmt(BUNDLE.price)} bundle at no extra cost the day it ships. Buy the bundle now and you own ${comingSoon.length === 1 ? 'it' : 'all of these'} too.</p>
+          <h2>Coming soon — ${soonTotal} more apps</h2>
+          <p>The full ${allProducts.length + comingSoon.length}-app catalog is on the way. Every app below joins the ${fmt(BUNDLE.price)} bundle at no extra cost the day it ships — buy the bundle now and you own all of them too.</p>
         </div>
-        ${soonDesktop.length ? `<div class="cat-head">
+        ${soonDesktopAll.length ? `<div class="cat-head">
           <h2 style="font-size:1.35rem;">Desktop</h2>
-          <span class="count">${soonDesktop.length} planned</span>
+          <span class="count">${soonDesktopAll.length} coming soon</span>
         </div>
-        <div class="card-grid">${soonCardsFor(soonDesktop)}
+        <div class="card-grid">${soonCardsFor(soonDesktopAll)}
         </div>` : ''}
-        ${soonWeb.length ? `<div class="cat-head">
+        ${soonWebAll.length ? `<div class="cat-head">
           <h2 style="font-size:1.35rem;">Web-hosted</h2>
-          <span class="count">${soonWeb.length} planned</span>
+          <span class="count">${soonWebAll.length} coming soon</span>
         </div>
-        <div class="card-grid">${soonCardsFor(soonWeb)}
+        <div class="card-grid">${soonCardsFor(soonWebAll)}
         </div>` : ''}
       </div>
     </section>
 
-    <section aria-label="Screenshots">
+    ${showcase.length ? `<section aria-label="Screenshots">
       <div class="wrap">
         <div class="section-head">
           <span class="stamp blue">As it actually looks</span>
           <h2>Real screenshots, not mockups</h2>
-          <p>A few of the ${allProducts.filter(p => hasShot(p.slug)).length} apps we've screenshotted so far. Every product page has one.</p>
+          <p>Every available app, as it actually looks.</p>
         </div>
         <div class="show-rows">${showcase.map(showRow).join('')}
         </div>
       </div>
-    </section>
+    </section>` : ''}
 
     <section aria-label="The bundle">
       <div class="wrap">
@@ -517,8 +522,8 @@ function reg(relPath) { urls.push(relPath); }
     </section>`;
 
   write('', page({
-    title: `OneTimeSuite — ${allProducts.length} Pay-Once Apps Available Now, ${allProducts.length + comingSoon.length}+ Total Catalog`,
-    desc: `${allProducts.length} desktop & self-hosted apps available today, ${comingSoon.length} more coming — all replacing monthly SaaS bills: PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, or everything (including every future app) for ${fmt(BUNDLE.price)}.`,
+    title: `OneTimeSuite — ${allProducts.length + comingSoon.length}-App Pay-Once Catalog: ${availableProducts.length} Available Now, the Rest Coming Soon`,
+    desc: `${availableProducts.length} pay-once apps available today (${availableProducts.map(p => p.brand).join(', ')}) and ${soonTotal} more coming — all replacing monthly SaaS bills: PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, or everything (including every future app) for ${fmt(BUNDLE.price)}.`,
     canonical: `${SITE}/`,
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'ItemList',

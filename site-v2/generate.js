@@ -60,6 +60,13 @@ const DESKTOP_SLUGS = new Set([
 const OWN_CHECKOUT = new Set(['wispertalk', 'bloomrecorder']);
 const WHOP = 'https://whop.com/benjisaiempire';
 
+/* Published installer releases (public -mvp repos) + in-browser demos. */
+const RELEASE_URLS = {
+  captionly: 'https://github.com/bensblueprints/video-clip-captioner-mvp/releases/tag/v1.0.0',
+  bloomrecorder: 'https://github.com/bensblueprints/bloomrecorder/releases/tag/v1.0.0',
+};
+const DEMO_SLUGS = new Set(['captionly']);
+
 const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const pair = (arr, keys) => (arr || []).map(row => Object.fromEntries(keys.map((k, i) => [k, row[i]])));
 
@@ -84,6 +91,8 @@ function normalize(p) {
     isDesktop,
     stampText: p.stamp || (isDesktop ? 'Desktop app · runs offline' : 'Web app · self-hosted on your server'),
     buyUrl,
+    releaseUrl: RELEASE_URLS[p.slug] || null,
+    demoUrl: DEMO_SLUGS.has(p.slug) ? `/${p.slug}/demo/` : null,
     tierUrls: tierUrls[p.slug] || null,
     videoId: (yt && yt.videoId) || null,
     pricing: computePricing(p.price, isDesktop),

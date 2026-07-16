@@ -127,6 +127,16 @@ function Hero({ p }) {
           >
             Get {p.brand} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </a>
+          {p.releaseUrl && (
+            <a href={p.releaseUrl} className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 font-mono text-sm font-semibold text-ink transition-colors hover:border-sticker hover:text-sticker">
+              Download
+            </a>
+          )}
+          {p.demoUrl && (
+            <a href={p.demoUrl} className="font-mono text-sm font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-sticker">
+              Try it free
+            </a>
+          )}
           <a href="#pricing" className="font-mono text-sm font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-sticker">
             See pricing
           </a>

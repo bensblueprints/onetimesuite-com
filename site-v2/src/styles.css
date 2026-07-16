@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f4f5f2;
+  --color-ink: #16130f;
+  --color-ink-soft: #4c463d;
+  --color-sticker: #e8420c;
+  --color-sticker-dark: #c33608;
+  --color-card: #ffffff;
+  --color-line: #e2e0d8;
+  --color-mint: #0d7a4f;
+
+  --font-display: "Bricolage Grotesque", "Arial Black", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* subtle paper grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  background-image: radial-gradient(#00000008 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* price-sticker: the brand's die-cut sticker look */
+.sticker {
+  display: inline-block;
+  background: var(--color-sticker);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  border-radius: 999px;
+  transform: rotate(-3deg);
+  box-shadow: 0 2px 0 #00000022, inset 0 0 0 2px #ffffff55;
+}
+
+/* FAQ accordion (native <details>, works without JS) */
+details.faq > summary { list-style: none; cursor: pointer; }
+details.faq > summary::-webkit-details-marker { display: none; }
+details.faq > summary .chev { transition: transform 0.25s ease; }
+details.faq[open] > summary .chev { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  details.faq > summary .chev { transition: none; }
+}

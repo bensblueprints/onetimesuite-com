@@ -226,7 +226,7 @@ function Comparison({ p }) {
   );
 }
 
-function TierCard({ name, price, period, note, hero, cta, ctaLabel, delay }) {
+function TierCard({ name, price, listPrice, period, note, hero, cta, ctaLabel, delay }) {
   return (
     <Reveal delay={delay} className="h-full">
       <div
@@ -243,10 +243,20 @@ function TierCard({ name, price, period, note, hero, cta, ctaLabel, delay }) {
           </span>
         )}
         <div className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-ink-soft">{name}</div>
-        <div className="mt-3 flex items-baseline gap-1">
+        <div className="mt-3 flex items-baseline gap-2">
+          {listPrice && (
+            <span className="font-display text-xl font-bold text-ink-soft line-through decoration-sticker decoration-2" aria-label={`Launch price $${listPrice}`}>
+              ${listPrice}
+            </span>
+          )}
           <span className="font-display text-4xl font-extrabold tracking-tight">${price}</span>
           {period && <span className="font-mono text-sm text-ink-soft">{period}</span>}
         </div>
+        {listPrice && (
+          <div className="mt-1 font-mono text-[11px] font-semibold text-sticker">
+            50% off launch price — intro pricing, first 1,000 licenses
+          </div>
+        )}
         {note && (
           <div className="mt-2 inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-mint">
             <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" /> {note}
@@ -302,6 +312,7 @@ function Pricing({ p }) {
             <TierCard
               name="Lifetime"
               price={pr.lifetime}
+              listPrice={pr.lifetimeList}
               period="once"
               hero
               note="Never pay again"

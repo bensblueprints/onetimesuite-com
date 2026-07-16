@@ -90,7 +90,7 @@ const DESKTOP_SLUGS = new Set([
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
 ]);
 /* Products with a free in-browser demo at /<slug>/demo/ (src/<slug>-demo.html) */
-const DEMOS = new Set(['iconforge', 'sigcraft', 'pdfsmith', 'wrangle', 'textract', 'memeforge', 'paletteforge', 'shrinkray', 'bloomrecorder', 'quillpad']);
+const DEMOS = new Set(['iconforge', 'sigcraft', 'pdfsmith', 'wrangle', 'textract', 'memeforge', 'paletteforge', 'shrinkray', 'bloomrecorder', 'quillpad', 'captionly']);
 
 const desktopProducts = allProducts.filter(p => DESKTOP_SLUGS.has(p.slug));
 const webProducts = allProducts.filter(p => !DESKTOP_SLUGS.has(p.slug));

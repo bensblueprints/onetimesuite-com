@@ -18,7 +18,7 @@ const path = require('path');
 const ROOT = __dirname;
 const OUT = path.join(ROOT, 'public');
 const SITE = 'https://onetimesuite.com';
-const WHOP = 'https://whop.com/onetime-suite';
+const WHOP = 'https://whop.com/benjisaiempire';
 const GH = 'https://github.com/bensblueprints';
 
 /* Real Whop product listings (slug -> { productUrl, checkoutUrl, ... }).

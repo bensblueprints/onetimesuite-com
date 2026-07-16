@@ -11,6 +11,7 @@
 module.exports = [
   {
     slug: 'bloomrecorder',
+    buyUrl: 'https://whop.com/checkout/plan_Ma48eglvyofUF',
     brand: 'BloomRecorder',
     repo: 'bloomrecorder-mvp',
     price: 29,

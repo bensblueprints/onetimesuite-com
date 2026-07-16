@@ -58,7 +58,7 @@ const DESKTOP_SLUGS = new Set([
 
 /* Apps with their own pre-existing checkout — never remap to whopLinks. */
 const OWN_CHECKOUT = new Set(['wispertalk', 'bloomrecorder']);
-const WHOP = 'https://whop.com/onetime-suite';
+const WHOP = 'https://whop.com/benjisaiempire';
 
 const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const pair = (arr, keys) => (arr || []).map(row => Object.fromEntries(keys.map((k, i) => [k, row[i]])));

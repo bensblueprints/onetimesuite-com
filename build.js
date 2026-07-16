@@ -1379,6 +1379,7 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
   if (fs.existsSync(V2)) {
     let n = 0;
     for (const entry of fs.readdirSync(V2)) {
+      if (entry === 'index.html' || entry === '404.html') continue; // never clobber the hub
       fs.cpSync(path.join(V2, entry), path.join(OUT, entry), { recursive: true, force: true });
       n++;
     }

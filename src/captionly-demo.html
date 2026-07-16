@@ -378,7 +378,11 @@ async function runTranscribe() {
     indet(false); bar.style.width = '0%';
     setStatus(`Loading the ${model.split('/').pop()} speech model in your browser…`);
     if (!transcriber || transcriberModel !== model) {
-      const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2');
+      // jsdelivr's /+esm endpoint serves a real ES module (the bare URL returns
+      // a UMD bundle with no named exports, which breaks the import).
+      const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2/+esm');
+      const { pipeline, env } = mod;
+      if (typeof pipeline !== 'function') throw new Error('speech engine failed to load');
       env.allowLocalModels = false;
       transcriber = await pipeline('automatic-speech-recognition', model, {
         progress_callback: (p) => { if (p.status === 'progress' && p.total) { bar.style.width = Math.round((p.loaded / p.total) * 100) + '%'; setStatus(`Downloading model… ${Math.round((p.loaded / p.total) * 100)}%`); } }
@@ -426,7 +430,11 @@ async function decodeAudio(file) {
 }
 
 /* manual script → evenly timed words */
-function openManual() { $('#manualText').hidden = false; $('#applyManualBtn').hidden = false; $('#manualText').focus(); }
+function openManual() {
+  $('#manualText').hidden = false; $('#applyManualBtn').hidden = false;
+  $('#manualText').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  $('#manualText').focus();
+}
 $('#manualBtn').addEventListener('click', openManual);
 $('#applyManualBtn').addEventListener('click', async () => {
   const text = $('#manualText').value.trim();

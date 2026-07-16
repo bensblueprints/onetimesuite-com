@@ -1370,3 +1370,18 @@ for (const demoSlug of DEMOS) {
 }
 
 console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);
+
+/* v2 landing pages overlay (2026-07-16): prebuilt React+Framer Motion product
+ * pages from site-v2/ (committed in v2-pages/) replace the generated product
+ * pages. Node 22 fs.cpSync, no deps. Hub, comparison posts, sitemap untouched. */
+{
+  const V2 = path.join(__dirname, 'v2-pages');
+  if (fs.existsSync(V2)) {
+    let n = 0;
+    for (const entry of fs.readdirSync(V2)) {
+      fs.cpSync(path.join(V2, entry), path.join(OUT, entry), { recursive: true, force: true });
+      n++;
+    }
+    console.log(`v2 overlay: ${n} entries copied over public/`);
+  }
+}

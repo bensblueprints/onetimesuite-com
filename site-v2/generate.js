@@ -29,6 +29,14 @@ const products = require(path.join(REPO, 'src', 'products.js'));
 const products51 = require(path.join(REPO, 'src', 'products-51-100.js'));
 const extras = require(path.join(REPO, 'src', 'extra-products.js'));
 const whopLinks = require(path.join(REPO, 'src', 'whop-links.json'));
+// per-tier checkout URLs from the live Whop pricing restructure (2026-07-16)
+let tierUrlsRaw = {};
+try { tierUrlsRaw = require(path.join(REPO, 'src', 'tier-checkouts.json')); } catch {}
+const tierUrls = Object.fromEntries(Object.entries(tierUrlsRaw).map(([slug, r]) => [slug, {
+  monthly: r.monthlyCheckoutUrl || null,
+  yearly: r.yearlyCheckoutUrl || null,
+  lifetime: r.lifetimePlanId ? `https://whop.com/checkout/${r.lifetimePlanId}` : null,
+}]));
 const ytVideos = require(path.join(REPO, 'src', 'youtube-videos.json'));
 
 const LAUNCHED_DIR = path.join(REPO, 'src', 'launched');
@@ -76,6 +84,7 @@ function normalize(p) {
     isDesktop,
     stampText: p.stamp || (isDesktop ? 'Desktop app · runs offline' : 'Web app · self-hosted on your server'),
     buyUrl,
+    tierUrls: tierUrls[p.slug] || null,
     videoId: (yt && yt.videoId) || null,
     pricing: computePricing(p.price, isDesktop),
     features: pair(p.features, ['icon', 'title', 'desc']),

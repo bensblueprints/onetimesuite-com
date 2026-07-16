@@ -1,0 +1,912 @@
+{
+  "upwatch": {
+    "monthlyPlanId": "plan_TAnSLL20JCKum",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_TAnSLL20JCKum",
+    "yearlyPlanId": "plan_7KwfpeS7t0alM",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_7KwfpeS7t0alM",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_ZfyjAnp3FYHXT",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "trimly": {
+    "monthlyPlanId": "plan_cVid1CTz4JcSn",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_cVid1CTz4JcSn",
+    "yearlyPlanId": "plan_Qu8pxsgAaqkFK",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_Qu8pxsgAaqkFK",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_0zA8uOHiWHuuq",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "billcraft": {
+    "monthlyPlanId": "plan_xokgywSuTNT92",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_xokgywSuTNT92",
+    "yearlyPlanId": "plan_VpwKHIhoetr2D",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_VpwKHIhoetr2D",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_qHLPiGxv2OByt",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "bookslot": {
+    "monthlyPlanId": "plan_RLgN2vT5nLpZn",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_RLgN2vT5nLpZn",
+    "yearlyPlanId": "plan_W5Mt7A9jr9KuH",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_W5Mt7A9jr9KuH",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_xL33UqjncpnMM",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "formforge": {
+    "monthlyPlanId": "plan_p1ownETlzhIIz",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_p1ownETlzhIIz",
+    "yearlyPlanId": "plan_lptF4wUInq7TJ",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_lptF4wUInq7TJ",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_4etbdC35hv1cq",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "postdock": {
+    "monthlyPlanId": "plan_mw3ck2XaruuyL",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_mw3ck2XaruuyL",
+    "yearlyPlanId": "plan_UURb9RcHKcppC",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_UURb9RcHKcppC",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_ZdbBjB8MnhpGU",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "linkleaf": {
+    "monthlyPlanId": "plan_vxBIRKCux3igg",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_vxBIRKCux3igg",
+    "yearlyPlanId": "plan_qY3K36mJzfLky",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_qY3K36mJzfLky",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_LZhiwagfsXe04",
+    "prices": {
+      "monthly": 5,
+      "yearly": 50,
+      "lifetime": 49
+    }
+  },
+  "scantrail": {
+    "monthlyPlanId": "plan_VBMjWtqJ605F6",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_VBMjWtqJ605F6",
+    "yearlyPlanId": "plan_WohxO2kR0XPdu",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_WohxO2kR0XPdu",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_KdSUR66r0Hq3Z",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "cardsmith": {
+    "monthlyPlanId": "plan_f8P0dohScNHL6",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_f8P0dohScNHL6",
+    "yearlyPlanId": "plan_WpM6hRxvkvUQx",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_WpM6hRxvkvUQx",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_itgK637cAUQgy",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "statfox": {
+    "monthlyPlanId": "plan_C7fIzr5OGvfjR",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_C7fIzr5OGvfjR",
+    "yearlyPlanId": "plan_OjJ6xF0XKMunV",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_OjJ6xF0XKMunV",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_aBWBu4qmc4YqN",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "shipnotes": {
+    "monthlyPlanId": "plan_oH3BsWkA45VQ2",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_oH3BsWkA45VQ2",
+    "yearlyPlanId": "plan_Bg5m9y7SAXILy",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_Bg5m9y7SAXILy",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_FWAqx43k8Nx7U",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "hearback": {
+    "monthlyPlanId": "plan_oaroY7kt7gL0h",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_oaroY7kt7gL0h",
+    "yearlyPlanId": "plan_SqS8Vh97OWYYM",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_SqS8Vh97OWYYM",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_ryCkIHIaV6JdJ",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "docwell": {
+    "monthlyPlanId": "plan_0u3iEBbODI2x7",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_0u3iEBbODI2x7",
+    "yearlyPlanId": "plan_hbjjEEbyuhysg",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_hbjjEEbyuhysg",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_cVrNBPxnIKJWF",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "chatlet": {
+    "monthlyPlanId": "plan_JotyrEVhRrwYB",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_JotyrEVhRrwYB",
+    "yearlyPlanId": "plan_av31mP28pUCmQ",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_av31mP28pUCmQ",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_MUXM7Q3RL9Y6f",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "boardly": {
+    "monthlyPlanId": "plan_viIX2iqL7QK44",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_viIX2iqL7QK44",
+    "yearlyPlanId": "plan_H4K7XeD1WLcfg",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_H4K7XeD1WLcfg",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_ZFG2xO3ra8lVG",
+    "prices": {
+      "monthly": 5,
+      "yearly": 50,
+      "lifetime": 49
+    }
+  },
+  "timevault": {
+    "monthlyPlanId": "plan_QMjS9mncw08Md",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_QMjS9mncw08Md",
+    "yearlyPlanId": "plan_HQJucjV7oIHYl",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_HQJucjV7oIHYl",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_LEMs0K0nJmifv",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "pingcron": {
+    "monthlyPlanId": "plan_l65eL65ADLZSk",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_l65eL65ADLZSk",
+    "yearlyPlanId": "plan_M7NWu3NJHMtQX",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_M7NWu3NJHMtQX",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_HeBFV49AS5U4t",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "hookscope": {
+    "monthlyPlanId": "plan_5SVisvVneqQlK",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_5SVisvVneqQlK",
+    "yearlyPlanId": "plan_sBJLqy8amknHY",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_sBJLqy8amknHY",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_iAW1RJULqbJKQ",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "snapfleet": {
+    "monthlyPlanId": "plan_h392DnKeOYotW",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_h392DnKeOYotW",
+    "yearlyPlanId": "plan_Z3rmkxJkPBh6h",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_Z3rmkxJkPBh6h",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_dDVO4oxhZ75uT",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "vaultkeeper": {
+    "monthlyPlanId": "plan_g5yekBaRwGKCW",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_g5yekBaRwGKCW",
+    "yearlyPlanId": "plan_JkYGTEDingibl",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_JkYGTEDingibl",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_p5iZuZn2oIbQH",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "queuecraft": {
+    "monthlyPlanId": "plan_YUL9lw7vbGq6z",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_YUL9lw7vbGq6z",
+    "yearlyPlanId": "plan_BcEDPR8UPaNTp",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_BcEDPR8UPaNTp",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_SToy5AddSEo4M",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "bravowall": {
+    "monthlyPlanId": "plan_i0MkdndepSMSF",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_i0MkdndepSMSF",
+    "yearlyPlanId": "plan_6wXiFHXAPIiek",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_6wXiFHXAPIiek",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_5h3xwDCTo8X67",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "hawkwatch": {
+    "monthlyPlanId": "plan_hi0aj7f62lldt",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_hi0aj7f62lldt",
+    "yearlyPlanId": "plan_KQCuYgUaF9Tjp",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_KQCuYgUaF9Tjp",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_a6OolQdmTNnMO",
+    "prices": {
+      "monthly": 9,
+      "yearly": 90,
+      "lifetime": 89
+    }
+  },
+  "postbird": {
+    "monthlyPlanId": "plan_304INgjSPv3Vj",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_304INgjSPv3Vj",
+    "yearlyPlanId": "plan_h04RuEOQOFII9",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_h04RuEOQOFII9",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_0tXxbwKuLomPh",
+    "prices": {
+      "monthly": 15,
+      "yearly": 150,
+      "lifetime": 149
+    }
+  },
+  "keymaster": {
+    "monthlyPlanId": "plan_96BadzBgu3T8c",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_96BadzBgu3T8c",
+    "yearlyPlanId": "plan_EL2EJt8IOzd5y",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_EL2EJt8IOzd5y",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_vlp4bcvqKw6yi",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "castport": {
+    "monthlyPlanId": "plan_3sAOy66lzLZN5",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_3sAOy66lzLZN5",
+    "yearlyPlanId": "plan_mNBoQTPXiucCC",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_mNBoQTPXiucCC",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_yzJcQeZmKVGoH",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "inkpress": {
+    "monthlyPlanId": "plan_MM6YTAfzrvVg2",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_MM6YTAfzrvVg2",
+    "yearlyPlanId": "plan_COtCy6bPRayJM",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_COtCy6bPRayJM",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_0xi4TmFTkXEJe",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "feedloft": {
+    "monthlyPlanId": "plan_u3gzpkTvI3RON",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_u3gzpkTvI3RON",
+    "yearlyPlanId": "plan_nPC5p9Wd0GY0h",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_nPC5p9Wd0GY0h",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_o4fZJADYiAff8",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "droplink": {
+    "monthlyPlanId": "plan_umhm6RrjejGJz",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_umhm6RrjejGJz",
+    "yearlyPlanId": "plan_zTz6pTud33De1",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_zTz6pTud33De1",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_QSlKHmJsfRCb9",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "snipvault": {
+    "monthlyPlanId": "plan_DUYur8Be8WiN0",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_DUYur8Be8WiN0",
+    "yearlyPlanId": "plan_fFJDiC2Z2V6fb",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_fFJDiC2Z2V6fb",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_TGaeF0MnkcpSS",
+    "prices": {
+      "monthly": 5,
+      "yearly": 50,
+      "lifetime": 49
+    }
+  },
+  "inkseal": {
+    "monthlyPlanId": "plan_Jz1bOF6BvopP3",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_Jz1bOF6BvopP3",
+    "yearlyPlanId": "plan_iFIoNmZEmV3Xh",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_iFIoNmZEmV3Xh",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_xRtPj9lTHiX0x",
+    "prices": {
+      "monthly": 15,
+      "yearly": 150,
+      "lifetime": 149
+    }
+  },
+  "overlayr": {
+    "monthlyPlanId": "plan_ZBCrnBFDEsV7L",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_ZBCrnBFDEsV7L",
+    "yearlyPlanId": "plan_dFLGNID8bR43B",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_dFLGNID8bR43B",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_EilSQF3f5APgE",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "signboard": {
+    "monthlyPlanId": "plan_6NslerTj0PEi0",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_6NslerTj0PEi0",
+    "yearlyPlanId": "plan_U2QXZNqYot2Qo",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_U2QXZNqYot2Qo",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_ugqi6pWCRpAEg",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "serpdeck": {
+    "monthlyPlanId": "plan_M284twTwJXT03",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_M284twTwJXT03",
+    "yearlyPlanId": "plan_oJmuVuZ9xLtXX",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_oJmuVuZ9xLtXX",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_JZLTEWTXwsEmS",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "chatterbox": {
+    "monthlyPlanId": "plan_r8KzfbzSpXLNZ",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_r8KzfbzSpXLNZ",
+    "yearlyPlanId": "plan_UASRMjj97r28U",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_UASRMjj97r28U",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_XP3ZaoFf6Ty0Y",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "ledgerly": {
+    "monthlyPlanId": "plan_1KBQIEMplX3lD",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_1KBQIEMplX3lD",
+    "yearlyPlanId": "plan_j1WZEK2FJg0DR",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_j1WZEK2FJg0DR",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_3GB0of5k43MDx",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "doortracker": {
+    "monthlyPlanId": "plan_VWljzERpHOKo4",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_VWljzERpHOKo4",
+    "yearlyPlanId": "plan_4WA2W4ZFufmui",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_4WA2W4ZFufmui",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_geWRcv1puOeJb",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "famping": {
+    "monthlyPlanId": "plan_0KjC4KAbsrFkY",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_0KjC4KAbsrFkY",
+    "yearlyPlanId": "plan_YyQpGC8z9EyTi",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_YyQpGC8z9EyTi",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_3qEX64z5tVTIj",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "deskly": {
+    "monthlyPlanId": "plan_KHn9xZU4oyQwb",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_KHn9xZU4oyQwb",
+    "yearlyPlanId": "plan_XCLzTHf5y3dEd",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_XCLzTHf5y3dEd",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_sctjXpnyVyTbp",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "upkeepstatus": {
+    "monthlyPlanId": "plan_eoKUMeOxg2ELJ",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_eoKUMeOxg2ELJ",
+    "yearlyPlanId": "plan_GVBts8gRueoWs",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_GVBts8gRueoWs",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_3Wkd1AYDPd42b",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "linkguard": {
+    "monthlyPlanId": "plan_Lc7JNBhdum7GM",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_Lc7JNBhdum7GM",
+    "yearlyPlanId": "plan_cleMXx95r743g",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_cleMXx95r743g",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_QEQX9rU2yMDn0",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "vaultly": {
+    "monthlyPlanId": "plan_WU2cO45zLeFK7",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_WU2cO45zLeFK7",
+    "yearlyPlanId": "plan_k6LHKG4WhhirG",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_k6LHKG4WhhirG",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_KYwselBWshnUs",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "secretbox": {
+    "monthlyPlanId": "plan_1i7p8IXiDQHPx",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_1i7p8IXiDQHPx",
+    "yearlyPlanId": "plan_7FHuN1AiYK9zp",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_7FHuN1AiYK9zp",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_Kw54pNhDqwYPE",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "certwatch": {
+    "monthlyPlanId": "plan_3bjFBruZFAfr5",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_3bjFBruZFAfr5",
+    "yearlyPlanId": "plan_5TWADwzx3IWRP",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_5TWADwzx3IWRP",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_LquyxWCub7VBG",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "logbin": {
+    "monthlyPlanId": "plan_U4CmK0VRWRQ0g",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_U4CmK0VRWRQ0g",
+    "yearlyPlanId": "plan_qXXXYZuSDPPJz",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_qXXXYZuSDPPJz",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_jB31XBHzMMqXA",
+    "prices": {
+      "monthly": 9,
+      "yearly": 90,
+      "lifetime": 89
+    }
+  },
+  "pitchcraft": {
+    "monthlyPlanId": "plan_rZPcYH2ScDVUJ",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_rZPcYH2ScDVUJ",
+    "yearlyPlanId": "plan_1DEJNczKBLkMV",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_1DEJNczKBLkMV",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_21Du6cAf38mmr",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "utmcraft": {
+    "monthlyPlanId": "plan_OOvfznYFzaDoH",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_OOvfznYFzaDoH",
+    "yearlyPlanId": "plan_rqHfMN2D5dkVL",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_rqHfMN2D5dkVL",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_EbL7zx54fjEql",
+    "prices": {
+      "monthly": 5,
+      "yearly": 50,
+      "lifetime": 49
+    }
+  },
+  "reflink": {
+    "monthlyPlanId": "plan_Zyl9SxGLfPdNI",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_Zyl9SxGLfPdNI",
+    "yearlyPlanId": "plan_j5DhAKeufGGWv",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_j5DhAKeufGGWv",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_LneO8IOnx45Rx",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "starstack": {
+    "monthlyPlanId": "plan_wcT9VIX3Z2mqs",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_wcT9VIX3Z2mqs",
+    "yearlyPlanId": "plan_BHyTNx6O4AR9n",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_BHyTNx6O4AR9n",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_A7Vhs6bhZo6zK",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "clickmap": {
+    "monthlyPlanId": "plan_hzGt62ktYccx9",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_hzGt62ktYccx9",
+    "yearlyPlanId": "plan_gm8W9d42EnKVa",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_gm8W9d42EnKVa",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_sojHeP0uKUIqu",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "splitpoint": {
+    "monthlyPlanId": "plan_QjswrfIhZgzSR",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_QjswrfIhZgzSR",
+    "yearlyPlanId": "plan_YsxsOeLO3nS65",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_YsxsOeLO3nS65",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_mO9n4bOJkddzJ",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "hirestack": {
+    "monthlyPlanId": "plan_v0YkPctzf4Jes",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_v0YkPctzf4Jes",
+    "yearlyPlanId": "plan_Ltr3Ujx6BC7IR",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_Ltr3Ujx6BC7IR",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_gNSgdPpM2I3Lj",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "shiftly": {
+    "monthlyPlanId": "plan_TiutfW1C1ZZtg",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_TiutfW1C1ZZtg",
+    "yearlyPlanId": "plan_uk03LlMyjdrdT",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_uk03LlMyjdrdT",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_ZBKnMDqtZEcQa",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "rampcheck": {
+    "monthlyPlanId": "plan_bDgGUN1EjZZwM",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_bDgGUN1EjZZwM",
+    "yearlyPlanId": "plan_20ypubLeBqdFi",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_20ypubLeBqdFi",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_3Q3xYnWkaAd5u",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "punchcard": {
+    "monthlyPlanId": "plan_aRh64HPbACdCZ",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_aRh64HPbACdCZ",
+    "yearlyPlanId": "plan_pbm2wPlW9dhsY",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_pbm2wPlW9dhsY",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_qB0ZtICxNMDnX",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "lessonforge": {
+    "monthlyPlanId": "plan_wFPGbZ5qi0uIb",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_wFPGbZ5qi0uIb",
+    "yearlyPlanId": "plan_sb7eEhgIxhlqj",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_sb7eEhgIxhlqj",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_W8Uc7DuIQo7wm",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "quizcraft": {
+    "monthlyPlanId": "plan_SEJEbEdPHMe7x",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_SEJEbEdPHMe7x",
+    "yearlyPlanId": "plan_2jtcgMeY41oUV",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_2jtcgMeY41oUV",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_ZYtj2QDEjjnVr",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "forumly": {
+    "monthlyPlanId": "plan_RybiywZjOw7wn",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_RybiywZjOw7wn",
+    "yearlyPlanId": "plan_zEtfQHgZ5coLo",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_zEtfQHgZ5coLo",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_I9vE1ALKDwOCu",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "roster": {
+    "monthlyPlanId": "plan_JYVfVxhRAUqiy",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_JYVfVxhRAUqiy",
+    "yearlyPlanId": "plan_AUPoZXbSa9y40",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_AUPoZXbSa9y40",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_UHgEOQkXhhgKv",
+    "prices": {
+      "monthly": 5,
+      "yearly": 50,
+      "lifetime": 49
+    }
+  },
+  "eventcraft": {
+    "monthlyPlanId": "plan_6PTrZj1x70uQP",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_6PTrZj1x70uQP",
+    "yearlyPlanId": "plan_WUdgM0wIA97Kq",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_WUdgM0wIA97Kq",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_3SYoI2t7ubvu6",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "redirectly": {
+    "monthlyPlanId": "plan_AboOBMPDpmmbu",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_AboOBMPDpmmbu",
+    "yearlyPlanId": "plan_Jflro6IFIEjdH",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_Jflro6IFIEjdH",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_AfyOZjW3oBMJ6",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "clientdesk": {
+    "monthlyPlanId": "plan_jWoas54OA3MCK",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_jWoas54OA3MCK",
+    "yearlyPlanId": "plan_YiULHvACPwCXN",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_YiULHvACPwCXN",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_AhTEhLpccMlw4",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "pulsecheck": {
+    "monthlyPlanId": "plan_MHjqi7qzcZyFk",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_MHjqi7qzcZyFk",
+    "yearlyPlanId": "plan_5auPgB5Yc7Zeb",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_5auPgB5Yc7Zeb",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_dmhxQhWZHWYdY",
+    "prices": {
+      "monthly": 7,
+      "yearly": 70,
+      "lifetime": 79
+    }
+  },
+  "billoop": {
+    "monthlyPlanId": "plan_8raO7inRiOtpQ",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_8raO7inRiOtpQ",
+    "yearlyPlanId": "plan_OVjIDJf3xX4cX",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_OVjIDJf3xX4cX",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_vYAM7uZMhOLmS",
+    "prices": {
+      "monthly": 12,
+      "yearly": 120,
+      "lifetime": 129
+    }
+  },
+  "askback": {
+    "monthlyPlanId": "plan_LBqR9FlmEaAdF",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_LBqR9FlmEaAdF",
+    "yearlyPlanId": "plan_d6jGX5k1im6S3",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_d6jGX5k1im6S3",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_N6qhTfZeesD00",
+    "prices": {
+      "monthly": 9,
+      "yearly": 90,
+      "lifetime": 89
+    }
+  },
+  "citewatch": {
+    "monthlyPlanId": "plan_kiUv4fjGCDIMo",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_kiUv4fjGCDIMo",
+    "yearlyPlanId": "plan_ttfBblgYHAltu",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_ttfBblgYHAltu",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_xqXTLEgEcKcdL",
+    "prices": {
+      "monthly": 9,
+      "yearly": 90,
+      "lifetime": 89
+    }
+  },
+  "voicebox": {
+    "monthlyPlanId": "plan_YfIhJo0GICQIE",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_YfIhJo0GICQIE",
+    "yearlyPlanId": "plan_V0WapLyPAw673",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_V0WapLyPAw673",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_sT4DY9262gp08",
+    "prices": {
+      "monthly": 9,
+      "yearly": 90,
+      "lifetime": 89
+    }
+  },
+  "listcraft": {
+    "monthlyPlanId": "plan_acUzfJCT2wypo",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_acUzfJCT2wypo",
+    "yearlyPlanId": "plan_7EbL3KCSCryiF",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_7EbL3KCSCryiF",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_mv3SM5xMF2CFh",
+    "prices": {
+      "monthly": 10,
+      "yearly": 100,
+      "lifetime": 99
+    }
+  },
+  "menuly": {
+    "monthlyPlanId": "plan_SL0luv8Fw6CXG",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_SL0luv8Fw6CXG",
+    "yearlyPlanId": "plan_NyrCqdvfnyRB2",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_NyrCqdvfnyRB2",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_6SiTx1DNVOuPU",
+    "prices": {
+      "monthly": 6,
+      "yearly": 60,
+      "lifetime": 69
+    }
+  },
+  "remindly": {
+    "monthlyPlanId": "plan_A2lfprPCVmDuc",
+    "monthlyCheckoutUrl": "https://whop.com/checkout/plan_A2lfprPCVmDuc",
+    "yearlyPlanId": "plan_CA3UbBBr5uRLc",
+    "yearlyCheckoutUrl": "https://whop.com/checkout/plan_CA3UbBBr5uRLc",
+    "lifetimeRepriced": true,
+    "lifetimePlanId": "plan_lPE1BTIbsjQBV",
+    "prices": {
+      "monthly": 9,
+      "yearly": 90,
+      "lifetime": 89
+    }
+  }
+}

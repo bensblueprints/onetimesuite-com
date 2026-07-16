@@ -308,7 +308,7 @@ function Pricing({ p }) {
           </div>
         ) : (
           <div className="grid items-stretch gap-5 pt-4 sm:grid-cols-3">
-            <TierCard name="Monthly" price={pr.monthly} period="/mo" cta={p.buyUrl} ctaLabel="Start monthly" delay={0} />
+            <TierCard name="Monthly" price={pr.monthly} period="/mo" cta={(p.tierUrls && p.tierUrls.monthly) || p.buyUrl} ctaLabel="Start monthly" delay={0} />
             <TierCard
               name="Lifetime"
               price={pr.lifetime}
@@ -316,11 +316,11 @@ function Pricing({ p }) {
               period="once"
               hero
               note="Never pay again"
-              cta={p.buyUrl}
+              cta={(p.tierUrls && p.tierUrls.lifetime) || p.buyUrl}
               ctaLabel={`Own it — $${pr.lifetime}`}
               delay={0.1}
             />
-            <TierCard name="Yearly" price={pr.yearly} period="/yr" note="2 months free" cta={p.buyUrl} ctaLabel="Start yearly" delay={0.2} />
+            <TierCard name="Yearly" price={pr.yearly} period="/yr" note="2 months free" cta={(p.tierUrls && p.tierUrls.yearly) || p.buyUrl} ctaLabel="Start yearly" delay={0.2} />
           </div>
         )}
         <Reveal delay={0.2} className="mt-8 text-center font-mono text-xs text-ink-soft">

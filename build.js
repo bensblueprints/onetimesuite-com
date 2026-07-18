@@ -309,6 +309,8 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body })
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/site.css?v=${CSS_V}">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ65NLXTY5"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJ65NLXTY5');</script>
 ${ld}
 </head>
 <body>

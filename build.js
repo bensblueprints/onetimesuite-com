@@ -77,7 +77,7 @@ for (const p of extras) if (!bySlug[p.slug]) bySlug[p.slug] = p;
 
 /* Public launch state: only these are purchasable today — every other catalog
    app is shown as a caution-taped "Coming soon" card on the hub. */
-const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly']);
+const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline']);
 const availableProducts = allProducts.filter(p => AVAILABLE_SLUGS.has(p.slug));
 const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
 
@@ -85,7 +85,7 @@ const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
   'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'orgtree', 'renewcheck',
-  'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk',
+  'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk', 'clip-pipeline',
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
 ]);

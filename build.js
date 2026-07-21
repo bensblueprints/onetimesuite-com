@@ -1579,6 +1579,45 @@ function blogPost5({ p, buy, repoUrl, compSlug, siblings }) {
   });
 }
 
+/* --- researched extra competitors (src/blog-competitors.js, optional):
+   { productSlug: [{ name, price, yr3 }] } — verified pricing from the
+   2026-07-21 competitor-research pass. Each entry yields one extra
+   "<competitor> alternative" post via blogPost6. --- */
+const BLOG_COMP_FILE = path.join(ROOT, 'src', 'blog-competitors.js');
+const blogExtraComps = fs.existsSync(BLOG_COMP_FILE) ? require(BLOG_COMP_FILE) : {};
+
+function blogPost6({ p, buy, repoUrl, compSlug }, comp) {
+  const cSlug = slugify(comp.name);
+  if (cSlug === compSlug) return; // primary competitor already has the 5-post cluster
+  const yr3Line = comp.yr3
+    ? ` That's roughly <span class="price-fig" style="font-family:var(--mono);">$${(+comp.yr3).toLocaleString('en-US')}</span> over three years.`
+    : '';
+  const articleHtml = `
+          <p>${esc(comp.name)} is one of the better-known subscription tools in its space — and at ${esc(comp.price)}, one of the recurring line items people most often look to replace. If you're searching for a <strong>${esc(comp.name)} alternative</strong> you pay for once and own forever, <a href="/${p.slug}/">${esc(p.brand)}</a> is the OneTimeSuite answer: $${p.price}, one time.</p>
+
+          <h2>Why people go looking for an alternative</h2>
+          <p>${esc(comp.name)} runs ${esc(comp.price)}, and like most SaaS the bill never stops — cancel and you typically lose access to your own history.${yr3Line} ${esc(p.brand)} flips that model: ${esc(p.oneliner)}</p>
+
+          <h2>What ${esc(p.brand)} covers</h2>
+          <ul>
+            ${p.features.slice(0, 5).map(f => `<li><strong>${esc(f[1])}</strong> — ${esc(f[2])}</li>`).join('\n            ')}
+          </ul>
+
+          <h2>The honest trade-off</h2>
+          <p>${esc(comp.name)} will keep shipping features, integrations and managed infrastructure that a pay-once tool won't chase — if that ecosystem is genuinely load-bearing for your workflow, staying is a fair call. For the core job, the math favors owning the tool: $${p.price} once against ${esc(comp.price)} forever. ${esc(p.payback)}</p>
+
+          <h2>Also worth reading</h2>
+          <p>${esc(p.brand)}'s main head-to-head is with ${esc(p.competitor)} — see the <a href="/blog/${p.slug}-vs-${compSlug}-open-source-vs-subscription/">detailed comparison</a> or the <a href="/${p.slug}/">product page</a> for the full feature list, FAQ and demo video.</p>
+          ${blogCta(p, buy, repoUrl)}`;
+  writeBlogPost({
+    slug: `${p.slug}-${cSlug}-alternative-pay-once`,
+    product: p.slug,
+    title: `${comp.name} Alternative That You Only Pay For Once: ${p.brand}`,
+    metaDesc: `${p.brand} is a $${p.price} one-time purchase that replaces ${comp.name} (${comp.price}). ${p.oneliner}`,
+    articleHtml,
+  });
+}
+
 blogAppSlugs.forEach(productSlug => {
   const p = bySlug[productSlug];
   if (!p) { console.warn('SKIPPED blog product (not found):', productSlug); return; }
@@ -1601,6 +1640,7 @@ blogAppSlugs.forEach(productSlug => {
   blogPost3(ctx);
   blogPost4(ctx);
   blogPost5(ctx);
+  (blogExtraComps[productSlug] || []).forEach(comp => blogPost6(ctx, comp));
 });
 
 /* ---------- /blog/ hub ---------- */
@@ -1657,6 +1697,69 @@ blogAppSlugs.forEach(productSlug => {
   }));
   reg('/blog/');
 })();
+
+/* ---------- interlink pass: "keep reading" spiderweb ----------
+   Injected after all posts are written so every blog post can link to its
+   whole cluster, the product page, the matching /comparison/ post and two
+   neighbouring apps' clusters — and every /comparison/ post links back into
+   the blog. Purely additive: existing URLs and markup are never changed. */
+{
+  const byProduct = {};
+  blogPostList.forEach(x => (byProduct[x.product] = byProduct[x.product] || []).push(x));
+  const productOrder = Object.keys(byProduct);
+  const compPostSlugs = new Set(posts.map(x => x.slug));
+  const injectBefore = (fp, marker, block) => {
+    if (!fs.existsSync(fp)) return false;
+    let html = fs.readFileSync(fp, 'utf8');
+    if (html.includes('keep-reading') || !html.includes(marker)) return false;
+    fs.writeFileSync(fp, html.replace(marker, block + marker), 'utf8');
+    return true;
+  };
+  let nBlog = 0, nComp = 0;
+
+  blogPostList.forEach(x => {
+    const p = bySlug[x.product];
+    if (!p) return;
+    const sibs = byProduct[x.product].filter(y => y.slug !== x.slug).slice(0, 5);
+    const compSlug = `${slugify(p.competitor)}-alternative`;
+    const i = productOrder.indexOf(x.product);
+    const neighbors = [1, 2]
+      .map(o => byProduct[productOrder[(i + o) % productOrder.length]])
+      .map(list => list && list[0]).filter(y => y && y.product !== x.product);
+    const links = [
+      `<a href="/${p.slug}/">${esc(p.brand)}: product page, demo video &amp; FAQ</a>`,
+      ...(compPostSlugs.has(compSlug) ? [`<a href="/comparison/${compSlug}/">${esc(p.competitor)} alternative — the full comparison</a>`] : []),
+      ...sibs.map(y => `<a href="/blog/${y.slug}/">${esc(y.title)}</a>`),
+      ...neighbors.map(y => `<a href="/blog/${y.slug}/">${esc(y.title)}</a>`),
+    ];
+    const block = `<nav class="keep-reading" aria-label="Keep reading" style="margin-top:2.4rem;border-top:1.5px solid var(--ink);padding-top:1.4rem;">
+            <h2>Keep reading</h2>
+            <ul>
+              ${links.map(l => `<li>${l}</li>`).join('\n              ')}
+            </ul>
+          </nav>\n        `;
+    if (injectBefore(path.join(OUT, 'blog', x.slug, 'index.html'), '</article>', block)) nBlog++;
+  });
+
+  posts.forEach(x => {
+    const cluster = byProduct[x.product];
+    if (!cluster || !cluster.length) return;
+    const p = bySlug[x.product];
+    const links = [
+      ...cluster.slice(0, 3).map(y => `<a href="/blog/${y.slug}/">${esc(y.title)}</a>`),
+      `<a href="/blog/">The OneTimeSuite Blog</a>`,
+    ];
+    const block = `<nav class="keep-reading" aria-label="Keep reading" style="margin-top:2.4rem;border-top:1.5px solid var(--ink);padding-top:1.4rem;">
+            <h2>More on ${esc(p ? p.brand : x.product)}</h2>
+            <ul>
+              ${links.map(l => `<li>${l}</li>`).join('\n              ')}
+            </ul>
+          </nav>\n        `;
+    if (injectBefore(path.join(OUT, 'comparison', x.slug, 'index.html'), '</article>', block)) nComp++;
+  });
+
+  console.log(`interlink pass: ${nBlog} blog posts + ${nComp} comparison posts got keep-reading blocks`);
+}
 
 /* ============================================================
  * 8. 404, robots, sitemap, static assets
@@ -1953,15 +2056,35 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       if (!EMBED_BROKEN.has(id) || !slug || !hasClip(slug)) return m;
       return `<video controls preload="metadata" src="/assets/clips/${slug}.mp4" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;"></video>`;
     });
-  const patchHtml = dir => {
+  /* "From the blog" cluster links on each v2 product page (spiderweb pass):
+     injected before the footer of the page's root index.html only. */
+  const blogByProduct = {};
+  blogPostList.forEach(x => (blogByProduct[x.product] = blogByProduct[x.product] || []).push(x));
+  const injectBlogLinks = (html, slug) => {
+    const cluster = blogByProduct[slug];
+    if (!cluster || !cluster.length || html.includes('from-the-blog') || !html.includes('<footer')) return html;
+    const items = cluster.slice(0, 4)
+      .map(y => `<li><a href="/blog/${y.slug}/">${esc(y.title)}</a></li>`)
+      .join('\n        ');
+    const block = `<section class="from-the-blog" aria-label="From the blog" style="max-width:920px;margin:2.5rem auto;padding:0 1.2rem;">
+      <h2 style="font-size:1.25rem;margin-bottom:0.8rem;">From the blog</h2>
+      <ul style="display:grid;gap:0.5rem;list-style:none;padding:0;">
+        ${items}
+        <li><a href="/blog/">All posts &rarr;</a></li>
+      </ul>
+    </section>\n    `;
+    return html.replace('<footer', block + '<footer');
+  };
+  const patchHtml = (dir, rootSlug) => {
     for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
       const fp = path.join(dir, f.name);
-      if (f.isDirectory()) { patchHtml(fp); continue; }
+      if (f.isDirectory()) { patchHtml(fp, null); continue; }
       if (!f.name.endsWith('.html')) continue;
       let html = fs.readFileSync(fp, 'utf8');
       html = relocateDemoVideo(html);
       html = injectVideoLd(html);
       html = fixBrokenEmbed(html);
+      if (rootSlug && f.name === 'index.html') html = injectBlogLinks(html, rootSlug);
       if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
       fs.writeFileSync(fp, html, 'utf8');
     }
@@ -1972,9 +2095,9 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
     for (const entry of fs.readdirSync(V2)) {
       if (entry === 'index.html' || entry === '404.html') continue; // never clobber the hub
       fs.cpSync(path.join(V2, entry), path.join(OUT, entry), { recursive: true, force: true });
-      patchHtml(path.join(OUT, entry));
+      patchHtml(path.join(OUT, entry), entry);
       n++;
     }
-    console.log(`v2 overlay: ${n} entries copied over public/ (video section hoisted, pixel ${PIXEL ? 'injected' : 'off'})`);
+    console.log(`v2 overlay: ${n} entries copied over public/ (video section hoisted, blog links injected, pixel ${PIXEL ? 'injected' : 'off'})`);
   }
 }

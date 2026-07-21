@@ -454,10 +454,10 @@ export default function ProductPage({ product }) {
       <Header p={product} />
       <main className="relative z-[1]">
         <Hero p={product} />
+        <Video p={product} />
         <Features p={product} />
         <Comparison p={product} />
         <Pricing p={product} />
-        <Video p={product} />
         <Steps p={product} />
         <Faq p={product} />
         <FinalCta p={product} />

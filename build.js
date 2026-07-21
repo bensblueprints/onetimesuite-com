@@ -152,23 +152,51 @@ const hasClip = slug => clipsAvailable.has(slug);
    (private videos show "Video unavailable" when embedded). */
 const YT_FILE = path.join(ROOT, 'src', 'youtube-videos.json');
 const ytVideos = fs.existsSync(YT_FILE) ? JSON.parse(fs.readFileSync(YT_FILE, 'utf8')) : {};
-const ytId = slug => ytVideos[slug] && ytVideos[slug].videoId;
+const ytIdRaw = slug => ytVideos[slug] && ytVideos[slug].videoId;
+
+/* 2026-07-21: a bulk privacy update (unlisted -> public) via the YouTube API
+   reset status.embeddable to false on these 50 videos, so their iframes show
+   "Video unavailable". Pages for these slugs fall back to the self-hosted
+   clip in assets/clips/. Re-enable embedding in YouTube Studio per video,
+   then remove its id from this set to restore the YouTube embed. */
+const EMBED_BROKEN = new Set([
+  '7BlTtgEW5oA','Rsoi0ZVkXFg','a8r-iXod_XU','oO5OjjYrboQ','o7Ph5Pq1i5g',
+  'c_q_6zE-nz4','SgLQcPcjDa4','s-tVw-L3eZs','o_8R3InZ6yw','DFPpzOu4JkE',
+  'emwpnjA3n2I','xKq4q1Rzs4Y','1iLdbqt3gX8','8LeRHcoEr54','6kvAG33EPn0',
+  'r84rn66_1n8','pVbEn-KGEM0','x1poMK9BTEI','G4F8dlssBFI','8zJ4wfGOFv0',
+  'jmRXnMZF3Q0','h4Oh4jZKOF0','lakJ6DOLxn8','bnz4GO8a07s','_gcsKHLCKZQ',
+  'kttAi5p5KtU','eYhZH25RdR4','Raa8KaetOGE','HJi2TpalIEI','fYaScy6mVP0',
+  'rLtZ4VWCQks','4o-DQQs0EEc','jeocVdn4ONQ','UeSNaFgUaxE','6T-FFr_wW9Y',
+  '5BUlJ42-wQY','hrvgMD2cv1k','WwCDUD6Gbk8','kQw-TSAIoyA','KwYyLOuPWLE',
+  'i5e3cB-gVOM','75sV6MLZ5m4','2o3V9KwSQ3s','0hGdEOsGVqQ','vPS7GAF_-4A',
+  'hbXjB7XSIoU','FpIYvC1d3zg','jQNvJHoS9sE','tDML8XEbAPY','EToxD4Q8BTs',
+]);
+const ytId = slug => {
+  const v = ytIdRaw(slug);
+  return v && !EMBED_BROKEN.has(v) ? v : undefined;
+};
 
 /* VideoObject JSON-LD so Google associates each demo video with its page
    (needed for Google Video indexing alongside video-sitemap.xml) */
 const videoLd = p => {
   const vid = ytId(p.slug);
-  if (!vid) return null;
-  return {
+  const raw = ytIdRaw(p.slug);
+  if (!vid && !hasClip(p.slug)) return null;
+  const ld = {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
     name: `${p.brand} demo — pay once, own it forever`,
     description: p.tagline || p.brand,
-    thumbnailUrl: [`https://i.ytimg.com/vi/${vid}/hqdefault.jpg`],
-    uploadDate: (ytVideos[p.slug].at || '2026-07-15T00:00:00Z').slice(0, 10),
-    embedUrl: `https://www.youtube-nocookie.com/embed/${vid}`,
-    contentUrl: `https://www.youtube.com/watch?v=${vid}`,
+    thumbnailUrl: [raw ? `https://i.ytimg.com/vi/${raw}/hqdefault.jpg` : `${SITE}/assets/shots/${p.slug}.png`],
+    uploadDate: ((ytVideos[p.slug] && ytVideos[p.slug].at) || '2026-07-15T00:00:00Z').slice(0, 10),
   };
+  if (vid) {
+    ld.embedUrl = `https://www.youtube-nocookie.com/embed/${vid}`;
+    ld.contentUrl = `https://www.youtube.com/watch?v=${vid}`;
+  } else {
+    ld.contentUrl = `${SITE}/assets/clips/${p.slug}.mp4`;
+  }
+  return ld;
 };
 const videoLdScript = p => {
   const ld = videoLd(p);
@@ -671,7 +699,8 @@ allProducts.forEach(p => {
         </video>
         <p class="mono-note" style="margin-top:0.7rem;">${p.brand} in action — a real demo, not a mockup.</p>
       </div>
-    </section>` : ''}
+    </section>
+    ${videoLdScript(p)}` : ''}
 
     <section aria-label="Screenshot">
       <div class="wrap" style="max-width:920px;">
@@ -1319,6 +1348,7 @@ posts.forEach(post => {
   reg(`/comparison/${post.slug}/`);
 });
 
+
 /* ============================================================
  * 7b. blog  /blog/  and  /blog/<post-slug>/
  * Data-driven, 5 posts/app, chunked like posts-1..6.js: drop a
@@ -1682,20 +1712,25 @@ fs.writeFileSync(path.join(OUT, 'rss.xml'),
   rssItems.map(i => `<item><title>${xmlEsc(i.title)}</title><link>${i.url}</link><guid>${i.url}</guid><pubDate>${i.date}</pubDate><description>${xmlEsc(i.desc)}</description></item>`).join('\n') +
   `\n</channel></rss>\n`, 'utf8');
 
-/* video-sitemap.xml — one <video:video> entry per product page with a YouTube
-   demo, so Google Video can associate each clip with its page */
-const videoProducts = allProducts.filter(p => ytId(p.slug));
+/* video-sitemap.xml — one <video:video> entry per product page with a demo
+   video (YouTube embed, or self-hosted clip fallback for EMBED_BROKEN ids) */
+const videoProducts = allProducts.filter(p => ytId(p.slug) || hasClip(p.slug));
 fs.writeFileSync(path.join(OUT, 'video-sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
   `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n` +
   videoProducts.map(p => {
     const vid = ytId(p.slug);
+    const raw = ytIdRaw(p.slug);
+    const thumb = raw ? `https://i.ytimg.com/vi/${raw}/hqdefault.jpg` : `${SITE}/assets/shots/${p.slug}.png`;
+    const locTag = vid
+      ? `<video:player_loc>https://www.youtube-nocookie.com/embed/${vid}</video:player_loc>`
+      : `<video:content_loc>${SITE}/assets/clips/${p.slug}.mp4</video:content_loc>`;
     return `  <url><loc>${SITE}/${p.slug}/</loc><video:video>` +
-      `<video:thumbnail_loc>https://i.ytimg.com/vi/${vid}/hqdefault.jpg</video:thumbnail_loc>` +
+      `<video:thumbnail_loc>${thumb}</video:thumbnail_loc>` +
       `<video:title>${xmlEsc(`${p.brand} demo — pay once, own it forever`)}</video:title>` +
       `<video:description>${xmlEsc(p.tagline || p.brand)}</video:description>` +
-      `<video:player_loc>https://www.youtube-nocookie.com/embed/${vid}</video:player_loc>` +
-      `<video:publication_date>${ytVideos[p.slug].at || '2026-07-15T00:00:00Z'}</video:publication_date>` +
+      locTag +
+      `<video:publication_date>${(ytVideos[p.slug] && ytVideos[p.slug].at) || '2026-07-15T00:00:00Z'}</video:publication_date>` +
       `</video:video></url>`;
   }).join('\n') + `\n</urlset>\n`, 'utf8');
 console.log(`video-sitemap.xml: ${videoProducts.length} video entries`);
@@ -1910,6 +1945,14 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
     const p = vm && anyBySlug[slugByVid[vm[1]]];
     return p ? html.replace('</head>', `${videoLdScript(p)}\n</head>`) : html;
   };
+  /* Swap iframes whose video has embedding disabled (EMBED_BROKEN) for the
+     self-hosted clip so the page never shows "Video unavailable" */
+  const fixBrokenEmbed = html =>
+    html.replace(/<iframe[^>]*youtube-nocookie\.com\/embed\/([A-Za-z0-9_-]{6,})[^>]*><\/iframe>/g, (m, id) => {
+      const slug = slugByVid[id];
+      if (!EMBED_BROKEN.has(id) || !slug || !hasClip(slug)) return m;
+      return `<video controls preload="metadata" src="/assets/clips/${slug}.mp4" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;"></video>`;
+    });
   const patchHtml = dir => {
     for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
       const fp = path.join(dir, f.name);
@@ -1918,6 +1961,7 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       let html = fs.readFileSync(fp, 'utf8');
       html = relocateDemoVideo(html);
       html = injectVideoLd(html);
+      html = fixBrokenEmbed(html);
       if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
       fs.writeFileSync(fp, html, 'utf8');
     }

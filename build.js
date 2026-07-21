@@ -379,6 +379,7 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, r
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+  <script defer src="https://stats.onetimesuite.com/a.js" data-site="87d907ee"></script>
   <meta property="og:type" content="${ogType}">
   <meta property="og:title" content="${attr(title)}">
   <meta property="og:description" content="${attr(desc)}">
@@ -2305,6 +2306,10 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       if (!html.includes('rel="icon"') && html.includes('</head>')) {
         html = html.replace('</head>',
           `<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">\n</head>`);
+      }
+      if (!html.includes('stats.onetimesuite.com/a.js') && html.includes('</head>')) {
+        html = html.replace('</head>',
+          `<script defer src="https://stats.onetimesuite.com/a.js" data-site="87d907ee"></script>\n</head>`);
       }
       if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
       fs.writeFileSync(fp, html, 'utf8');

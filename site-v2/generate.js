@@ -70,11 +70,20 @@ const DEMO_SLUGS = new Set(['captionly']);
 const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const pair = (arr, keys) => (arr || []).map(row => Object.fromEntries(keys.map((k, i) => [k, row[i]])));
 
+/* Send buyers through our on-site embedded checkout (/checkout/<slug>/?plan=X)
+   instead of straight to whop.com — keeps the pixel on our domain and lets the
+   post-purchase redirect land on /thanks/<slug>/. Non-checkout URLs (product
+   pages, own sites) pass through untouched. */
+const localCheckout = (slug, url) => {
+  const m = /whop\.com\/checkout\/(plan_[A-Za-z0-9]+)/.exec(url || '');
+  return m ? `/checkout/${slug}/?plan=${m[1]}` : url;
+};
+
 /** Normalize a raw catalog entry into the flat shape ProductPage expects. */
 function normalize(p) {
   const isDesktop = DESKTOP_SLUGS.has(p.slug);
   const wl = OWN_CHECKOUT.has(p.slug) ? null : whopLinks[p.slug];
-  const buyUrl = (wl && (wl.checkoutUrl || wl.productUrl)) || p.buyUrl || WHOP;
+  const buyUrl = localCheckout(p.slug, (wl && (wl.checkoutUrl || wl.productUrl)) || p.buyUrl || WHOP);
   const yt = ytVideos[p.slug];
   return {
     slug: p.slug,
@@ -93,7 +102,9 @@ function normalize(p) {
     buyUrl,
     releaseUrl: RELEASE_URLS[p.slug] || null,
     demoUrl: DEMO_SLUGS.has(p.slug) ? `/${p.slug}/demo/` : null,
-    tierUrls: tierUrls[p.slug] || null,
+    tierUrls: tierUrls[p.slug]
+      ? Object.fromEntries(Object.entries(tierUrls[p.slug]).map(([k, u]) => [k, localCheckout(p.slug, u)]))
+      : null,
     videoId: (yt && yt.videoId) || null,
     pricing: computePricing(p.price, isDesktop),
     features: pair(p.features, ['icon', 'title', 'desc']),

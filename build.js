@@ -105,6 +105,15 @@ const BUNDLE = {
 const bundleValue = products.reduce((s, p) => s + p.price, 0); // à-la-carte total of the full catalog (computed)
 const bundleSavings = bundleValue - BUNDLE.price;              // savings vs the flat $997 bundle
 
+/* Rewrite a whop.com checkout URL to our on-site embedded checkout page
+   (/checkout/<slug>/?plan=...) so the buyer stays on onetimesuite.com and we
+   control the post-purchase redirect to /thanks/<slug>/. Non-checkout URLs
+   (product pages, own sites) pass through untouched. */
+const localCheckout = (slug, url) => {
+  const m = /whop\.com\/checkout\/(plan_[A-Za-z0-9]+)/.exec(url || '');
+  return m ? `/checkout/${slug}/?plan=${m[1]}` : url;
+};
+
 const fmt = n => '$' + n.toLocaleString('en-US');
 const art = name => (/^[aeiou]/i.test(name) ? 'an' : 'a');
 function esc(s) { return String(s).replace(/&(?![a-z#0-9]+;)/g, '&amp;'); }
@@ -303,14 +312,14 @@ const PIXEL = META_PIXEL_ID ? (() => {
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1"></noscript>`;
 })() : '';
 
-function page({ title, desc, canonical, ogType = 'website', jsonld = [], body }) {
+function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, robots = 'index, follow' }) {
   const ld = jsonld.map(o => `  <script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="${robots}">
   <title>${esc(title)}</title>
   <meta name="description" content="${attr(desc)}">
   <link rel="canonical" href="${canonical}">
@@ -757,7 +766,7 @@ allProducts.forEach(p => {
           </span>
         </div>
         <div class="btn-row">
-          <a class="btn btn-solid" href="${BUNDLE.checkoutUrl}" rel="noopener">Get the bundle on Whop — ${fmt(BUNDLE.price)} &rarr;</a>
+          <a class="btn btn-solid" href="${localCheckout(BUNDLE.slug, BUNDLE.checkoutUrl)}" rel="noopener">Get the bundle — ${fmt(BUNDLE.price)} &rarr;</a>
           <a class="btn btn-ghost" href="/">Browse apps individually</a>
         </div>
       </div>
@@ -824,7 +833,7 @@ allProducts.forEach(p => {
         <h2>Own the whole suite</h2>
         <p style="color:var(--ink-soft);margin:0.8rem auto 1.6rem;">${fmt(BUNDLE.price)} once. Every app, every future release, installers and MIT source. No renewal, no per-app upsell, no meter.</p>
         <div class="btn-row" style="justify-content:center;">
-          <a class="btn btn-solid" href="${BUNDLE.checkoutUrl}" rel="noopener">Get the bundle on Whop — ${fmt(BUNDLE.price)} &rarr;</a>
+          <a class="btn btn-solid" href="${localCheckout(BUNDLE.slug, BUNDLE.checkoutUrl)}" rel="noopener">Get the bundle — ${fmt(BUNDLE.price)} &rarr;</a>
           <a class="btn btn-ghost" href="/">Browse apps individually</a>
         </div>
       </div>
@@ -1395,6 +1404,126 @@ for (const demoSlug of DEMOS) {
     fs.mkdirSync(path.join(OUT, demoSlug, 'demo'), { recursive: true });
     fs.copyFileSync(demoSrc, path.join(OUT, demoSlug, 'demo', 'index.html'));
   }
+}
+
+/* ============================================================
+ * On-site embedded checkout + per-product thank-you pages
+ *   /checkout/<slug>/?plan=plan_X  — Whop checkout embed, stays on our domain
+ *   /thanks/<slug>/                — post-purchase congrats + browser Purchase
+ * The embed's onComplete hands us (planId, receiptId); receiptId equals the
+ * Whop payment id the ots-track webhook sends to the Conversions API, so the
+ * browser Purchase (eventID = receiptId) and the server Purchase dedupe in
+ * Meta instead of double-counting. Both page types are noindex.
+ * ============================================================ */
+{
+  let tierCheckouts = {};
+  try { tierCheckouts = require('./src/tier-checkouts.json'); } catch {}
+
+  const planFromUrl = url => { const m = /whop\.com\/checkout\/(plan_[A-Za-z0-9]+)/.exec(url || ''); return m ? m[1] : null; };
+  const targets = [];
+  for (const p of allProducts) {
+    const wl = whopLinks[p.slug];
+    const defaultPlan = (wl && wl.planId) || planFromUrl(p.buyUrl);
+    if (!defaultPlan) continue; // sells off-site (own domain) — no embed page
+    const planPrices = { [defaultPlan]: p.price };
+    const tc = tierCheckouts[p.slug];
+    if (tc && tc.prices) {
+      if (tc.monthlyPlanId) planPrices[tc.monthlyPlanId] = tc.prices.monthly;
+      if (tc.yearlyPlanId) planPrices[tc.yearlyPlanId] = tc.prices.yearly;
+      if (tc.lifetimePlanId) planPrices[tc.lifetimePlanId] = tc.prices.lifetime;
+    }
+    targets.push({ slug: p.slug, brand: p.brand, icon: p.icon, price: p.price, isDesktop: DESKTOP_SLUGS.has(p.slug), defaultPlan, planPrices });
+  }
+  targets.push({
+    slug: BUNDLE.slug, brand: BUNDLE.name, icon: '🧰', price: BUNDLE.price, isDesktop: false,
+    defaultPlan: planFromUrl(BUNDLE.checkoutUrl) || 'plan_5Mv4jYmDfZH3a',
+    planPrices: { [planFromUrl(BUNDLE.checkoutUrl) || 'plan_5Mv4jYmDfZH3a']: BUNDLE.price },
+  });
+
+  for (const t of targets) {
+    const checkoutBody = `
+    <section aria-label="Checkout">
+      <div class="wrap" style="max-width:680px;">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/${t.slug === BUNDLE.slug ? 'onetime-suite-bundle' : t.slug}/">${t.brand}</a> / Checkout</nav>
+        <h1 style="margin-bottom:0.4rem;">${t.icon} Get ${esc(t.brand)}</h1>
+        <p class="mono-note" style="margin-bottom:1.6rem;">Secure checkout by Whop — pay once, own it forever. You'll get your receipt and access by email.</p>
+        <div id="whop-checkout"
+          data-whop-checkout-plan-id="${t.defaultPlan}"
+          data-whop-checkout-return-url="https://onetimesuite.com/thanks/${t.slug}/"
+          data-whop-checkout-on-complete="otsCheckoutComplete"
+          style="min-height:560px;"></div>
+      </div>
+    </section>
+    <script>
+      (function(){
+        var m = /[?&]plan=(plan_[A-Za-z0-9]+)/.exec(location.search);
+        if (m) document.getElementById('whop-checkout').setAttribute('data-whop-checkout-plan-id', m[1]);
+        window.otsCheckoutComplete = function(planId, receiptId){
+          location.href = '/thanks/${t.slug}/?status=success&plan_id=' + encodeURIComponent(planId || '') + '&receipt_id=' + encodeURIComponent(receiptId || '');
+        };
+        if (window.fbq) fbq('track', 'InitiateCheckout', { content_type: 'product', content_ids: ['${t.slug}'], value: ${t.price}, currency: 'USD' });
+      })();
+    </script>
+    <script async defer src="https://js.whop.com/static/checkout/loader.js"></script>`;
+    write(`checkout/${t.slug}`, page({
+      title: `Checkout — ${t.brand} | OneTimeSuite`,
+      desc: `Secure one-time-purchase checkout for ${t.brand}.`,
+      canonical: `${SITE}/checkout/${t.slug}/`,
+      robots: 'noindex, nofollow',
+      body: checkoutBody,
+    }));
+
+    const thanksBody = `
+    <section aria-label="Thank you" class="center">
+      <div class="wrap" style="max-width:680px;">
+        <div id="ots-thanks-ok">
+          <p style="font-size:3.4rem;margin-bottom:0.4rem;" aria-hidden="true">${t.icon}</p>
+          <h1>You own ${esc(t.brand)} now. 🎉</h1>
+          <p style="color:var(--ink-soft);margin:1rem auto 1.6rem;">That's it — no renewal, no meter, no monthly bill. Your receipt and ${t.isDesktop ? 'download instructions' : 'setup instructions'} are on their way to your email from Whop (check spam if it's not there in a couple of minutes).</p>
+          <div class="btn-row" style="justify-content:center;">
+            <a class="btn btn-solid" href="https://whop.com/orders/" rel="noopener">View your order on Whop &rarr;</a>
+            <a class="btn btn-ghost" href="/${t.slug === BUNDLE.slug ? 'onetime-suite-bundle' : t.slug}/">Back to ${esc(t.brand)}</a>
+          </div>
+          <p class="mono-note" style="margin-top:2rem;">While you're here — the <a href="/onetime-suite-bundle/">${fmt(BUNDLE.price)} bundle</a> gets you every app in the suite, including every future release.</p>
+        </div>
+        <div id="ots-thanks-err" style="display:none;">
+          <h1>Payment didn't go through</h1>
+          <p style="color:var(--ink-soft);margin:1rem auto 1.6rem;">No charge was made. You can try again — it takes under a minute.</p>
+          <div class="btn-row" style="justify-content:center;">
+            <a class="btn btn-solid" href="/checkout/${t.slug}/">Try again &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      (function(){
+        var q = new URLSearchParams(location.search);
+        if (q.get('status') === 'error') {
+          document.getElementById('ots-thanks-ok').style.display = 'none';
+          document.getElementById('ots-thanks-err').style.display = '';
+          return;
+        }
+        var prices = ${JSON.stringify(t.planPrices)};
+        var rid = q.get('receipt_id') || q.get('receiptId') || q.get('receipt') || '';
+        var plan = q.get('plan_id') || q.get('planId') || '';
+        var key = 'ots_purchase_' + (rid || '${t.slug}');
+        if (window.fbq && !sessionStorage.getItem(key)) {
+          sessionStorage.setItem(key, '1');
+          fbq('track', 'Purchase',
+            { content_type: 'product', content_ids: ['${t.slug}'], value: prices[plan] || ${t.price}, currency: 'USD' },
+            rid ? { eventID: rid } : undefined);
+        }
+      })();
+    </script>`;
+    write(`thanks/${t.slug}`, page({
+      title: `Thank you — ${t.brand} | OneTimeSuite`,
+      desc: `Purchase confirmation for ${t.brand}.`,
+      canonical: `${SITE}/thanks/${t.slug}/`,
+      robots: 'noindex, nofollow',
+      body: thanksBody,
+    }));
+  }
+  console.log(`embedded checkout: ${targets.length} /checkout/ + ${targets.length} /thanks/ pages`);
 }
 
 console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);

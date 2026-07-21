@@ -154,6 +154,27 @@ const YT_FILE = path.join(ROOT, 'src', 'youtube-videos.json');
 const ytVideos = fs.existsSync(YT_FILE) ? JSON.parse(fs.readFileSync(YT_FILE, 'utf8')) : {};
 const ytId = slug => ytVideos[slug] && ytVideos[slug].videoId;
 
+/* VideoObject JSON-LD so Google associates each demo video with its page
+   (needed for Google Video indexing alongside video-sitemap.xml) */
+const videoLd = p => {
+  const vid = ytId(p.slug);
+  if (!vid) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: `${p.brand} demo — pay once, own it forever`,
+    description: p.tagline || p.brand,
+    thumbnailUrl: [`https://i.ytimg.com/vi/${vid}/hqdefault.jpg`],
+    uploadDate: (ytVideos[p.slug].at || '2026-07-15T00:00:00Z').slice(0, 10),
+    embedUrl: `https://www.youtube-nocookie.com/embed/${vid}`,
+    contentUrl: `https://www.youtube.com/watch?v=${vid}`,
+  };
+};
+const videoLdScript = p => {
+  const ld = videoLd(p);
+  return ld ? `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>` : '';
+};
+
 /* ---------- competitor columns for the 76 comparison posts ---------- */
 const POST_TABLE = {
   'smallpdf-alternative':            { price: '$12–15/mo', yr3: '~$432–540', limits: 'Task/file limits on free tier', cloud: 'Uploaded to their servers', offline: 'No', src: 'Closed' },
@@ -639,7 +660,8 @@ allProducts.forEach(p => {
         </div>
         <p class="mono-note" style="margin-top:0.7rem;">${p.brand} in action — a real demo, not a mockup.</p>
       </div>
-    </section>` : hasClip(p.slug) ? `
+    </section>
+    ${videoLdScript(p)}` : hasClip(p.slug) ? `
     <section aria-label="Demo video">
       <div class="wrap" style="max-width:920px;">
         <video controls preload="metadata" width="1280" height="720" style="width:100%;border:1.5px solid var(--ink);border-radius:12px;background:#000;">
@@ -1317,7 +1339,7 @@ fs.writeFileSync(path.join(OUT, '404.html'), page({
 }), 'utf8');
 
 fs.writeFileSync(path.join(OUT, 'robots.txt'),
-  `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`, 'utf8');
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\nSitemap: ${SITE}/video-sitemap.xml\n`, 'utf8');
 
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -1348,6 +1370,24 @@ fs.writeFileSync(path.join(OUT, 'rss.xml'),
   `<language>en</language>\n` +
   rssItems.map(i => `<item><title>${xmlEsc(i.title)}</title><link>${i.url}</link><guid>${i.url}</guid><pubDate>${i.date}</pubDate><description>${xmlEsc(i.desc)}</description></item>`).join('\n') +
   `\n</channel></rss>\n`, 'utf8');
+
+/* video-sitemap.xml — one <video:video> entry per product page with a YouTube
+   demo, so Google Video can associate each clip with its page */
+const videoProducts = allProducts.filter(p => ytId(p.slug));
+fs.writeFileSync(path.join(OUT, 'video-sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n` +
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n` +
+  videoProducts.map(p => {
+    const vid = ytId(p.slug);
+    return `  <url><loc>${SITE}/${p.slug}/</loc><video:video>` +
+      `<video:thumbnail_loc>https://i.ytimg.com/vi/${vid}/hqdefault.jpg</video:thumbnail_loc>` +
+      `<video:title>${xmlEsc(`${p.brand} demo — pay once, own it forever`)}</video:title>` +
+      `<video:description>${xmlEsc(p.tagline || p.brand)}</video:description>` +
+      `<video:player_loc>https://www.youtube-nocookie.com/embed/${vid}</video:player_loc>` +
+      `<video:publication_date>${ytVideos[p.slug].at || '2026-07-15T00:00:00Z'}</video:publication_date>` +
+      `</video:video></url>`;
+  }).join('\n') + `\n</urlset>\n`, 'utf8');
+console.log(`video-sitemap.xml: ${videoProducts.length} video entries`);
 
 /* css + screenshots */
 fs.mkdirSync(path.join(OUT, 'css'), { recursive: true });
@@ -1548,6 +1588,17 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
     const heroEnd = rest.indexOf('</section>') + 10;
     return rest.slice(0, heroEnd) + videoSec + rest.slice(heroEnd);
   };
+  /* VideoObject JSON-LD for v2 pages: resolve the product from the embedded
+     videoId, since the v2 HTML is prebuilt and carries no slug metadata */
+  const slugByVid = Object.fromEntries(
+    Object.entries(ytVideos).map(([s, v]) => [v.videoId, s]));
+  const anyBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
+  const injectVideoLd = html => {
+    if (html.includes('"VideoObject"') || !html.includes('</head>')) return html;
+    const vm = html.match(/youtube-nocookie\.com\/embed\/([A-Za-z0-9_-]{6,})/);
+    const p = vm && anyBySlug[slugByVid[vm[1]]];
+    return p ? html.replace('</head>', `${videoLdScript(p)}\n</head>`) : html;
+  };
   const patchHtml = dir => {
     for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
       const fp = path.join(dir, f.name);
@@ -1555,6 +1606,7 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       if (!f.name.endsWith('.html')) continue;
       let html = fs.readFileSync(fp, 'utf8');
       html = relocateDemoVideo(html);
+      html = injectVideoLd(html);
       if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
       fs.writeFileSync(fp, html, 'utf8');
     }

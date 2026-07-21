@@ -1382,7 +1382,17 @@ posts.forEach(post => {
   /* the researched extra competitors join the grid too (verified pricing,
      2026-07-21 pass); yearly cost from yr3/3 or parsed from the price string */
   const XCOMP_FILE = path.join(ROOT, 'src', 'blog-competitors.js');
-  const extraComps = fs.existsSync(XCOMP_FILE) ? require(XCOMP_FILE) : {};
+  const SVCOMP_FILE = path.join(ROOT, 'src', 'savings-competitors.js');
+  /* merged copy — never mutate the required modules: blog-competitors.js is
+     require()d again by the blog engine (same cached object) and must NOT
+     grow the savings-only entries, or they'd all become blog posts */
+  const extraComps = {};
+  for (const src of [XCOMP_FILE, SVCOMP_FILE]) {
+    if (!fs.existsSync(src)) continue;
+    for (const [s, list] of Object.entries(require(src))) {
+      extraComps[s] = [...(extraComps[s] || []), ...list];
+    }
+  }
   const parseYearly = s => {
     const mo = /\$\s*([\d,.]+)\s*(?:\/|per\s*)?\s*(?:user\s*\/?\s*)?mo/i.exec(s || '');
     if (mo) return parseFloat(mo[1].replace(/,/g, '')) * 12;

@@ -1367,12 +1367,35 @@ posts.forEach(post => {
   const logoFiles = new Set(fs.existsSync(LOGO_DIR) ? fs.readdirSync(LOGO_DIR) : []);
   const slugC = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-+|-+$)/g, '');
   const byComp = new Map();
+  const perSeatRe = /\/\s*user|\/\s*seat|per\s*user|per\s*seat/i;
+  const addTile = (name, priceStr, yearly, app) => {
+    if (!name || !yearly) return;
+    if (!byComp.has(name)) byComp.set(name, { n: name, m: priceStr, y: Math.round(yearly), ps: perSeatRe.test(priceStr || '') ? 1 : 0, apps: [] });
+    const t = byComp.get(name);
+    if (app && !t.apps.some(a => a.s === app.s)) t.apps.push(app);
+  };
   allProducts.forEach(p => {
     if (!p.competitor || !p.compYr) return;
-    if (!byComp.has(p.competitor)) byComp.set(p.competitor, { n: p.competitor, m: p.compPrice, y: p.compYr, apps: [] });
-    byComp.get(p.competitor).apps.push({ b: p.brand, s: p.slug, pr: p.price });
+    addTile(p.competitor, p.compPrice, p.compYr, { b: p.brand, s: p.slug, pr: p.price });
   });
-  const tiles = [...byComp.values()].map(c => ({
+  /* the researched extra competitors join the grid too (verified pricing,
+     2026-07-21 pass); yearly cost from yr3/3 or parsed from the price string */
+  const XCOMP_FILE = path.join(ROOT, 'src', 'blog-competitors.js');
+  const extraComps = fs.existsSync(XCOMP_FILE) ? require(XCOMP_FILE) : {};
+  const parseYearly = s => {
+    const mo = /\$\s*([\d,.]+)\s*(?:\/|per\s*)?\s*(?:user\s*\/?\s*)?mo/i.exec(s || '');
+    if (mo) return parseFloat(mo[1].replace(/,/g, '')) * 12;
+    const yr = /\$\s*([\d,.]+)\s*(?:\/|per\s*)?\s*(?:yr|year)/i.exec(s || '');
+    return yr ? parseFloat(yr[1].replace(/,/g, '')) : 0;
+  };
+  for (const [pSlug, list] of Object.entries(extraComps)) {
+    const p = bySlug[pSlug];
+    for (const c of list) {
+      addTile(c.name, c.price, c.yr3 ? c.yr3 / 3 : parseYearly(c.price),
+        p ? { b: p.brand, s: p.slug, pr: p.price } : null);
+    }
+  }
+  const tiles = [...byComp.values()].filter(t => t.apps.length).map(c => ({
     ...c, logo: logoFiles.has(`${slugC(c.n)}.png`) ? `/assets/complogos/${slugC(c.n)}.png` : null,
   })).sort((a, b) => b.y - a.y);
   if (fs.existsSync(LOGO_DIR)) {
@@ -1393,6 +1416,12 @@ posts.forEach(post => {
 
     <section aria-label="Pick your subscriptions">
       <div class="wrap">
+        <div style="display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;margin-bottom:1.2rem;">
+          <label for="sv-seats" style="font-weight:600;">How many people on your team?</label>
+          <input id="sv-seats" type="number" min="1" max="500" value="1" inputmode="numeric"
+            style="width:5.5rem;padding:0.45rem 0.6rem;border:1.5px solid var(--ink);border-radius:8px;font:inherit;font-family:var(--mono);">
+          <span class="mono-note">per-user tools multiply by this — pay-once apps never do</span>
+        </div>
         <div id="sv-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.8rem;"></div>
       </div>
     </section>
@@ -1403,7 +1432,7 @@ posts.forEach(post => {
           <p id="sv-none" style="margin:0;color:var(--ink-soft);">Nothing selected yet — click the tools you pay for.</p>
           <div id="sv-out" style="display:none;">
             <p style="margin:0 0 0.4rem;font-size:1.05rem;">You're paying about <strong id="sv-yr" style="font-family:var(--mono);"></strong>/year — <strong id="sv-3yr" style="font-family:var(--mono);"></strong> over 3 years.</p>
-            <p style="margin:0 0 0.8rem;">The same jobs, pay-once: <strong id="sv-once" style="font-family:var(--mono);"></strong> total. <span class="stamp blue" style="font-size:0.95rem;">You keep <span id="sv-save" style="font-family:var(--mono);"></span> over 3 years</span></p>
+            <p style="margin:0 0 0.8rem;">The same jobs, pay-once: <strong id="sv-once" style="font-family:var(--mono);"></strong> total — one price no matter how many people use it. <span class="stamp blue" style="font-size:0.95rem;">You keep <span id="sv-save" style="font-family:var(--mono);"></span> over 3 years</span></p>
             <div id="sv-apps" style="font-size:0.92rem;color:var(--ink-soft);margin-bottom:0.9rem;"></div>
             <div class="btn-row">
               <a class="btn btn-solid" href="${WHOP}" rel="noopener">Get the whole suite — $${BUNDLE.price} once &rarr;</a>
@@ -1419,7 +1448,12 @@ posts.forEach(post => {
       var DATA = ${DATA};
       var grid = document.getElementById('sv-grid');
       var sel = new Set();
+      var seats = 1;
       var fmt = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+      document.getElementById('sv-seats').addEventListener('input', function () {
+        seats = Math.max(1, Math.min(500, parseInt(this.value, 10) || 1));
+        render();
+      });
       DATA.forEach(function (c, i) {
         var el = document.createElement('button');
         el.type = 'button';
@@ -1443,7 +1477,7 @@ posts.forEach(post => {
         none.style.display = 'none'; out.style.display = '';
         var yr = 0, once = 0, seen = new Set(), links = [];
         sel.forEach(function (i) {
-          var c = DATA[i]; yr += c.y;
+          var c = DATA[i]; yr += c.y * (c.ps ? seats : 1);
           c.apps.forEach(function (a) {
             if (seen.has(a.s)) return; seen.add(a.s);
             once += a.pr;

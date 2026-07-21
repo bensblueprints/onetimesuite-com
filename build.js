@@ -152,51 +152,23 @@ const hasClip = slug => clipsAvailable.has(slug);
    (private videos show "Video unavailable" when embedded). */
 const YT_FILE = path.join(ROOT, 'src', 'youtube-videos.json');
 const ytVideos = fs.existsSync(YT_FILE) ? JSON.parse(fs.readFileSync(YT_FILE, 'utf8')) : {};
-const ytIdRaw = slug => ytVideos[slug] && ytVideos[slug].videoId;
-
-/* 2026-07-21: a bulk privacy update (unlisted -> public) via the YouTube API
-   reset status.embeddable to false on these 50 videos, so their iframes show
-   "Video unavailable". Pages for these slugs fall back to the self-hosted
-   clip in assets/clips/. Re-enable embedding in YouTube Studio per video,
-   then remove its id from this set to restore the YouTube embed. */
-const EMBED_BROKEN = new Set([
-  '7BlTtgEW5oA','Rsoi0ZVkXFg','a8r-iXod_XU','oO5OjjYrboQ','o7Ph5Pq1i5g',
-  'c_q_6zE-nz4','SgLQcPcjDa4','s-tVw-L3eZs','o_8R3InZ6yw','DFPpzOu4JkE',
-  'emwpnjA3n2I','xKq4q1Rzs4Y','1iLdbqt3gX8','8LeRHcoEr54','6kvAG33EPn0',
-  'r84rn66_1n8','pVbEn-KGEM0','x1poMK9BTEI','G4F8dlssBFI','8zJ4wfGOFv0',
-  'jmRXnMZF3Q0','h4Oh4jZKOF0','lakJ6DOLxn8','bnz4GO8a07s','_gcsKHLCKZQ',
-  'kttAi5p5KtU','eYhZH25RdR4','Raa8KaetOGE','HJi2TpalIEI','fYaScy6mVP0',
-  'rLtZ4VWCQks','4o-DQQs0EEc','jeocVdn4ONQ','UeSNaFgUaxE','6T-FFr_wW9Y',
-  '5BUlJ42-wQY','hrvgMD2cv1k','WwCDUD6Gbk8','kQw-TSAIoyA','KwYyLOuPWLE',
-  'i5e3cB-gVOM','75sV6MLZ5m4','2o3V9KwSQ3s','0hGdEOsGVqQ','vPS7GAF_-4A',
-  'hbXjB7XSIoU','FpIYvC1d3zg','jQNvJHoS9sE','tDML8XEbAPY','EToxD4Q8BTs',
-]);
-const ytId = slug => {
-  const v = ytIdRaw(slug);
-  return v && !EMBED_BROKEN.has(v) ? v : undefined;
-};
+const ytId = slug => ytVideos[slug] && ytVideos[slug].videoId;
 
 /* VideoObject JSON-LD so Google associates each demo video with its page
    (needed for Google Video indexing alongside video-sitemap.xml) */
 const videoLd = p => {
   const vid = ytId(p.slug);
-  const raw = ytIdRaw(p.slug);
-  if (!vid && !hasClip(p.slug)) return null;
-  const ld = {
+  if (!vid) return null;
+  return {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
     name: `${p.brand} demo — pay once, own it forever`,
     description: p.tagline || p.brand,
-    thumbnailUrl: [raw ? `https://i.ytimg.com/vi/${raw}/hqdefault.jpg` : `${SITE}/assets/shots/${p.slug}.png`],
-    uploadDate: ((ytVideos[p.slug] && ytVideos[p.slug].at) || '2026-07-15T00:00:00Z').slice(0, 10),
+    thumbnailUrl: [`https://i.ytimg.com/vi/${vid}/hqdefault.jpg`],
+    uploadDate: (ytVideos[p.slug].at || '2026-07-15T00:00:00Z').slice(0, 10),
+    embedUrl: `https://www.youtube-nocookie.com/embed/${vid}`,
+    contentUrl: `https://www.youtube.com/watch?v=${vid}`,
   };
-  if (vid) {
-    ld.embedUrl = `https://www.youtube-nocookie.com/embed/${vid}`;
-    ld.contentUrl = `https://www.youtube.com/watch?v=${vid}`;
-  } else {
-    ld.contentUrl = `${SITE}/assets/clips/${p.slug}.mp4`;
-  }
-  return ld;
 };
 const videoLdScript = p => {
   const ld = videoLd(p);
@@ -297,6 +269,7 @@ const NAV = `
       <a class="nav-link" href="/#coming-soon">Coming soon</a>
       <a class="nav-link" href="/${BUNDLE.slug}/">The bundle</a>
       <a class="nav-link" href="/comparison/">Comparisons</a>
+      <a class="nav-link" href="/blog/">Blog</a>
       <a class="nav-link nav-login" href="https://dashboard.onetimesuite.com/" rel="noopener">Log in</a>
       </div>
       <a class="nav-buy" href="${WHOP}" rel="noopener">Buy on Whop</a>
@@ -320,6 +293,7 @@ const FOOTER = `
         <div>
           <h4>Read</h4>
           <a href="/comparison/">All comparisons</a>
+          <a href="/blog/">Blog</a>
           <a href="/loom-alternative/">Loom alternative</a>
           <a href="/linktree-alternative/">Linktree alternative</a>
           <a href="/wispr-flow-alternative/">Wispr Flow alternative</a>
@@ -697,8 +671,7 @@ allProducts.forEach(p => {
         </video>
         <p class="mono-note" style="margin-top:0.7rem;">${p.brand} in action — a real demo, not a mockup.</p>
       </div>
-    </section>
-    ${videoLdScript(p)}` : ''}
+    </section>` : ''}
 
     <section aria-label="Screenshot">
       <div class="wrap" style="max-width:920px;">
@@ -1347,6 +1320,315 @@ posts.forEach(post => {
 });
 
 /* ============================================================
+ * 7b. blog  /blog/  and  /blog/<post-slug>/
+ * Data-driven, 5 posts/app, chunked like posts-1..6.js: drop a
+ * src/blog-chunk<N>.js (module.exports = [productSlug, ...]) and its
+ * 5 posts/app appear here automatically — no build.js edit needed.
+ * ============================================================ */
+const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-+|-+$)/g, '');
+
+const blogAppSlugs = fs.readdirSync(path.join(ROOT, 'src'))
+  .filter(f => /^blog-chunk\d+\.js$/.test(f))
+  .sort()
+  .flatMap(f => require(path.join(ROOT, 'src', f)));
+
+function blogBuyLink(p) {
+  const whopLink = OWN_CHECKOUT.has(p.slug) ? null : whopLinks[p.slug];
+  return (whopLink && whopLink.productUrl) || p.buyUrl || WHOP;
+}
+
+function blogCta(p, buy, repoUrl) {
+  return `
+          <div class="cta-card">
+            <h3>Try ${esc(p.brand)} — $${p.price}, once</h3>
+            <p>${esc(p.oneliner)}</p>
+            <div class="btn-row">
+              <a class="btn btn-solid" href="/${p.slug}/">See ${esc(p.brand)} &rarr;</a>
+              <a class="btn btn-ghost" href="${buy}" rel="noopener">Get it on Whop &mdash; $${p.price}</a>
+              ${p.closedSource ? '' : `<a class="btn btn-ghost" href="${repoUrl}" rel="noopener">Free on GitHub</a>`}
+            </div>
+          </div>`;
+}
+
+function blogTable(p) {
+  return `
+        <div class="tbl-wrap">
+          <table class="receipt">
+            <thead><tr><th></th><th class="us">${esc(p.brand)}</th><th>${esc(p.competitor)}</th></tr></thead>
+            <tbody>
+              ${p.compRows.map(r => `<tr><td>${esc(r[0])}</td><td class="us">${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('\n              ')}
+            </tbody>
+          </table>
+        </div>`;
+}
+
+const blogPostList = []; // { slug, product, title, metaDesc } — for the /blog/ hub
+const BLOG_DATE = '2026-07-21';
+
+function writeBlogPost({ slug, product, title, metaDesc, articleHtml }) {
+  const url = `${SITE}/blog/${slug}/`;
+  const crumbLabel = title.split(/[—:]/)[0].trim();
+  const body = `
+    <section class="hero" aria-label="Article" style="padding-bottom:2.5rem;">
+      <div class="wrap-narrow">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/blog/">Blog</a> / ${esc(crumbLabel)}</nav>
+        <span class="stamp">OneTimeSuite Blog &middot; 2026</span>
+        <h1 style="font-size:clamp(1.9rem,4.4vw,3rem);">${esc(title)}</h1>
+      </div>
+    </section>
+
+    <section aria-label="Article body" style="padding-top:2.5rem;">
+      <div class="wrap-narrow">
+        <article class="post-body">
+          <p class="post-meta">OneTimeSuite Blog &middot; Published ${BLOG_DATE}</p>
+          ${articleHtml}
+        </article>
+      </div>
+    </section>`;
+
+  write(`blog/${slug}`, page({
+    title: `${title} | OneTimeSuite Blog`,
+    desc: metaDesc,
+    canonical: url,
+    ogType: 'article',
+    jsonld: [{
+      '@context': 'https://schema.org', '@type': 'Article',
+      headline: title,
+      description: metaDesc,
+      author: { '@type': 'Organization', name: 'OneTimeSuite', url: SITE },
+      publisher: { '@type': 'Organization', name: 'OneTimeSuite' },
+      mainEntityOfPage: url,
+      datePublished: BLOG_DATE, dateModified: BLOG_DATE,
+    }],
+    body,
+  }));
+  reg(`/blog/${slug}/`);
+  blogPostList.push({ slug, product, title, metaDesc });
+}
+
+/* --- the 5 post formulas, each built from the product's own real numbers --- */
+function blogPost1({ p, buy, repoUrl, compSlug }) {
+  const top5 = p.features.slice(0, 5);
+  const faq3 = p.faq.slice(0, 3);
+  const articleHtml = `
+          <p>${esc(p.heroLead)}</p>
+          <p>If you've searched for a <strong>${esc(p.competitor)} alternative</strong>, ${esc(p.brand)} is the pay-once option worth putting at the top of the list: <a href="/${p.slug}/">${esc(p.brand)}</a> is $${p.price}, one time, and covers the same core job ${esc(p.competitor)} charges ${esc(p.compPrice)} for.</p>
+
+          <h2>What makes ${esc(p.brand)} the pick for 2026</h2>
+          <ul>
+            ${top5.map(f => `<li><strong>${esc(f[1])}</strong> — ${esc(f[2])}</li>`).join('\n            ')}
+          </ul>
+
+          <h2>${esc(p.brand)} vs ${esc(p.competitor)}, at a glance</h2>
+          ${blogTable(p)}
+          <p style="color:var(--ink-soft);font-size:0.95rem;">${esc(p.payback)}</p>
+
+          <h2>Common questions</h2>
+          ${faq3.map(q => `<p><strong>${esc(q[0])}</strong><br>${esc(q[1])}</p>`).join('\n          ')}
+
+          <h2>The bottom line</h2>
+          <p>${esc(p.brand)} won't out-feature ${esc(p.competitor)} on every axis — no subscription tool with a bigger team and a bigger roadmap loses on everything. But for the core job, $${p.price} once against ${esc(p.compPrice)} forever is a trade most people should at least look at. ${esc(p.brand)} is part of <a href="/">OneTimeSuite</a>, a catalog of pay-once apps that replace subscription SaaS.</p>
+          ${blogCta(p, buy, repoUrl)}`;
+  writeBlogPost({
+    slug: `${p.slug}-best-${compSlug}-alternative-2026`,
+    product: p.slug,
+    title: `Best ${p.competitor} Alternative in 2026: ${p.brand} (One-Time Purchase)`,
+    metaDesc: `${p.brand} is a $${p.price} one-time purchase that replaces ${p.competitor} (${p.compPrice}). ${p.oneliner}`,
+    articleHtml,
+  });
+}
+
+function blogPost2({ p, buy, repoUrl, compSlug, yr3 }) {
+  const priceRow = p.compRows.find(r => /price/i.test(r[0])) || p.compRows[0];
+  const articleHtml = `
+          <p>${esc(p.competitor)} costs ${esc(p.compPrice)} — and unlike a tool you buy once, that bill never stops. Over three years that's roughly <span class="price-fig" style="font-family:var(--mono);">$${yr3.toLocaleString('en-US')}</span> for software doing a job your own hardware could just as easily do.</p>
+
+          <h2>Where the subscription actually goes</h2>
+          <p>${esc(priceRow[2])} is the sticker price. It compounds: cancel and you typically lose access to your own history, and most plans ratchet the price up as you add usage, seats or storage — the bill rarely stays flat for long.</p>
+
+          <h2>${esc(p.brand)}: the pay-once alternative</h2>
+          <p>${esc(p.brand)} does the same core job for <span class="price-fig" style="font-family:var(--mono);">$${p.price}</span>, once. ${esc(p.oneliner)}</p>
+          ${blogTable(p)}
+          <p style="color:var(--ink-soft);font-size:0.95rem;">${esc(p.payback)}</p>
+
+          <h2>Is the subscription ever still worth it?</h2>
+          <p>If you need ${esc(p.competitor)}'s specific ecosystem, integrations or managed infrastructure and that's genuinely load-bearing for you, the subscription earns its keep — that's a real trade-off, not a trick. ${esc(p.brand)} is for everyone else: people paying every month for a job that runs fine on hardware they already own.</p>
+          ${blogCta(p, buy, repoUrl)}`;
+  writeBlogPost({
+    slug: `${p.slug}-${compSlug}-pricing-is-out-of-control`,
+    product: p.slug,
+    title: `${p.competitor} Pricing Is Out of Control — Here's the Pay-Once Alternative`,
+    metaDesc: `${p.competitor} runs ${p.compPrice} — about $${yr3.toLocaleString('en-US')} over three years. ${p.brand} does the same job for $${p.price}, once.`,
+    articleHtml,
+  });
+}
+
+function blogPost3({ p, buy, repoUrl, compSlug }) {
+  /* Only pull a real FAQ answer when the QUESTION is actually about
+     migrating/importing — matching on the full answer text too easily
+     grabs an unrelated line (e.g. any answer that happens to say "export"). */
+  const migrationFaq = p.faq.find(q => /\bmigrat|\bimport\b|\bswitch(ing)? from|\bmove (my|your) data/i.test(q[0]));
+  const articleHtml = `
+          <p>Switching from ${esc(p.competitor)} to <a href="/${p.slug}/">${esc(p.brand)}</a> is mostly a matter of following the same three steps every OneTimeSuite app uses — buy once, deploy or install, bring your workflow over.</p>
+
+          ${p.steps.map((s, i) => `<h2>Step ${i + 1}: ${esc(s[0])}</h2>\n          <p>${esc(s[1])}</p>`).join('\n\n          ')}
+
+          <h2>What to expect during the switch</h2>
+          <p>${migrationFaq ? esc(migrationFaq[1]) : `${esc(p.brand)} covers the same core workflow as ${esc(p.competitor)}, so most people are productive within the first session — see the full feature list and FAQ on the <a href="/${p.slug}/">product page</a> before you commit.`}</p>
+
+          <h2>Why make the switch at all</h2>
+          <p>${esc(p.competitor)} runs ${esc(p.compPrice)}, forever. ${esc(p.brand)} is $${p.price}, once. ${esc(p.payback)}</p>
+          ${blogCta(p, buy, repoUrl)}`;
+  writeBlogPost({
+    slug: `${p.slug}-how-to-switch-from-${compSlug}`,
+    product: p.slug,
+    title: `How to Switch from ${p.competitor} to ${p.brand} (Step-by-Step)`,
+    metaDesc: `A step-by-step guide to moving from ${p.competitor} (${p.compPrice}) to ${p.brand} — a $${p.price} one-time purchase that ${p.oneliner.charAt(0).toLowerCase()}${p.oneliner.slice(1)}`,
+    articleHtml,
+  });
+}
+
+function blogPost4({ p, buy, repoUrl, compSlug }) {
+  /* Pull the one FAQ item that's an honest concession about the competitor,
+     if the product's own FAQ has one — never the last FAQ item by default,
+     since for most apps that's an unrelated "is this a subscription in
+     disguise?" answer, not a statement about what the competitor does well. */
+  const compRe = new RegExp(p.competitor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+  const concessionCue = /genuinely (wins|good|the better fit)|is a solid product|honest trade-?off|we'd rather say so/i;
+  const honestLimit = p.faq.find(q => compRe.test(q[1]) && concessionCue.test(q[1]));
+  const articleHtml = `
+          <p>${esc(p.brand)} and ${esc(p.competitor)} solve the same problem from opposite directions: one is source-available software you can own outright for $${p.price}, the other is a subscription at ${esc(p.compPrice)} run entirely on someone else's servers.</p>
+
+          <h2>Head to head</h2>
+          ${blogTable(p)}
+
+          <h2>What ${esc(p.brand)} does well</h2>
+          <ul>
+            ${p.features.slice(0, 4).map(f => `<li><strong>${esc(f[1])}</strong> — ${esc(f[2])}</li>`).join('\n            ')}
+          </ul>
+
+          <h2>What ${esc(p.competitor)} still does better</h2>
+          <p>${honestLimit ? esc(honestLimit[1]) : `There's a real reason ${esc(p.competitor)} costs what it does: a bigger team, broader integrations and dedicated support behind it. If that ecosystem is genuinely what you need, it's worth paying for.`}</p>
+
+          <h2>Which one should you pick</h2>
+          <p>If your workflow depends on ${esc(p.competitor)}'s specific integrations or you'd rather not run anything yourself, stay put — that's a legitimate call. If you're comfortable owning the tool and want to stop paying ${esc(p.compPrice)} for a job your own hardware can do, ${esc(p.brand)} pays for itself and then some: ${esc(p.payback.charAt(0).toLowerCase())}${esc(p.payback.slice(1))}</p>
+          ${blogCta(p, buy, repoUrl)}`;
+  writeBlogPost({
+    slug: `${p.slug}-vs-${compSlug}-open-source-vs-subscription`,
+    product: p.slug,
+    title: `${p.brand} vs ${p.competitor}: Open Source vs Subscription`,
+    metaDesc: `${p.brand} ($${p.price} once) vs ${p.competitor} (${p.compPrice}) — an honest head-to-head on price, features and who should actually switch.`,
+    articleHtml,
+  });
+}
+
+function blogPost5({ p, buy, repoUrl, compSlug, siblings }) {
+  const rest = siblings.map((s, i) => {
+    const sBuy = blogBuyLink(s);
+    return `
+          <h3>${i + 2}. ${esc(s.brand)} — ${esc(s.oneliner)}</h3>
+          <p>Replaces ${esc(s.competitor)} (${esc(s.compPrice)}). <span class="price-fig" style="font-family:var(--mono);">$${s.price}</span> once. <a href="/${s.slug}/">See ${esc(s.brand)} &rarr;</a></p>`;
+  }).join('\n');
+  const articleHtml = `
+          <p>Looking for a free or open-source alternative to ${esc(p.competitor)}? <strong>${esc(p.brand)}</strong> is the closest direct swap — MIT-licensed source on GitHub, or a $${p.price} one-time packaged install. Since you're already auditing what you pay ${esc(p.competitor)} every month, here are four more pay-once tools from the same catalog worth a look while you're at it — different jobs, same idea: buy the software once instead of renting it forever.</p>
+
+          <h2>1. ${esc(p.brand)} — replaces ${esc(p.competitor)}</h2>
+          <p>${esc(p.oneliner)} $${p.price} once vs ${esc(p.competitor)}'s ${esc(p.compPrice)}. Free on GitHub, or the packaged installer on Whop.</p>
+          <p><a href="/${p.slug}/">See ${esc(p.brand)} &rarr;</a> &middot; <a href="${repoUrl}" rel="noopener">Source on GitHub</a></p>
+          ${rest}
+
+          <h2>Why this list is worth bookmarking</h2>
+          <p>Every app above is a one-time purchase with MIT-licensed source, no accounts with us and no telemetry. None of them are trying to be the next ${esc(p.competitor)} — they're trying to be the last subscription you pay for that specific job.</p>
+          ${blogCta(p, buy, repoUrl)}`;
+  writeBlogPost({
+    slug: `${p.slug}-free-open-source-alternatives-to-${compSlug}`,
+    product: p.slug,
+    title: `5 Free & Open-Source Alternatives to ${p.competitor}`,
+    metaDesc: `${p.brand} leads this list of 5 free and open-source, pay-once alternatives to ${p.competitor} and other subscription SaaS.`,
+    articleHtml,
+  });
+}
+
+blogAppSlugs.forEach(productSlug => {
+  const p = bySlug[productSlug];
+  if (!p) { console.warn('SKIPPED blog product (not found):', productSlug); return; }
+  const buy = blogBuyLink(p);
+  const repoUrl = `${GH}/${p.repo}`;
+  const compSlug = slugify(p.competitor);
+  const yr3 = p.compYr * 3;
+
+  const idx = blogAppSlugs.indexOf(productSlug);
+  const siblings = [];
+  for (let i = 1; siblings.length < 4 && i < blogAppSlugs.length; i++) {
+    const sSlug = blogAppSlugs[(idx + i) % blogAppSlugs.length];
+    const s = bySlug[sSlug];
+    if (sSlug !== productSlug && s) siblings.push(s);
+  }
+
+  const ctx = { p, buy, repoUrl, compSlug, yr3, siblings };
+  blogPost1(ctx);
+  blogPost2(ctx);
+  blogPost3(ctx);
+  blogPost4(ctx);
+  blogPost5(ctx);
+});
+
+/* ---------- /blog/ hub ---------- */
+(function blogHub() {
+  const groups = blogAppSlugs.map(slug => {
+    const p = bySlug[slug];
+    if (!p) return '';
+    const list = blogPostList.filter(x => x.product === slug);
+    if (!list.length) return '';
+    return `
+      <div style="margin-bottom:2.4rem;">
+        <h2 style="font-size:1.3rem;margin-bottom:0.9rem;">${p.icon} ${esc(p.brand)} <span class="mono-note">&mdash; replaces ${esc(p.competitor)} &middot; <a href="/${p.slug}/">product page</a></span></h2>
+        <div class="post-list">
+          ${list.map(x => `<a href="/blog/${x.slug}/"><h3>${esc(x.title)}</h3><p>${esc(x.metaDesc)}</p></a>`).join('\n          ')}
+        </div>
+      </div>`;
+  }).join('');
+
+  const body = `
+    <section class="hero" aria-label="Blog">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / Blog</nav>
+        <span class="stamp">${blogPostList.length} posts</span>
+        <h1>The OneTimeSuite Blog</h1>
+        <p class="lead">Switch guides, pricing breakdowns and honest head-to-heads for every app in the suite &mdash; who should switch, who should stay, and what it actually costs either way.</p>
+      </div>
+    </section>
+
+    <section aria-label="All blog posts">
+      <div class="wrap">${groups || '<p>New posts are on the way.</p>'}
+      </div>
+    </section>
+
+    <section aria-label="Get the suite" class="center">
+      <div class="wrap">
+        <h2>Pay once. Own it forever.</h2>
+        <p style="color:var(--ink-soft);margin:0.8rem auto 1.6rem;">The whole suite is on Whop &mdash; one-time prices from $15, MIT source on GitHub.</p>
+        <div class="btn-row" style="justify-content:center;">
+          <a class="btn btn-solid" href="/">Browse the suite &rarr;</a>
+          <a class="btn btn-ghost" href="${WHOP}" rel="noopener">Buy on Whop</a>
+        </div>
+      </div>
+    </section>`;
+
+  write('blog', page({
+    title: `The OneTimeSuite Blog — ${blogPostList.length} Switch Guides & Pricing Breakdowns | OneTimeSuite`,
+    desc: `Switch guides, pricing breakdowns and open-source-vs-subscription comparisons for every app in the OneTimeSuite catalog.`,
+    canonical: `${SITE}/blog/`,
+    jsonld: [{
+      '@context': 'https://schema.org', '@type': 'ItemList',
+      itemListElement: blogPostList.map((x, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/blog/${x.slug}/`, name: x.title })),
+    }],
+    body,
+  }));
+  reg('/blog/');
+})();
+
+/* ============================================================
  * 8. 404, robots, sitemap, static assets
  * ============================================================ */
 fs.writeFileSync(path.join(OUT, '404.html'), page({
@@ -1400,25 +1682,20 @@ fs.writeFileSync(path.join(OUT, 'rss.xml'),
   rssItems.map(i => `<item><title>${xmlEsc(i.title)}</title><link>${i.url}</link><guid>${i.url}</guid><pubDate>${i.date}</pubDate><description>${xmlEsc(i.desc)}</description></item>`).join('\n') +
   `\n</channel></rss>\n`, 'utf8');
 
-/* video-sitemap.xml — one <video:video> entry per product page with a demo
-   video (YouTube embed, or self-hosted clip fallback for EMBED_BROKEN ids) */
-const videoProducts = allProducts.filter(p => ytId(p.slug) || hasClip(p.slug));
+/* video-sitemap.xml — one <video:video> entry per product page with a YouTube
+   demo, so Google Video can associate each clip with its page */
+const videoProducts = allProducts.filter(p => ytId(p.slug));
 fs.writeFileSync(path.join(OUT, 'video-sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
   `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n` +
   videoProducts.map(p => {
     const vid = ytId(p.slug);
-    const raw = ytIdRaw(p.slug);
-    const thumb = raw ? `https://i.ytimg.com/vi/${raw}/hqdefault.jpg` : `${SITE}/assets/shots/${p.slug}.png`;
-    const locTag = vid
-      ? `<video:player_loc>https://www.youtube-nocookie.com/embed/${vid}</video:player_loc>`
-      : `<video:content_loc>${SITE}/assets/clips/${p.slug}.mp4</video:content_loc>`;
     return `  <url><loc>${SITE}/${p.slug}/</loc><video:video>` +
-      `<video:thumbnail_loc>${thumb}</video:thumbnail_loc>` +
+      `<video:thumbnail_loc>https://i.ytimg.com/vi/${vid}/hqdefault.jpg</video:thumbnail_loc>` +
       `<video:title>${xmlEsc(`${p.brand} demo — pay once, own it forever`)}</video:title>` +
       `<video:description>${xmlEsc(p.tagline || p.brand)}</video:description>` +
-      locTag +
-      `<video:publication_date>${(ytVideos[p.slug] && ytVideos[p.slug].at) || '2026-07-15T00:00:00Z'}</video:publication_date>` +
+      `<video:player_loc>https://www.youtube-nocookie.com/embed/${vid}</video:player_loc>` +
+      `<video:publication_date>${ytVideos[p.slug].at || '2026-07-15T00:00:00Z'}</video:publication_date>` +
       `</video:video></url>`;
   }).join('\n') + `\n</urlset>\n`, 'utf8');
 console.log(`video-sitemap.xml: ${videoProducts.length} video entries`);
@@ -1633,14 +1910,6 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
     const p = vm && anyBySlug[slugByVid[vm[1]]];
     return p ? html.replace('</head>', `${videoLdScript(p)}\n</head>`) : html;
   };
-  /* Swap iframes whose video has embedding disabled (EMBED_BROKEN) for the
-     self-hosted clip so the page never shows "Video unavailable" */
-  const fixBrokenEmbed = html =>
-    html.replace(/<iframe[^>]*youtube-nocookie\.com\/embed\/([A-Za-z0-9_-]{6,})[^>]*><\/iframe>/g, (m, id) => {
-      const slug = slugByVid[id];
-      if (!EMBED_BROKEN.has(id) || !slug || !hasClip(slug)) return m;
-      return `<video controls preload="metadata" src="/assets/clips/${slug}.mp4" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;"></video>`;
-    });
   const patchHtml = dir => {
     for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
       const fp = path.join(dir, f.name);
@@ -1649,7 +1918,6 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       let html = fs.readFileSync(fp, 'utf8');
       html = relocateDemoVideo(html);
       html = injectVideoLd(html);
-      html = fixBrokenEmbed(html);
       if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
       fs.writeFileSync(fp, html, 'utf8');
     }

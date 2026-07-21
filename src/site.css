@@ -295,6 +295,12 @@ table.receipt tr.total td { border-top: 1.5px solid var(--ink); border-bottom: n
 .p-card.soon:hover h3 { color: inherit; }
 .p-card.soon > *:not(.tape) { opacity: 0.55; }
 .p-card.soon .sticker { background: var(--ink-faint); transform: rotate(-2.5deg); }
+/* coming-soon card WITH a live product page: still taped, but fully clickable */
+.p-card.soon.linked { cursor: pointer; }
+.p-card.soon.linked > *:not(.tape) { opacity: 0.8; }
+.p-card.soon.linked:hover { background: var(--paper); }
+.p-card.soon.linked:hover h3 { color: var(--accent); }
+.p-card.soon.linked .soon-note { color: var(--accent); font-weight: 600; }
 .tape {
   position: absolute; top: 1.35rem; left: -12%; right: -12%;
   transform: rotate(-4deg);

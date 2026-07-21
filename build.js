@@ -286,6 +286,23 @@ const FOOTER = `
     </div>
   </footer>`;
 
+/* ---------- Meta Pixel (set META_PIXEL_ID env in Coolify to enable) ----------
+   PageView on every page + InitiateCheckout on any click-out to whop.com
+   (with the product slug + one-time price). The actual Purchase event is sent
+   server-side from the Whop payment.succeeded webhook via the Conversions API
+   (ots-track service) — the hosted checkout completes on whop.com, so the
+   browser pixel can never see it. */
+const META_PIXEL_ID = process.env.META_PIXEL_ID || '';
+const PIXEL = META_PIXEL_ID ? (() => {
+  const prices = {};
+  for (const p of allProducts) prices[p.slug] = p.price;
+  prices[BUNDLE.slug] = BUNDLE.price;
+  return `
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');
+  (function(){var P=${JSON.stringify(prices)};document.addEventListener('click',function(e){var a=e.target&&e.target.closest?e.target.closest('a[href*="whop.com"]'):null;if(!a||!window.fbq)return;var s=location.pathname.split('/').filter(Boolean)[0]||'home';fbq('track','InitiateCheckout',{content_type:'product',content_ids:[s],value:P[s]||0,currency:'USD'});});})();</script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1"></noscript>`;
+})() : '';
+
 function page({ title, desc, canonical, ogType = 'website', jsonld = [], body }) {
   const ld = jsonld.map(o => `  <script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!DOCTYPE html>
@@ -310,7 +327,7 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body })
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/site.css?v=${CSS_V}">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ65NLXTY5"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJ65NLXTY5');</script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJ65NLXTY5');</script>${PIXEL}
 ${ld}
 </head>
 <body>
@@ -371,8 +388,11 @@ function reg(relPath) { urls.push(relPath); }
           </div>
         </a>`).join('');
 
-  const soonCardsFor = list => list.map(p => `
-        <div class="p-card soon" aria-label="${attr(p.brand)} — coming soon">
+  /* Cards with a slug have a live product page (with a working Whop buy
+     button) — render those as real links so the "coming soon" tape doesn't
+     block the sale. Slug-less entries (Dealstack etc.) stay inert divs. */
+  const soonCardsFor = list => list.map(p => {
+    const inner = `
           <span class="tape" aria-hidden="true"><b>&#128679; Coming soon</b></span>
           <span class="ico" aria-hidden="true">${p.icon}</span>
           <h3>${esc(p.brand)}</h3>
@@ -381,8 +401,14 @@ function reg(relPath) { urls.push(relPath); }
             <span class="sticker sm"><span class="amt">$${p.price}</span><span class="once">planned</span></span>
             <span class="replaces">will replace ${esc(p.vs)}<br>${esc(p.vsPrice)}</span>
           </div>
-          ${p.repoLive ? '<p class="soon-note">code already live on GitHub — product page on the way</p>' : ''}
-        </div>`).join('');
+          ${p.repoLive ? '<p class="soon-note">code already live on GitHub — product page on the way</p>' : ''}`;
+    return p.slug ? `
+        <a class="p-card soon linked" href="/${p.slug}/" aria-label="${attr(p.brand)} — coming soon, page available">${inner}
+          <p class="soon-note">early access — see the page &amp; buy now</p>
+        </a>` : `
+        <div class="p-card soon" aria-label="${attr(p.brand)} — coming soon">${inner}
+        </div>`;
+  }).join('');
 
   const showRow = (p, i) => `
       <div class="show-row${i % 2 ? ' flip' : ''}">
@@ -400,7 +426,7 @@ function reg(relPath) { urls.push(relPath); }
       </div>`;
 
   /* shipped-but-not-yet-launched products rendered in the coming-soon card shape */
-  const toSoon = p => ({ brand: p.brand, icon: p.icon, one: p.oneliner, price: p.price, vs: p.competitor, vsPrice: p.compPrice });
+  const toSoon = p => ({ slug: p.slug, brand: p.brand, icon: p.icon, one: p.oneliner, price: p.price, vs: p.competitor, vsPrice: p.compPrice });
   const soonDesktopAll = [...upcomingProducts.filter(p => DESKTOP_SLUGS.has(p.slug)).map(toSoon), ...soonDesktop];
   const soonWebAll = [...upcomingProducts.filter(p => !DESKTOP_SLUGS.has(p.slug)).map(toSoon), ...soonWeb];
   const soonTotal = soonDesktopAll.length + soonWebAll.length;
@@ -594,13 +620,6 @@ allProducts.forEach(p => {
       </div>
     </section>
 
-    <section aria-label="Screenshot">
-      <div class="wrap" style="max-width:920px;">
-        ${shotFrame(p)}
-        <p class="mono-note" style="margin-top:0.7rem;">${hasShot(p.slug) ? `${p.brand}, as it actually looks — a real screenshot, not a mockup.` : `${p.brand} screenshot is being captured — the app is shipped and real.`}</p>
-      </div>
-    </section>
-
     ${ytId(p.slug) ? `
     <section aria-label="Demo video">
       <div class="wrap" style="max-width:920px;">
@@ -620,6 +639,13 @@ allProducts.forEach(p => {
         <p class="mono-note" style="margin-top:0.7rem;">${p.brand} in action — a real demo, not a mockup.</p>
       </div>
     </section>` : ''}
+
+    <section aria-label="Screenshot">
+      <div class="wrap" style="max-width:920px;">
+        ${shotFrame(p)}
+        <p class="mono-note" style="margin-top:0.7rem;">${hasShot(p.slug) ? `${p.brand}, as it actually looks — a real screenshot, not a mockup.` : `${p.brand} screenshot is being captured — the app is shipped and real.`}</p>
+      </div>
+    </section>
 
     <section aria-label="Features">
       <div class="wrap">
@@ -1377,14 +1403,42 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
  * pages from site-v2/ (committed in v2-pages/) replace the generated product
  * pages. Node 22 fs.cpSync, no deps. Hub, comparison posts, sitemap untouched. */
 {
+  /* Move the demo-video section (the one holding the YouTube iframe) from its
+     spot deep in the page to directly after the hero — right under the header
+     and buy buttons. The v2 pages never nest <section> tags, so plain index
+     surgery on the flat HTML is safe. */
+  const relocateDemoVideo = html => {
+    const ifr = html.indexOf('youtube-nocookie.com/embed');
+    if (ifr === -1) return html;
+    const secStart = html.lastIndexOf('<section', ifr);
+    const secEnd = html.indexOf('</section>', ifr);
+    const firstSec = html.indexOf('<section');
+    if (secStart === -1 || secEnd === -1 || secStart === firstSec) return html;
+    const videoSec = html.slice(secStart, secEnd + 10);
+    const rest = html.slice(0, secStart) + html.slice(secEnd + 10);
+    const heroEnd = rest.indexOf('</section>') + 10;
+    return rest.slice(0, heroEnd) + videoSec + rest.slice(heroEnd);
+  };
+  const patchHtml = dir => {
+    for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+      const fp = path.join(dir, f.name);
+      if (f.isDirectory()) { patchHtml(fp); continue; }
+      if (!f.name.endsWith('.html')) continue;
+      let html = fs.readFileSync(fp, 'utf8');
+      html = relocateDemoVideo(html);
+      if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
+      fs.writeFileSync(fp, html, 'utf8');
+    }
+  };
   const V2 = path.join(__dirname, 'v2-pages');
   if (fs.existsSync(V2)) {
     let n = 0;
     for (const entry of fs.readdirSync(V2)) {
       if (entry === 'index.html' || entry === '404.html') continue; // never clobber the hub
       fs.cpSync(path.join(V2, entry), path.join(OUT, entry), { recursive: true, force: true });
+      patchHtml(path.join(OUT, entry));
       n++;
     }
-    console.log(`v2 overlay: ${n} entries copied over public/`);
+    console.log(`v2 overlay: ${n} entries copied over public/ (video section hoisted, pixel ${PIXEL ? 'injected' : 'off'})`);
   }
 }

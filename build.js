@@ -374,6 +374,11 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, r
   <title>${esc(title)}</title>
   <meta name="description" content="${attr(desc)}">
   <link rel="canonical" href="${canonical}">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <meta property="og:type" content="${ogType}">
   <meta property="og:title" content="${attr(title)}">
   <meta property="og:description" content="${attr(desc)}">
@@ -510,6 +515,7 @@ function reg(relPath) { urls.push(relPath); }
         <div class="btn-row">
           <a class="btn btn-solid" href="${WHOP}" rel="noopener">Buy on Whop &rarr;</a>
           <a class="btn btn-ghost" href="/${BUNDLE.slug}/">The ${fmt(BUNDLE.price)} everything bundle</a>
+          <a class="btn btn-ghost" href="/savings/">What am I overpaying? &rarr;</a>
         </div>
       </div>
     </section>
@@ -1350,6 +1356,120 @@ posts.forEach(post => {
 
 
 /* ============================================================
+ * 7a-bis. /savings/ — the subscription audit calculator.
+ * One tile per distinct competitor (icon from assets/complogos/, downloaded
+ * 2026-07-21 via Google's favicon service — swap for Brandfetch API logos
+ * when a key exists). Click tiles -> live yearly / 3-year totals vs the
+ * one-time cost of the matching OneTimeSuite apps. Pure client-side JS.
+ * ============================================================ */
+{
+  const LOGO_DIR = path.join(ROOT, 'assets', 'complogos');
+  const logoFiles = new Set(fs.existsSync(LOGO_DIR) ? fs.readdirSync(LOGO_DIR) : []);
+  const slugC = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-+|-+$)/g, '');
+  const byComp = new Map();
+  allProducts.forEach(p => {
+    if (!p.competitor || !p.compYr) return;
+    if (!byComp.has(p.competitor)) byComp.set(p.competitor, { n: p.competitor, m: p.compPrice, y: p.compYr, apps: [] });
+    byComp.get(p.competitor).apps.push({ b: p.brand, s: p.slug, pr: p.price });
+  });
+  const tiles = [...byComp.values()].map(c => ({
+    ...c, logo: logoFiles.has(`${slugC(c.n)}.png`) ? `/assets/complogos/${slugC(c.n)}.png` : null,
+  })).sort((a, b) => b.y - a.y);
+  if (fs.existsSync(LOGO_DIR)) {
+    const logosOut = path.join(OUT, 'assets', 'complogos');
+    fs.mkdirSync(logosOut, { recursive: true });
+    for (const f of logoFiles) if (f.endsWith('.png')) fs.copyFileSync(path.join(LOGO_DIR, f), path.join(logosOut, f));
+  }
+  const DATA = JSON.stringify(tiles).replace(/</g, '\\u003c');
+  const body = `
+    <section class="hero" aria-label="Subscription audit">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / Savings</nav>
+        <span class="stamp">the subscription audit</span>
+        <h1>Click what you pay for.<br>Watch what you'd save.</h1>
+        <p class="lead">Tap every tool below that charges you monthly. We'll total the bill — and show what the same jobs cost as pay-once software you own forever.</p>
+      </div>
+    </section>
+
+    <section aria-label="Pick your subscriptions">
+      <div class="wrap">
+        <div id="sv-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.8rem;"></div>
+      </div>
+    </section>
+
+    <section aria-label="Your savings">
+      <div class="wrap">
+        <div id="sv-bar" style="position:sticky;bottom:0;background:var(--paper);border:1.5px solid var(--ink);border-radius:12px;padding:1.1rem 1.4rem;margin-top:1.6rem;box-shadow:0 -6px 24px rgba(0,0,0,0.08);">
+          <p id="sv-none" style="margin:0;color:var(--ink-soft);">Nothing selected yet — click the tools you pay for.</p>
+          <div id="sv-out" style="display:none;">
+            <p style="margin:0 0 0.4rem;font-size:1.05rem;">You're paying about <strong id="sv-yr" style="font-family:var(--mono);"></strong>/year — <strong id="sv-3yr" style="font-family:var(--mono);"></strong> over 3 years.</p>
+            <p style="margin:0 0 0.8rem;">The same jobs, pay-once: <strong id="sv-once" style="font-family:var(--mono);"></strong> total. <span class="stamp blue" style="font-size:0.95rem;">You keep <span id="sv-save" style="font-family:var(--mono);"></span> over 3 years</span></p>
+            <div id="sv-apps" style="font-size:0.92rem;color:var(--ink-soft);margin-bottom:0.9rem;"></div>
+            <div class="btn-row">
+              <a class="btn btn-solid" href="${WHOP}" rel="noopener">Get the whole suite — $${BUNDLE.price} once &rarr;</a>
+              <a class="btn btn-ghost" href="/">Browse all apps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    (function () {
+      var DATA = ${DATA};
+      var grid = document.getElementById('sv-grid');
+      var sel = new Set();
+      var fmt = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+      DATA.forEach(function (c, i) {
+        var el = document.createElement('button');
+        el.type = 'button';
+        el.setAttribute('aria-pressed', 'false');
+        el.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:0.9rem 0.6rem;border:1.5px solid var(--ink);border-radius:10px;background:#fff;cursor:pointer;text-align:center;font:inherit;';
+        el.innerHTML = (c.logo
+          ? '<img src="' + c.logo + '" alt="" width="40" height="40" loading="lazy" style="border-radius:8px;">'
+          : '<span style="width:40px;height:40px;border-radius:8px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">' + c.n.charAt(0) + '</span>')
+          + '<span style="font-weight:600;font-size:0.88rem;line-height:1.2;">' + c.n + '</span>'
+          + '<span style="font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);">' + c.m + '</span>';
+        el.addEventListener('click', function () {
+          if (sel.has(i)) { sel.delete(i); el.style.background = '#fff'; el.style.outline = 'none'; el.setAttribute('aria-pressed', 'false'); }
+          else { sel.add(i); el.style.background = '#eef1ff'; el.style.outline = '2px solid var(--accent)'; el.setAttribute('aria-pressed', 'true'); }
+          render();
+        });
+        grid.appendChild(el);
+      });
+      function render() {
+        var none = document.getElementById('sv-none'), out = document.getElementById('sv-out');
+        if (!sel.size) { none.style.display = ''; out.style.display = 'none'; return; }
+        none.style.display = 'none'; out.style.display = '';
+        var yr = 0, once = 0, seen = new Set(), links = [];
+        sel.forEach(function (i) {
+          var c = DATA[i]; yr += c.y;
+          c.apps.forEach(function (a) {
+            if (seen.has(a.s)) return; seen.add(a.s);
+            once += a.pr;
+            links.push('<a href="/' + a.s + '/">' + a.b + ' ($' + a.pr + ' once)</a>');
+          });
+        });
+        document.getElementById('sv-yr').textContent = fmt(yr);
+        document.getElementById('sv-3yr').textContent = fmt(yr * 3);
+        document.getElementById('sv-once').textContent = fmt(once);
+        document.getElementById('sv-save').textContent = fmt(yr * 3 - once);
+        document.getElementById('sv-apps').innerHTML = 'Your replacements: ' + links.join(' &middot; ');
+      }
+    })();
+    </script>`;
+  write('savings', page({
+    title: 'How Much Are Subscriptions Costing You? | OneTimeSuite Savings Calculator',
+    desc: 'Click the SaaS tools you pay for and see the 3-year bill — then what the same jobs cost as pay-once software you own forever.',
+    canonical: `${SITE}/savings/`,
+    body,
+  }));
+  reg('/savings/');
+  console.log(`savings calculator: ${tiles.length} competitor tiles (${tiles.filter(t => t.logo).length} with logos)`);
+}
+
+
+/* ============================================================
  * 7b. blog  /blog/  and  /blog/<post-slug>/
  * Data-driven, 5 posts/app, chunked like posts-1..6.js: drop a
  * src/blog-chunk<N>.js (module.exports = [productSlug, ...]) and its
@@ -1861,6 +1981,14 @@ if (fs.existsSync(CLIPS_SRC)) {
   }
 }
 
+/* root-level static files (favicons, site.webmanifest) from assets/root/ */
+const ROOT_STATIC = path.join(ROOT, 'assets', 'root');
+if (fs.existsSync(ROOT_STATIC)) {
+  for (const f of fs.readdirSync(ROOT_STATIC)) {
+    fs.copyFileSync(path.join(ROOT_STATIC, f), path.join(OUT, f));
+  }
+}
+
 /* iconforge in-browser demo (self-contained page + vendored jszip) */
 const JS_SRC = path.join(ROOT, 'assets', 'js');
 if (fs.existsSync(JS_SRC)) {
@@ -2085,6 +2213,10 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       html = injectVideoLd(html);
       html = fixBrokenEmbed(html);
       if (rootSlug && f.name === 'index.html') html = injectBlogLinks(html, rootSlug);
+      if (!html.includes('rel="icon"') && html.includes('</head>')) {
+        html = html.replace('</head>',
+          `<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">\n</head>`);
+      }
       if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
       fs.writeFileSync(fp, html, 'utf8');
     }

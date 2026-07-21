@@ -1422,7 +1422,19 @@ posts.forEach(post => {
             style="width:5.5rem;padding:0.45rem 0.6rem;border:1.5px solid var(--ink);border-radius:8px;font:inherit;font-family:var(--mono);">
           <span class="mono-note">per-user tools multiply by this — pay-once apps never do</span>
         </div>
+        <div style="margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;">
+          <input id="sv-search" type="search" placeholder="Search by name — Loom, QuickBooks, Canva…" autocomplete="off"
+            style="width:100%;max-width:420px;padding:0.6rem 0.85rem;border:1.5px solid var(--ink);border-radius:8px;font:inherit;">
+          <span id="sv-count" class="mono-note"></span>
+        </div>
         <div id="sv-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.8rem;"></div>
+        <div style="margin-top:1.2rem;display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;border:1.5px dashed var(--ink);border-radius:10px;padding:0.9rem 1rem;">
+          <span style="font-weight:600;">Paying for something we didn't list?</span>
+          <input id="sv-cname" placeholder="Tool name" style="padding:0.45rem 0.6rem;border:1.5px solid var(--ink);border-radius:8px;font:inherit;width:11rem;">
+          <input id="sv-cprice" type="number" min="1" max="10000" placeholder="$ / month" inputmode="numeric" style="padding:0.45rem 0.6rem;border:1.5px solid var(--ink);border-radius:8px;font:inherit;font-family:var(--mono);width:7rem;">
+          <label style="display:flex;align-items:center;gap:0.3rem;"><input id="sv-cseat" type="checkbox"> per user</label>
+          <button id="sv-cadd" type="button" class="btn btn-ghost" style="cursor:pointer;">Add it to the bill</button>
+        </div>
       </div>
     </section>
 
@@ -1454,7 +1466,24 @@ posts.forEach(post => {
         seats = Math.max(1, Math.min(500, parseInt(this.value, 10) || 1));
         render();
       });
-      DATA.forEach(function (c, i) {
+      var tiles = [];
+      var search = document.getElementById('sv-search');
+      var countEl = document.getElementById('sv-count');
+      function updateCount(shown) {
+        countEl.textContent = shown === tiles.length
+          ? tiles.length + ' tools' : 'showing ' + shown + ' of ' + tiles.length;
+      }
+      function applyFilter() {
+        var q = search.value.trim().toLowerCase(), shown = 0;
+        tiles.forEach(function (t) {
+          var hit = !q || t.name.indexOf(q) !== -1;
+          t.el.style.display = hit ? '' : 'none';
+          if (hit) shown++;
+        });
+        updateCount(shown);
+      }
+      search.addEventListener('input', applyFilter);
+      function makeTile(c, i) {
         var el = document.createElement('button');
         el.type = 'button';
         el.setAttribute('aria-pressed', 'false');
@@ -1462,14 +1491,37 @@ posts.forEach(post => {
         el.innerHTML = (c.logo
           ? '<img src="' + c.logo + '" alt="" width="40" height="40" loading="lazy" style="border-radius:8px;">'
           : '<span style="width:40px;height:40px;border-radius:8px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">' + c.n.charAt(0) + '</span>')
-          + '<span style="font-weight:600;font-size:0.88rem;line-height:1.2;">' + c.n + '</span>'
-          + '<span style="font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);">' + c.m + '</span>';
+          + '<span style="font-weight:600;font-size:0.88rem;line-height:1.2;"></span>'
+          + '<span style="font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);"></span>';
+        el.children[1].textContent = c.n;
+        el.children[2].textContent = c.m;
         el.addEventListener('click', function () {
           if (sel.has(i)) { sel.delete(i); el.style.background = '#fff'; el.style.outline = 'none'; el.setAttribute('aria-pressed', 'false'); }
           else { sel.add(i); el.style.background = '#eef1ff'; el.style.outline = '2px solid var(--accent)'; el.setAttribute('aria-pressed', 'true'); }
+          /* after every pick: show the full grid again, ready for the next search */
+          search.value = '';
+          applyFilter();
+          search.focus();
           render();
         });
         grid.appendChild(el);
+        tiles.push({ el: el, name: c.n.toLowerCase() });
+      }
+      DATA.forEach(makeTile);
+      updateCount(tiles.length);
+      /* long-tail: let people add any tool we don't list */
+      document.getElementById('sv-cadd').addEventListener('click', function () {
+        var name = document.getElementById('sv-cname').value.trim();
+        var mo = parseFloat(document.getElementById('sv-cprice').value);
+        var perSeat = document.getElementById('sv-cseat').checked;
+        if (!name || !mo || mo <= 0) return;
+        var c = { n: name, m: '$' + mo + (perSeat ? '/user' : '') + '/mo', y: Math.round(mo * 12), ps: perSeat ? 1 : 0, apps: [], logo: null };
+        DATA.push(c);
+        makeTile(c, DATA.length - 1);
+        tiles[tiles.length - 1].el.click();
+        document.getElementById('sv-cname').value = '';
+        document.getElementById('sv-cprice').value = '';
+        document.getElementById('sv-cseat').checked = false;
       });
       function render() {
         var none = document.getElementById('sv-none'), out = document.getElementById('sv-out');
@@ -1488,7 +1540,10 @@ posts.forEach(post => {
         document.getElementById('sv-3yr').textContent = fmt(yr * 3);
         document.getElementById('sv-once').textContent = fmt(once);
         document.getElementById('sv-save').textContent = fmt(yr * 3 - once);
-        document.getElementById('sv-apps').innerHTML = 'Your replacements: ' + links.join(' &middot; ');
+        var unmatched = 0;
+        sel.forEach(function (i) { if (!DATA[i].apps.length) unmatched++; });
+        document.getElementById('sv-apps').innerHTML = 'Your replacements: ' + (links.join(' &middot; ') || '&mdash;')
+          + (unmatched ? ' <span style="opacity:0.75;">(' + unmatched + ' selected tool' + (unmatched > 1 ? 's' : '') + ' without a OneTimeSuite match count toward your bill but not the replacement total.)</span>' : '');
       }
     })();
     </script>`;

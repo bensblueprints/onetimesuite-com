@@ -65,7 +65,7 @@ const RELEASE_URLS = {
   captionly: 'https://github.com/bensblueprints/video-clip-captioner-mvp/releases/tag/v1.0.0',
   bloomrecorder: 'https://github.com/bensblueprints/bloomrecorder/releases/tag/v1.0.0',
 };
-const DEMO_SLUGS = new Set(['captionly']);
+const DEMO_SLUGS = new Set(['captionly', 'cutaway']);
 
 const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const pair = (arr, keys) => (arr || []).map(row => Object.fromEntries(keys.map((k, i) => [k, row[i]])));

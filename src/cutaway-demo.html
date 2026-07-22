@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Background Remover — Transparent PNG in Your Browser | Cutaway Demo — OneTimeSuite</title>
+<meta name="description" content="Free in-browser AI background remover. Drop an image, get a transparent PNG — nothing uploaded, no account. One free download, then the $24 desktop app does unlimited batch offline.">
+<link rel="canonical" href="https://onetimesuite.com/cutaway/demo/">
+<meta property="og:title" content="Free Background Remover — Transparent PNG in Your Browser | Cutaway Demo">
+<meta property="og:url" content="https://onetimesuite.com/cutaway/demo/">
+<link rel="icon" href="/assets/boxes/cutaway.png">
+<script src="/ads/ad.js" async></script>
+<style>
+:root{--bg:#0b0f16;--panel:#121826;--panel2:#0e1420;--line:#232c3d;--ink:#eef1f6;--soft:#9aa5b5;--accent:#4a8cff;--orange:#e8420c;--green:#3ddc84;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent);text-decoration:none}
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1.4rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:0.55rem}
+.gem{width:16px;height:16px;border-radius:4px;background:var(--accent);transform:rotate(45deg);display:inline-block}
+.tag{font-weight:400;color:var(--soft);font-size:0.85rem;margin-left:0.4rem}
+.cta{background:var(--orange);color:#fff;font-weight:700;padding:0.55rem 1rem;border-radius:9px;white-space:nowrap}
+.adbar{display:flex;justify-content:center;padding:0.9rem 0}
+.ad{color:#55617a;font-size:0.75rem;display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:8px}
+.ad.top728{width:728px;max-width:94vw;height:90px}
+.ad.side300{width:300px;min-height:250px}
+.wrap{max-width:1120px;margin:0 auto;padding:1.2rem 1.4rem 3rem;display:grid;grid-template-columns:1fr 300px;gap:1.4rem}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.4rem}
+.main h1{font-size:1.5rem;margin-bottom:0.3rem}
+.note{color:var(--soft);font-size:0.85rem;margin-top:0.9rem}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:2.6rem 1rem;text-align:center;color:var(--soft);cursor:pointer;transition:border-color .15s;margin-top:1rem}
+.drop.hover{border-color:var(--accent);color:var(--ink)}
+.drop strong{color:var(--ink)}
+.btn{background:var(--accent);color:#fff;border:none;font-weight:700;padding:0.7rem 1.3rem;border-radius:10px;cursor:pointer;font-size:0.95rem}
+.btn:disabled{opacity:0.45;cursor:default}
+.results{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1.2rem}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:0.7rem;text-align:center}
+.card .checker{border-radius:8px;overflow:hidden;background:repeating-conic-gradient(#2a3345 0% 25%,#1a2230 0% 50%) 50%/18px 18px}
+.card img{max-width:100%;max-height:180px;display:block;margin:0 auto}
+.card .nm{font-size:0.75rem;color:var(--soft);margin:0.5rem 0;word-break:break-all}
+.card .dl{color:var(--green);font-size:0.85rem;font-weight:700;cursor:pointer}
+.card .st{font-size:0.75rem;color:var(--accent)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:r 0.8s linear infinite;vertical-align:-2px}
+@keyframes r{to{transform:rotate(360deg)}}
+.upsell .boxart{width:100%;border-radius:12px;border:1px solid var(--line)}
+.upsell h3{margin:0.9rem 0 0.4rem}
+.upsell p{color:var(--soft);font-size:0.9rem;margin-bottom:1rem}
+.buy{display:block;background:var(--orange);color:#fff;font-weight:800;text-align:center;padding:0.85rem;border-radius:10px;margin-bottom:1rem}
+footer{border-top:1px solid var(--line);padding:1.4rem;text-align:center;color:var(--soft);font-size:0.85rem}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="logo"><span class="gem"></span>Cutaway <span class="tag">Free demo — remove image backgrounds, in your browser</span></div>
+  <a class="cta" href="/cutaway/">Get the desktop app — $24 once</a>
+</div>
+
+<div class="adbar"><div class="ad top728" data-ots-ad="728x90" id="ad-slot-top">Advertisement</div></div>
+
+<div class="wrap">
+  <section class="panel main">
+    <h1>Free AI background remover</h1>
+    <p style="color:var(--soft);font-size:0.95rem">Drop images below. The AI model runs <strong style="color:var(--ink)">100% in your browser</strong> — your photos are never uploaded. First use downloads the model (~80&nbsp;MB), then it's instant.</p>
+    <div class="drop" id="drop">
+      <p style="font-size:1.05rem"><strong>Drop images here</strong> or click to browse</p>
+      <p style="margin-top:0.3rem;font-size:0.85rem">JPG · PNG · WebP — one free download, unlimited previews</p>
+      <input type="file" id="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+    </div>
+    <div class="results" id="results"></div>
+    <p class="note">Nothing leaves your device. The desktop app adds unlimited batch export, magic object eraser, white/black/custom backgrounds and full-resolution offline processing.</p>
+  </section>
+
+  <aside class="panel upsell">
+    <img class="boxart" src="/assets/boxes/cutaway.png" alt="Cutaway">
+    <h3>Cutaway desktop — $24 once</h3>
+    <p>Unlimited images, batch folders, magic eraser, full resolution, 100% offline on Mac &amp; Windows. No credits, no upload, no monthly bill.</p>
+    <a class="buy" href="https://whop.com/benjisaiempire/cutaway" rel="noopener">Get Cutaway — $24 →</a>
+    <div class="ad side300" data-ots-ad="500x500" id="ad-slot-side" style="height:auto;min-height:250px">Advertisement</div>
+  </aside>
+</div>
+
+<footer>Part of <a href="/">OneTimeSuite</a> — 100+ pay-once apps that replace subscriptions. <a href="/cutaway/">Cutaway product page</a></footer>
+
+<script type="module">
+import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm';
+
+const $ = (id) => document.getElementById(id);
+const drop = $('drop'), file = $('file'), results = $('results');
+
+// ---------------------------------------------------- one free download gate
+function used(){try{return localStorage.getItem('cutaway_demo_used')==='1'}catch(e){return false}}
+function markUsed(){try{localStorage.setItem('cutaway_demo_used','1')}catch(e){}}
+function paywall(){
+  var m=document.createElement('div');
+  m.style.cssText='position:fixed;inset:0;background:rgba(5,8,13,0.82);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem';
+  m.innerHTML='<div style="background:#121826;border:1px solid #232c3d;border-radius:16px;max-width:440px;padding:2rem;text-align:center">'+
+    '<div style="font-size:2.4rem;margin-bottom:0.4rem">✂️</div>'+
+    '<h2 style="margin-bottom:0.5rem">That was your free download!</h2>'+
+    '<p style="color:#9aa5b5;font-size:0.95rem;margin-bottom:1.2rem">Hope the cutout looked clean. The Cutaway desktop app removes backgrounds from <strong style="color:#eef1f6">unlimited images in batch</strong>, adds a magic object eraser, custom backgrounds and full-resolution offline processing — yours forever.</p>'+
+    '<a href="https://whop.com/benjisaiempire/cutaway" rel="noopener" style="display:block;background:#e8420c;color:#fff;font-weight:800;padding:0.85rem;border-radius:10px;margin-bottom:0.6rem">Get Cutaway — $24 once, own forever →</a>'+
+    '<a href="/cutaway/" style="display:block;color:#4a8cff;font-size:0.9rem;margin-bottom:0.8rem">See everything it does</a>'+
+    '<button id="pw-close" style="background:none;border:none;color:#55617a;font-size:0.8rem;cursor:pointer">close</button></div>';
+  document.body.appendChild(m);
+  m.querySelector('#pw-close').addEventListener('click',function(){m.remove()});
+}
+
+drop.addEventListener('click', () => file.click());
+drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('hover'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('hover'));
+drop.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('hover'); handle(e.dataTransfer.files); });
+file.addEventListener('change', () => handle(file.files));
+
+async function handle(files) {
+  for (const f of files) {
+    if (!/^image\/(jpeg|png|webp)$/.test(f.type)) continue;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<div class="checker"></div><div class="nm">${f.name}</div><div class="st"><span class="spin"></span> removing background…</div>`;
+    results.prepend(card);
+    try {
+      const blob = await removeBackground(f, { output: { format: 'image/png', quality: 1 } });
+      const url = URL.createObjectURL(blob);
+      const img = document.createElement('img');
+      img.src = url;
+      card.querySelector('.checker').appendChild(img);
+      const st = card.querySelector('.st');
+      st.className = 'dl';
+      st.textContent = '⬇ Download PNG';
+      st.addEventListener('click', () => {
+        if (used()) { paywall(); return; }
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = f.name.replace(/\.[^.]+$/, '') + '-nobg.png';
+        a.click();
+        markUsed();
+        st.textContent = '✓ Downloaded — free download used';
+        st.className = 'st';
+      });
+    } catch (err) {
+      const st = card.querySelector('.st');
+      st.textContent = 'Failed: ' + ((err && err.message) || err);
+    }
+  }
+}
+</script>
+</body>
+</html>

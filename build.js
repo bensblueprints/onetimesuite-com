@@ -363,12 +363,30 @@ const PIXEL = META_PIXEL_ID ? (() => {
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1"></noscript>`;
 })() : '';
 
+/* Google Tag Manager — container loads on every page (head as high as
+   possible + noscript right after <body>, per Google's install docs).
+   Conversion tags fire off the GA4-shaped `purchase` dataLayer event
+   pushed on /thanks/<slug>/ (see the thanks-page script). */
+const GTM_ID = 'GTM-MR2LSDGH';
+const GTM_HEAD = `<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','${GTM_ID}');</script>
+  <!-- End Google Tag Manager -->`;
+const GTM_BODY = `<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->`;
+
 function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, robots = 'index, follow' }) {
   const ld = jsonld.map(o => `  <script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  ${GTM_HEAD}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="${robots}">
   <title>${esc(title)}</title>
@@ -397,6 +415,7 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, r
 ${ld}
 </head>
 <body>
+${GTM_BODY}
 ${NAV}
   <main id="main-content">
 ${body}
@@ -2141,15 +2160,17 @@ for (const demoSlug of DEMOS) {
   for (const p of allProducts) {
     const wl = whopLinks[p.slug];
     const defaultPlan = (wl && wl.planId) || planFromUrl(p.buyUrl);
-    if (!defaultPlan) continue; // sells off-site (own domain) — no embed page
-    const planPrices = { [defaultPlan]: p.price };
+    /* No plan = sells off-site (own checkout, e.g. wispertalk.com). No embed
+       page, but it still gets /thanks/<slug>/ as a conversion landing page —
+       point the off-site checkout's success redirect at it. */
+    const planPrices = defaultPlan ? { [defaultPlan]: p.price } : {};
     const tc = tierCheckouts[p.slug];
-    if (tc && tc.prices) {
+    if (defaultPlan && tc && tc.prices) {
       if (tc.monthlyPlanId) planPrices[tc.monthlyPlanId] = tc.prices.monthly;
       if (tc.yearlyPlanId) planPrices[tc.yearlyPlanId] = tc.prices.yearly;
       if (tc.lifetimePlanId) planPrices[tc.lifetimePlanId] = tc.prices.lifetime;
     }
-    targets.push({ slug: p.slug, brand: p.brand, icon: p.icon, price: p.price, isDesktop: DESKTOP_SLUGS.has(p.slug), defaultPlan, planPrices });
+    targets.push({ slug: p.slug, brand: p.brand, icon: p.icon, price: p.price, isDesktop: DESKTOP_SLUGS.has(p.slug), defaultPlan, planPrices, retryUrl: p.buyUrl || `/${p.slug}/` });
   }
   targets.push({
     slug: BUNDLE.slug, brand: BUNDLE.name, icon: '🧰', price: BUNDLE.price, isDesktop: false,
@@ -2158,7 +2179,7 @@ for (const demoSlug of DEMOS) {
   });
 
   for (const t of targets) {
-    const checkoutBody = `
+    const checkoutBody = !t.defaultPlan ? '' : `
     <section aria-label="Checkout">
       <div class="wrap" style="max-width:680px;">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/${t.slug === BUNDLE.slug ? 'onetime-suite-bundle' : t.slug}/">${t.brand}</a> / Checkout</nav>
@@ -2182,7 +2203,7 @@ for (const demoSlug of DEMOS) {
       })();
     </script>
     <script async defer src="https://js.whop.com/static/checkout/loader.js"></script>`;
-    write(`checkout/${t.slug}`, page({
+    if (t.defaultPlan) write(`checkout/${t.slug}`, page({
       title: `Checkout — ${t.brand} | OneTimeSuite`,
       desc: `Secure one-time-purchase checkout for ${t.brand}.`,
       canonical: `${SITE}/checkout/${t.slug}/`,
@@ -2207,7 +2228,7 @@ for (const demoSlug of DEMOS) {
           <h1>Payment didn't go through</h1>
           <p style="color:var(--ink-soft);margin:1rem auto 1.6rem;">No charge was made. You can try again — it takes under a minute.</p>
           <div class="btn-row" style="justify-content:center;">
-            <a class="btn btn-solid" href="/checkout/${t.slug}/">Try again &rarr;</a>
+            <a class="btn btn-solid" href="${t.defaultPlan ? `/checkout/${t.slug}/` : t.retryUrl}"${t.defaultPlan ? '' : ' rel="noopener"'}>Try again &rarr;</a>
           </div>
         </div>
       </div>
@@ -2223,12 +2244,27 @@ for (const demoSlug of DEMOS) {
         var prices = ${JSON.stringify(t.planPrices)};
         var rid = q.get('receipt_id') || q.get('receiptId') || q.get('receipt') || '';
         var plan = q.get('plan_id') || q.get('planId') || '';
+        var val = prices[plan] || ${t.price};
         var key = 'ots_purchase_' + (rid || '${t.slug}');
-        if (window.fbq && !sessionStorage.getItem(key)) {
+        if (!sessionStorage.getItem(key)) {
           sessionStorage.setItem(key, '1');
-          fbq('track', 'Purchase',
-            { content_type: 'product', content_ids: ['${t.slug}'], value: prices[plan] || ${t.price}, currency: 'USD' },
+          if (window.fbq) fbq('track', 'Purchase',
+            { content_type: 'product', content_ids: ['${t.slug}'], value: val, currency: 'USD' },
             rid ? { eventID: rid } : undefined);
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ ecommerce: null });
+          window.dataLayer.push({
+            event: 'purchase',
+            transaction_id: rid || key,
+            value: val,
+            currency: 'USD',
+            ecommerce: {
+              transaction_id: rid || key,
+              value: val,
+              currency: 'USD',
+              items: [{ item_id: '${t.slug}', item_name: ${JSON.stringify(t.brand)}, price: val, quantity: 1 }]
+            }
+          });
         }
       })();
     </script>`;
@@ -2240,7 +2276,8 @@ for (const demoSlug of DEMOS) {
       body: thanksBody,
     }));
   }
-  console.log(`embedded checkout: ${targets.length} /checkout/ + ${targets.length} /thanks/ pages`);
+  const nCheckout = targets.filter(t => t.defaultPlan).length;
+  console.log(`embedded checkout: ${nCheckout} /checkout/ + ${targets.length} /thanks/ pages (${targets.length - nCheckout} own-checkout thanks-only)`);
 }
 
 console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 comparison hub + ${posts.length} generated posts + ${seoPosts.length} SEO posts + 404 = ${urls.length + 1} pages`);
@@ -2322,6 +2359,12 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
           `<script defer src="https://stats.onetimesuite.com/a.js" data-site="87d907ee"></script>\n</head>`);
       }
       if (PIXEL && html.includes('</head>')) html = html.replace('</head>', `${PIXEL}\n</head>`);
+      if (!html.includes('googletagmanager.com/gtm.js') && html.includes('</head>')) {
+        html = html.replace('</head>', `${GTM_HEAD}\n</head>`);
+      }
+      if (!html.includes('googletagmanager.com/ns.html')) {
+        html = html.replace(/<body([^>]*)>/, `<body$1>\n${GTM_BODY}`);
+      }
       fs.writeFileSync(fp, html, 'utf8');
     }
   };

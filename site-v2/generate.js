@@ -112,6 +112,7 @@ function normalize(p) {
     steps: pair(p.steps, ['title', 'desc']),
     faq: pair(p.faq, ['q', 'a']),
     payback: p.payback || null,
+    downloads: p.downloads || null,
   };
 }
 

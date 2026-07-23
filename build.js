@@ -77,7 +77,7 @@ for (const p of extras) if (!bySlug[p.slug]) bySlug[p.slug] = p;
 
 /* Public launch state: only these are purchasable today — every other catalog
    app is shown as a caution-taped "Coming soon" card on the hub. */
-const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice']);
+const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'orgtree']);
 const availableProducts = allProducts.filter(p => AVAILABLE_SLUGS.has(p.slug));
 const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
 

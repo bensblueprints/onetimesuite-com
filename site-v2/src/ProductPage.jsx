@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, MotionConfig, useReducedMotion } from 'framer-motion';
-import { Check, X, ChevronDown, ArrowRight, Zap, Monitor, Server, BadgeCheck } from 'lucide-react';
+import { Check, X, ChevronDown, ArrowRight, Zap, Monitor, Server, BadgeCheck, Download } from 'lucide-react';
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -366,6 +366,83 @@ function Video({ p }) {
   );
 }
 
+/* Installer downloads (products with a `downloads` block, e.g. WholeTeam's
+   Admin host + Member editions). Baked release URLs render immediately; a
+   client-side fetch of the repo's latest GitHub release upgrades the links
+   and version in place so the page never goes stale between deploys. */
+function Downloads({ p }) {
+  const d = p.downloads;
+  const [editions, setEditions] = React.useState(() => (d ? d.editions : []));
+  const [version, setVersion] = React.useState(d ? d.version : '');
+  React.useEffect(() => {
+    if (!d) return;
+    fetch(`https://api.github.com/repos/${d.repo}/releases/latest`)
+      .then(r => (r.ok ? r.json() : null))
+      .then(rel => {
+        if (!rel || !Array.isArray(rel.assets) || !rel.assets.length) return;
+        setEditions(prev => prev.map(ed => {
+          const mine = rel.assets.filter(a => /member/i.test(a.name) === (ed.key === 'member'));
+          const assets = { ...ed.assets };
+          for (const a of mine) {
+            if (/\.exe$/i.test(a.name)) assets.win = a.browser_download_url;
+            else if (/arm64\.dmg$/i.test(a.name)) assets.macArm = a.browser_download_url;
+            else if (/\.dmg$/i.test(a.name)) assets.mac = a.browser_download_url;
+          }
+          return { ...ed, assets };
+        }));
+        if (rel.tag_name) setVersion(String(rel.tag_name).replace(/^v/, ''));
+      })
+      .catch(() => {});
+  }, []);
+  if (!d) return null;
+  const linkBase = 'inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-mono text-xs font-bold transition-colors';
+  return (
+    <section id="downloads" className="relative px-5 py-20">
+      <div className="mx-auto max-w-4xl">
+        <SectionHeading
+          kicker="Downloads"
+          title="Two installers, one team"
+          sub={`Version ${version} — the host edition runs on one machine, the member edition on everyone else's.`}
+        />
+        <div className="grid gap-5 sm:grid-cols-2">
+          {editions.map((ed, i) => (
+            <Reveal key={ed.key} delay={i * 0.1} className="h-full">
+              <div className="flex h-full flex-col rounded-2xl border border-line bg-card p-6 shadow-sm">
+                <div className="mb-1 flex items-center gap-2">
+                  <Monitor className="h-5 w-5 text-sticker" aria-hidden="true" />
+                  <h3 className="font-display text-base font-bold">{ed.name}</h3>
+                </div>
+                <p className="mb-5 text-sm leading-relaxed text-ink-soft">{ed.role}</p>
+                <div className="mt-auto flex flex-col gap-2">
+                  {ed.assets.win && (
+                    <a href={ed.assets.win} className={`${linkBase} bg-ink text-paper hover:bg-sticker`}>
+                      <Download className="h-4 w-4" aria-hidden="true" /> Windows (.exe)
+                    </a>
+                  )}
+                  {ed.assets.macArm && (
+                    <a href={ed.assets.macArm} className={`${linkBase} border border-line bg-card text-ink hover:border-sticker hover:text-sticker`}>
+                      <Download className="h-4 w-4" aria-hidden="true" /> macOS — Apple Silicon (.dmg)
+                    </a>
+                  )}
+                  {ed.assets.mac && (
+                    <a href={ed.assets.mac} className={`${linkBase} border border-line bg-card text-ink hover:border-sticker hover:text-sticker`}>
+                      <Download className="h-4 w-4" aria-hidden="true" /> macOS — Intel (.dmg)
+                    </a>
+                  )}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal delay={0.2} className="mt-8 text-center font-mono text-xs text-ink-soft">
+          macOS builds are unsigned — right-click the app and choose Open the first time. All releases on{' '}
+          <a href={`https://github.com/${d.repo}/releases`} className="underline underline-offset-2 hover:text-sticker">GitHub</a>.
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Steps({ p }) {
   if (!p.steps.length) return null;
   return (
@@ -458,6 +535,7 @@ export default function ProductPage({ product }) {
         <Features p={product} />
         <Comparison p={product} />
         <Pricing p={product} />
+        <Downloads p={product} />
         <Steps p={product} />
         <Faq p={product} />
         <FinalCta p={product} />

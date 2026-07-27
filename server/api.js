@@ -5,7 +5,8 @@
  * same container; nginx proxies /api/ here on 127.0.0.1:3100.
  *
  * Env:
- *   PORT               listen port (default 3100)
+ *   API_PORT           listen port (default 3100; NOT "PORT" — Coolify injects PORT=80,
+ *                      which collided with nginx and crashed the process)
  *   DATA_FILE          leads store, one JSON object per line (default /data/leads.jsonl)
  *   CHECKLIST_FILE     launch checklist markdown (default /app/NEXT-UP.md)
  *   ADMIN_USER_1/ADMIN_PASS_1, ADMIN_USER_2/ADMIN_PASS_2  admin credentials (env only)
@@ -20,7 +21,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const PORT = Number(process.env.PORT) || 3100;
+const PORT = Number(process.env.API_PORT) || 3100;
 const DATA_FILE = process.env.DATA_FILE || '/data/leads.jsonl';
 const CHECKLIST_FILE = process.env.CHECKLIST_FILE || '/app/NEXT-UP.md';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';

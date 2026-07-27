@@ -2029,10 +2029,12 @@ fs.writeFileSync(path.join(OUT, '404.html'), page({
     </section>`,
 }), 'utf8');
 
-/* /lead/ + /admin/ — self-contained pages (inline CSS/JS), noindex, not in the
-   sitemap. /lead/ captures emails for the promised GitHub link; /admin/ is the
+/* /lead/ + /survey/ + /admin/ — self-contained pages (inline CSS/JS), noindex,
+   not in the sitemap. /lead/ captures emails for the promised GitHub link and
+   redirects to /survey/ (what-tools-do-you-use); /admin/ is the
    password-protected dashboard talking to server/api.js. */
 write('lead', require('./src/lead-page.js'));
+write('survey', require('./src/survey-page.js'));
 write('admin', require('./src/admin-page.js'));
 
 fs.writeFileSync(path.join(OUT, 'robots.txt'),

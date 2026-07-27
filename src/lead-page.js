@@ -143,6 +143,9 @@ module.exports = `<!DOCTYPE html>
         if (res.ok && res.data.ok) {
           form.style.display = 'none';
           document.getElementById('done').className = 'done show';
+          setTimeout(function () {
+            window.location = '/survey/?email=' + encodeURIComponent(email);
+          }, 1200);
         } else {
           err.textContent = (res.data && res.data.error) ? res.data.error : 'Something went wrong — please try again.';
           err.className = 'msg err';

@@ -4,6 +4,17 @@
  * Node 22, built-ins only (http, fs, path, crypto). Runs next to nginx in the
  * same container; nginx proxies /api/ here on 127.0.0.1:3100.
  *
+ * Routes:
+ *   GET  /api/health          liveness probe
+ *   POST /api/lead            {name, email, source?} — capture a lead, best-effort Resend welcome
+ *   POST /api/survey          {email, tools[], other?} — post-signup survey (no lead required)
+ *   POST /api/admin/login     {username, password} -> {token}
+ *   GET  /api/admin/leads     leads (newest first) with surveys merged in + orphan surveys
+ *   GET  /api/admin/checklist launch checklist markdown
+ *
+ * DATA_FILE holds one JSON object per line. Lead lines have no `type` field
+ * (or type:"lead"); survey lines have type:"survey".
+ *
  * Env:
  *   API_PORT           listen port (default 3100; NOT "PORT" — Coolify injects PORT=80,
  *                      which collided with nginx and crashed the process)
@@ -151,6 +162,9 @@ function welcomeEmailHtml(name) {
       Don't know how to use GitHub? No worries — here's the same software as a one-time purchase:<br>
       <a href="${escHtml(SITE_URL)}" style="color:#e8420c;font-weight:700;">${escHtml(SITE_URL)}</a>
     </p>
+    <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+      You're also on the list now — I'll email you first whenever we launch new software.
+    </p>
     <p style="margin:0;font-size:13px;color:#85888f;">One email, no spam. Unsubscribe anytime.</p>
   </div>
 </body></html>`;
@@ -247,6 +261,29 @@ const server = http.createServer(async (req, res) => {
       return send(res, 200, { ok: true });
     }
 
+    if (req.method === 'POST' && p === '/api/survey') {
+      const body = await readBody(req);
+      const email = String(body.email || '').trim().toLowerCase();
+      if (!EMAIL_RE.test(email)) return send(res, 400, { error: 'invalid email address' });
+      if (!Array.isArray(body.tools)) return send(res, 400, { error: 'tools must be an array' });
+      const tools = body.tools
+        .slice(0, 50)
+        .map(t => String(t).trim().slice(0, 80))
+        .filter(Boolean);
+      const other = String(body.other || '').trim().slice(0, 500);
+      const line = JSON.stringify({
+        type: 'survey',
+        ts: new Date().toISOString(),
+        email,
+        tools,
+        other,
+        ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '',
+      });
+      fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+      fs.appendFileSync(DATA_FILE, line + '\n', 'utf8');
+      return send(res, 200, { ok: true });
+    }
+
     if (req.method === 'POST' && p === '/api/admin/login') {
       if (!ADMINS.length) return send(res, 503, { error: 'admin not configured' });
       const body = await readBody(req);
@@ -258,8 +295,30 @@ const server = http.createServer(async (req, res) => {
 
     if (req.method === 'GET' && p === '/api/admin/leads') {
       if (!verifyToken(req)) return send(res, 401, { error: 'unauthorized' });
-      const leads = readLeads().reverse(); // newest first
-      return send(res, 200, { leads });
+      const lines = readLeads();
+      const leads = lines.filter(l => !l.type || l.type === 'lead');
+      const surveys = lines.filter(l => l.type === 'survey');
+      // attach each survey to the most recent lead with the same email
+      for (const s of surveys) {
+        const em = String(s.email || '').toLowerCase();
+        let hit = null;
+        for (const l of leads) {
+          if (String(l.email || '').toLowerCase() === em) hit = l; // keep walking: last match is newest
+        }
+        if (hit) hit.survey = { ts: s.ts, tools: s.tools || [], other: s.other || '' };
+      }
+      const matched = new Set(surveys.filter(s =>
+        leads.some(l => String(l.email || '').toLowerCase() === String(s.email || '').toLowerCase())));
+      const orphans = surveys.filter(s => !matched.has(s)).map(s => ({
+        orphan: true,
+        ts: s.ts,
+        email: s.email,
+        name: '(no lead signup)',
+        survey: { ts: s.ts, tools: s.tools || [], other: s.other || '' },
+      }));
+      const out = leads.reverse() // newest first
+        .concat(orphans.reverse()); // orphan surveys at the end, newest first
+      return send(res, 200, { leads: out });
     }
 
     if (req.method === 'GET' && p === '/api/admin/checklist') {

@@ -93,6 +93,26 @@ module.exports = `<!DOCTYPE html>
     #pane-checklist { display: none; }
     #pane-checklist.show { display: block; }
     #pane-leads.hide { display: none; }
+    /* expandable lead profiles */
+    tr.lead-row { cursor: pointer; }
+    tr.lead-row:hover td { background: var(--paper); }
+    tr.lead-row .caret { display: inline-block; margin-right: 0.35rem; font-family: var(--mono); transition: transform 0.1s ease; }
+    tr.lead-row.open .caret { transform: rotate(90deg); }
+    tr.detail-row { display: none; }
+    tr.detail-row.show { display: table-row; }
+    tr.detail-row td { background: var(--paper); border-bottom: 1.5px solid var(--ink); }
+    .profile { padding: 0.5rem 0.2rem 0.8rem; }
+    .prof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.5rem 1.2rem; margin-bottom: 0.9rem; font-size: 0.85rem; }
+    .prof-label { display: block; font-family: var(--mono); font-size: 0.68rem; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; }
+    .prof-sec { font-size: 0.85rem; }
+    .schips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.3rem; }
+    .schip {
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 600;
+      background: var(--price); color: #fff; border: 1.5px solid var(--ink);
+      border-radius: 999px; padding: 0.1rem 0.6rem;
+    }
+    .prof-other { margin-top: 0.4rem; color: var(--ink-soft); }
+    .muted { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-faint); }
   </style>
 </head>
 <body>
@@ -238,25 +258,65 @@ module.exports = `<!DOCTYPE html>
       var tbody = document.getElementById('lead-rows');
       document.getElementById('lead-count').textContent = leads.length + (leads.length === 1 ? ' lead' : ' leads');
       document.getElementById('leads-empty').style.display = leads.length ? 'none' : '';
-      tbody.innerHTML = leads.map(function (l) {
+      var yes = '<span style="color:#1a7f37;font-weight:700;">\\u2713</span>';
+      var no = '<span style="color:#e8420c;font-weight:700;">\\u2717</span>';
+      tbody.innerHTML = leads.map(function (l, i) {
         var time = '';
         try { time = new Date(l.ts).toLocaleString(); } catch (e) { time = l.ts || ''; }
-        var yes = '<span style="color:#1a7f37;font-weight:700;">\\u2713</span>';
-        var no = '<span style="color:#e8420c;font-weight:700;">\\u2717</span>';
-        return '<tr>' +
-          '<td class="mono">' + esc(time) + '</td>' +
-          '<td>' + esc(l.name) + '</td>' +
+        var nameCell = esc(l.name) +
+          (l.orphan ? '<br><span class="muted">survey only — no /lead signup</span>' : '');
+        var main = '<tr class="lead-row" data-idx="' + i + '">' +
+          '<td class="mono"><span class="caret">&#9656;</span>' + esc(time) + '</td>' +
+          '<td>' + nameCell + '</td>' +
           '<td>' + esc(l.email) + '</td>' +
           '<td>' + esc(l.source || '') + '</td>' +
           '<td>' + (l.resendContact ? yes : no) + '</td>' +
           '<td>' + (l.resendEmail ? yes : no) + '</td>' +
           '</tr>';
+        /* expanded profile: full record + survey answers */
+        var surveyHtml;
+        if (l.survey) {
+          var chips = (l.survey.tools || []).map(function (t) {
+            return '<span class="schip">' + esc(t) + '</span>';
+          }).join('');
+          surveyHtml = '<div class="prof-sec"><span class="prof-label">Survey</span>' +
+            (chips ? '<div class="schips">' + chips + '</div>' : '') +
+            (l.survey.other ? '<p class="prof-other">' + esc(l.survey.other) + '</p>' : '') +
+            (!chips && !l.survey.other ? '<span class="muted">(submitted, nothing ticked)</span>' : '') +
+            '</div>';
+        } else {
+          surveyHtml = '<div class="prof-sec"><span class="prof-label">Survey</span>' +
+            '<span class="muted">No survey yet</span></div>';
+        }
+        var detail = '<tr class="detail-row" id="detail-' + i + '"><td colspan="6"><div class="profile">' +
+          '<div class="prof-grid">' +
+          '<div><span class="prof-label">Name</span>' + esc(l.name) + '</div>' +
+          '<div><span class="prof-label">Email</span>' + esc(l.email) + '</div>' +
+          '<div><span class="prof-label">Source</span>' + esc(l.source || '—') + '</div>' +
+          '<div><span class="prof-label">Signed up</span>' + esc(time) + '</div>' +
+          '<div><span class="prof-label">IP</span>' + esc(l.ip || '—') + '</div>' +
+          '<div><span class="prof-label">Resend contact</span>' + (l.resendContact ? yes : no) + '</div>' +
+          '<div><span class="prof-label">Welcome email</span>' + (l.resendEmail ? yes : no) + '</div>' +
+          '</div>' + surveyHtml + '</div></td></tr>';
+        return main + detail;
       }).join('');
+      Array.prototype.forEach.call(tbody.querySelectorAll('tr.lead-row'), function (tr) {
+        tr.addEventListener('click', function () {
+          var d = document.getElementById('detail-' + tr.getAttribute('data-idx'));
+          var open = d.className.indexOf('show') !== -1;
+          d.className = open ? 'detail-row' : 'detail-row show';
+          tr.className = open ? 'lead-row' : 'lead-row open';
+        });
+      });
     }
     document.getElementById('refresh-btn').addEventListener('click', loadLeads);
     document.getElementById('csv-btn').addEventListener('click', function () {
-      var rows = [['time', 'name', 'email', 'source']].concat(leads.map(function (l) {
-        return [l.ts || '', l.name || '', l.email || '', l.source || ''];
+      var rows = [['time', 'name', 'email', 'source', 'survey_tools', 'survey_other']].concat(leads.map(function (l) {
+        return [
+          l.ts || '', l.name || '', l.email || '', l.source || '',
+          l.survey ? (l.survey.tools || []).join('; ') : '',
+          l.survey ? (l.survey.other || '') : ''
+        ];
       }));
       var csv = rows.map(function (r) {
         return r.map(function (c) {

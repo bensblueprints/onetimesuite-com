@@ -47,6 +47,94 @@ const launched = fs.existsSync(LAUNCHED_DIR)
 
 const allProducts = [...products, ...products51, ...launched, ...extras];
 
+/* Related-tools picks: prefer apps competing with the same SaaS, else the
+   same desktop/web kind. Deterministic — walk catalog order starting just
+   after the current product and wrap around, so the same input always
+   produces the same links. */
+const catalogMeta = allProducts.map(p => ({
+  slug: p.slug,
+  brand: p.brand,
+  icon: p.icon || '📦',
+  tagline: p.tagline,
+  competitor: String(p.competitor || '').toLowerCase(),
+  isDesktop: null, // filled after DESKTOP_SLUGS is defined
+}));
+
+function relatedFor(slug) {
+  const i = catalogMeta.findIndex(m => m.slug === slug);
+  if (i === -1) return [];
+  const me = catalogMeta[i];
+  const ordered = [...catalogMeta.slice(i + 1), ...catalogMeta.slice(0, i)];
+  const picks = [];
+  const passes = [
+    m => me.competitor && m.competitor === me.competitor,
+    m => m.isDesktop === me.isDesktop,
+  ];
+  for (const pass of passes) {
+    for (const m of ordered) {
+      if (picks.length >= 4) break;
+      if (!picks.includes(m) && pass(m)) picks.push(m);
+    }
+    if (picks.length >= 3) break;
+  }
+  return picks.slice(0, 4).map(({ slug: s, brand, icon, tagline }) => ({ slug: s, brand, icon, tagline }));
+}
+
+/** JSON-LD @graph for a normalized product page. */
+function jsonLd(p) {
+  const url = `https://onetimesuite.com/${p.slug}/`;
+  const price = p.pricing.kind === 'desktop' ? p.pricing.once : p.pricing.lifetime;
+  const graph = [
+    {
+      '@type': 'SoftwareApplication',
+      '@id': `${url}#app`,
+      name: p.brand,
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: p.isDesktop ? 'Windows, macOS' : 'self-hosted',
+      url,
+      description: p.oneliner,
+      offers: {
+        '@type': 'Offer',
+        price: String(price),
+        priceCurrency: 'USD',
+        url,
+      },
+    },
+  ];
+  if (p.faq.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: p.faq.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    });
+  }
+  if (p.videoId) {
+    const yt = ytVideos[p.slug] || {};
+    graph.push({
+      '@type': 'VideoObject',
+      '@id': `${url}#video`,
+      name: `${p.brand} demo`,
+      embedUrl: `https://www.youtube.com/embed/${p.videoId}`,
+      thumbnailUrl: `https://i.ytimg.com/vi/${p.videoId}/hqdefault.jpg`,
+      ...(yt.at ? { uploadDate: String(yt.at).slice(0, 10) } : {}),
+    });
+  }
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://onetimesuite.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Available now', item: 'https://onetimesuite.com/#available' },
+      { '@type': 'ListItem', position: 3, name: p.brand, item: url },
+    ],
+  });
+  return { '@context': 'https://schema.org', '@graph': graph };
+}
+
 /* Desktop vs web — mirrors DESKTOP_SLUGS in ../build.js */
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
@@ -55,6 +143,7 @@ const DESKTOP_SLUGS = new Set([
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
 ]);
+catalogMeta.forEach(m => { m.isDesktop = DESKTOP_SLUGS.has(m.slug); });
 
 /* Apps with their own pre-existing checkout — never remap to whopLinks. */
 const OWN_CHECKOUT = new Set(['wispertalk', 'bloomrecorder']);
@@ -177,6 +266,7 @@ for (const slug of wanted) {
   const raw = allProducts.find(p => p.slug === slug);
   if (!raw) { console.error(`!! no product with slug "${slug}" — skipped`); continue; }
   const product = normalize(raw);
+  product.related = relatedFor(slug);
   /* Reserve room for escapeHtml() entity expansion so the escaped form in
      the HTML source meets the length limits (same rule as ../build.js). */
   const rawTitle = product.brand + ' — ' + product.tagline;
@@ -188,6 +278,7 @@ for (const slug of wanted) {
     `<link rel="canonical" href="https://onetimesuite.com/${product.slug}/" />`,
     `<meta property="og:title" content="${escapeHtml(fitTitle(rawTitle, 60 - tMargin))}" />`,
     `<meta property="og:description" content="${escapeHtml(fitDesc(product.oneliner, 160 - dMargin))}" />`,
+    `<script type="application/ld+json">${JSON.stringify(jsonLd(product)).replace(/</g, '\\u003c')}</script>`,
   ].join('\n    ');
 
   const html = template

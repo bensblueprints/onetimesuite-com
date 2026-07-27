@@ -433,6 +433,22 @@ const GTM_BODY = `<!-- Google Tag Manager (noscript) -->
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->`;
 
+/* ---------- JSON-LD helpers ----------
+   ldJson: compact JSON, every `<` escaped (</script>-safe).
+   crumbs(): BreadcrumbList from [name, url] pairs.
+   Shared Organization node reused across pages. */
+const ldJson = o => JSON.stringify(o).replace(/</g, '\\u003c');
+const ORG_LD = {
+  '@type': 'Organization', name: 'OneTimeSuite', url: SITE,
+  sameAs: ['https://github.com/bensblueprints'],
+};
+const crumbs = items => ({
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: items.map(([name, url], i) => ({
+    '@type': 'ListItem', position: i + 1, name, item: url,
+  })),
+});
+
 function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, robots = 'index, follow' }) {
   /* Reserve room for HTML-entity expansion (esc/attr below) so the escaped
      form in the HTML source is what actually meets the length limits. */
@@ -440,7 +456,9 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, r
   const dMargin = (String(desc).match(/&/g) || []).length * 4 + (String(desc).match(/"/g) || []).length * 5;
   title = fitTitle(title, 60 - tMargin);
   desc = fitDesc(desc, 160 - dMargin);
-  const ld = jsonld.map(o => `  <script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
+  /* ldJson escapes `<` as < so no value (FAQ answers, headlines) can
+     ever break out of the script block with a literal "</script>". */
+  const ld = jsonld.map(o => `  <script type="application/ld+json">${ldJson(o)}</script>`).join('\n');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -706,10 +724,20 @@ function reg(relPath) { urls.push(relPath); }
     title: `OneTimeSuite — ${allProducts.length + comingSoon.length}-App Pay-Once Catalog, ${availableProducts.length} Available Now`,
     desc: `${availableProducts.length} pay-once apps available today (${availableProducts.map(p => p.brand).join(', ')}) and ${soonTotal} more coming — all replacing monthly SaaS bills: PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, or everything (including every future app) for ${fmt(BUNDLE.price)}.`,
     canonical: `${SITE}/`,
-    jsonld: [{
-      '@context': 'https://schema.org', '@type': 'ItemList',
-      itemListElement: allProducts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/${p.slug}/`, name: p.brand })),
-    }],
+    jsonld: [
+      { '@context': 'https://schema.org', '@type': 'WebSite', name: 'OneTimeSuite', url: `${SITE}/` },
+      { '@context': 'https://schema.org', ...ORG_LD },
+      {
+        '@context': 'https://schema.org', '@type': 'ItemList',
+        itemListElement: availableProducts.map((p, i) => ({
+          '@type': 'ListItem', position: i + 1, name: p.brand, url: `${SITE}/${p.slug}/`,
+          item: {
+            '@type': 'Product', name: p.brand, url: `${SITE}/${p.slug}/`,
+            offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'USD', url: `${SITE}/${p.slug}/` },
+          },
+        })),
+      },
+    ],
     body,
   }));
   reg('/');
@@ -874,9 +902,17 @@ allProducts.forEach(p => {
         offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: buy },
       },
       {
+        '@context': 'https://schema.org', '@type': 'SoftwareApplication',
+        name: p.brand,
+        applicationCategory: isDesktop ? 'UtilitiesApplication' : 'WebApplication',
+        operatingSystem: isDesktop ? 'Windows' : 'Self-hosted (your own server)',
+        offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'USD', url: `${SITE}/${p.slug}/` },
+      },
+      {
         '@context': 'https://schema.org', '@type': 'FAQPage',
         mainEntity: p.faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })),
       },
+      crumbs([['OneTimeSuite', `${SITE}/`], [p.brand, `${SITE}/${p.slug}/`]]),
     ],
     body,
   }));
@@ -988,7 +1024,9 @@ allProducts.forEach(p => {
       brand: { '@type': 'Brand', name: 'OneTimeSuite' },
       url: `${SITE}/${BUNDLE.slug}/`,
       offers: { '@type': 'Offer', price: String(BUNDLE.price), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: BUNDLE.checkoutUrl },
-    }],
+    },
+      crumbs([['OneTimeSuite', `${SITE}/`], [BUNDLE.name, `${SITE}/${BUNDLE.slug}/`]]),
+    ],
     body,
   }));
   reg(`/${BUNDLE.slug}/`);
@@ -1254,7 +1292,9 @@ seoPosts.forEach(post => {
       publisher: { '@type': 'Organization', name: 'OneTimeSuite' },
       mainEntityOfPage: url,
       datePublished: '2026-07-11', dateModified: '2026-07-11',
-    }],
+    },
+      crumbs([['OneTimeSuite', `${SITE}/`], ['Comparisons', `${SITE}/comparison/`], [post.title.split(/[—:]/)[0].trim(), url]]),
+    ],
     body,
   }));
   reg(`/${post.slug}/`);
@@ -1336,6 +1376,9 @@ posts.forEach(post => {
   const title = `Looking for ${art(post.competitor)} ${post.competitor} Alternative? Meet ${p.brand}`;
   const url = `${SITE}/comparison/${post.slug}/`;
   const related = posts.filter(x => x.product === post.product && x.slug !== post.slug);
+  /* Other apps in the suite that replace the SAME competitor — the
+     "More <competitor> alternatives" internal-links block. */
+  const sameComp = posts.filter(x => x.competitor === post.competitor && x.product !== post.product && bySlug[x.product]);
 
   const table = `
         <div class="tbl-wrap">
@@ -1387,6 +1430,15 @@ posts.forEach(post => {
           <h2>Who should stay with ${esc(post.competitor)}</h2>
           ${post.stay.map(x => `<p>${esc(x)}</p>`).join('\n          ')}
 
+          <h3>When ${esc(post.competitor)} is the better choice</h3>
+          <p>Being straight about it: ${p.brand} is not the right answer for everyone. ${esc(post.competitor)} genuinely earns its subscription when:</p>
+          <ul>
+            <li><strong>Your team is past a handful of seats.</strong> ${esc(post.competitor)}'s collaboration features — shared workspaces, permissions, admin controls — are built for larger teams, and its per-seat pricing buys real coordination tooling a single-user desktop app doesn't try to replicate.</li>
+            <li><strong>Its ecosystem is load-bearing for you.</strong> If your workflow runs on ${esc(post.competitor)}'s integrations, automations or third-party add-ons, switching means rebuilding that plumbing — a real cost that can outweigh the subscription.</li>
+            <li><strong>You have enterprise requirements.</strong> SSO/SAML, audit logs, SLAs, compliance paperwork and a vendor to call when something breaks — that's what the subscription actually buys at the high tiers, and a pay-once app doesn't come with it.</li>
+          </ul>
+          <p>If none of those describe you, the subscription is mostly a toll booth — read on.</p>
+
           <h2>Making the switch</h2>
           ${p.steps.map((s, i) => `<p><strong>Step ${i + 1} — ${esc(s[0])}.</strong> ${esc(s[1])}</p>`).join('\n          ')}
 
@@ -1405,6 +1457,16 @@ posts.forEach(post => {
               <a class="btn btn-ghost" href="${WHOP}" rel="noopener">Get it on Whop</a>
             </div>
           </div>
+
+          <nav class="related-strip" aria-label="More ${attr(post.competitor)} alternatives" style="margin-top:1.6rem;">
+            <p style="font-size:0.9rem;"><strong>More ${esc(post.competitor)} alternatives:</strong>
+              ${[
+                ...sameComp.map(x => `<a href="/comparison/${x.slug}/">${esc(bySlug[x.product].brand)}</a>`),
+                `<a href="/${p.slug}/">${p.brand} — product page</a>`,
+                `<a href="/">OneTimeSuite — the whole pay-once suite</a>`,
+              ].join(' · ')}
+            </p>
+          </nav>
 
           ${related.length
             ? `<p style="font-size:0.9rem;">Related comparisons: ${related.map(x => `<a href="/comparison/${x.slug}/">${esc(x.competitor)} alternative</a>`).join(' · ')} — or browse <a href="/">the whole pay-once suite</a>.</p>`
@@ -1427,7 +1489,13 @@ posts.forEach(post => {
       mainEntityOfPage: url,
       datePublished: '2026-07-06', dateModified: '2026-07-11',
       about: { '@type': 'Product', name: p.brand, offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'USD' } },
-    }],
+    },
+      {
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: p.faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })),
+      },
+      crumbs([['OneTimeSuite', `${SITE}/`], ['Comparisons', `${SITE}/comparison/`], [`${post.competitor} alternative`, url]]),
+    ],
     body,
   }));
   reg(`/comparison/${post.slug}/`);
@@ -1693,8 +1761,17 @@ function blogTable(p) {
 const blogPostList = []; // { slug, product, title, metaDesc } — for the /blog/ hub
 const BLOG_DATE = '2026-07-21';
 
-function writeBlogPost({ slug, product, title, metaDesc, articleHtml }) {
+/* Blog formulas that ship with `noindex,follow` — the "<competitor> Pricing Is
+   Out of Control" variant (blogPost2) is the thinnest of the six formulas:
+   inflammatory title, lowest information density, and it multiplies one post
+   per app. Keep those posts linked and crawlable (they still funnel readers to
+   the product pages and pass PageRank) but out of the search index, and out of
+   sitemap.xml. Add/remove formula keys here to tune which variants index. */
+const NOINDEX_BLOG_FORMULAS = new Set(['pricing-is-out-of-control']);
+
+function writeBlogPost({ slug, product, title, metaDesc, articleHtml, formula }) {
   const url = `${SITE}/blog/${slug}/`;
+  const noindex = NOINDEX_BLOG_FORMULAS.has(formula);
   const crumbLabel = title.split(/[—:]/)[0].trim();
   const body = `
     <section class="hero" aria-label="Article" style="padding-bottom:2.5rem;">
@@ -1719,18 +1796,23 @@ function writeBlogPost({ slug, product, title, metaDesc, articleHtml }) {
     desc: metaDesc,
     canonical: url,
     ogType: 'article',
+    robots: noindex ? 'noindex, follow' : 'index, follow',
     jsonld: [{
-      '@context': 'https://schema.org', '@type': 'Article',
+      '@context': 'https://schema.org', '@type': 'BlogPosting',
       headline: title,
       description: metaDesc,
       author: { '@type': 'Organization', name: 'OneTimeSuite', url: SITE },
       publisher: { '@type': 'Organization', name: 'OneTimeSuite' },
       mainEntityOfPage: url,
       datePublished: BLOG_DATE, dateModified: BLOG_DATE,
-    }],
+    },
+      crumbs([['OneTimeSuite', `${SITE}/`], ['Blog', `${SITE}/blog/`], [crumbLabel, url]]),
+    ],
     body,
   }));
-  reg(`/blog/${slug}/`);
+  /* noindexed posts stay out of the sitemap but stay on the /blog/ hub and in
+     the interlink pass — crawlable via links, just not submitted for indexing */
+  if (!noindex) reg(`/blog/${slug}/`);
   blogPostList.push({ slug, product, title, metaDesc });
 }
 
@@ -1760,6 +1842,7 @@ function blogPost1({ p, buy, repoUrl, compSlug }) {
   writeBlogPost({
     slug: `${p.slug}-best-${compSlug}-alternative-2026`,
     product: p.slug,
+    formula: 'best-alternative-2026',
     title: `Best ${p.competitor} Alternative in 2026: ${p.brand}`,
     metaDesc: `${p.brand} is a $${p.price} one-time purchase that replaces ${p.competitor} (${p.compPrice}). ${p.oneliner}`,
     articleHtml,
@@ -1785,6 +1868,7 @@ function blogPost2({ p, buy, repoUrl, compSlug, yr3 }) {
   writeBlogPost({
     slug: `${p.slug}-${compSlug}-pricing-is-out-of-control`,
     product: p.slug,
+    formula: 'pricing-is-out-of-control',
     title: `${p.brand} — ${p.competitor} Pricing Is Out of Control`,
     metaDesc: `${p.competitor} runs ${p.compPrice} — about $${yr3.toLocaleString('en-US')} over three years. ${p.brand} does the same job for $${p.price}, once.`,
     articleHtml,
@@ -1810,6 +1894,7 @@ function blogPost3({ p, buy, repoUrl, compSlug }) {
   writeBlogPost({
     slug: `${p.slug}-how-to-switch-from-${compSlug}`,
     product: p.slug,
+    formula: 'how-to-switch',
     title: `How to Switch from ${p.competitor} to ${p.brand}`,
     metaDesc: `A step-by-step guide to moving from ${p.competitor} (${p.compPrice}) to ${p.brand} — a $${p.price} one-time purchase that ${p.oneliner.charAt(0).toLowerCase()}${p.oneliner.slice(1)}`,
     articleHtml,
@@ -1844,6 +1929,7 @@ function blogPost4({ p, buy, repoUrl, compSlug }) {
   writeBlogPost({
     slug: `${p.slug}-vs-${compSlug}-open-source-vs-subscription`,
     product: p.slug,
+    formula: 'open-source-vs-subscription',
     title: `${p.brand} vs ${p.competitor}: Open Source vs Subscription`,
     metaDesc: `${p.brand} ($${p.price} once) vs ${p.competitor} (${p.compPrice}) — an honest head-to-head on price, features and who should actually switch.`,
     articleHtml,
@@ -1871,6 +1957,7 @@ function blogPost5({ p, buy, repoUrl, compSlug, siblings }) {
   writeBlogPost({
     slug: `${p.slug}-free-open-source-alternatives-to-${compSlug}`,
     product: p.slug,
+    formula: 'free-open-source-alternatives',
     title: `${p.brand} — Free and Open-Source Alternatives to ${p.competitor}`,
     metaDesc: `${p.brand} leads this list of 5 free and open-source, pay-once alternatives to ${p.competitor} and other subscription SaaS.`,
     articleHtml,
@@ -1910,6 +1997,7 @@ function blogPost6({ p, buy, repoUrl, compSlug }, comp) {
   writeBlogPost({
     slug: `${p.slug}-${cSlug}-alternative-pay-once`,
     product: p.slug,
+    formula: 'pay-once-alternative',
     title: `${p.brand} — ${comp.name} Alternative You Pay for Once`,
     metaDesc: `${p.brand} is a $${p.price} one-time purchase that replaces ${comp.name} (${comp.price}). ${p.oneliner}`,
     articleHtml,
@@ -2374,6 +2462,31 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
   const slugByVid = Object.fromEntries(
     Object.entries(ytVideos).map(([s, v]) => [v.videoId, s]));
   const anyBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
+  /* SoftwareApplication + FAQPage JSON-LD for overlaid v2 product pages (same
+     nodes the v1 generator emits) — skipped per-type if the prebuilt page
+     already carries that block. */
+  const injectProductLd = (html, slug) => {
+    const p = anyBySlug[slug];
+    if (!p || !html.includes('</head>')) return html;
+    const blocks = [];
+    if (!html.includes('"SoftwareApplication"')) {
+      blocks.push({
+        '@context': 'https://schema.org', '@type': 'SoftwareApplication',
+        name: p.brand,
+        applicationCategory: DESKTOP_SLUGS.has(slug) ? 'UtilitiesApplication' : 'WebApplication',
+        operatingSystem: DESKTOP_SLUGS.has(slug) ? 'Windows' : 'Self-hosted (your own server)',
+        offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'USD', url: `${SITE}/${slug}/` },
+      });
+    }
+    if (!html.includes('"FAQPage"') && Array.isArray(p.faq)) {
+      blocks.push({
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: p.faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })),
+      });
+    }
+    if (!blocks.length) return html;
+    return html.replace('</head>', blocks.map(o => `<script type="application/ld+json">${ldJson(o)}</script>`).join('\n') + '\n</head>');
+  };
   const injectVideoLd = html => {
     if (html.includes('"VideoObject"') || !html.includes('</head>')) return html;
     const vm = html.match(/youtube-nocookie\.com\/embed\/([A-Za-z0-9_-]{6,})/);
@@ -2423,6 +2536,7 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       html = html.replace(/<meta name="description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
       html = html.replace(/<meta property="og:description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
       if (rootSlug && f.name === 'index.html') html = injectBlogLinks(html, rootSlug);
+      if (rootSlug && f.name === 'index.html') html = injectProductLd(html, rootSlug);
       if (!html.includes('rel="icon"') && html.includes('</head>')) {
         html = html.replace('</head>',
           `<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">\n</head>`);

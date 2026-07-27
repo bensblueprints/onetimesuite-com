@@ -491,6 +491,48 @@ function Faq({ p }) {
   );
 }
 
+function Breadcrumb({ p }) {
+  return (
+    <nav aria-label="Breadcrumb" className="relative z-10 px-5 pt-4">
+      <ol className="mx-auto flex max-w-6xl flex-wrap items-center gap-2 font-mono text-xs text-ink-soft">
+        <li><a href="/" className="hover:text-sticker">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/#available" className="hover:text-sticker">Available now</a></li>
+        <li aria-hidden="true">/</li>
+        <li className="font-semibold text-ink" aria-current="page">{p.brand}</li>
+      </ol>
+    </nav>
+  );
+}
+
+function Related({ p }) {
+  if (!p.related || !p.related.length) return null;
+  return (
+    <section className="relative px-5 py-20">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          kicker="Keep exploring"
+          title="Related tools"
+          sub="More pay-once apps from the OneTimeSuite catalog."
+        />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {p.related.map(r => (
+            <a
+              key={r.slug}
+              href={`/${r.slug}/`}
+              className="group rounded-2xl border border-line bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div className="mb-3 text-3xl" aria-hidden="true">{r.icon}</div>
+              <div className="font-display text-lg font-bold group-hover:text-sticker">{r.brand}</div>
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft">{r.tagline}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCta({ p }) {
   return (
     <section className="relative px-5 pb-24 pt-8">
@@ -529,6 +571,7 @@ export default function ProductPage({ product }) {
   return (
     <MotionConfig reducedMotion="user">
       <Header p={product} />
+      <Breadcrumb p={product} />
       <main className="relative z-[1]">
         <Hero p={product} />
         <Video p={product} />
@@ -538,6 +581,7 @@ export default function ProductPage({ product }) {
         <Downloads p={product} />
         <Steps p={product} />
         <Faq p={product} />
+        <Related p={product} />
         <FinalCta p={product} />
       </main>
     </MotionConfig>

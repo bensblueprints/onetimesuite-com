@@ -1761,15 +1761,15 @@ function blogTable(p) {
 const blogPostList = []; // { slug, product, title, metaDesc } — for the /blog/ hub
 const BLOG_DATE = '2026-07-21';
 
-/* Blog formulas that ship with `noindex,follow` — the "<competitor> Pricing Is
-   Out of Control" variant (blogPost2) is the thinnest of the six formulas:
-   inflammatory title, lowest information density, and it multiplies one post
-   per app. Keep those posts linked and crawlable (they still funnel readers to
-   the product pages and pass PageRank) but out of the search index, and out of
-   sitemap.xml. Add/remove formula keys here to tune which variants index. */
-const NOINDEX_BLOG_FORMULAS = new Set(['pricing-is-out-of-control']);
+/* Blog formulas that ship with `noindex,follow` — add a formula key here to
+   keep a whole variant linked and crawlable (posts still funnel readers to
+   the product pages and pass PageRank) but out of the search index and out of
+   sitemap.xml. Currently empty: the 'pricing-is-out-of-control' formula was
+   upgraded 2026-07-27 from a thin rant into a full pricing-analysis article
+   (pricing math tables, compRows, steps, FAQ) and re-indexed. */
+const NOINDEX_BLOG_FORMULAS = new Set([]);
 
-function writeBlogPost({ slug, product, title, metaDesc, articleHtml, formula }) {
+function writeBlogPost({ slug, product, title, metaDesc, articleHtml, formula, faq }) {
   const url = `${SITE}/blog/${slug}/`;
   const noindex = NOINDEX_BLOG_FORMULAS.has(formula);
   const crumbLabel = title.split(/[—:]/)[0].trim();
@@ -1806,6 +1806,13 @@ function writeBlogPost({ slug, product, title, metaDesc, articleHtml, formula })
       mainEntityOfPage: url,
       datePublished: BLOG_DATE, dateModified: BLOG_DATE,
     },
+      /* FAQPage schema only for formulas that actually render the product's
+         FAQ on the page (currently blogPost2) — Google ignores FAQ markup
+         for questions that aren't visible in the body. */
+      ...(Array.isArray(faq) && faq.length ? [{
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })),
+      }] : []),
       crumbs([['OneTimeSuite', `${SITE}/`], ['Blog', `${SITE}/blog/`], [crumbLabel, url]]),
     ],
     body,
@@ -1849,29 +1856,116 @@ function blogPost1({ p, buy, repoUrl, compSlug }) {
   });
 }
 
+/* Formula upgraded 2026-07-27: was a thin ~330-word "Pricing Is Out of
+   Control" rant (noindexed for it), now a full pricing-analysis article —
+   multi-year cost tables computed from compPrice/compYr, the product's own
+   compRows/steps/faq, a balanced when-to-stay section and FAQPage schema.
+   Slugs kept as-is: the old URLs may already have impressions. */
 function blogPost2({ p, buy, repoUrl, compSlug, yr3 }) {
-  const priceRow = p.compRows.find(r => /price/i.test(r[0])) || p.compRows[0];
+  const perUnit = p.compPrice.match(/\/\s*(user|seat|agent|rep|screen|channel)s?\b|per\s+(user|seat)/i);
+  const unitNoun = perUnit ? (perUnit[1] || perUnit[2]).toLowerCase() : null;
+  const unitPriceMatch = p.compPrice.replace(/,/g, '').match(/\$\s*(\d+(?:\.\d+)?)/);
+  const unitMo = unitPriceMatch ? parseFloat(unitPriceMatch[1]) : null;
+  /* ranges ("$5–$9/user/mo") and floors ("$19+/user/mo") price from the
+     lower bound — say so rather than pretending the number is exact */
+  const isRange = /[+\u2013-]|from/i.test(p.compPrice);
+  const unitYr = unitMo ? unitMo * 12 : null;
+  const impliedSeats = (unitNoun && unitMo) ? Math.round(p.compYr / unitYr) : 0;
+
+  const costTable = `
+        <div class="tbl-wrap">
+          <table class="receipt">
+            <thead><tr><th></th><th class="us">${esc(p.brand)}</th><th>${esc(p.competitor)}</th></tr></thead>
+            <tbody>
+              <tr><td>Sticker price</td><td class="us"><span class="price-fig">${fmt(p.price)} once</span></td><td>${esc(p.compPrice)}</td></tr>
+              <tr><td>Cost after 1 year</td><td class="us"><span class="price-fig">${fmt(p.price)}</span></td><td>${fmt(p.compYr)}</td></tr>
+              <tr><td>Cost after 2 years</td><td class="us"><span class="price-fig">${fmt(p.price)}</span></td><td>${fmt(p.compYr * 2)}</td></tr>
+              <tr><td>Cost after 3 years</td><td class="us"><span class="price-fig">${fmt(p.price)}</span></td><td>${fmt(yr3)}</td></tr>
+            </tbody>
+          </table>
+        </div>`;
+
+  const seatsTable = (unitNoun && unitMo) ? `
+          <p>${esc(p.competitor)} bills per ${unitNoun}, so the total scales with headcount${isRange ? ' — and the figures below use the low end of the advertised range' : ''}:</p>
+          <div class="tbl-wrap">
+            <table class="receipt">
+              <thead><tr><th>${esc(p.competitor)} ${unitNoun}s</th><th>Per year</th><th>Over 3 years</th></tr></thead>
+              <tbody>
+                ${[1, 5, 10].map(n => `<tr><td>${n} ${unitNoun}${n > 1 ? 's' : ''}</td><td>${fmt(unitYr * n)}</td><td>${fmt(unitYr * 3 * n)}</td></tr>`).join('\n                ')}
+              </tbody>
+            </table>
+          </div>` : '';
+
+  const costLead = unitNoun
+    ? `<p>${esc(p.competitor)} prices per ${unitNoun} — ${esc(p.compPrice)} — so the subscription grows with every ${unitNoun} you add. The comparison below uses the catalog's annual figure of <span class="price-fig" style="font-family:var(--mono);">${fmt(p.compYr)}</span>${impliedSeats >= 2 && impliedSeats <= 200 ? `, which works out to roughly ${impliedSeats} ${unitNoun}s at that rate` : ''}; the per-${unitNoun} table underneath shows how the bill scales either way.</p>`
+    : `<p>At ${esc(p.compPrice)}, one ${esc(p.competitor)} subscription adds up to <span class="price-fig" style="font-family:var(--mono);">${fmt(p.compYr)}</span> every year — <span class="price-fig" style="font-family:var(--mono);">${fmt(yr3)}</span> over a three-year window, for software you stop owning the day you cancel. ${esc(p.brand)} is <span class="price-fig" style="font-family:var(--mono);">${fmt(p.price)}</span> the day you buy it, and the meter never runs again.</p>`;
+
+  /* 1-2 other posts covering the SAME competitor (different apps) — the
+     pricing-analysis cluster cross-links so the posts reinforce each other */
+  const compMates = blogAppSlugs
+    .filter(s => s !== p.slug && bySlug[s] && bySlug[s].competitor === p.competitor)
+    .slice(0, 2);
+  const compPageSlug = `${compSlug}-alternative`;
+  const hasCompPage = posts.some(x => x.slug === compPageSlug);
+
   const articleHtml = `
-          <p>${esc(p.competitor)} costs ${esc(p.compPrice)} — and unlike a tool you buy once, that bill never stops. Over three years that's roughly <span class="price-fig" style="font-family:var(--mono);">$${yr3.toLocaleString('en-US')}</span> for software doing a job your own hardware could just as easily do.</p>
+          <p>${esc(p.heroLead)}</p>
+          <p>This is the full pricing breakdown: what ${esc(p.competitor)} actually costs over one, two and three years, what ${esc(p.brand)} gives you for ${fmt(p.price)} paid once, and the honest cases where the subscription is still the right call.</p>
 
-          <h2>Where the subscription actually goes</h2>
-          <p>${esc(priceRow[2])} is the sticker price. It compounds: cancel and you typically lose access to your own history, and most plans ratchet the price up as you add usage, seats or storage — the bill rarely stays flat for long.</p>
+          <h2>What ${esc(p.competitor)} actually costs you</h2>
+          ${costLead}
+          ${costTable}
+          ${seatsTable}
+          ${yr3 > p.price ? `<p>Three years in, the gap is <span class="price-fig" style="font-family:var(--mono);">${fmt(yr3 - p.price)}</span> — and every year after that adds another ${fmt(p.compYr)} to the subscription side of the ledger.</p>` : ''}
 
-          <h2>${esc(p.brand)}: the pay-once alternative</h2>
-          <p>${esc(p.brand)} does the same core job for <span class="price-fig" style="font-family:var(--mono);">$${p.price}</span>, once. ${esc(p.oneliner)}</p>
+          <h2>${esc(p.brand)} vs ${esc(p.competitor)}, feature by feature</h2>
+          <p>Price is only half the story — here's how the two line up on the things that decide day-to-day use:</p>
           ${blogTable(p)}
+
+          <h2>What you get for ${fmt(p.price)}, once</h2>
+          <p>${esc(p.oneliner)} The highlights:</p>
+          <ul>
+            ${p.features.slice(0, 4).map(f => `<li>${esc(f[0])} <strong>${esc(f[1])}</strong> — ${esc(f[2])}</li>`).join('\n            ')}
+          </ul>
           <p style="color:var(--ink-soft);font-size:0.95rem;">${esc(p.payback)}</p>
 
-          <h2>Is the subscription ever still worth it?</h2>
-          <p>If you need ${esc(p.competitor)}'s specific ecosystem, integrations or managed infrastructure and that's genuinely load-bearing for you, the subscription earns its keep — that's a real trade-off, not a trick. ${esc(p.brand)} is for everyone else: people paying every month for a job that runs fine on hardware they already own.</p>
+          <h2>Switching is ${p.steps.length} steps</h2>
+          <ol>
+            ${p.steps.map(s => `<li><strong>${esc(s[0])}.</strong> ${esc(s[1])}</li>`).join('\n            ')}
+          </ol>
+
+          <h2>When paying ${esc(p.competitor)} is still the right call</h2>
+          <p>Being straight about it: the subscription earns its keep in three situations. If your team is large enough that ${esc(p.competitor)}'s collaboration features, permissions and admin controls are genuinely load-bearing; if your workflow is built on its integrations and leaving means rebuilding that plumbing; or if you have enterprise requirements — SSO, audit logs, SLAs, a vendor to call — that a pay-once app doesn't come with. Everyone else is paying ${esc(p.compPrice)} for a job that runs fine on hardware they already own.</p>
+          <p>If that's you, <a href="/${p.slug}/">${esc(p.brand)} is ${fmt(p.price)}, once</a>. For the deeper dive, read the <a href="/blog/${p.slug}-vs-${compSlug}-open-source-vs-subscription/">${esc(p.brand)} vs ${esc(p.competitor)} head-to-head</a>${hasCompPage ? ` or the <a href="/comparison/${compPageSlug}/">full ${esc(p.competitor)} comparison</a>` : ''}.</p>
+
+          <h2>Frequently asked questions</h2>
+          ${p.faq.map(q => `<p><strong>${esc(q[0])}</strong><br>${esc(q[1])}</p>`).join('\n          ')}
+
+          <h2>More on ${esc(p.competitor)} pricing</h2>
+          <p>${[
+            `<a href="/${p.slug}/">${esc(p.brand)} — product page, demo &amp; full feature list</a>`,
+            ...compMates.map(s => `<a href="/blog/${s}-${compSlug}-pricing-is-out-of-control/">${esc(bySlug[s].brand)} vs ${esc(p.competitor)} pricing</a>`),
+            `<a href="/blog/">All OneTimeSuite pricing breakdowns</a>`,
+          ].join(' &middot; ')}</p>
           ${blogCta(p, buy, repoUrl)}`;
+
+  /* Title: numbers-first and unique per app (brand is unique). Fall back to
+     shorter variants when brand + competitor names run long — hard cap 60. */
+  const yr3fmt = fmt(yr3);
+  let title = `${p.brand} vs ${p.competitor} pricing: ${yr3fmt} vs ${fmt(p.price)} once`;
+  if (title.length > 60) title = `${p.brand} vs ${p.competitor} pricing: ${yr3fmt} vs ${fmt(p.price)}`;
+  if (title.length > 60) title = `${p.brand} vs ${p.competitor}: the 3-year pricing math`;
+  if (title.length > 60) title = `${p.brand} pricing vs ${p.competitor}`;
+  if (title.length > 60) console.warn('blogPost2 TITLE OVER 60 CHARS:', title.length, title);
+
   writeBlogPost({
     slug: `${p.slug}-${compSlug}-pricing-is-out-of-control`,
     product: p.slug,
     formula: 'pricing-is-out-of-control',
-    title: `${p.brand} — ${p.competitor} Pricing Is Out of Control`,
-    metaDesc: `${p.competitor} runs ${p.compPrice} — about $${yr3.toLocaleString('en-US')} over three years. ${p.brand} does the same job for $${p.price}, once.`,
+    title,
+    metaDesc: `${p.competitor} costs ${p.compPrice} — ${yr3fmt} over 3 years. ${p.brand} does the same core job for ${fmt(p.price)}, once. The full pricing math, feature table and switch steps.`,
     articleHtml,
+    faq: p.faq,
   });
 }
 

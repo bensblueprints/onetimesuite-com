@@ -127,6 +127,51 @@ const art = name => (/^[aeiou]/i.test(name) ? 'an' : 'a');
 function esc(s) { return String(s).replace(/&(?![a-z#0-9]+;)/g, '&amp;'); }
 function attr(s) { return String(s).replace(/&(?![a-z#0-9]+;)/g, '&amp;').replace(/"/g, '&quot;'); }
 
+/* SEO clamps — titles ≤60 chars, meta descriptions 120–160 chars (2026-07-27
+   audit). Titles: drop the " | OneTimeSuite[ Blog]" suffix first, then cut at
+   the last clause boundary that keeps ≥20 chars — never mid-word. Keep the
+   differentiating brand/competitor BEFORE the first separator in title
+   patterns so a clause cut can never collapse two pages to the same title.
+   Descriptions: long ones trim at a sentence (then word) boundary; short ones
+   pad with standard suffixes that fit.
+   The `limit` args let page() reserve room for HTML-entity expansion
+   (& -> &amp; = +4 chars, " -> &quot; = +5), since the escaped form is what
+   ships in the HTML source. */
+function fitTitle(t, limit = 60) {
+  t = String(t).replace(/\s+/g, ' ').trim();
+  if (t.length <= limit) return t;
+  const base = t.replace(/\s*\|\s*OneTimeSuite( Blog)?\s*$/, '');
+  if (base.length <= limit) return base;
+  let best = -1, keep = 0;
+  for (const sep of [' — ', ': ', '? ', ' · ', ' | ']) {
+    const i = base.lastIndexOf(sep);
+    if (i >= 20 && i <= limit && i > best) { best = i; keep = sep === '? ' ? 1 : 0; }
+  }
+  if (best !== -1) return base.slice(0, best + keep);
+  const cut = base.slice(0, limit - 3);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,;:—–-]+$/, '') + '…';
+}
+function fitDesc(d, limit = 160) {
+  d = String(d).replace(/\s+/g, ' ').trim();
+  if (d.length > limit) {
+    const cut = d.slice(0, limit - 2);
+    const dot = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+    if (dot >= 80) d = cut.slice(0, dot + 1);
+    else d = cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,;:—–-]+$/, '') + '…';
+  }
+  if (d.length < 120) {
+    for (const pad of [
+      ' Pay once, own it forever — no subscription, no renewal.',
+      ' Part of the OneTimeSuite pay-once catalog.',
+      ' Pay once, own it forever.',
+    ]) {
+      if (d.length >= 120) break;
+      if (d.length + pad.length <= limit) d += pad;
+    }
+  }
+  return d;
+}
+
 /* ---------- screenshots ---------- */
 const SHOTS_SRC = path.join(ROOT, 'assets', 'shots');
 const shotsAvailable = new Set(
@@ -321,13 +366,13 @@ const FOOTER = `
           <p class="blurb">${allProducts.length} apps that replace subscription SaaS. Pay once, own forever. Almost all of them are MIT source on GitHub — build them yourself if you'd rather.</p>
         </div>
         <div>
-          <h4>Apps</h4>
+          <h2>Apps</h2>
           <a href="/#available">Available now (${availableProducts.length})</a>
           <a href="/#coming-soon">Coming soon (${allProducts.length - availableProducts.length + comingSoon.length})</a>
           <a href="/${BUNDLE.slug}/">${BUNDLE.name} — ${fmt(BUNDLE.price)}</a>
         </div>
         <div>
-          <h4>Read</h4>
+          <h2>Read</h2>
           <a href="/comparison/">All comparisons</a>
           <a href="/blog/">Blog</a>
           <a href="/loom-alternative/">Loom alternative</a>
@@ -336,13 +381,13 @@ const FOOTER = `
           <a href="/inkseal/compliance/">E-signature compliance</a>
         </div>
         <div>
-          <h4>Get it</h4>
+          <h2>Get it</h2>
           <a href="${WHOP}" rel="noopener">Buy on Whop</a>
           <a href="https://dashboard.onetimesuite.com/" rel="noopener">Log in — your library</a>
           <a href="${GH}" rel="noopener">Source on GitHub</a>
         </div>
         <div>
-          <h4>Legal</h4>
+          <h2>Legal</h2>
           <a href="/terms/">Terms of use</a>
           <a href="/privacy/">Privacy</a>
         </div>
@@ -389,6 +434,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->`;
 
 function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, robots = 'index, follow' }) {
+  /* Reserve room for HTML-entity expansion (esc/attr below) so the escaped
+     form in the HTML source is what actually meets the length limits. */
+  const tMargin = (String(title).match(/&/g) || []).length * 4;
+  const dMargin = (String(desc).match(/&/g) || []).length * 4 + (String(desc).match(/"/g) || []).length * 5;
+  title = fitTitle(title, 60 - tMargin);
+  desc = fitDesc(desc, 160 - dMargin);
   const ld = jsonld.map(o => `  <script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!DOCTYPE html>
 <html lang="en">
@@ -652,7 +703,7 @@ function reg(relPath) { urls.push(relPath); }
     </section>`;
 
   write('', page({
-    title: `OneTimeSuite — ${allProducts.length + comingSoon.length}-App Pay-Once Catalog: ${availableProducts.length} Available Now, the Rest Coming Soon`,
+    title: `OneTimeSuite — ${allProducts.length + comingSoon.length}-App Pay-Once Catalog, ${availableProducts.length} Available Now`,
     desc: `${availableProducts.length} pay-once apps available today (${availableProducts.map(p => p.brand).join(', ')}) and ${soonTotal} more coming — all replacing monthly SaaS bills: PDF tools, screen recording, dictation, analytics, invoicing, email campaigns, uptime monitoring and more. One-time prices from $15, or everything (including every future app) for ${fmt(BUNDLE.price)}.`,
     canonical: `${SITE}/`,
     jsonld: [{
@@ -984,7 +1035,7 @@ docPage({
           <h2>Purchases and refunds</h2>
           <ul>
             <li>Checkout and payment are handled by <a href="https://whop.com" rel="noopener">Whop</a> under Whop's own terms and policies.</li>
-            <li>Something wrong with your purchase? Email <a href="mailto:ben@advancedmarketing.co">ben@advancedmarketing.co</a> and we'll sort out a fix or a refund.</li>
+            <li>Something wrong with your purchase? Email ben [at] advancedmarketing [dot] co and we'll sort out a fix or a refund.</li>
           </ul>
           <h2>The website</h2>
           <ul>
@@ -994,7 +1045,7 @@ docPage({
           <h2>Liability</h2>
           <p>To the maximum extent permitted by law, our total liability for any claim connected to the site or the software is limited to the amount you paid us for the product concerned.</p>
           <h2>Contact</h2>
-          <p>Questions about these terms: <a href="mailto:ben@advancedmarketing.co">ben@advancedmarketing.co</a>. OneTimeSuite is operated by <a href="https://advancedmarketing.co" rel="noopener">Advanced Marketing</a>.</p>`,
+          <p>Questions about these terms: ben [at] advancedmarketing [dot] co. OneTimeSuite is operated by <a href="https://advancedmarketing.co" rel="noopener">Advanced Marketing</a>.</p>`,
 });
 
 docPage({
@@ -1017,7 +1068,7 @@ docPage({
           <h2>The apps themselves</h2>
           <p>OneTimeSuite apps run on your own machine or server. They don't require an account with us and don't send telemetry. Your documents and data stay on your hardware.</p>
           <h2>Contact</h2>
-          <p>Privacy questions: <a href="mailto:ben@advancedmarketing.co">ben@advancedmarketing.co</a>.</p>`,
+          <p>Privacy questions: ben [at] advancedmarketing [dot] co.</p>`,
 });
 
 docPage({
@@ -1282,7 +1333,7 @@ posts.forEach(post => {
   const p = bySlug[post.product];
   const t = POST_TABLE[post.slug];
   if (!p || !t) { console.warn('SKIPPED post (missing product or table):', post.slug); return; }
-  const title = `Looking for ${art(post.competitor)} ${post.competitor} Alternative? Meet ${p.brand} — Pay Once, Own It Forever (2026)`;
+  const title = `Looking for ${art(post.competitor)} ${post.competitor} Alternative? Meet ${p.brand}`;
   const url = `${SITE}/comparison/${post.slug}/`;
   const related = posts.filter(x => x.product === post.product && x.slug !== post.slug);
 
@@ -1709,7 +1760,7 @@ function blogPost1({ p, buy, repoUrl, compSlug }) {
   writeBlogPost({
     slug: `${p.slug}-best-${compSlug}-alternative-2026`,
     product: p.slug,
-    title: `Best ${p.competitor} Alternative in 2026: ${p.brand} (One-Time Purchase)`,
+    title: `Best ${p.competitor} Alternative in 2026: ${p.brand}`,
     metaDesc: `${p.brand} is a $${p.price} one-time purchase that replaces ${p.competitor} (${p.compPrice}). ${p.oneliner}`,
     articleHtml,
   });
@@ -1734,7 +1785,7 @@ function blogPost2({ p, buy, repoUrl, compSlug, yr3 }) {
   writeBlogPost({
     slug: `${p.slug}-${compSlug}-pricing-is-out-of-control`,
     product: p.slug,
-    title: `${p.competitor} Pricing Is Out of Control — Here's the Pay-Once Alternative`,
+    title: `${p.brand} — ${p.competitor} Pricing Is Out of Control`,
     metaDesc: `${p.competitor} runs ${p.compPrice} — about $${yr3.toLocaleString('en-US')} over three years. ${p.brand} does the same job for $${p.price}, once.`,
     articleHtml,
   });
@@ -1759,7 +1810,7 @@ function blogPost3({ p, buy, repoUrl, compSlug }) {
   writeBlogPost({
     slug: `${p.slug}-how-to-switch-from-${compSlug}`,
     product: p.slug,
-    title: `How to Switch from ${p.competitor} to ${p.brand} (Step-by-Step)`,
+    title: `How to Switch from ${p.competitor} to ${p.brand}`,
     metaDesc: `A step-by-step guide to moving from ${p.competitor} (${p.compPrice}) to ${p.brand} — a $${p.price} one-time purchase that ${p.oneliner.charAt(0).toLowerCase()}${p.oneliner.slice(1)}`,
     articleHtml,
   });
@@ -1820,7 +1871,7 @@ function blogPost5({ p, buy, repoUrl, compSlug, siblings }) {
   writeBlogPost({
     slug: `${p.slug}-free-open-source-alternatives-to-${compSlug}`,
     product: p.slug,
-    title: `5 Free & Open-Source Alternatives to ${p.competitor}`,
+    title: `${p.brand} — Free and Open-Source Alternatives to ${p.competitor}`,
     metaDesc: `${p.brand} leads this list of 5 free and open-source, pay-once alternatives to ${p.competitor} and other subscription SaaS.`,
     articleHtml,
   });
@@ -1859,7 +1910,7 @@ function blogPost6({ p, buy, repoUrl, compSlug }, comp) {
   writeBlogPost({
     slug: `${p.slug}-${cSlug}-alternative-pay-once`,
     product: p.slug,
-    title: `${comp.name} Alternative That You Only Pay For Once: ${p.brand}`,
+    title: `${p.brand} — ${comp.name} Alternative You Pay for Once`,
     metaDesc: `${p.brand} is a $${p.price} one-time purchase that replaces ${comp.name} (${comp.price}). ${p.oneliner}`,
     articleHtml,
   });
@@ -1933,7 +1984,7 @@ blogAppSlugs.forEach(productSlug => {
     </section>`;
 
   write('blog', page({
-    title: `The OneTimeSuite Blog — ${blogPostList.length} Switch Guides & Pricing Breakdowns | OneTimeSuite`,
+    title: `The OneTimeSuite Blog — Switch Guides and Pricing Breakdowns`,
     desc: `Switch guides, pricing breakdowns and open-source-vs-subscription comparisons for every app in the OneTimeSuite catalog.`,
     canonical: `${SITE}/blog/`,
     jsonld: [{
@@ -2365,6 +2416,12 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       html = relocateDemoVideo(html);
       html = injectVideoLd(html);
       html = fixBrokenEmbed(html);
+      /* SEO clamps on the prebuilt v2 pages (2026-07-27 audit): titles ≤60,
+         meta descriptions 120–160 — same rules as page(). */
+      html = html.replace(/<title>([^<]*)<\/title>/, (m, t) => `<title>${fitTitle(t)}</title>`);
+      html = html.replace(/<meta property="og:title" content="([^"]*)"\s*\/?>/, (m, t) => m.replace(t, fitTitle(t)));
+      html = html.replace(/<meta name="description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
+      html = html.replace(/<meta property="og:description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
       if (rootSlug && f.name === 'index.html') html = injectBlogLinks(html, rootSlug);
       if (!html.includes('rel="icon"') && html.includes('</head>')) {
         html = html.replace('</head>',

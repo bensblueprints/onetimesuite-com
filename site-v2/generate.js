@@ -117,6 +117,44 @@ function normalize(p) {
 }
 
 /* ------------------------------------------------ render */
+/* SEO clamps (2026-07-27 audit): titles ≤60 chars, meta descriptions
+   120–160 chars. Same rules as ../build.js fitTitle/fitDesc — keep both
+   copies in sync. */
+function fitTitle(t, limit = 60) {
+  t = String(t).replace(/\s+/g, ' ').trim();
+  if (t.length <= limit) return t;
+  const base = t.replace(/\s*\|\s*OneTimeSuite( Blog)?\s*$/, '');
+  if (base.length <= limit) return base;
+  let best = -1, keep = 0;
+  for (const sep of [' — ', ': ', '? ', ' · ', ' | ']) {
+    const i = base.lastIndexOf(sep);
+    if (i >= 20 && i <= limit && i > best) { best = i; keep = sep === '? ' ? 1 : 0; }
+  }
+  if (best !== -1) return base.slice(0, best + keep);
+  const cut = base.slice(0, limit - 3);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,;:—–-]+$/, '') + '…';
+}
+function fitDesc(d, limit = 160) {
+  d = String(d).replace(/\s+/g, ' ').trim();
+  if (d.length > limit) {
+    const cut = d.slice(0, limit - 2);
+    const dot = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+    if (dot >= 80) d = cut.slice(0, dot + 1);
+    else d = cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,;:—–-]+$/, '') + '…';
+  }
+  if (d.length < 120) {
+    for (const pad of [
+      ' Pay once, own it forever — no subscription, no renewal.',
+      ' Part of the OneTimeSuite pay-once catalog.',
+      ' Pay once, own it forever.',
+    ]) {
+      if (d.length >= 120) break;
+      if (d.length + pad.length <= limit) d += pad;
+    }
+  }
+  return d;
+}
+
 const templatePath = path.join(DIST, 'index.html');
 if (!fs.existsSync(templatePath)) {
   console.error('dist/index.html not found — run `npm run build` first (or `npm run all`).');
@@ -139,12 +177,17 @@ for (const slug of wanted) {
   const raw = allProducts.find(p => p.slug === slug);
   if (!raw) { console.error(`!! no product with slug "${slug}" — skipped`); continue; }
   const product = normalize(raw);
+  /* Reserve room for escapeHtml() entity expansion so the escaped form in
+     the HTML source meets the length limits (same rule as ../build.js). */
+  const rawTitle = product.brand + ' — ' + product.tagline;
+  const tMargin = (rawTitle.match(/&/g) || []).length * 4 + (rawTitle.match(/"/g) || []).length * 5;
+  const dMargin = (String(product.oneliner).match(/&/g) || []).length * 4 + (String(product.oneliner).match(/"/g) || []).length * 5;
   const head = [
-    `<title>${escapeHtml(product.brand)} — ${escapeHtml(product.tagline)}</title>`,
-    `<meta name="description" content="${escapeHtml(product.oneliner)}" />`,
+    `<title>${escapeHtml(fitTitle(rawTitle, 60 - tMargin))}</title>`,
+    `<meta name="description" content="${escapeHtml(fitDesc(product.oneliner, 160 - dMargin))}" />`,
     `<link rel="canonical" href="https://onetimesuite.com/${product.slug}/" />`,
-    `<meta property="og:title" content="${escapeHtml(product.brand + ' — ' + product.tagline)}" />`,
-    `<meta property="og:description" content="${escapeHtml(product.oneliner)}" />`,
+    `<meta property="og:title" content="${escapeHtml(fitTitle(rawTitle, 60 - tMargin))}" />`,
+    `<meta property="og:description" content="${escapeHtml(fitDesc(product.oneliner, 160 - dMargin))}" />`,
   ].join('\n    ');
 
   const html = template

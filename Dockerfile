@@ -7,8 +7,17 @@ WORKDIR /site
 COPY . .
 RUN node build.js
 
-# Stage 2 — serve it
-FROM nginx:1.27-alpine
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Stage 2 — serve the static site AND run the lead-capture/admin API in one
+# container. Final base is node:22-alpine (the API needs Node); nginx is added
+# via apk. Alpine's nginx package reads /etc/nginx/http.d/*.conf (NOT the
+# Debian-style conf.d used by the official nginx image) and ships a default
+# server at /etc/nginx/http.d/default.conf — remove it before copying ours.
+FROM node:22-alpine
+RUN apk add --no-cache nginx && mkdir -p /run/nginx && rm -f /etc/nginx/http.d/default.conf
+COPY nginx.conf /etc/nginx/http.d/default.conf
 COPY --from=build /site/public /usr/share/nginx/html
+COPY server/api.js /app/api.js
+COPY NEXT-UP.md /app/NEXT-UP.md
+COPY start.sh /app/start.sh
 EXPOSE 80
+CMD ["sh", "/app/start.sh"]

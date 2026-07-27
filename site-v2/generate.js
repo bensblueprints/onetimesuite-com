@@ -106,7 +106,7 @@ function normalize(p) {
       ? Object.fromEntries(Object.entries(tierUrls[p.slug]).map(([k, u]) => [k, localCheckout(p.slug, u)]))
       : null,
     videoId: (yt && yt.videoId) || null,
-    pricing: computePricing(p.price, isDesktop),
+    pricing: computePricing(p.price, isDesktop, (tierUrlsRaw[p.slug] && tierUrlsRaw[p.slug].prices) || undefined),
     features: pair(p.features, ['icon', 'title', 'desc']),
     compRows: pair(p.compRows, ['label', 'us', 'them']),
     steps: pair(p.steps, ['title', 'desc']),

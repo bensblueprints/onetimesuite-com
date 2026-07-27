@@ -2,10 +2,10 @@
 module.exports = [
   {
     slug: 'cronitor-alternative', competitor: 'Cronitor', product: 'pingcron',
-    metaDesc: 'Cronitor costs $10/mo solo — $360 over three years — to watch your cron jobs. Pingcron is the same dead-man\'s-switch monitoring, self-hosted, for $29 once. Honest comparison.',
+    metaDesc: 'Cronitor costs $10/mo solo — $360 over three years — to watch your cron jobs. Pingcron is the same dead-man\'s-switch monitoring, self-hosted, for $79 once. Honest comparison.',
     intro: [
       'Cronitor is the polished professional\'s answer to a very real problem: cron jobs fail silently. Your backup script dies, nothing is "down", and no uptime monitor notices — until the day you need the backup. Cronitor\'s heartbeat monitoring, clean SDKs and instant alerting have made it the default choice for teams who have been burned once.',
-      'But here is the uncomfortable math: what Cronitor fundamentally does is compare a timestamp against a schedule. The solo plan is $10/month — $120 a year, $360 over three, forever — for that comparison. Pingcron is the same dead-man\'s-switch pattern as a $29 pay-once app you run on your own box. This is an honest look at when each makes sense.',
+      'But here is the uncomfortable math: what Cronitor fundamentally does is compare a timestamp against a schedule. The solo plan is $10/month — $120 a year, $360 over three, forever — for that comparison. Pingcron is the same dead-man\'s-switch pattern as a $79 pay-once app you run on your own box. This is an honest look at when each makes sense.',
     ],
     good: {
       lead: 'Cronitor earns its reputation, and we will not pretend otherwise:',
@@ -30,15 +30,15 @@ module.exports = [
   },
   {
     slug: 'healthchecks-alternative', competitor: 'Healthchecks.io', product: 'pingcron',
-    metaDesc: 'Healthchecks.io is excellent — and its hosted Business plan is $20/mo, while self-hosting means running a Django/Postgres stack. Pingcron is one process, one SQLite file, $29 once.',
+    metaDesc: 'Healthchecks.io is excellent — and its hosted Business plan is $20/mo, while self-hosting means running a Django/Postgres stack. Pingcron is one process, one SQLite file, $79 once.',
     intro: [
       'Healthchecks.io is the tool most people recommend first for cron monitoring, and the recommendation is deserved. It defined the modern ping-URL pattern, its free hosted tier covers 20 checks, the integration list is enormous, and — rare in this category — the whole thing is open source. There is a lot to like here.',
-      'So why an alternative post at all? Two reasons. The hosted plans get real once you outgrow the free tier — Business is $20/month, $720 over three years. And the self-host escape hatch, while genuinely free, is a Django application with a database, a task runner and an SMTP relay to assemble and maintain. Pingcron is the third option: a $29 pay-once app that self-hosts as one Node process with one SQLite file. Here is the honest breakdown.',
+      'So why an alternative post at all? Two reasons. The hosted plans get real once you outgrow the free tier — Business is $20/month, $720 over three years. And the self-host escape hatch, while genuinely free, is a Django application with a database, a task runner and an SMTP relay to assemble and maintain. Pingcron is the third option: a $79 pay-once app that self-hosts as one Node process with one SQLite file. Here is the honest breakdown.',
     ],
     good: {
       lead: 'Healthchecks.io gets an enormous amount right:',
       items: [
-        'A generous free hosted tier — 20 checks covers many solo setups entirely, and free beats $29.',
+        'A generous free hosted tier — 20 checks covers many solo setups entirely, and free beats $79.',
         'Open source (BSD) — the self-hosted version is the real product, not a crippled demo.',
         'Best-in-class integrations — Slack, PagerDuty, Matrix, ntfy, Signal, and dozens more.',
         'Mature and battle-tested — a decade of production use, sensible cron-expression handling, teams and projects on paid tiers.',
@@ -53,14 +53,14 @@ module.exports = [
       'Stay with Healthchecks.io hosted if 20 checks is enough — it is free and excellent. Stay with the self-hosted version if you want its deeper integration catalog and team features and you are comfortable operating a Django/Postgres stack. Pingcron trades that breadth for radical simplicity, on purpose.',
       'Switch if you want self-hosted monitoring that deploys in five minutes and never needs a database server: one process, one SQLite file, docker compose up — or run it as a Windows desktop app, which nothing in this category offers.',
     ],
-    meetExtra: 'Pingcron is the "one process, one file" take on the pattern Healthchecks pioneered: ping URLs with /start duration tracking and /fail endpoints, interval or cron schedules with timezone support and a next-3-runs preview, grace periods, transition-only webhook + SMTP alerts that survive restarts without re-firing, SVG status badges, and a dashboard with sparklines. $29 once, MIT source, and the SQLite file is the whole backup story.',
+    meetExtra: 'Pingcron is the "one process, one file" take on the pattern Healthchecks pioneered: ping URLs with /start duration tracking and /fail endpoints, interval or cron schedules with timezone support and a next-3-runs preview, grace periods, transition-only webhook + SMTP alerts that survive restarts without re-firing, SVG status badges, and a dashboard with sparklines. $79 once, MIT source, and the SQLite file is the whole backup story.',
   },
   {
     slug: 'urlbox-alternative', competitor: 'Urlbox', product: 'snapfleet',
-    metaDesc: 'Urlbox charges $19/mo for 2,000 renders — $228/year to run headless Chromium. Snapfleet is the same screenshot API self-hosted on your own server for $39 once. Honest comparison.',
+    metaDesc: 'Urlbox charges $19/mo for 2,000 renders — $228/year to run headless Chromium. Snapfleet is the same screenshot API self-hosted on your own server for $99 once. Honest comparison.',
     intro: [
       'Urlbox is one of the most mature screenshot APIs on the market. It renders pages accurately, handles the messy parts — lazy-loaded images, cookie banners, ad blocking, retries — and has been quietly powering link previews, og-images and archival pipelines for over a decade. When people say "just use a screenshot API", Urlbox is usually what they mean.',
-      'The pricing is where the math turns. $19/month buys 2,000 renders — $228 a year, every year, whether you render 2,000 or 200. And what is a screenshot render, mechanically? Headless Chromium opening a page. Your $5 VPS can do that all day for free. Snapfleet is that same API — one endpoint, PNG/JPG/PDF, API keys, caching — self-hosted for a one-time $39.',
+      'The pricing is where the math turns. $19/month buys 2,000 renders — $228 a year, every year, whether you render 2,000 or 200. And what is a screenshot render, mechanically? Headless Chromium opening a page. Your $5 VPS can do that all day for free. Snapfleet is that same API — one endpoint, PNG/JPG/PDF, API keys, caching — self-hosted for a one-time $99.',
     ],
     good: {
       lead: 'Urlbox is genuinely excellent at the hard parts:',
@@ -80,7 +80,7 @@ module.exports = [
       'Stay with Urlbox if screenshots are revenue-critical at high volume, if you need its battle-tested handling of hostile pages (ad blocking, banner hiding, retries), or if operating even one small service is a burden your team should not carry. Those are real advantages of a decade-old managed product.',
       'Switch if you are generating og-images, thumbnails or PDFs for your own projects and the images are of pages you control or trust. Rendering is the commodity; you already pay for the hardware.',
     ],
-    meetExtra: 'Snapfleet gives you the SaaS ergonomics on your own box: GET /api/v1/screenshot?url=... returns PNG, JPG or PDF with viewport, full-page, delay, wait conditions, dark-mode emulation, CSS-selector clipping and retina scale. Around it: named API keys with token-bucket rate limits and daily quotas, a SHA-256-keyed disk cache with TTLs, a pooled Chromium with crash recovery, a live playground UI, and a gallery with stats. Unlimited renders, $39 once, MIT source.',
+    meetExtra: 'Snapfleet gives you the SaaS ergonomics on your own box: GET /api/v1/screenshot?url=... returns PNG, JPG or PDF with viewport, full-page, delay, wait conditions, dark-mode emulation, CSS-selector clipping and retina scale. Around it: named API keys with token-bucket rate limits and daily quotas, a SHA-256-keyed disk cache with TTLs, a pooled Chromium with crash recovery, a live playground UI, and a gallery with stats. Unlimited renders, $99 once, MIT source.',
   },
   {
     slug: 'devutils-alternative', competitor: 'DevUtils', product: 'wrangle',
@@ -111,10 +111,10 @@ module.exports = [
   },
   {
     slug: 'simplebackups-alternative', competitor: 'SimpleBackups', product: 'vaultkeeper',
-    metaDesc: 'SimpleBackups starts at $29/mo — $348/year — and holds your database credentials in its cloud. Vaultkeeper runs the same encrypted backup pipeline on your own box for $39 once.',
+    metaDesc: 'SimpleBackups starts at $29/mo — $348/year — and holds your database credentials in its cloud. Vaultkeeper runs the same encrypted backup pipeline on your own box for $99 once.',
     intro: [
       'SimpleBackups does exactly what its name promises: connect a database, pick a schedule and a storage bucket, and your backups just happen — Postgres, MySQL, Mongo, whole servers, SaaS apps, with retention, alerting and a team dashboard. As managed backup services go, it is one of the most complete.',
-      'The cost of that convenience is twofold. The subscription starts around $29/month — $348 a year, $1,044 over three, forever. And to work at all, it needs your production database credentials stored on its cloud, with your dumps transiting its infrastructure. Vaultkeeper does the same core job — scheduled, encrypted dumps shipped to S3, FTP or disk, with failure alerts — as a $39 pay-once app running entirely on your own hardware.',
+      'The cost of that convenience is twofold. The subscription starts around $29/month — $348 a year, $1,044 over three, forever. And to work at all, it needs your production database credentials stored on its cloud, with your dumps transiting its infrastructure. Vaultkeeper does the same core job — scheduled, encrypted dumps shipped to S3, FTP or disk, with failure alerts — as a $99 pay-once app running entirely on your own hardware.',
     ],
     good: {
       lead: 'SimpleBackups is a genuinely well-built service:',
@@ -127,21 +127,21 @@ module.exports = [
       after: 'If nobody on your team can be responsible for backup infrastructure, paying someone else to be responsible is a defensible call.',
     },
     hurts: [
-      'The subscription math is stark: $29/month is $348 every year — and pricier tiers scale with the number of jobs. Over three years you have paid $1,044+ to schedule pg_dump. Vaultkeeper costs one month\'s fee, once. For freelancers and small teams whose databases fit on a $10 VPS, the backup bill exceeding the hosting bill is exactly backwards.',
+      'The subscription math is stark: $29/month is $348 every year — and pricier tiers scale with the number of jobs. Over three years you have paid $1,044+ to schedule pg_dump. Vaultkeeper costs less than four months of SimpleBackups, once. For freelancers and small teams whose databases fit on a $10 VPS, the backup bill exceeding the hosting bill is exactly backwards.',
       'The credentials question deserves more weight than it usually gets. A managed backup service is a honeypot by design: it holds connection strings for hundreds of companies\' production databases. SimpleBackups takes security seriously, but "our vendor got breached" is a sentence you can only avoid by not having the vendor. With Vaultkeeper, credentials are AES-256-GCM encrypted in a SQLite file on your own box, passwords never touch a process argument, and dumps stream directly from your database to your storage — no third party in the path.',
     ],
     stay: [
       'Stay with SimpleBackups if you need full-server snapshots, SaaS-app backups or a managed multi-client dashboard with someone else on the hook — Vaultkeeper covers databases (Postgres, MySQL/MariaDB, MongoDB, SQLite), not server images. Stay if there is genuinely nobody to own a self-hosted tool.',
       'Switch if your backups are database dumps to S3-compatible storage and you would rather own the pipeline: your credentials on your box, an encryption format you can decrypt without us, and $0/month from now on.',
     ],
-    meetExtra: 'Vaultkeeper runs cron-scheduled dumps of all four engines, streams them through gzip and AES-256-GCM (or age), ships to local disk, any S3-compatible bucket (AWS, B2, R2, MinIO) or FTP, prunes by GFS-lite retention, and alerts by webhook or email with the dump tool\'s stderr the moment a run fails. The VK1 encryption format is documented byte-for-byte with a dependency-free decrypt script in the repo — your backups are never hostage to the software. A one-click restore helper generates the exact command chain. $39 once, MIT source.',
+    meetExtra: 'Vaultkeeper runs cron-scheduled dumps of all four engines, streams them through gzip and AES-256-GCM (or age), ships to local disk, any S3-compatible bucket (AWS, B2, R2, MinIO) or FTP, prunes by GFS-lite retention, and alerts by webhook or email with the dump tool\'s stderr the moment a run fails. The VK1 encryption format is documented byte-for-byte with a dependency-free decrypt script in the repo — your backups are never hostage to the software. A one-click restore helper generates the exact command chain. $99 once, MIT source.',
   },
   {
     slug: 'launchlist-alternative', competitor: 'LaunchList', product: 'queuecraft',
-    metaDesc: 'LaunchList Pro is $29/month — and your waitlist runs for months before launch. Queuecraft is the same referral waitlist, self-hosted with your own SMTP, for $29 once.',
+    metaDesc: 'LaunchList Pro is $29/month — and your waitlist runs for months before launch. Queuecraft is the same referral waitlist, self-hosted with your own SMTP, for $79 once.',
     intro: [
       'LaunchList made pre-launch waitlists genuinely easy: a hosted signup page or embed widget, referral links that let subscribers jump the queue by sharing, email verification, and analytics — the exact growth loop behind Robinhood\'s and Superhuman\'s famous million-person queues, packaged for anyone.',
-      'The catch is baked into the timing. A waitlist runs for the months before you launch — precisely when you have no revenue — and LaunchList Pro charges $29 for each of them. A typical 3-to-12-month pre-launch runs $87 to $348 in subscription fees for what is, at its core, a signup form and a ranking query. Queuecraft is that exact mechanic as a $29 one-time purchase you host yourself. It pays for itself in month one, literally.',
+      'The catch is baked into the timing. A waitlist runs for the months before you launch — precisely when you have no revenue — and LaunchList Pro charges $29 for each of them. A typical 3-to-12-month pre-launch runs $87 to $348 in subscription fees for what is, at its core, a signup form and a ranking query. Queuecraft is that exact mechanic as a $79 one-time purchase you host yourself. It pays for itself inside three months, literally.',
     ],
     good: {
       lead: 'LaunchList deserves its traction:',
@@ -149,7 +149,7 @@ module.exports = [
         'Five-minute setup — create a list, drop the widget in, and you are collecting emails before lunch.',
         'The full referral loop — unique links, queue positions, leaderboard mechanics, all pre-built.',
         'Managed email — verification and notifications go out through their sender; no SMTP to configure.',
-        'A free tier — small lists can start at $0, and free beats $29.',
+        'A free tier — small lists can start at $0, and free beats $79.',
       ],
       after: 'If you want a waitlist live today with zero infrastructure and your list stays small, LaunchList\'s free tier is a fine place to start.',
     },
@@ -161,14 +161,14 @@ module.exports = [
       'Stay with LaunchList if you want zero infrastructure — Queuecraft needs a $5 VPS or a desktop machine, plus SMTP credentials (an afternoon, but a real afternoon). Stay if the free tier covers your list size and you would rather not think about servers mid-launch.',
       'Switch if you launch more than once, your list is growing, or you want your subscribers on your own disk. The referral mechanic is identical; the difference is who owns the queue.',
     ],
-    meetExtra: 'Queuecraft ships the whole loop: hosted signup pages and a shadow-DOM-isolated embed widget, unique referral links where every verified referral jumps the queue N positions, double opt-in through your own SMTP with a retry queue so a bad config never loses a signup, launch broadcasts to all/verified/top-N with position and referral-link placeholders, CSV export, and serious anti-fraud — 450+ disposable domains blocked, honeypot, per-IP rate limits, Gmail dot/+tag dedupe, self-referral prevention. $29 once, MIT source.',
+    meetExtra: 'Queuecraft ships the whole loop: hosted signup pages and a shadow-DOM-isolated embed widget, unique referral links where every verified referral jumps the queue N positions, double opt-in through your own SMTP with a retry queue so a bad config never loses a signup, launch broadcasts to all/verified/top-N with position and referral-link placeholders, CSV export, and serious anti-fraud — 450+ disposable domains blocked, honeypot, per-IP rate limits, Gmail dot/+tag dedupe, self-referral prevention. $79 once, MIT source.',
   },
   {
     slug: 'senja-alternative', competitor: 'Senja', product: 'bravowall',
-    metaDesc: 'Senja costs $19–39/mo — $228–468/year — to display quotes your customers wrote for free. Bravowall collects, moderates and embeds testimonials self-hosted for $29 once.',
+    metaDesc: 'Senja costs $19–39/mo — $228–468/year — to display quotes your customers wrote for free. Bravowall collects, moderates and embeds testimonials self-hosted for $79 once.',
     intro: [
       'Senja is the best-loved tool in the testimonial space, and for good reason: beautiful collection forms, video testimonial recording, one-click imports from Twitter and G2, a gorgeous Wall of Love widget, and share-ready image cards. It made social proof feel effortless, and its free tier let everyone try.',
-      'But step back and look at what you are renting: the display and storage of words your customers wrote for free. Testimonials are collected once and shown forever — the most one-time-shaped workload imaginable — yet Senja Starter bills $19/month ($228/year) and Pro $39/month ($468/year), indefinitely. Bravowall is the same core loop — collect, moderate, embed, export cards — as a $29 pay-once app on your own server. It even imports your Senja CSV.',
+      'But step back and look at what you are renting: the display and storage of words your customers wrote for free. Testimonials are collected once and shown forever — the most one-time-shaped workload imaginable — yet Senja Starter bills $19/month ($228/year) and Pro $39/month ($468/year), indefinitely. Bravowall is the same core loop — collect, moderate, embed, export cards — as a $79 pay-once app on your own server. It even imports your Senja CSV.',
     ],
     good: {
       lead: 'Senja is genuinely delightful software:',
@@ -188,14 +188,14 @@ module.exports = [
       'Stay with Senja if in-browser video recording and hosting matters — Bravowall handles video as YouTube/Loom/Vimeo link embeds, not recording, on purpose. Stay if the social-media auto-imports are how you actually gather proof, or if 15 testimonials on the free tier is all you need.',
       'Switch if your loop is the common one — send a form, approve the responses, embed a wall, share a card — and you would rather own it. Bravowall\'s CSV import reads Senja exports directly, so leaving is a single upload.',
     ],
-    meetExtra: 'Bravowall covers the loop that matters: hosted collection forms per product (stars, avatar upload, video links, consent checkbox, guiding questions), a moderation queue with typo-fixing that preserves originals, a masonry Wall of Love embedded via one script tag inside shadow DOM so client CSS can never break it, server-side PNG card export (1080x1080 or 1600x900) for social, a count API for "loved by N customers" counters, and honeypot + rate-limit spam protection. Unlimited spaces and testimonials in a SQLite file you own. $29 once, MIT source.',
+    meetExtra: 'Bravowall covers the loop that matters: hosted collection forms per product (stars, avatar upload, video links, consent checkbox, guiding questions), a moderation queue with typo-fixing that preserves originals, a masonry Wall of Love embedded via one script tag inside shadow DOM so client CSS can never break it, server-side PNG card export (1080x1080 or 1600x900) for social, a count API for "loved by N customers" counters, and honeypot + rate-limit spam protection. Unlimited spaces and testimonials in a SQLite file you own. $79 once, MIT source.',
   },
   {
     slug: 'distill-alternative', competitor: 'Distill', product: 'hawkwatch',
-    metaDesc: 'Distill.io meters your page checks — $12/mo Starter, $28/mo Pro, forever. Hawkwatch monitors prices and stock from your own server, unlimited watchers, for $34 once.',
+    metaDesc: 'Distill.io meters your page checks — $12/mo Starter, $28/mo Pro, forever. Hawkwatch monitors prices and stock from your own server, unlimited watchers, for $89 once.',
     intro: [
       'Distill.io is the veteran of web page monitoring. Its browser extension can watch almost anything — prices, stock, job boards, government pages — with visual element selection, and its cloud monitors keep checking after you close the laptop. For breadth of "watch this and tell me when it changes", Distill has few rivals.',
-      'The business model is a meter. Cloud checks are rationed by plan: Starter is $12/month, Pro $28/month, with monitor counts and check frequency both tiered — $144 to $336 a year, forever, to poll web pages. Hawkwatch moves the whole job onto hardware you already own: a $34 pay-once monitor with unlimited watchers, real headless Chromium, price-aware extraction and screenshot alerts. Here is the honest comparison.',
+      'The business model is a meter. Cloud checks are rationed by plan: Starter is $12/month, Pro $28/month, with monitor counts and check frequency both tiered — $144 to $336 a year, forever, to poll web pages. Hawkwatch moves the whole job onto hardware you already own: a $89 pay-once monitor with unlimited watchers, real headless Chromium, price-aware extraction and screenshot alerts. Here is the honest comparison.',
     ],
     good: {
       lead: 'Distill has earned its decade of loyal users:',
@@ -215,14 +215,14 @@ module.exports = [
       'Stay with Distill if you monitor pages behind personal logins (the extension rides your session — a genuinely hard trick), if you need SMS alerts as a managed service, or if the free browser-only tier honestly covers your needs. Those are real strengths Hawkwatch does not replicate.',
       'Switch if your watchers are product pages: Hawkwatch parses prices from JSON-LD structured data automatically, tracks stock transitions, charts price history, and attaches a full-page screenshot of the exact moment things changed — unlimited watchers, on your schedule, on your box.',
     ],
-    meetExtra: 'Hawkwatch is price-and-stock-native: automatic price extraction from JSON-LD Product/Offer data with og:price and microdata fallbacks, CSS-selector mode with locale-aware parsing ($1,299.00 and 1.299,00 EUR both work), stock tracking, headless Playwright Chromium for JS-heavy shops or plain HTTP for static ones, per-watcher schedules with jitter and backoff, BYO-SMTP email and webhook alerts with screenshots attached, and price history charts in local SQLite. Politeness is built in: identifying user agent, 5-minute interval floor, robots.txt warnings. $34 once, MIT source.',
+    meetExtra: 'Hawkwatch is price-and-stock-native: automatic price extraction from JSON-LD Product/Offer data with og:price and microdata fallbacks, CSS-selector mode with locale-aware parsing ($1,299.00 and 1.299,00 EUR both work), stock tracking, headless Playwright Chromium for JS-heavy shops or plain HTTP for static ones, per-watcher schedules with jitter and backoff, BYO-SMTP email and webhook alerts with screenshots attached, and price history charts in local SQLite. Politeness is built in: identifying user agent, 5-minute interval floor, robots.txt warnings. $89 once, MIT source.',
   },
   {
     slug: 'mailchimp-alternative', competitor: 'Mailchimp', product: 'postbird',
-    metaDesc: 'Mailchimp bills per contact — roughly $20/mo at 1,000 contacts, $100+/mo at 10,000, forever. Postbird is self-hosted email campaigns over your own SMTP for $59 once.',
+    metaDesc: 'Mailchimp bills per contact — roughly $20/mo at 1,000 contacts, $100+/mo at 10,000, forever. Postbird is self-hosted email campaigns over your own SMTP for $149 once.',
     intro: [
       'Mailchimp is where most people learn email marketing, and it remains a genuinely capable platform: a polished campaign builder, automations, landing pages, integrations with everything, and deliverability infrastructure refined over two decades. There is a reason it became a verb.',
-      'The problem is the pricing axis: Mailchimp charges per contact. Around $20/month at a thousand contacts, past $100/month at ten thousand — your bill grows precisely as your audience does, forever, and you are effectively renting access to your own list. Postbird inverts the model: a $59 one-time app that runs on your server, sends through any SMTP provider you choose, and stores subscribers in a SQLite file you own. At 1,000 contacts, Mailchimp costs more than Postbird every three months.',
+      'The problem is the pricing axis: Mailchimp charges per contact. Around $20/month at a thousand contacts, past $100/month at ten thousand — your bill grows precisely as your audience does, forever, and you are effectively renting access to your own list. Postbird inverts the model: a $149 one-time app that runs on your server, sends through any SMTP provider you choose, and stores subscribers in a SQLite file you own. At 1,000 contacts, Mailchimp costs more than Postbird every three months.',
     ],
     good: {
       lead: 'Mailchimp\'s strengths are real and substantial:',
@@ -243,14 +243,14 @@ module.exports = [
       'Stay with Mailchimp if you rely on automations and drip journeys, landing pages, or its e-commerce integrations — Postbird deliberately does campaigns, not marketing automation. Stay if nobody can run a small server, or if the free tier covers your list.',
       'Switch if what you send is newsletters and campaigns to a list you want to own. You bring SES or Postmark credentials (and inherit their deliverability), Postbird does the rest — with compliance enforced in code, not checkboxes.',
     ],
-    meetExtra: 'Postbird covers the campaign loop end to end: lists with CSV import/dedupe and double opt-in (consent timestamp + IP stored for GDPR), live-count segments, a drag-block builder that compiles to bulletproof table-based inline-styled HTML that survives Outlook, throttled queued sending over any SMTP with pause/resume, open and click tracking with HMAC-signed tokens, and bounce webhooks for SES/Postmark/Mailgun. CAN-SPAM is enforced at send time: sending is blocked until a physical address is set, the unsubscribe footer is non-removable, and RFC 8058 one-click headers go on every message. $59 once, MIT source.',
+    meetExtra: 'Postbird covers the campaign loop end to end: lists with CSV import/dedupe and double opt-in (consent timestamp + IP stored for GDPR), live-count segments, a drag-block builder that compiles to bulletproof table-based inline-styled HTML that survives Outlook, throttled queued sending over any SMTP with pause/resume, open and click tracking with HMAC-signed tokens, and bounce webhooks for SES/Postmark/Mailgun. CAN-SPAM is enforced at send time: sending is blocked until a physical address is set, the unsubscribe footer is non-removable, and RFC 8058 one-click headers go on every message. $149 once, MIT source.',
   },
   {
     slug: 'sendy-alternative', competitor: 'Sendy', product: 'postbird',
-    metaDesc: 'Sendy is the classic escape from Mailchimp — $69 once, but PHP/MySQL, closed source and locked to Amazon SES. Postbird is $59, any SMTP, MIT-licensed, desktop or Docker.',
+    metaDesc: 'Sendy is the classic escape from Mailchimp — $69 once, but PHP/MySQL, closed source and locked to Amazon SES. Postbird is $149, any SMTP, MIT-licensed, desktop or Docker.',
     intro: [
       'Sendy is the original self-hosted answer to Mailchimp\'s per-contact rent, and credit where due: it proved the model. Pay $69 once, run a PHP app on your server, send through Amazon SES at $1 per 10,000 emails, and watch the Mailchimp bill disappear. Thousands of newsletters have run on it for a decade, and for many it has been superb value.',
-      'So this is not a subscription-versus-ownership post — Sendy already won that argument. It is about the constraints Sendy carries in 2026: it is hard-locked to Amazon SES, closed source with a license key, and built on a PHP/MySQL stack you must provision. Postbird is the modern take on the same idea: $59 once, any SMTP provider, MIT source, one Node process with SQLite — and it runs as a desktop app.',
+      'So this is not a subscription-versus-ownership post — Sendy already won that argument. It is about the constraints Sendy carries in 2026: it is hard-locked to Amazon SES, closed source with a license key, and built on a PHP/MySQL stack you must provision. Postbird is the modern take on the same idea: $149 once, any SMTP provider, MIT source, one Node process with SQLite — and it runs as a desktop app.',
     ],
     good: {
       lead: 'Sendy earned its reputation honestly:',
@@ -270,14 +270,14 @@ module.exports = [
       'Stay with Sendy if you are on SES already, your setup works, and its ecosystem of integrations matters to you — a working newsletter pipeline is not something to churn for sport. The $69 you spent is spent well.',
       'Switch if you are choosing today: Postbird is $10 cheaper, SMTP-agnostic (SES when you want cheap, Postmark when you want deliverability — swap anytime), MIT-licensed so you can audit every line, and one Node process with SQLite instead of a LAMP stack. The desktop mode for authoring is something Sendy simply does not have.',
     ],
-    meetExtra: 'Postbird is what the Sendy idea looks like rebuilt in 2026: a drag-block builder compiling to table-based email-safe HTML, segments with live counts, throttled queue sending that resumes after restarts, double opt-in with consent records, HMAC-signed open/click tracking, and bounce webhooks accepting SES-SNS, Postmark, Mailgun or generic payloads. Compliance is enforced in code — physical-address send-block, auto-appended unsubscribe footer, RFC 8058 headers on the wire, all asserted by the test suite. $59 once, any SMTP, MIT source.',
+    meetExtra: 'Postbird is what the Sendy idea looks like rebuilt in 2026: a drag-block builder compiling to table-based email-safe HTML, segments with live counts, throttled queue sending that resumes after restarts, double opt-in with consent records, HMAC-signed open/click tracking, and bounce webhooks accepting SES-SNS, Postmark, Mailgun or generic payloads. Compliance is enforced in code — physical-address send-block, auto-appended unsubscribe footer, RFC 8058 headers on the wire, all asserted by the test suite. $149 once, any SMTP, MIT source.',
   },
   {
     slug: 'keygen-alternative', competitor: 'Keygen', product: 'keymaster',
-    metaDesc: 'Keygen\'s hosted licensing API starts at $99/month — $1,188/year before you sell a single license. Keymaster is a self-hosted license server with offline ed25519 keys for $49 once.',
+    metaDesc: 'Keygen\'s hosted licensing API starts at $99/month — $1,188/year before you sell a single license. Keymaster is a self-hosted license server with offline ed25519 keys for $129 once.',
     intro: [
       'Keygen is the serious player in licensing-as-a-service: a deep API for licenses, machines, entitlements and distribution, cryptographically signed keys, and the polish of a product that has thought hard about every edge case in software licensing. To its real credit, it also publishes its source as a fair-code Community Edition you can self-host.',
-      'The hosted pricing is the rub: plans start at $99/month — $1,188 a year, $3,564 over three — which is brutal math for exactly the people who most need licensing: indie developers selling desktop tools. And the self-host escape hatch is a full Ruby application with Postgres and Redis to operate. Keymaster is the small-vendor version: a $49 pay-once license server, one Node process and a SQLite file, issuing ed25519-signed keys your app verifies completely offline.',
+      'The hosted pricing is the rub: plans start at $99/month — $1,188 a year, $3,564 over three — which is brutal math for exactly the people who most need licensing: indie developers selling desktop tools. And the self-host escape hatch is a full Ruby application with Postgres and Redis to operate. Keymaster is the small-vendor version: a $129 pay-once license server, one Node process and a SQLite file, issuing ed25519-signed keys your app verifies completely offline.',
     ],
     good: {
       lead: 'Keygen is genuinely excellent engineering:',
@@ -290,21 +290,21 @@ module.exports = [
       after: 'If you are licensing enterprise software with per-entitlement complexity and need a vendor on the hook, Keygen is the grown-up choice.',
     },
     hurts: [
-      'The pricing inverts the market. $99/month means an indie selling a $49 desktop tool pays for 25 sales a year before licensing breaks even — $1,188/year, every year, for what most small vendors actually use: issue key, verify key, count seats. Keymaster does those three things for $49 once. The self-hosted Community Edition avoids the fee but not the operations: Ruby, Postgres, Redis and their upgrade treadmill, which is heavy infrastructure for a single-vendor licensing server.',
+      'The pricing inverts the market. $99/month means an indie selling a $49 desktop tool pays for 25 sales a year before licensing breaks even — $1,188/year, every year, for what most small vendors actually use: issue key, verify key, count seats. Keymaster does those three things for $129 once. The self-hosted Community Edition avoids the fee but not the operations: Ruby, Postgres, Redis and their upgrade treadmill, which is heavy infrastructure for a single-vendor licensing server.',
       'There is also a custody argument specific to licensing: with a hosted service, your signing keys and your customer/activation data live with the vendor, and your app\'s activation path depends on their availability and their continued existence. License keys outlive companies — keys signed by a keypair on your own disk keep verifying forever, no matter what happens to anyone\'s SaaS.',
     ],
     stay: [
       'Stay with Keygen if you need entitlement-level licensing complexity, compliance requirements demand a managed vendor, or the Community Edition\'s depth is worth running the Postgres/Redis stack. Keymaster is deliberately simpler — keys, seats, downloads, webhooks — and does not try to model enterprise policy graphs.',
-      'Switch if you sell desktop apps, plugins or tools and your licensing needs are the universal ones: signed keys, offline verification, seat limits, signed download links. That is a $5 VPS job, and it should cost $49 once, not $99 a month.',
+      'Switch if you sell desktop apps, plugins or tools and your licensing needs are the universal ones: signed keys, offline verification, seat limits, signed download links. That is a $5 VPS job, and it should cost $129 once, not $99 a month.',
     ],
-    meetExtra: 'Keymaster issues KM1-format ed25519-signed keys — self-describing, documented byte-for-byte, verifiable offline with just your public key using the zero-dependency Node and WebCrypto snippets in the repo. The activation API enforces seat limits via machine fingerprints with idempotent re-activation and signed receipts for offline runs; artifacts deliver through 15-minute signed URLs; webhooks are HMAC-signed with retries and a delivery log. Your keypair is generated on first boot and lives on your disk. One Express process, SQLite, $49 once, MIT source.',
+    meetExtra: 'Keymaster issues KM1-format ed25519-signed keys — self-describing, documented byte-for-byte, verifiable offline with just your public key using the zero-dependency Node and WebCrypto snippets in the repo. The activation API enforces seat limits via machine fingerprints with idempotent re-activation and signed receipts for offline runs; artifacts deliver through 15-minute signed URLs; webhooks are HMAC-signed with retries and a delivery log. Your keypair is generated on first boot and lives on your disk. One Express process, SQLite, $129 once, MIT source.',
   },
   {
     slug: 'gumroad-alternative', competitor: 'Gumroad', product: 'keymaster',
-    metaDesc: 'Gumroad takes roughly 10% of every sale — $1,000/year on $10k of revenue, forever. Keymaster is a $49 self-hosted license server: your keys, your downloads, your margins.',
+    metaDesc: 'Gumroad takes roughly 10% of every sale — $1,000/year on $10k of revenue, forever. Keymaster is a $129 self-hosted license server: your keys, your downloads, your margins.',
     intro: [
       'Gumroad deserves enormous credit for what it made possible: anyone can sell a digital product in an afternoon. Checkout, VAT handling, file delivery, license keys, an audience discovery feed — the entire commercial plumbing of selling software, with zero upfront cost. For a first product, that trade is often exactly right.',
-      'But look at the trade as you grow: Gumroad\'s cut is roughly 10% plus a fixed fee per sale. Sell $10,000 of software a year and you hand over about $1,000 — every year, scaling with your success, forever. Its licensing is also the shallow end: server-validated keys with no offline verification and no real seat management. Keymaster attacks the piece you can actually own: a $49 self-hosted license server with cryptographically signed keys, seat limits and signed download delivery — pair it with a flat-fee processor like Stripe and the math changes completely.',
+      'But look at the trade as you grow: Gumroad\'s cut is roughly 10% plus a fixed fee per sale. Sell $10,000 of software a year and you hand over about $1,000 — every year, scaling with your success, forever. Its licensing is also the shallow end: server-validated keys with no offline verification and no real seat management. Keymaster attacks the piece you can actually own: a $129 self-hosted license server with cryptographically signed keys, seat limits and signed download delivery — pair it with a flat-fee processor like Stripe and the math changes completely.',
     ],
     good: {
       lead: 'Gumroad\'s value is real, especially early on:',
@@ -317,21 +317,21 @@ module.exports = [
       after: 'If you are validating your first product and revenue is near zero, 10% of almost nothing is a fair price for all of that plumbing.',
     },
     hurts: [
-      'The percentage never stops scaling. 10% + 50 cents on every sale means your platform bill grows in lockstep with your success: ~$1,050/year at $10k of sales, $5,000+/year at $50k — compare Stripe\'s roughly 3% and Keymaster\'s one-time $49. The better your product does, the worse the deal gets, and unlike a subscription you cannot even cap it. Over three years at modest $10k/year revenue, Gumroad\'s cut is around $3,000.',
+      'The percentage never stops scaling. 10% + 50 cents on every sale means your platform bill grows in lockstep with your success: ~$1,050/year at $10k of sales, $5,000+/year at $50k — compare Stripe\'s roughly 3% and Keymaster\'s one-time $129. The better your product does, the worse the deal gets, and unlike a subscription you cannot even cap it. Over three years at modest $10k/year revenue, Gumroad\'s cut is around $3,000.',
       'The licensing itself is also thin: Gumroad keys are verified by calling Gumroad\'s server — no offline validation (your app breaks where the internet does not reach), no machine fingerprints or real seat enforcement, and the whole scheme lives or dies with your Gumroad account. Your customers, your keys and your delivery all sit on a platform that has changed pricing before and can again.',
     ],
     stay: [
       'Stay with Gumroad if you are pre-revenue or near it, if merchant-of-record tax handling is a hard requirement you will not solve another way, or if its discovery feed genuinely drives sales for you. Keymaster does licensing and delivery — you still need a payment processor (Stripe plus a webhook that calls Keymaster\'s issue endpoint; the recipe is in the docs).',
-      'Switch when the math flips — for most sellers that is around a few thousand dollars a year in revenue. At that point the 10% cut is your largest software expense, and replacing it with Stripe fees plus a $49 one-time license server is the highest-ROI change you can make.',
+      'Switch when the math flips — for most sellers that is around a few thousand dollars a year in revenue. At that point the 10% cut is your largest software expense, and replacing it with Stripe fees plus a $129 one-time license server is the highest-ROI change you can make.',
     ],
-    meetExtra: 'Keymaster is the piece of the stack worth owning: ed25519-signed license keys your app verifies fully offline (zero-dependency snippets included), an activation API with machine-fingerprint seat limits, product/version management with artifacts delivered through 15-minute signed expiring URLs, HMAC-signed webhooks, a customer portal at /license/<key>, and a documented Stripe/Whop key-issuing recipe. Your keypair, your customer data, your VPS. $49 once, MIT source — it pays for itself on your first ~$500 of sales versus Gumroad\'s cut.',
+    meetExtra: 'Keymaster is the piece of the stack worth owning: ed25519-signed license keys your app verifies fully offline (zero-dependency snippets included), an activation API with machine-fingerprint seat limits, product/version management with artifacts delivered through 15-minute signed expiring URLs, HMAC-signed webhooks, a customer portal at /license/<key>, and a documented Stripe/Whop key-issuing recipe. Your keypair, your customer data, your VPS. $129 once, MIT source — it pays for itself on your first ~$1,300 of sales versus Gumroad\'s cut.',
   },
   {
     slug: 'transistor-alternative', competitor: 'Transistor', product: 'castport',
-    metaDesc: 'Transistor costs $19–99/month — $228+/year — to host audio files and an RSS feed. Castport is self-hosted podcast hosting with an Apple/Spotify-valid feed for $39 once.',
+    metaDesc: 'Transistor costs $19–99/month — $228+/year — to host audio files and an RSS feed. Castport is self-hosted podcast hosting with an Apple/Spotify-valid feed for $99 once.',
     intro: [
       'Transistor is one of the best podcast hosts money can rent: unlimited shows on every plan, clean analytics, private podcasts for internal audiences, a built-in website, and distribution to every directory that matters. It is the tool podcast professionals recommend to each other, and its product quality backs that up.',
-      'But strip podcasting hosting to its mechanics and it is file storage plus an XML feed — a job a $5 VPS does comfortably. Transistor bills $19/month at the Starter tier (capped at 20,000 downloads a month) up to $99/month, which is $228 to $1,188 a year, forever, for as long as your show exists. Castport is that same job as a $39 one-time purchase: upload episodes, get an Apple/Spotify-valid RSS feed, public pages, an embeddable player and download stats, on infrastructure you own.',
+      'But strip podcasting hosting to its mechanics and it is file storage plus an XML feed — a job a $5 VPS does comfortably. Transistor bills $19/month at the Starter tier (capped at 20,000 downloads a month) up to $99/month, which is $228 to $1,188 a year, forever, for as long as your show exists. Castport is that same job as a $99 one-time purchase: upload episodes, get an Apple/Spotify-valid RSS feed, public pages, an embeddable player and download stats, on infrastructure you own.',
     ],
     good: {
       lead: 'Transistor is genuinely excellent at podcast hosting:',
@@ -349,8 +349,8 @@ module.exports = [
     ],
     stay: [
       'Stay with Transistor if advertisers need IAB-certified analytics, if you need private/member podcasts, or if you never want to think about servers, TLS or backups — those are real services Castport does not replicate. Stay if a huge audience makes bandwidth a genuine engineering topic.',
-      'Switch if you run an indie show or small network: your feed on your domain, unlimited shows, episodes and downloads, honest per-episode stats, and hosting costs that end after $39 plus the VPS you likely already rent.',
+      'Switch if you run an indie show or small network: your feed on your domain, unlimited shows, episodes and downloads, honest per-episode stats, and hosting costs that end after $99 plus the VPS you likely already rent.',
     ],
-    meetExtra: 'Castport takes feed validity seriously — RSS 2.0 with the full itunes namespace, exact enclosure byte lengths, permanent GUIDs, real probed durations and proper HTTP Range support on audio, which is what Apple\'s crawler actually checks. Around it: unlimited shows and episodes, markdown show notes, scheduling, Podcasting 2.0 chapters, clean public show/episode pages with subscribe buttons, an embeddable iframe player, and privacy-safe download stats (IPs hashed with a rotating daily salt). One SQLite file plus two folders is the entire backup. $39 once, MIT source.',
+    meetExtra: 'Castport takes feed validity seriously — RSS 2.0 with the full itunes namespace, exact enclosure byte lengths, permanent GUIDs, real probed durations and proper HTTP Range support on audio, which is what Apple\'s crawler actually checks. Around it: unlimited shows and episodes, markdown show notes, scheduling, Podcasting 2.0 chapters, clean public show/episode pages with subscribe buttons, an embeddable iframe player, and privacy-safe download stats (IPs hashed with a rotating daily salt). One SQLite file plus two folders is the entire backup. $99 once, MIT source.',
   },
 ];

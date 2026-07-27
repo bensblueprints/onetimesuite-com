@@ -52,7 +52,7 @@
     "planId": "plan_ZfyjAnp3FYHXT",
     "checkoutUrl": "https://whop.com/checkout/plan_ZfyjAnp3FYHXT",
     "title": "Upwatch — Self-Hosted Uptime Monitoring + Status Page",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/upwatch"
   },
   "trimly": {
@@ -63,7 +63,7 @@
     "planId": "plan_0zA8uOHiWHuuq",
     "checkoutUrl": "https://whop.com/checkout/plan_0zA8uOHiWHuuq",
     "title": "Trimly — Self-Hosted Branded Link Shortener + Analytics",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/trimly-app"
   },
   "billcraft": {
@@ -74,7 +74,7 @@
     "planId": "plan_qHLPiGxv2OByt",
     "checkoutUrl": "https://whop.com/checkout/plan_qHLPiGxv2OByt",
     "title": "Billcraft — Self-Hosted Invoicing for Freelancers",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/billcraft"
   },
   "bookslot": {
@@ -85,7 +85,7 @@
     "planId": "plan_xL33UqjncpnMM",
     "checkoutUrl": "https://whop.com/checkout/plan_xL33UqjncpnMM",
     "title": "Bookslot — Self-Hosted Scheduling & Booking Page",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/bookslot"
   },
   "formforge": {
@@ -96,7 +96,7 @@
     "planId": "plan_4etbdC35hv1cq",
     "checkoutUrl": "https://whop.com/checkout/plan_4etbdC35hv1cq",
     "title": "Formforge — Self-Hosted Form Builder + Submissions Inbox",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/formforge-app"
   },
   "postdock": {
@@ -105,7 +105,7 @@
     "planId": "plan_ZdbBjB8MnhpGU",
     "checkoutUrl": "https://whop.com/checkout/plan_ZdbBjB8MnhpGU",
     "title": "PostDock — Self-Hosted Social Media Scheduler",
-    "price": 49,
+    "price": 129,
     "productUrl": "https://whop.com/benjisaiempire/postdock"
   },
   "linkleaf": {
@@ -123,7 +123,7 @@
     "planId": "plan_KdSUR66r0Hq3Z",
     "checkoutUrl": "https://whop.com/checkout/plan_KdSUR66r0Hq3Z",
     "title": "Scantrail — Self-Hosted Dynamic QR Codes + Scan Analytics",
-    "price": 24,
+    "price": 69,
     "productUrl": "https://whop.com/benjisaiempire/scantrail"
   },
   "cardsmith": {
@@ -132,7 +132,7 @@
     "planId": "plan_itgK637cAUQgy",
     "checkoutUrl": "https://whop.com/checkout/plan_itgK637cAUQgy",
     "title": "Cardsmith — Self-Hosted Social Card / OG Image API",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/cardsmith"
   },
   "sigcraft": {
@@ -150,7 +150,7 @@
     "planId": "plan_aBWBu4qmc4YqN",
     "checkoutUrl": "https://whop.com/checkout/plan_aBWBu4qmc4YqN",
     "title": "Statfox — Self-Hosted Privacy-First Web Analytics",
-    "price": 49,
+    "price": 129,
     "productUrl": "https://whop.com/benjisaiempire/statfox"
   },
   "shipnotes": {
@@ -159,7 +159,7 @@
     "planId": "plan_FWAqx43k8Nx7U",
     "checkoutUrl": "https://whop.com/checkout/plan_FWAqx43k8Nx7U",
     "title": "Shipnotes — Self-Hosted Changelog + Roadmap + Feature Voting",
-    "price": 49,
+    "price": 129,
     "productUrl": "https://whop.com/benjisaiempire/shipnotes"
   },
   "hearback": {
@@ -168,7 +168,7 @@
     "planId": "plan_ryCkIHIaV6JdJ",
     "checkoutUrl": "https://whop.com/checkout/plan_ryCkIHIaV6JdJ",
     "title": "Hearback — Self-Hosted Feedback + NPS Widget",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/hearback"
   },
   "docwell": {
@@ -177,7 +177,7 @@
     "planId": "plan_cVrNBPxnIKJWF",
     "checkoutUrl": "https://whop.com/checkout/plan_cVrNBPxnIKJWF",
     "title": "Docwell — Self-Hosted Knowledge Base & Help Center",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/docwell"
   },
   "chatlet": {
@@ -188,7 +188,7 @@
     "planId": "plan_MUXM7Q3RL9Y6f",
     "checkoutUrl": "https://whop.com/checkout/plan_MUXM7Q3RL9Y6f",
     "title": "Chatlet — Self-Hosted Live Chat for Your Website",
-    "price": 49,
+    "price": 129,
     "productUrl": "https://whop.com/benjisaiempire/chatlet-app"
   },
   "boardly": {
@@ -197,7 +197,7 @@
     "planId": "plan_ZFG2xO3ra8lVG",
     "checkoutUrl": "https://whop.com/checkout/plan_ZFG2xO3ra8lVG",
     "title": "Boardly — Self-Hosted Kanban Boards (Trello Replacement)",
-    "price": 19,
+    "price": 49,
     "productUrl": "https://whop.com/benjisaiempire/boardly"
   },
   "timevault": {
@@ -208,7 +208,7 @@
     "planId": "plan_LEMs0K0nJmifv",
     "checkoutUrl": "https://whop.com/checkout/plan_LEMs0K0nJmifv",
     "title": "Timevault — Self-Hosted Time Tracking for Freelancers",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/timevault-app"
   },
   "streakly": {
@@ -246,7 +246,7 @@
     "planId": "plan_HeBFV49AS5U4t",
     "checkoutUrl": "https://whop.com/checkout/plan_HeBFV49AS5U4t",
     "title": "Pingcron — Self-Hosted Cron Job Monitoring (Dead-Man's Switch)",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/pingcron"
   },
   "hookscope": {
@@ -255,7 +255,7 @@
     "planId": "plan_iAW1RJULqbJKQ",
     "checkoutUrl": "https://whop.com/checkout/plan_iAW1RJULqbJKQ",
     "title": "Hookscope — Self-Hosted Webhook Inspector (Capture + Replay)",
-    "price": 24,
+    "price": 69,
     "productUrl": "https://whop.com/benjisaiempire/hookscope"
   },
   "snapfleet": {
@@ -264,7 +264,7 @@
     "planId": "plan_dDVO4oxhZ75uT",
     "checkoutUrl": "https://whop.com/checkout/plan_dDVO4oxhZ75uT",
     "title": "Snapfleet — Self-Hosted Screenshot API (Unlimited Renders)",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/snapfleet"
   },
   "wrangle": {
@@ -286,7 +286,7 @@
     "planId": "plan_p5iZuZn2oIbQH",
     "checkoutUrl": "https://whop.com/checkout/plan_p5iZuZn2oIbQH",
     "title": "Vaultkeeper — Scheduled, Encrypted Database Backups You Own",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/vaultkeeper"
   },
   "queuecraft": {
@@ -295,7 +295,7 @@
     "planId": "plan_SToy5AddSEo4M",
     "checkoutUrl": "https://whop.com/checkout/plan_SToy5AddSEo4M",
     "title": "Queuecraft — Self-Hosted Viral Waitlist + Referral Queue-Jumping",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/queuecraft"
   },
   "bravowall": {
@@ -304,7 +304,7 @@
     "planId": "plan_5h3xwDCTo8X67",
     "checkoutUrl": "https://whop.com/checkout/plan_5h3xwDCTo8X67",
     "title": "Bravowall — Self-Hosted Testimonial Walls + PNG Card Export",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/bravowall"
   },
   "hawkwatch": {
@@ -313,7 +313,7 @@
     "planId": "plan_a6OolQdmTNnMO",
     "checkoutUrl": "https://whop.com/checkout/plan_a6OolQdmTNnMO",
     "title": "Hawkwatch — Self-Hosted Price & Stock Monitoring",
-    "price": 34,
+    "price": 89,
     "productUrl": "https://whop.com/benjisaiempire/hawkwatch"
   },
   "postbird": {
@@ -324,7 +324,7 @@
     "planId": "plan_0tXxbwKuLomPh",
     "checkoutUrl": "https://whop.com/checkout/plan_0tXxbwKuLomPh",
     "title": "Postbird — Self-Hosted Email Campaigns Over Your Own SMTP",
-    "price": 59,
+    "price": 149,
     "productUrl": "https://whop.com/benjisaiempire/postbird"
   },
   "keymaster": {
@@ -335,7 +335,7 @@
     "planId": "plan_vlp4bcvqKw6yi",
     "checkoutUrl": "https://whop.com/checkout/plan_vlp4bcvqKw6yi",
     "title": "Keymaster — Self-Hosted License Key Server for Software Sellers",
-    "price": 49,
+    "price": 129,
     "productUrl": "https://whop.com/benjisaiempire/keymaster-app"
   },
   "castport": {
@@ -344,7 +344,7 @@
     "planId": "plan_yzJcQeZmKVGoH",
     "checkoutUrl": "https://whop.com/checkout/plan_yzJcQeZmKVGoH",
     "title": "Castport — Self-Hosted Podcast Hosting + Valid RSS",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/castport"
   },
   "inkpress": {
@@ -353,7 +353,7 @@
     "planId": "plan_0xi4TmFTkXEJe",
     "checkoutUrl": "https://whop.com/checkout/plan_0xi4TmFTkXEJe",
     "title": "Inkpress — Self-Hosted Markdown Blog Engine",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/inkpress"
   },
   "feedloft": {
@@ -393,7 +393,7 @@
     "planId": "plan_QSlKHmJsfRCb9",
     "checkoutUrl": "https://whop.com/checkout/plan_QSlKHmJsfRCb9",
     "title": "Droplink — Self-Hosted Big-File Transfer",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/droplink-app"
   },
   "snipvault": {
@@ -404,7 +404,7 @@
     "planId": "plan_TGaeF0MnkcpSS",
     "checkoutUrl": "https://whop.com/checkout/plan_TGaeF0MnkcpSS",
     "title": "Snipvault — Self-Hosted Code Snippet Manager",
-    "price": 19,
+    "price": 49,
     "productUrl": "https://whop.com/benjisaiempire/snipvault-app"
   },
   "inkseal": {
@@ -413,7 +413,7 @@
     "planId": "plan_xRtPj9lTHiX0x",
     "checkoutUrl": "https://whop.com/checkout/plan_xRtPj9lTHiX0x",
     "title": "Inkseal — Self-Hosted E-Signature Platform",
-    "price": 59,
+    "price": 149,
     "productUrl": "https://whop.com/benjisaiempire/inkseal"
   },
   "overlayr": {
@@ -424,7 +424,7 @@
     "planId": "plan_EilSQF3f5APgE",
     "checkoutUrl": "https://whop.com/checkout/plan_EilSQF3f5APgE",
     "title": "Overlayr — Self-Hosted OBS Stream Overlays",
-    "price": 24,
+    "price": 69,
     "productUrl": "https://whop.com/benjisaiempire/overlayr"
   },
   "signboard": {
@@ -435,7 +435,7 @@
     "planId": "plan_ugqi6pWCRpAEg",
     "checkoutUrl": "https://whop.com/checkout/plan_ugqi6pWCRpAEg",
     "title": "Signboard — Self-Hosted Digital Signage",
-    "price": 49,
+    "price": 129,
     "productUrl": "https://whop.com/benjisaiempire/signboard"
   },
   "serpdeck": {
@@ -444,7 +444,7 @@
     "planId": "plan_JZLTEWTXwsEmS",
     "checkoutUrl": "https://whop.com/checkout/plan_JZLTEWTXwsEmS",
     "title": "Serpdeck — Self-Hosted Keyword Rank Tracker",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/serpdeck"
   },
   "chatterbox": {
@@ -455,7 +455,7 @@
     "planId": "plan_XP3ZaoFf6Ty0Y",
     "checkoutUrl": "https://whop.com/checkout/plan_XP3ZaoFf6Ty0Y",
     "title": "Chatterbox — Self-Hosted Embeddable Comments",
-    "price": 24,
+    "price": 69,
     "productUrl": "https://whop.com/benjisaiempire/chatterbox-app"
   },
   "textract": {
@@ -477,7 +477,7 @@
     "planId": "plan_3GB0of5k43MDx",
     "checkoutUrl": "https://whop.com/checkout/plan_3GB0of5k43MDx",
     "title": "Ledgerly — Expense Tracker with Receipt OCR",
-    "price": 29,
+    "price": 79,
     "productUrl": "https://whop.com/benjisaiempire/ledgerly-app"
   },
   "deskly": {
@@ -991,7 +991,7 @@
     "planId": "plan_3qEX64z5tVTIj",
     "checkoutUrl": "https://whop.com/checkout/plan_3qEX64z5tVTIj",
     "title": "FamPing — Real-time family locations and place alerts — without selling your…",
-    "price": 39,
+    "price": 99,
     "productUrl": "https://whop.com/benjisaiempire/famping"
   },
   "doortracker": {
@@ -1001,7 +1001,7 @@
     "planId": "plan_geWRcv1puOeJb",
     "checkoutUrl": "https://whop.com/checkout/plan_geWRcv1puOeJb",
     "title": "Door Tracker — Prove the route was actually walked — not just driven.",
-    "price": 49,
+    "price": 129,
     "productUrl": "https://whop.com/benjisaiempire/doortracker"
   },
   "onetimesuite-complete": {

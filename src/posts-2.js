@@ -2,10 +2,10 @@
 module.exports = [
   {
     slug: 'uptimerobot-alternative', competitor: 'UptimeRobot', product: 'upwatch',
-    metaDesc: 'UptimeRobot costs $96+/year and caps your monitors. Upwatch is self-hosted uptime monitoring with a branded status page — $39 once, unlimited monitors.',
+    metaDesc: 'UptimeRobot costs $96+/year and caps your monitors. Upwatch is self-hosted uptime monitoring with a branded status page — $99 once, unlimited monitors.',
     intro: [
       'UptimeRobot is the default answer to "how do I know when my site goes down?" — and deservedly so. The free tier (50 monitors at 5-minute intervals) is one of the most generous in SaaS, setup takes ninety seconds, and it checks your sites from multiple locations around the world.',
-      'The squeeze starts when you outgrow free: 1-minute intervals, more monitor types, proper status pages and longer log retention all live behind the paid tiers at roughly $8/month and up — $96+/year, forever, with monitor counts still capped. If you run client sites and own even one $5 VPS, there is a pay-once path: Upwatch, $39, unlimited monitors, your own branded status page.',
+      'The squeeze starts when you outgrow free: 1-minute intervals, more monitor types, proper status pages and longer log retention all live behind the paid tiers at roughly $8/month and up — $96+/year, forever, with monitor counts still capped. If you run client sites and own even one $5 VPS, there is a pay-once path: Upwatch, $99, unlimited monitors, your own branded status page.',
     ],
     good: {
       lead: 'UptimeRobot has earned its two million users:',
@@ -22,17 +22,17 @@ module.exports = [
       'Your monitoring data also lives in their cloud, attached to their account limits. Want a fully branded status page on your own domain with your own retention policy? That is exactly the feature set the pricing ladder is built to sell you, one tier at a time.',
     ],
     stay: [
-      'Stay with UptimeRobot if the free tier covers you — do not pay $39 to replace $0. Stay if you need multi-region checking (Upwatch checks from the one box you run it on), ping/port/DNS monitor types, or SMS/voice alerting managed for you.',
-      'Switch if you are an agency or indie host paying monthly to watch client sites. One $5 VPS runs Upwatch with unlimited HTTP monitors, 30-second intervals, keyword checks and a clean branded status page for every client — for a flat $39, once.',
+      'Stay with UptimeRobot if the free tier covers you — do not pay $99 to replace $0. Stay if you need multi-region checking (Upwatch checks from the one box you run it on), ping/port/DNS monitor types, or SMS/voice alerting managed for you.',
+      'Switch if you are an agency or indie host paying monthly to watch client sites. One $5 VPS runs Upwatch with unlimited HTTP monitors, 30-second intervals, keyword checks and a clean branded status page for every client — for a flat $99, once.',
     ],
     meetExtra: 'Upwatch was built for the agency case: unlimited HTTP(S) monitors with status-code and keyword assertions, per-monitor uptime stats and incident logs, Slack/Discord-compatible webhooks plus SMTP email on down and recovery, and a classic 90-day-bar public status page at /status.',
   },
   {
     slug: 'pingdom-alternative', competitor: 'Pingdom', product: 'upwatch',
-    metaDesc: 'Pingdom starts at $10+/month and climbs with check volume. Upwatch gives you self-hosted uptime monitoring and a public status page for $39 one-time.',
+    metaDesc: 'Pingdom starts at $10+/month and climbs with check volume. Upwatch gives you self-hosted uptime monitoring and a public status page for $99 one-time.',
     intro: [
       'Pingdom (now part of SolarWinds) is the enterprise-recognizable name in uptime monitoring. It pioneered the category: synthetic checks from a global probe network, real-user monitoring, transaction checks that log into your app and click through flows, and root-cause traces when things break.',
-      'It is priced accordingly — synthetic monitoring starts around $10/month billed annually and scales with check volume, with RUM priced separately. For a SaaS company, that is a rounding error. For a freelancer or small agency watching a few dozen sites with "is it up, and is the checkout page rendering?" — it is a $120+/year subscription for a $39-once problem. That is Upwatch\'s territory.',
+      'It is priced accordingly — synthetic monitoring starts around $10/month billed annually and scales with check volume, with RUM priced separately. For a SaaS company, that is a rounding error. For a freelancer or small agency watching a few dozen sites with "is it up, and is the checkout page rendering?" — it is a $120+/year subscription for a $99-once problem. That is Upwatch\'s territory.',
     ],
     good: {
       lead: 'Pingdom is a serious tool with serious capabilities:',
@@ -50,16 +50,16 @@ module.exports = [
     ],
     stay: [
       'Stay with Pingdom if you need multi-region probes, scripted transaction checks or real-user monitoring — Upwatch does none of those; it checks HTTP from the single location where you run it. For contractual SLAs, that difference matters.',
-      'Switch if you are paying enterprise-monitoring money for up/down awareness on client sites. Upwatch gives you 30-second HTTP checks, keyword assertions, incident history, webhook + email alerts and a branded public status page — self-hosted, $39 once.',
+      'Switch if you are paying enterprise-monitoring money for up/down awareness on client sites. Upwatch gives you 30-second HTTP checks, keyword assertions, incident history, webhook + email alerts and a branded public status page — self-hosted, $99 once.',
     ],
     meetExtra: 'Upwatch runs as one Node process with SQLite — no cron, no Redis, no agents. Desktop mode for watching sites from your own machine, or Docker on a $5 VPS for a 24/7 public status page your clients can bookmark.',
   },
   {
     slug: 'statuscake-alternative', competitor: 'StatusCake', product: 'upwatch',
-    metaDesc: 'StatusCake\'s useful features live in paid tiers from ~$20/month. Upwatch is a $39-once self-hosted uptime monitor with unlimited checks and a branded status page.',
+    metaDesc: 'StatusCake\'s useful features live in paid tiers from ~$20/month. Upwatch is a $99-once self-hosted uptime monitor with unlimited checks and a branded status page.',
     intro: [
       'StatusCake is the cheerful British contender in uptime monitoring: a solid free tier (10 monitors at 5-minute intervals), uptime and SSL checks, page-speed monitoring, domain-expiry warnings, and a personality most infrastructure tools lack.',
-      'As with its competitors, though, the free tier is the top of a funnel. One-minute intervals, meaningful monitor counts, SMS alerts and clean status pages live in the Superior plan at roughly $20+/month billed annually — $240+/year, forever. If you would rather own your monitoring than rent it, Upwatch does the core job — HTTP checks, alerts, incidents, a public status page — for $39, once, on hardware you already have.',
+      'As with its competitors, though, the free tier is the top of a funnel. One-minute intervals, meaningful monitor counts, SMS alerts and clean status pages live in the Superior plan at roughly $20+/month billed annually — $240+/year, forever. If you would rather own your monitoring than rent it, Upwatch does the core job — HTTP checks, alerts, incidents, a public status page — for $99, once, on hardware you already have.',
     ],
     good: {
       lead: 'StatusCake covers a lot of ground:',
@@ -83,10 +83,10 @@ module.exports = [
   },
   {
     slug: 'bitly-alternative', competitor: 'Bitly', product: 'trimly',
-    metaDesc: 'Bitly charges $348/year to use your own domain on short links. Trimly is a self-hosted shortener with QR codes and full analytics for $29 one-time.',
+    metaDesc: 'Bitly charges $348/year to use your own domain on short links. Trimly is a self-hosted shortener with QR codes and full analytics for $79 one-time.',
     intro: [
       'Bitly is the brand name of link shortening — so much so that "bitly link" is generic vocabulary. The product has grown into a full "connections platform": short links, QR codes, link-in-bio pages, campaign analytics, and enterprise features used by two-thirds of the Fortune 500.',
-      'The pricing has grown with it. The plan that unlocks a custom branded domain — the single feature most businesses actually want — runs about $29/month, $348/year, forever. Link and QR quotas are capped per tier, and every click you have ever earned lives in their database, not yours. Trimly is the pay-once version of the 90% use case: your domain, your clicks, your SQLite file, $29 total.',
+      'The pricing has grown with it. The plan that unlocks a custom branded domain — the single feature most businesses actually want — runs about $29/month, $348/year, forever. Link and QR quotas are capped per tier, and every click you have ever earned lives in their database, not yours. Trimly is the pay-once version of the 90% use case: your domain, your clicks, your SQLite file, $79 total.',
     ],
     good: {
       lead: 'Bitly is genuinely strong infrastructure:',
@@ -99,7 +99,7 @@ module.exports = [
       after: 'If marketing ops at a 200-person company runs on Bitly campaigns, that subscription is doing real work.',
     },
     hurts: [
-      'For everyone smaller, the math is brutal: $348/year for a custom domain, against $29 once for Trimly plus a $5/month VPS you probably already have. Even counting the VPS, year one costs less than three months of Bitly — and years two through forever are nearly free. Bitly\'s free and cheap tiers, meanwhile, keep tightening: link caps, analytics limits, and bit.ly-branded domains that scream "generic marketing blast."',
+      'For everyone smaller, the math is brutal: $348/year for a custom domain, against $79 once for Trimly plus a $5/month VPS you probably already have. Even counting the VPS, year one costs less than six months of Bitly — and years two through forever are nearly free. Bitly\'s free and cheap tiers, meanwhile, keep tightening: link caps, analytics limits, and bit.ly-branded domains that scream "generic marketing blast."',
       'The deeper issue is custody. Your click data — which campaigns work, who your audience is, where they come from — is the asset. On Bitly, it lives on their servers behind their API limits, and links redirect through their infrastructure, with their business model built around link data. Cancel, and your history is theirs to export on their terms.',
     ],
     stay: [
@@ -110,10 +110,10 @@ module.exports = [
   },
   {
     slug: 'rebrandly-alternative', competitor: 'Rebrandly', product: 'trimly',
-    metaDesc: 'Rebrandly meters branded links by plan, from $13/month. Trimly is a self-hosted link shortener on your own domain — unlimited links, $29 once.',
+    metaDesc: 'Rebrandly meters branded links by plan, from $13/month. Trimly is a self-hosted link shortener on your own domain — unlimited links, $79 once.',
     intro: [
       'Rebrandly built its whole identity around one insight: branded links get more clicks than generic ones. It made custom-domain short links its headline feature rather than an upsell, and wrapped them in solid link management — tags, teammates, UTM tooling and an API developers actually like.',
-      'But the meter still runs. Paid plans start around $13/month and climb quickly as you add links, clicks tracked, and teammates; serious usage lands in the $32–99/month tiers. Which raises the obvious question: if the domain is yours anyway, why rent the redirect? Trimly puts the shortener itself on your infrastructure — $29 once, unlimited links, unlimited clicks.',
+      'But the meter still runs. Paid plans start around $13/month and climb quickly as you add links, clicks tracked, and teammates; serious usage lands in the $32–99/month tiers. Which raises the obvious question: if the domain is yours anyway, why rent the redirect? Trimly puts the shortener itself on your infrastructure — $79 once, unlimited links, unlimited clicks.',
     ],
     good: {
       lead: 'Rebrandly does branded linking well:',
@@ -137,10 +137,10 @@ module.exports = [
   },
   {
     slug: 'short-io-alternative', competitor: 'Short.io', product: 'trimly',
-    metaDesc: 'Short.io\'s useful tiers run $19–99/month for branded short links. Trimly is a $29-once self-hosted shortener with QR codes and full click analytics.',
+    metaDesc: 'Short.io\'s useful tiers run $19–99/month for branded short links. Trimly is a $79-once self-hosted shortener with QR codes and full click analytics.',
     intro: [
       'Short.io is the quietly capable link shortener — custom domains on every paid plan, link cloaking, geo- and device-targeted redirects, A/B splitting, and a solid API. It is a favorite of affiliate marketers and growth teams who need links that do more than redirect.',
-      'Its pricing follows the SaaS ladder: a limited free tier, then roughly $19/month (Personal) to $99/month (Team) as your link counts, clicks and features grow. That is $228–1,188 per year, forever, largely for infrastructure that fits comfortably on the smallest VPS money rents. Trimly is that VPS version: $29 once, no meters.',
+      'Its pricing follows the SaaS ladder: a limited free tier, then roughly $19/month (Personal) to $99/month (Team) as your link counts, clicks and features grow. That is $228–1,188 per year, forever, largely for infrastructure that fits comfortably on the smallest VPS money rents. Trimly is that VPS version: $79 once, no meters.',
     ],
     good: {
       lead: 'Short.io packs in real capability:',
@@ -164,10 +164,10 @@ module.exports = [
   },
   {
     slug: 'freshbooks-alternative', competitor: 'FreshBooks', product: 'billcraft',
-    metaDesc: 'FreshBooks costs $228+/year and caps billable clients on its Lite plan. Billcraft is self-hosted invoicing — unlimited clients, recurring billing, $39 once.',
+    metaDesc: 'FreshBooks costs $228+/year and caps billable clients on its Lite plan. Billcraft is self-hosted invoicing — unlimited clients, recurring billing, $99 once.',
     intro: [
       'FreshBooks is one of the most pleasant pieces of accounting software ever made for non-accountants. Freelancers love it for a reason: sending a professional invoice takes a minute, expenses snap in from your bank feed, time tracking flows into billing, and at tax time the reports are just there.',
-      'It is also a full accounting platform priced like one — the Lite plan runs about $19/month ($228/year) and caps you at five billable clients, with Plus at ~$33/month for fifty. If you actually use the accounting, that can be fair. But a large share of subscribers use FreshBooks as an invoice generator with a dashboard — and that job is a $39-once problem. That is Billcraft.',
+      'It is also a full accounting platform priced like one — the Lite plan runs about $19/month ($228/year) and caps you at five billable clients, with Plus at ~$33/month for fifty. If you actually use the accounting, that can be fair. But a large share of subscribers use FreshBooks as an invoice generator with a dashboard — and that job is a $99-once problem. That is Billcraft.',
     ],
     good: {
       lead: 'FreshBooks earns its reputation:',
@@ -191,10 +191,10 @@ module.exports = [
   },
   {
     slug: 'invoice-ninja-alternative', competitor: 'Invoice Ninja', product: 'billcraft',
-    metaDesc: 'Invoice Ninja is powerful but complex — 4 clients free, ~$120/yr hosted Pro, or a heavy self-host. Billcraft is simple self-hosted invoicing for $39 once.',
+    metaDesc: 'Invoice Ninja is powerful but complex — 4 clients free, ~$120/yr hosted Pro, or a heavy self-host. Billcraft is simple self-hosted invoicing for $99 once.',
     intro: [
       'Invoice Ninja is the open-source heavyweight of invoicing — and an honest post has to start there: like Billcraft, it can be self-hosted for free, and its feature list is enormous. Invoices, quotes, projects, tasks, expenses, vendors, 45+ payment gateways, client portals, white-labeling. It is a genuinely impressive project.',
-      'The catch is heft. The hosted free tier caps you at four clients; hosted Pro runs about $10–12/month (~$120/year). Self-hosting is free but means running a full Laravel/PHP application with a database, queues, cron and regular upgrades. Billcraft\'s pitch is different: the 20% of Invoice Ninja that freelancers actually use, in one Node process with one SQLite file, for $39 with a packaged installer.',
+      'The catch is heft. The hosted free tier caps you at four clients; hosted Pro runs about $10–12/month (~$120/year). Self-hosting is free but means running a full Laravel/PHP application with a database, queues, cron and regular upgrades. Billcraft\'s pitch is different: the 20% of Invoice Ninja that freelancers actually use, in one Node process with one SQLite file, for $99 with a packaged installer.',
     ],
     good: {
       lead: 'Invoice Ninja\'s strengths are substantial:',
@@ -218,10 +218,10 @@ module.exports = [
   },
   {
     slug: 'calendly-alternative', competitor: 'Calendly', product: 'bookslot',
-    metaDesc: 'Calendly costs $120+/user/year, forever, to rent your booking link. Bookslot is a self-hosted scheduling page on your own domain for $39 once.',
+    metaDesc: 'Calendly costs $120+/user/year, forever, to rent your booking link. Bookslot is a self-hosted scheduling page on your own domain for $99 once.',
     intro: [
       'Calendly won scheduling. "Send me your Calendly" is a sentence in every industry now, and the product deserves it: connect your calendars, set your rules, and double-bookings simply stop existing. Its two-way sync with Google, Outlook and iCloud calendars remains the best in the business.',
-      'But the Standard plan is $10 per user per month — $120/year, $360 over three years — to rent a booking page on calendly.com. For consultants, coaches, barbers and freelancers whose real need is "let people book my open slots and get a calendar invite," that is a permanent tax on a solved problem. Bookslot is that booking page, self-hosted on your own domain, for $39 once.',
+      'But the Standard plan is $10 per user per month — $120/year, $360 over three years — to rent a booking page on calendly.com. For consultants, coaches, barbers and freelancers whose real need is "let people book my open slots and get a calendar invite," that is a permanent tax on a solved problem. Bookslot is that booking page, self-hosted on your own domain, for $99 once.',
     ],
     good: {
       lead: 'Calendly is polished in ways that matter:',
@@ -245,10 +245,10 @@ module.exports = [
   },
   {
     slug: 'cal-com-alternative', competitor: 'Cal.com', product: 'bookslot',
-    metaDesc: 'Cal.com is open-source scheduling — free hosted for individuals, but heavy to self-host. Bookslot is a lightweight $39-once booking page for your own VPS.',
+    metaDesc: 'Cal.com is open-source scheduling — free hosted for individuals, but heavy to self-host. Bookslot is a lightweight $99-once booking page for your own VPS.',
     intro: [
       'Cal.com is the open-source answer to Calendly, and a good one: free for individuals on the hosted plan, teams at ~$15/user/month, fully open-source, self-hostable, with an API-first design and an app store of integrations. If this post talks you into Cal.com instead of Bookslot, fair enough — it is a strong project.',
-      'The honest comparison is about weight. Cal.com is a large Next.js/Prisma platform: self-hosting it properly means PostgreSQL, environment sprawl, real memory, and keeping pace with a fast-moving monorepo. Bookslot is the opposite bet — one small Node process, one SQLite file, $39 once with a packaged installer — for people who want a booking page, not a scheduling platform.',
+      'The honest comparison is about weight. Cal.com is a large Next.js/Prisma platform: self-hosting it properly means PostgreSQL, environment sprawl, real memory, and keeping pace with a fast-moving monorepo. Bookslot is the opposite bet — one small Node process, one SQLite file, $99 once with a packaged installer — for people who want a booking page, not a scheduling platform.',
     ],
     good: {
       lead: 'Cal.com has a lot going for it:',
@@ -265,17 +265,17 @@ module.exports = [
       'For a barber, coach or consultant, the platform features are mostly surface area: app stores and routing forms in front of what they need — "show my open slots, take a booking, email an invite." Complexity has a maintenance cost even when the license is free.',
     ],
     stay: [
-      'Stay with Cal.com if the hosted free tier covers you (solo, one calendar — genuinely free beats $39), or if you need calendar sync, video integrations and team scheduling with open-source values. If you already run Postgres happily, its self-host is viable too.',
+      'Stay with Cal.com if the hosted free tier covers you (solo, one calendar — genuinely free beats $99), or if you need calendar sync, video integrations and team scheduling with open-source values. If you already run Postgres happily, its self-host is viable too.',
       'Switch if you want self-hosting that fits on the smallest VPS or runs as a desktop app: one process, one SQLite file, timezone-correct math, ICS invites and cancel/reschedule links — installed in minutes, owned forever.',
     ],
     meetExtra: 'Bookslot keeps the footprint tiny on purpose: Node + Express + better-sqlite3, a dark-mode React booking page, Docker compose for VPS deploys, and an Electron desktop mode — the same code and schema everywhere, so moving from desktop to server is copying a data folder.',
   },
   {
     slug: 'typeform-alternative', competitor: 'Typeform', product: 'formforge',
-    metaDesc: 'Typeform charges $348/year and caps responses at 100/month on Basic. Formforge is a self-hosted form builder with unlimited responses for $39 once.',
+    metaDesc: 'Typeform charges $348/year and caps responses at 100/month on Basic. Formforge is a self-hosted form builder with unlimited responses for $99 once.',
     intro: [
       'Typeform made forms feel human. One question at a time, smooth transitions, conversational tone — respondents actually finish Typeforms, and completion rate is the whole game in surveys and lead capture. It is a genuinely great interaction model, which is why everyone copied it.',
-      'Then there is the bill: the Basic plan is $29/month — $348/year — and caps you at 100 responses per month. One hundred. A single successful campaign blows through that in a day, and the overage path is a bigger plan. Formforge gives you the same one-question-per-screen experience, self-hosted, with unlimited responses, for $39 once.',
+      'Then there is the bill: the Basic plan is $29/month — $348/year — and caps you at 100 responses per month. One hundred. A single successful campaign blows through that in a day, and the overage path is a bigger plan. Formforge gives you the same one-question-per-screen experience, self-hosted, with unlimited responses, for $99 once.',
     ],
     good: {
       lead: 'Typeform\'s polish is real:',
@@ -299,10 +299,10 @@ module.exports = [
   },
   {
     slug: 'jotform-alternative', competitor: 'Jotform', product: 'formforge',
-    metaDesc: 'Jotform\'s free tier is generous but paid tiers run $348+/year with submission caps. Formforge is a $39-once self-hosted form builder with no caps at all.',
+    metaDesc: 'Jotform\'s free tier is generous but paid tiers run $348+/year with submission caps. Formforge is a $99-once self-hosted form builder with no caps at all.',
     intro: [
       'Jotform is the feature giant of the form world: 10,000+ templates, a drag-and-drop builder, approval workflows, e-signatures, PDF generation, payment collection through 40+ processors, even a no-code app builder. Its free tier — five forms, 100 submissions a month — is one of the most usable in the category.',
-      'The paid ladder is where it tightens: Bronze at ~$34/month, Silver ~$39, Gold ~$99 (annual billing reduces these), each rationing forms, submissions, storage and views. Like every form SaaS, you are renting capacity forever. Formforge takes the other road: fewer features, zero caps, your own server, $39 once.',
+      'The paid ladder is where it tightens: Bronze at ~$34/month, Silver ~$39, Gold ~$99 (annual billing reduces these), each rationing forms, submissions, storage and views. Like every form SaaS, you are renting capacity forever. Formforge takes the other road: fewer features, zero caps, your own server, $99 once.',
     ],
     good: {
       lead: 'Jotform\'s breadth is genuinely useful:',
@@ -320,7 +320,7 @@ module.exports = [
     ],
     stay: [
       'Stay with Jotform if you need payment collection, e-signatures, approval workflows or HIPAA features — Formforge has none of those; it collects answers and files, full stop. The free tier is also genuinely fine for five small forms.',
-      'Switch if what you build is intake, registration, feedback and contact forms, and you want them unlimited, unbranded, on your own domain, with respondent files on your own disk. $39 once is less than six weeks of Bronze.',
+      'Switch if what you build is intake, registration, feedback and contact forms, and you want them unlimited, unbranded, on your own domain, with respondent files on your own disk. $99 once is less than three months of Bronze.',
     ],
     meetExtra: 'Formforge keeps the essentials sharp: a drag-orderable editor with 10 field types, per-form accent colors and success redirects, an open/closed toggle, iframe embedding, a clean submissions inbox with detail drawer and one-click CSV export — all in one Node process with SQLite.',
   },

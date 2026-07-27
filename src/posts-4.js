@@ -2,10 +2,10 @@
 module.exports = [
   {
     slug: 'plausible-alternative', competitor: 'Plausible', product: 'statfox',
-    metaDesc: 'Plausible costs $9–19/month, tiered by traffic, forever. Statfox is the same privacy-first analytics on your own server for a one-time $49. Honest comparison inside.',
+    metaDesc: 'Plausible costs $9–19/month, tiered by traffic, forever. Statfox is the same privacy-first analytics on your own server for a one-time $129. Honest comparison inside.',
     intro: [
       'Plausible deserves enormous credit. It proved that web analytics could be simple, cookie-free and privacy-respecting — one lightweight script, one clean dashboard, no consent banner — and built a sustainable open-source business doing it. If you left Google Analytics in the last few years, there is a good chance Plausible is where you went.',
-      'But Plausible\'s hosted service is a subscription tiered by traffic: $9/month at 10k pageviews, climbing as your sites grow, forever. If you run several sites — or client sites — you are paying rent on a job your own $5 VPS could do. Statfox is a $49 pay-once analytics server built on the same privacy principles. Here is the honest comparison.',
+      'But Plausible\'s hosted service is a subscription tiered by traffic: $9/month at 10k pageviews, climbing as your sites grow, forever. If you run several sites — or client sites — you are paying rent on a job your own $5 VPS could do. Statfox is a $129 pay-once analytics server built on the same privacy principles. Here is the honest comparison.',
     ],
     good: {
       lead: 'Plausible earns its reputation:',
@@ -29,10 +29,10 @@ module.exports = [
   },
   {
     slug: 'google-analytics-alternative', competitor: 'Google Analytics', product: 'statfox',
-    metaDesc: 'Google Analytics is free — paid for with consent banners, complexity and your visitors\' data. Statfox is $49 once: simple, cookie-free, self-hosted analytics. Honest comparison.',
+    metaDesc: 'Google Analytics is free — paid for with consent banners, complexity and your visitors\' data. Statfox is $129 once: simple, cookie-free, self-hosted analytics. Honest comparison.',
     intro: [
       'Google Analytics is the default analytics of the internet, and it is genuinely free in the cash sense — no invoice will ever arrive. GA4 can do almost anything: funnels, audiences, ad attribution, BigQuery exports, machine-learning insights across properties with millions of hits.',
-      'It is also the tool people most often describe as "47 menus deep", it requires cookie consent banners in much of the world, and its business model is your visitors\' data. Most site owners use roughly none of its power: they want to know how many people came, from where, and what they read. Statfox answers exactly those questions, on your own server, without a consent banner — for $49, once. Here is the honest comparison.',
+      'It is also the tool people most often describe as "47 menus deep", it requires cookie consent banners in much of the world, and its business model is your visitors\' data. Most site owners use roughly none of its power: they want to know how many people came, from where, and what they read. Statfox answers exactly those questions, on your own server, without a consent banner — for $129, once. Here is the honest comparison.',
     ],
     good: {
       lead: 'GA4 is unbeatable at what it is actually for:',
@@ -42,7 +42,7 @@ module.exports = [
         'Serious analysis power — funnels, cohorts, audiences, BigQuery export, custom reports.',
         'The ecosystem default — every tutorial, plugin and marketer already speaks it.',
       ],
-      after: 'If you run paid acquisition at scale or genuinely do cohort analysis, GA4 is the correct tool and no $49 app replaces it.',
+      after: 'If you run paid acquisition at scale or genuinely do cohort analysis, GA4 is the correct tool and no $129 app replaces it.',
     },
     hurts: [
       'The costs are just non-monetary. GA4 requires cookie consent in the EU/UK, which means a banner, which measurably costs you real traffic data as visitors decline. Its script weighs ~50KB+ against Statfox\'s <2KB. Several EU data-protection authorities ruled GA transfers unlawful in recent years — an ongoing compliance headache if you serve European visitors. And GA4 itself samples data, defaults to 14-month retention, and buries "how many people visited yesterday" under an interface even professionals complain about.',
@@ -52,14 +52,14 @@ module.exports = [
       'Stay with Google Analytics if you spend meaningfully on Google Ads (the attribution integration alone justifies it), if you need funnels, audiences and BigQuery-grade analysis, or if free-at-any-scale is non-negotiable and consent banners don\'t bother you.',
       'Switch if you check visitors, sources and top pages a few times a week and would happily trade the other 95% of GA4 for a dashboard you can read in ten seconds, a site that loads a 2KB script instead of 50, and no consent banner at all.',
     ],
-    meetExtra: 'Statfox is the ten-second dashboard: visitors, pageviews, bounce rate and duration compared to the previous period, with breakdowns for pages, grouped referrers, countries, devices and UTMs, realtime visitors, SPA-aware tracking and custom events — across unlimited sites, from one $49 server you own.',
+    meetExtra: 'Statfox is the ten-second dashboard: visitors, pageviews, bounce rate and duration compared to the previous period, with breakdowns for pages, grouped referrers, countries, devices and UTMs, realtime visitors, SPA-aware tracking and custom events — across unlimited sites, from one $129 server you own.',
   },
   {
     slug: 'canny-alternative', competitor: 'Canny', product: 'shipnotes',
-    metaDesc: 'Canny charges $79/month for changelog, roadmap and feature voting. Shipnotes does all three self-hosted for a one-time $49 — with no signup wall on votes. Honest comparison.',
+    metaDesc: 'Canny charges $79/month for changelog, roadmap and feature voting. Shipnotes does all three self-hosted for a one-time $129 — with no signup wall on votes. Honest comparison.',
     intro: [
       'Canny is the polished standard for user feedback: feature request boards, a public roadmap, a changelog, and prioritization tooling that product teams genuinely rely on. Companies like Ahrefs and ClickUp run their feedback loops on it, and it shows — the product is mature and well-integrated.',
-      'It also starts at $79/month. That is $948 a year — every year — to host what is, mechanically, a list of posts, a three-column board and an upvote button. For a bootstrapped SaaS or an agency shipping client products, that price turns "listen to your users" into a luxury. Shipnotes is the same core loop, self-hosted, for $49 once. Here is the honest breakdown.',
+      'It also starts at $79/month. That is $948 a year — every year — to host what is, mechanically, a list of posts, a three-column board and an upvote button. For a bootstrapped SaaS or an agency shipping client products, that price turns "listen to your users" into a luxury. Shipnotes is the same core loop, self-hosted, for $129 once. Here is the honest breakdown.',
     ],
     good: {
       lead: 'Canny is the category leader for good reasons:',
@@ -83,10 +83,10 @@ module.exports = [
   },
   {
     slug: 'headway-alternative', competitor: 'Headway', product: 'shipnotes',
-    metaDesc: 'Headway charges monthly for a changelog widget. Shipnotes is a one-time $49 and adds a public roadmap, feature voting and email subscribers — self-hosted. Honest comparison.',
+    metaDesc: 'Headway charges monthly for a changelog widget. Shipnotes is a one-time $129 and adds a public roadmap, feature voting and email subscribers — self-hosted. Honest comparison.',
     intro: [
       'Headway does one thing well: a clean hosted changelog with an embeddable widget — the little "What\'s new" badge that tells users you\'re alive and shipping. It is simple to set up, pleasant to write in, and the free tier is enough for a side project.',
-      'But the paid tier runs about $29/month for custom branding and privacy, and Headway is only the announcement half of the conversation. Users read what you shipped; they cannot tell you what to ship next. Shipnotes is $49 once and covers both directions — changelog plus roadmap plus feature voting — on your own server. Here is the honest comparison.',
+      'But the paid tier runs about $29/month for custom branding and privacy, and Headway is only the announcement half of the conversation. Users read what you shipped; they cannot tell you what to ship next. Shipnotes is $129 once and covers both directions — changelog plus roadmap plus feature voting — on your own server. Here is the honest comparison.',
     ],
     good: {
       lead: 'Headway keeps it simple, and simple has value:',
@@ -110,10 +110,10 @@ module.exports = [
   },
   {
     slug: 'hotjar-alternative', competitor: 'Hotjar', product: 'hearback',
-    metaDesc: 'Hotjar charges $32/month for surveys with a 500-response cap. Hearback is a self-hosted feedback + NPS widget for $29 once, unlimited responses. Honest comparison.',
+    metaDesc: 'Hotjar charges $32/month for surveys with a 500-response cap. Hearback is a self-hosted feedback + NPS widget for $79 once, unlimited responses. Honest comparison.',
     intro: [
       'Hotjar built the category of "watch what your users actually do": heatmaps, session recordings, and later surveys and feedback widgets. It is a genuinely useful suite, and for UX teams the recordings alone can justify the invoice.',
-      'But if what you actually use is the feedback button and the occasional NPS survey — which is where a large share of Hotjar accounts quietly end up — you are paying $32/month with a 500-response cap for a form and a dashboard. Hearback does the feedback half for $29, once, on your own server, with no response caps. Here is the honest breakdown.',
+      'But if what you actually use is the feedback button and the occasional NPS survey — which is where a large share of Hotjar accounts quietly end up — you are paying $32/month with a 500-response cap for a form and a dashboard. Hearback does the feedback half for $79, once, on your own server, with no response caps. Here is the honest breakdown.',
     ],
     good: {
       lead: 'Hotjar\'s suite is real and broad:',
@@ -131,16 +131,16 @@ module.exports = [
     ],
     stay: [
       'Stay with Hotjar if you need session recordings, heatmaps or frustration analytics — that is Hotjar\'s actual moat and Hearback deliberately does not attempt it. Stay too if you rely on its survey targeting rules (specific pages, user attributes, event triggers) beyond a frequency cap.',
-      'Switch if your real usage is a feedback widget and NPS — collect, triage, trend, export. That is a $29-once job, and unlimited responses means launch weeks stop being billing events.',
+      'Switch if your real usage is a feedback widget and NPS — collect, triage, trend, export. That is a $79-once job, and unlimited responses means launch weeks stop being billing events.',
     ],
     meetExtra: 'Hearback drops in with one script tag in a shadow DOM: an emoji-rated feedback form with Issue/Idea/Praise categories, classic 0–10 NPS with frequency capping enforced server-side, auto-captured page/browser context, an inbox with filters and a new → in progress → resolved workflow, an NPS trend dashboard, BYO-SMTP alerts and one-click CSV export.',
   },
   {
     slug: 'gitbook-alternative', competitor: 'GitBook', product: 'docwell',
-    metaDesc: 'GitBook Premium runs $79/site/month for a hosted docs site. Docwell is a self-hosted help center — markdown, instant search, full SEO — for $29 once. Honest comparison.',
+    metaDesc: 'GitBook Premium runs $79/site/month for a hosted docs site. Docwell is a self-hosted help center — markdown, instant search, full SEO — for $79 once. Honest comparison.',
     intro: [
       'GitBook is what many teams reach for when "we need docs" becomes urgent: a polished hosted platform where markdown becomes a searchable, versioned documentation site, with git sync for engineering teams and an editor non-engineers can actually use.',
-      'Then the pricing page: the free tier is for open source, and the tiers that businesses actually need climb to roughly $79 per site per month. That is $948 a year, per docs site, to host rendered markdown. Docwell is a self-hosted help center that does the customer-docs job for $29 once. Here is the honest comparison.',
+      'Then the pricing page: the free tier is for open source, and the tiers that businesses actually need climb to roughly $79 per site per month. That is $948 a year, per docs site, to host rendered markdown. Docwell is a self-hosted help center that does the customer-docs job for $79 once. Here is the honest comparison.',
     ],
     good: {
       lead: 'GitBook is genuinely strong:',
@@ -158,16 +158,16 @@ module.exports = [
     ],
     stay: [
       'Stay with GitBook if your docs are engineering-owned and git-synced, if you need versioned docs per release, multi-language localization or change-request review flows. Docwell has none of those, on purpose.',
-      'Switch if what you are really running is a product help center: articles, categories, search, "was this helpful?", SEO. That job needs a $29 tool and a $5 VPS, not a $948/year platform.',
+      'Switch if what you are really running is a product help center: articles, categories, search, "was this helpful?", SEO. That job needs a $79 tool and a $5 VPS, not a $948/year platform.',
     ],
     meetExtra: 'Docwell renders a branded, server-side help center with instant FTS5 search-as-you-type, auto TOCs, prev/next and related articles, one-vote-per-visitor helpful votes with a worst-articles-first feedback report, and complete SEO plumbing — sitemap.xml, OG tags, canonicals, smart 404s. Writing happens in a split-pane markdown editor with paste-to-upload images and a draft workflow.',
   },
   {
     slug: 'helpscout-docs-alternative', competitor: 'HelpScout Docs', product: 'docwell',
-    metaDesc: 'HelpScout Docs comes bundled at $22+/user/month. If you just need a knowledge base, Docwell is $29 once, self-hosted, with search and vote analytics. Honest comparison.',
+    metaDesc: 'HelpScout Docs comes bundled at $22+/user/month. If you just need a knowledge base, Docwell is $79 once, self-hosted, with search and vote analytics. Honest comparison.',
     intro: [
       'Help Scout is a genuinely pleasant help desk, and Docs is its knowledge-base module: clean article editor, collections, a tidy customer-facing site, and — its best trick — Beacon, which floats docs suggestions inside your product and deflects tickets before they reach your inbox.',
-      'The catch is the bundle. Docs is not sold alone; it comes with Help Scout\'s per-seat pricing, which starts around $22/user/month and climbs on the plans most teams actually use. If you want the knowledge base but not (or no longer) the seats, you are paying help-desk prices for a docs site. Docwell is the docs half, self-hosted, for $29 once. The honest comparison follows.',
+      'The catch is the bundle. Docs is not sold alone; it comes with Help Scout\'s per-seat pricing, which starts around $22/user/month and climbs on the plans most teams actually use. If you want the knowledge base but not (or no longer) the seats, you are paying help-desk prices for a docs site. Docwell is the docs half, self-hosted, for $79 once. The honest comparison follows.',
     ],
     good: {
       lead: 'Help Scout earns its fans:',
@@ -191,10 +191,10 @@ module.exports = [
   },
   {
     slug: 'trello-alternative', competitor: 'Trello', product: 'boardly',
-    metaDesc: 'Trello costs $5/user/month — $1,800 for a 10-person team over 3 years. Boardly is a self-hosted kanban for $19 once, unlimited boards. Honest comparison inside.',
+    metaDesc: 'Trello costs $5/user/month — $1,800 for a 10-person team over 3 years. Boardly is a self-hosted kanban for $49 once, unlimited boards. Honest comparison inside.',
     intro: [
       'Trello made kanban mainstream. Lists, cards, drag and drop — it is still one of the most intuitive pieces of software ever shipped, which is why hundreds of millions of accounts exist and why "just make a Trello board" is a sentence everyone understands.',
-      'It is also an Atlassian subscription now: $5/user/month on Standard, more on Premium, with the free tier progressively tightened (10-board cap per workspace, attachment limits). A 10-person team pays $600 a year for lists with cards on them. Boardly is the same workflow, self-hosted, for $19 once. Here is the honest comparison.',
+      'It is also an Atlassian subscription now: $5/user/month on Standard, more on Premium, with the free tier progressively tightened (10-board cap per workspace, attachment limits). A 10-person team pays $600 a year for lists with cards on them. Boardly is the same workflow, self-hosted, for $49 once. Here is the honest comparison.',
     ],
     good: {
       lead: 'Trello is still excellent at being Trello:',
@@ -218,10 +218,10 @@ module.exports = [
   },
   {
     slug: 'toggl-alternative', competitor: 'Toggl', product: 'timevault',
-    metaDesc: 'Toggl Track costs $10/user/month, forever, to store your timers. Timevault is self-hosted time tracking with rates and billable reports for $29 once. Honest comparison.',
+    metaDesc: 'Toggl Track costs $10/user/month, forever, to store your timers. Timevault is self-hosted time tracking with rates and billable reports for $79 once. Honest comparison.',
     intro: [
       'Toggl Track is the reference product for time tracking: a friction-free timer, apps on every platform, idle detection, calendar integration, and reporting polished by a decade of iteration. Freelancers love it because it disappears into the workflow; agencies love the team dashboards.',
-      'Then the invoice: $10 per user per month on Starter, $18 on Premium, forever. A freelancer pays $360 over three years to remember when they worked. And billing-critical features like billable rates and time rounding sit on the paid tiers. Timevault is a $29 pay-once tracker built specifically for people who bill clients. Here is the honest comparison.',
+      'Then the invoice: $10 per user per month on Starter, $18 on Premium, forever. A freelancer pays $360 over three years to remember when they worked. And billing-critical features like billable rates and time rounding sit on the paid tiers. Timevault is a $79 pay-once tracker built specifically for people who bill clients. Here is the honest comparison.',
     ],
     good: {
       lead: 'Toggl is the category benchmark for a reason:',
@@ -245,10 +245,10 @@ module.exports = [
   },
   {
     slug: 'clockify-alternative', competitor: 'Clockify', product: 'timevault',
-    metaDesc: 'Clockify\'s free tier is generous — but rates, rounding and the reports billers need sit on $4.99–14.99/user/month tiers. Timevault is $29 once. Honest comparison.',
+    metaDesc: 'Clockify\'s free tier is generous — but rates, rounding and the reports billers need sit on $4.99–14.99/user/month tiers. Timevault is $79 once. Honest comparison.',
     intro: [
       'Clockify\'s pitch is disarming: free time tracking for unlimited users, unlimited projects, forever. And it is real — as freemium goes, Clockify is one of the most generous products in software, which is why millions of teams start there.',
-      'The business model is the upsell path: the features that turn time tracking into billing — required fields, rounding, labor rates vs billable rates, invoicing, approval — spread across Basic ($4.99), Standard ($6.99), Pro ($9.99) and Enterprise ($14.99) per user per month. Freelancers who bill tend to end up paying after all. Timevault is $29 once, with the billing features in the box. Here is the honest breakdown.',
+      'The business model is the upsell path: the features that turn time tracking into billing — required fields, rounding, labor rates vs billable rates, invoicing, approval — spread across Basic ($4.99), Standard ($6.99), Pro ($9.99) and Enterprise ($14.99) per user per month. Freelancers who bill tend to end up paying after all. Timevault is $79 once, with the billing features in the box. Here is the honest breakdown.',
     ],
     good: {
       lead: 'Clockify\'s free tier deserves its reputation:',
@@ -266,7 +266,7 @@ module.exports = [
     ],
     stay: [
       'Stay with Clockify if the free tier covers you — genuinely, it covers a lot — or if you need mobile apps, kiosk mode, or team management across many employees. Timevault is single-workspace and desktop/browser only.',
-      'Switch if you are a freelancer or small studio that bills: Timevault includes the rates, rounding and billable reporting Clockify meters out across tiers, keeps your client data in a SQLite file you own, and costs less than five months of one Standard seat.',
+      'Switch if you are a freelancer or small studio that bills: Timevault includes the rates, rounding and billable reporting Clockify meters out across tiers, keeps your client data in a SQLite file you own, and costs less than sixteen months of one Standard seat.',
     ],
     meetExtra: 'Timevault ships the billing tier as the only tier: hourly rates per project, billable flags, report-level 5/15-minute rounding that never mutates raw entries, overlap warnings, weekly timesheet editing, grouped reports with exact invoiceable totals, CSV export and printable client statements — with a timer that runs as server state and survives anything short of a power cut.',
   },
@@ -380,10 +380,10 @@ module.exports = [
   },
   {
     slug: 'crisp-alternative', competitor: 'Crisp', product: 'chatlet',
-    metaDesc: 'Crisp\'s team plan is $95/month — $1,140/year for a chat bubble. Chatlet is self-hosted live chat with unlimited agents and sites for $49 once. Honest comparison.',
+    metaDesc: 'Crisp\'s team plan is $95/month — $1,140/year for a chat bubble. Chatlet is self-hosted live chat with unlimited agents and sites for $129 once. Honest comparison.',
     intro: [
       'Crisp is one of the best-liked live chat products for small businesses: a slick widget, a genuinely pleasant agent inbox, and a platform that has grown into a shared inbox, a CRM, campaigns and a knowledge base. The free tier gets you two seats and the basics.',
-      'The growth path is where it bites: the plans small teams actually settle on run $45–95/month — Crisp Plus at $95/month is $1,140 a year — for what is at its core a WebSocket, a widget and an inbox. Chatlet is that core, self-hosted, with unlimited agents and unlimited sites, for $49 once. Here is the honest comparison.',
+      'The growth path is where it bites: the plans small teams actually settle on run $45–95/month — Crisp Plus at $95/month is $1,140 a year — for what is at its core a WebSocket, a widget and an inbox. Chatlet is that core, self-hosted, with unlimited agents and unlimited sites, for $129 once. Here is the honest comparison.',
     ],
     good: {
       lead: 'Crisp earns its popularity:',
@@ -407,10 +407,10 @@ module.exports = [
   },
   {
     slug: 'intercom-alternative', competitor: 'Intercom', product: 'chatlet',
-    metaDesc: 'Intercom bills $39+ per seat per month plus usage-based AI fees. If you need live chat rather than a platform, Chatlet is $49 once, self-hosted. Honest comparison.',
+    metaDesc: 'Intercom bills $39+ per seat per month plus usage-based AI fees. If you need live chat rather than a platform, Chatlet is $129 once, self-hosted. Honest comparison.',
     intro: [
       'Intercom invented modern in-app messaging and remains the most complete customer communication platform in the business: live chat, help desk, product tours, outbound campaigns, and now Fin — an AI agent that genuinely resolves a meaningful share of support tickets on its own.',
-      'It is also famously, structurally expensive: $39+ per seat per month on the plans that matter, plus usage-based pricing for Fin resolutions, plus add-ons — small teams routinely report bills of several hundred dollars a month. If what your business actually needs is "a human answers chat on our website", you are buying a platform to use a bubble. Chatlet is the bubble, done properly, for $49 once. Here is the honest comparison.',
+      'It is also famously, structurally expensive: $39+ per seat per month on the plans that matter, plus usage-based pricing for Fin resolutions, plus add-ons — small teams routinely report bills of several hundred dollars a month. If what your business actually needs is "a human answers chat on our website", you are buying a platform to use a bubble. Chatlet is the bubble, done properly, for $129 once. Here is the honest comparison.',
     ],
     good: {
       lead: 'Intercom is the deepest product in the category:',

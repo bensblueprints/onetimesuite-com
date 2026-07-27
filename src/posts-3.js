@@ -2,10 +2,10 @@
 module.exports = [
   {
     slug: 'buffer-alternative', competitor: 'Buffer', product: 'postdock',
-    metaDesc: 'Buffer charges $6/channel/month — five channels is $360/year, forever. PostDock is a self-hosted scheduler with unlimited channels for a one-time $49. Honest comparison inside.',
+    metaDesc: 'Buffer charges $6/channel/month — five channels is $360/year, forever. PostDock is a self-hosted scheduler with unlimited channels for a one-time $129. Honest comparison inside.',
     intro: [
       'Buffer more or less invented the modern social media queue. Connect your accounts, fill the queue, and your posts go out on schedule — it is simple, reliable, and for over a decade it has been the default answer to "how do I schedule social posts?"',
-      'The catch is the meter: $6 per channel, per month, forever. A modest five-channel setup — X, Facebook, Instagram, LinkedIn and one more — runs $360 a year, every year, whether you post daily or once a month. This post is an honest look at when Buffer earns that money, and when a $49 pay-once self-hosted scheduler like PostDock is simply the smarter buy.',
+      'The catch is the meter: $6 per channel, per month, forever. A modest five-channel setup — X, Facebook, Instagram, LinkedIn and one more — runs $360 a year, every year, whether you post daily or once a month. This post is an honest look at when Buffer earns that money, and when a $129 pay-once self-hosted scheduler like PostDock is simply the smarter buy.',
     ],
     good: {
       lead: 'Buffer is popular for good reasons:',
@@ -29,10 +29,10 @@ module.exports = [
   },
   {
     slug: 'hootsuite-alternative', competitor: 'Hootsuite', product: 'postdock',
-    metaDesc: 'Hootsuite starts at $99/month — nearly $3,600 over three years. PostDock is a self-hosted social scheduler for a one-time $49. An honest comparison of who should use which.',
+    metaDesc: 'Hootsuite starts at $99/month — nearly $3,600 over three years. PostDock is a self-hosted social scheduler for a one-time $129. An honest comparison of who should use which.',
     intro: [
       'Hootsuite is the enterprise battleship of social media management. It has been around since 2008, it connects to everything, and it wraps scheduling inside a full command center: unified inboxes, team approval workflows, social listening, ad management, detailed reporting.',
-      'It also starts at $99 per month — billed annually, so a $1,188 commitment before you have scheduled a single post — and that is the plan for one user. Three years on the entry plan is roughly $3,564. If what you actually need is "write posts, schedule them, have them go out reliably," you are buying an aircraft carrier to cross a river. Here is the honest comparison with a $49 pay-once alternative.',
+      'It also starts at $99 per month — billed annually, so a $1,188 commitment before you have scheduled a single post — and that is the plan for one user. Three years on the entry plan is roughly $3,564. If what you actually need is "write posts, schedule them, have them go out reliably," you are buying an aircraft carrier to cross a river. Here is the honest comparison with a $129 pay-once alternative.',
     ],
     good: {
       lead: 'Hootsuite is genuinely built for a different job, and at that job it is strong:',
@@ -50,7 +50,7 @@ module.exports = [
     ],
     stay: [
       'Stay with Hootsuite if you run a team that needs approval workflows, a shared inbox and client-ready reporting — PostDock is a single-admin tool and does not pretend otherwise. Stay if social listening or ads management is part of your job. Stay if you need TikTok or Pinterest natively rather than through a webhook and an automation tool.',
-      'Switch if you are the person for whom Hootsuite was always too much: a founder, creator or small agency whose real need is composing, scheduling and recycling posts across the big networks — and who would rather pay $49 once than $99 every month.',
+      'Switch if you are the person for whom Hootsuite was always too much: a founder, creator or small agency whose real need is composing, scheduling and recycling posts across the big networks — and who would rather pay $129 once than $99 every month.',
     ],
     meetExtra: 'PostDock deliberately covers the scheduling core that most Hootsuite seats actually use: five channel drivers with your own API keys, per-network previews, a calendar queue, honest publish statuses with retry, evergreen content recycling, and a signed webhook driver that hands anything exotic to Zapier, Make or n8n.',
   },
@@ -110,10 +110,10 @@ module.exports = [
   },
   {
     slug: 'qr-tiger-alternative', competitor: 'QR Tiger', product: 'scantrail',
-    metaDesc: 'QR Tiger charges $15+/month — and your printed QR codes die if you stop paying. Scantrail self-hosts dynamic QR codes for a one-time $24. Honest comparison inside.',
+    metaDesc: 'QR Tiger charges $15+/month — and your printed QR codes die if you stop paying. Scantrail self-hosts dynamic QR codes for a one-time $69. Honest comparison inside.',
     intro: [
       'QR Tiger is one of the best-regarded QR platforms out there: dynamic codes, strong design customization, bulk generation, solid analytics, and integrations into the big marketing suites. If you have scanned a designed QR code on a menu or poster lately, there is a fair chance it routes through qrco.de.',
-      'The business model deserves a closer look, though. Dynamic QR codes — the useful kind, the kind you can re-point after printing — only work while your subscription is active. Stop paying QR Tiger\'s $15+/month and every code you have ever printed becomes a dead end. That is not a bug; it is the retention strategy of the entire hosted-QR industry. Scantrail is a $24 pay-once alternative where the codes live on your domain instead. Here is the honest comparison.',
+      'The business model deserves a closer look, though. Dynamic QR codes — the useful kind, the kind you can re-point after printing — only work while your subscription is active. Stop paying QR Tiger\'s $15+/month and every code you have ever printed becomes a dead end. That is not a bug; it is the retention strategy of the entire hosted-QR industry. Scantrail is a $69 pay-once alternative where the codes live on your domain instead. Here is the honest comparison.',
     ],
     good: {
       lead: 'QR Tiger is a polished product with real strengths:',
@@ -137,10 +137,10 @@ module.exports = [
   },
   {
     slug: 'flowcode-alternative', competitor: 'Flowcode', product: 'scantrail',
-    metaDesc: 'Flowcode\'s designer QR codes come with a growing subscription and your scan data in their cloud. Scantrail is self-hosted dynamic QR for $24 once. Honest comparison.',
+    metaDesc: 'Flowcode\'s designer QR codes come with a growing subscription and your scan data in their cloud. Scantrail is self-hosted dynamic QR for $69 once. Honest comparison.',
     intro: [
       'Flowcode positions itself as the premium end of the QR market — beautifully designed codes, "privacy-first" branding, real-time analytics dashboards, and enterprise deals with sports leagues and broadcast TV. The design tooling genuinely is excellent, and their codes are some of the best-looking in the industry.',
-      'Under the design polish sits the same subscription mechanics as every hosted QR platform: the free tier is a funnel with limited codes, Pro pricing has climbed over the years (commonly cited in the $12–30+/month range depending on plan and billing), and your dynamic codes route through their domain — which means they work at their pleasure, for as long as you pay. Here is the honest comparison with a $24 pay-once alternative.',
+      'Under the design polish sits the same subscription mechanics as every hosted QR platform: the free tier is a funnel with limited codes, Pro pricing has climbed over the years (commonly cited in the $12–30+/month range depending on plan and billing), and your dynamic codes route through their domain — which means they work at their pleasure, for as long as you pay. Here is the honest comparison with a $69 pay-once alternative.',
     ],
     good: {
       lead: 'Flowcode\'s strengths are real, particularly at the top end:',
@@ -164,10 +164,10 @@ module.exports = [
   },
   {
     slug: 'bannerbear-alternative', competitor: 'Bannerbear', product: 'cardsmith',
-    metaDesc: 'Bannerbear charges $49/month for 1,000 image renders. Cardsmith renders unlimited social cards from your own templates for a one-time $39. Honest comparison inside.',
+    metaDesc: 'Bannerbear charges $49/month for 1,000 image renders. Cardsmith renders unlimited social cards from your own templates for a one-time $99. Honest comparison inside.',
     intro: [
       'Bannerbear is the reference product for automated image generation: design a template, then generate thousands of on-brand social cards, OG images and banners via API, Zapier or Airtable. It is well-documented, reliable, and beloved by marketing automation people for good reason.',
-      'It also costs $49 per month — $588 a year — and that Starter tier caps you at 1,000 renders and 10 templates a month. The actual work being billed is rendering HTML to a PNG, a job your own machine performs in about a second. Cardsmith is a $39 pay-once app built on exactly that observation. Here is the honest comparison.',
+      'It also costs $49 per month — $588 a year — and that Starter tier caps you at 1,000 renders and 10 templates a month. The actual work being billed is rendering HTML to a PNG, a job your own machine performs in about a second. Cardsmith is a $99 pay-once app built on exactly that observation. Here is the honest comparison.',
     ],
     good: {
       lead: 'Bannerbear has earned its position:',
@@ -191,10 +191,10 @@ module.exports = [
   },
   {
     slug: 'placid-alternative', competitor: 'Placid', product: 'cardsmith',
-    metaDesc: 'Placid meters your image renders from $19/month. Cardsmith renders unlimited OG images and social cards from your own server for a one-time $39. Honest comparison.',
+    metaDesc: 'Placid meters your image renders from $19/month. Cardsmith renders unlimited OG images and social cards from your own server for a one-time $99. Honest comparison.',
     intro: [
       'Placid is the pragmatic pick among image-generation APIs — cheaper than Bannerbear, with a drag-and-drop template editor, REST and URL-based APIs, and tidy plugins for WordPress, Webflow and Airtable. For automated OG images on a content site, it is many developers\' first stop.',
-      'But it is still a meter on your own content pipeline: plans start around $19/month with a monthly image quota, and every render happens on their servers, from templates that live in their cloud. Three years in, you have paid $684+ to generate pictures of your own blog titles. Cardsmith does the same job from a $39 app you own. Here is the honest breakdown.',
+      'But it is still a meter on your own content pipeline: plans start around $19/month with a monthly image quota, and every render happens on their servers, from templates that live in their cloud. Three years in, you have paid $684+ to generate pictures of your own blog titles. Cardsmith does the same job from a $99 app you own. Here is the honest breakdown.',
     ],
     good: {
       lead: 'Placid gets a lot right for its price point:',

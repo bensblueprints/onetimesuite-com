@@ -77,7 +77,15 @@ for (const p of extras) if (!bySlug[p.slug]) bySlug[p.slug] = p;
 
 /* Public launch state: only these are purchasable today — every other catalog
    app is shown as a caution-taped "Coming soon" card on the hub. */
-const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'orgtree', 'sigcraft']);
+const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'orgtree', 'sigcraft',
+  /* 2026-07-27 launch wave — 21 desktop apps (one-time price, matches Whop): */
+  'cutaway', 'contractly', 'deepdesk', 'docsmithapi', 'iconforge', 'keyloop', 'maptrail', 'memeforge', 'mockcraft', 'paletteforge', 'pdfsmith',
+  'quillpad', 'quotewell', 'reelsnag', 'renewcheck', 'shrinkray', 'streakly', 'textract', 'voicebarn', 'whisperdesk', 'wrangle',
+  /* 2026-07-27 launch wave — 36 web apps (tiered; price = Whop lifetime tier): */
+  'boardly', 'bookslot', 'bravowall', 'castport', 'chatlet', 'chatterbox', 'docwell', 'doortracker', 'droplink', 'famping', 'formforge', 'hawkwatch',
+  'hearback', 'hookscope', 'inkpress', 'inkseal', 'keymaster', 'ledgerly', 'overlayr', 'pingcron', 'postbird', 'queuecraft', 'serpdeck', 'shipnotes',
+  'signboard', 'snapfleet', 'snipvault', 'statfox', 'timevault', 'upwatch', 'vaultkeeper', 'billcraft', 'trimly', 'cardsmith', 'postdock', 'scantrail',
+]);
 const availableProducts = allProducts.filter(p => AVAILABLE_SLUGS.has(p.slug));
 const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
 
@@ -1134,7 +1142,7 @@ function mdToHtml(md) {
  * ============================================================ */
 const SEO_DIR = path.join(ROOT, 'content', 'seo');
 const seoPosts = fs.readdirSync(SEO_DIR).filter(f => f.endsWith('.md')).map(f => {
-  const raw = fs.readFileSync(path.join(SEO_DIR, f), 'utf8');
+  const raw = fs.readFileSync(path.join(SEO_DIR, f), 'utf8').replace(/\r\n/g, '\n');
   const m = raw.match(/^---\nslug: (.+)\ntitle: (.+)\ndescription: (.+)\n---\n/);
   if (!m) throw new Error('bad front matter in ' + f);
   return { slug: m[1].trim(), title: m[2].trim(), metaDesc: m[3].trim(), md: raw.slice(m[0].length).trim() };

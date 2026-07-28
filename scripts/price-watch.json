@@ -1,0 +1,14 @@
+[
+  { "name": "Loom", "url": "https://www.loom.com/pricing", "replacedBy": "bloomrecorder" },
+  { "name": "Calendly", "url": "https://calendly.com/pricing", "replacedBy": "bookslot" },
+  { "name": "Linktree", "url": "https://linktr.ee/pricing", "replacedBy": "linkleaf" },
+  { "name": "Typeform", "url": "https://www.typeform.com/pricing/", "replacedBy": "formforge" },
+  { "name": "Buffer", "url": "https://buffer.com/pricing", "replacedBy": "postdock" },
+  { "name": "Notion", "url": "https://www.notion.com/pricing", "replacedBy": "quillpad" },
+  { "name": "Wispr Flow", "url": "https://wisprflow.ai/pricing", "replacedBy": "wispertalk" },
+  { "name": "Otter.ai", "url": "https://otter.ai/pricing", "replacedBy": "whisperdesk" },
+  { "name": "TinyPNG", "url": "https://tinypng.com/pricing/web", "replacedBy": "shrinkray" },
+  { "name": "UptimeRobot", "url": "https://uptimerobot.com/pricing/", "replacedBy": "upwatch" },
+  { "name": "FreshBooks", "url": "https://www.freshbooks.com/pricing", "replacedBy": "billcraft" },
+  { "name": "Trello", "url": "https://trello.com/pricing", "replacedBy": "boardly" }
+]

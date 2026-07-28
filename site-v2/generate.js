@@ -47,6 +47,25 @@ const launched = fs.existsSync(LAUNCHED_DIR)
 
 const allProducts = [...products, ...products51, ...launched, ...extras];
 
+/* Launch-state counts for the shared footer — mirrors AVAILABLE_SLUGS /
+   availableProducts / comingSoon in ../build.js. Keep in sync. */
+const launchedBrands = new Set(launched.map(l => l.brand.toLowerCase()));
+const comingSoon = require(path.join(REPO, 'src', 'coming-soon.js')).filter(p => !launchedBrands.has(p.brand.toLowerCase()));
+const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'orgtree', 'sigcraft',
+  'cutaway', 'contractly', 'deepdesk', 'docsmithapi', 'iconforge', 'keyloop', 'maptrail', 'memeforge', 'mockcraft', 'paletteforge', 'pdfsmith',
+  'quillpad', 'quotewell', 'reelsnag', 'renewcheck', 'shrinkray', 'streakly', 'textract', 'voicebarn', 'whisperdesk', 'wrangle',
+  'boardly', 'bookslot', 'bravowall', 'castport', 'chatlet', 'chatterbox', 'docwell', 'doortracker', 'droplink', 'famping', 'formforge', 'hawkwatch',
+  'hearback', 'hookscope', 'inkpress', 'inkseal', 'keymaster', 'ledgerly', 'overlayr', 'pingcron', 'postbird', 'queuecraft', 'serpdeck', 'shipnotes',
+  'signboard', 'snapfleet', 'snipvault', 'statfox', 'timevault', 'upwatch', 'vaultkeeper', 'billcraft', 'trimly', 'cardsmith', 'postdock', 'scantrail',
+]);
+const availableCount = allProducts.filter(p => AVAILABLE_SLUGS.has(p.slug)).length;
+/* Shared chrome meta injected into every page (footer counts). */
+const SITE_META = {
+  totalApps: allProducts.length,
+  available: availableCount,
+  comingSoon: allProducts.length - availableCount + comingSoon.length,
+};
+
 /* Related-tools picks: prefer apps competing with the same SaaS, else the
    same desktop/web kind. Deterministic — walk catalog order starting just
    after the current product and wrap around, so the same input always
@@ -202,6 +221,7 @@ function normalize(p) {
     faq: pair(p.faq, ['q', 'a']),
     payback: p.payback || null,
     downloads: p.downloads || null,
+    site: SITE_META,
   };
 }
 

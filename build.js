@@ -24,6 +24,9 @@ const GH = 'https://github.com/bensblueprints';
 /* Real Whop product listings (slug -> { productUrl, checkoutUrl, ... }).
    Source of truth: onetime-suite/whop-publish-results.json. */
 const whopLinks = require('./src/whop-links.json');
+/* Tiered Whop pricing for the web apps — prices.lifetime is the one-time
+   (lifetime) price shown for web-hosted apps; desktop apps use `price`. */
+const tierCheckouts = require('./src/tier-checkouts.json');
 /* Apps with their own pre-existing checkout — never remap to whopLinks. */
 const OWN_CHECKOUT = new Set(['wispertalk', 'bloomrecorder']);
 
@@ -347,9 +350,12 @@ const NAV = `
       <label for="navtoggle" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></label>
       <div class="nav-links">
       <a class="nav-link" href="/#available">Available now</a>
-      <a class="nav-link" href="/#coming-soon">Coming soon</a>
+      <a class="nav-link" href="/apps/">Apps</a>
+      <a class="nav-link" href="/vs/">Compare</a>
+      <a class="nav-link" href="/solve/">Solve</a>
+      <a class="nav-link" href="/calculator/">Calculator</a>
       <a class="nav-link" href="/${BUNDLE.slug}/">The bundle</a>
-      <a class="nav-link" href="/comparison/">Comparisons</a>
+      <a class="nav-link" href="/webinar/">Webinar</a>
       <a class="nav-link" href="/blog/">Blog</a>
       <a class="nav-link nav-login" href="https://dashboard.onetimesuite.com/" rel="noopener">Log in</a>
       </div>
@@ -367,29 +373,47 @@ const FOOTER = `
         </div>
         <div>
           <h2>Apps</h2>
+          <a href="/apps/">All apps directory</a>
           <a href="/#available">Available now (${availableProducts.length})</a>
           <a href="/#coming-soon">Coming soon (${allProducts.length - availableProducts.length + comingSoon.length})</a>
+          <a href="/categories/">Browse by category</a>
           <a href="/${BUNDLE.slug}/">${BUNDLE.name} — ${fmt(BUNDLE.price)}</a>
         </div>
         <div>
-          <h2>Read</h2>
-          <a href="/comparison/">All comparisons</a>
-          <a href="/blog/">Blog</a>
+          <h2>Compare</h2>
+          <a href="/vs/">Versus pages</a>
+          <a href="/compare/">Price comparisons</a>
+          <a href="/alternatives/">Alternatives A–Z</a>
+          <a href="/comparison/">Comparison posts</a>
           <a href="/loom-alternative/">Loom alternative</a>
-          <a href="/linktree-alternative/">Linktree alternative</a>
           <a href="/wispr-flow-alternative/">Wispr Flow alternative</a>
-          <a href="/inkseal/compliance/">E-signature compliance</a>
+          <a href="/blog/">Blog</a>
+        </div>
+        <div>
+          <h2>The suite</h2>
+          <a href="/webinar/">Watch the webinar</a>
+          <a href="/calculator/">Savings calculator</a>
+          <a href="/price-tracker/">Price tracker</a>
+          <a href="/solve/">Solve a problem</a>
+          <a href="/research/">Research</a>
+          <a href="/manifesto/">The manifesto</a>
+          <a href="/graveyard/">Subscription graveyard</a>
+          <a href="/stacks/">User stacks</a>
+          <a href="/events/">Events</a>
+          <a href="/press/">Press kit</a>
         </div>
         <div>
           <h2>Get it</h2>
           <a href="${WHOP}" rel="noopener">Buy on Whop</a>
           <a href="https://dashboard.onetimesuite.com/" rel="noopener">Log in — your library</a>
           <a href="${GH}" rel="noopener">Source on GitHub</a>
+          <a href="/savings/">Savings snapshot</a>
         </div>
         <div>
           <h2>Legal</h2>
           <a href="/terms/">Terms of use</a>
           <a href="/privacy/">Privacy</a>
+          <a href="/inkseal/compliance/">E-signature compliance</a>
         </div>
       </div>
       <div class="bottom">
@@ -530,9 +554,13 @@ function shotFrame(p) {
       </div>`;
 }
 
-/* URL registry for sitemap + link check */
+/* URL registry for sitemap + link check.
+ * reg(rel, set) files each URL into a named sitemap set (pages/apps/blog/vs)
+ * for the split sitemap files; `urls` keeps the full list for the page-count
+ * summary line. */
 const urls = [];
-function reg(relPath) { urls.push(relPath); }
+const urlSets = { pages: [], apps: [], blog: [], vs: [] };
+function reg(relPath, set = 'pages') { urls.push(relPath); (urlSets[set] ||= []).push(relPath); }
 
 /* ============================================================
  * 1. hub  /
@@ -916,7 +944,7 @@ allProducts.forEach(p => {
     ],
     body,
   }));
-  reg(`/${p.slug}/`);
+  reg(`/${p.slug}/`, 'apps');
 });
 
 /* ============================================================
@@ -1503,6 +1531,60 @@ posts.forEach(post => {
 
 
 /* ============================================================
+ * SECTION 7c: programmatic SEO factory — auto-discovered section modules
+ * Each module in src/sections/*.js exports function(ctx) and emits pages via
+ * ctx.write/ctx.page/ctx.reg. See docs/seo-factory/CONTRACT.md for the API,
+ * the route registry and the content rules. Routes must use non-colliding
+ * prefixes (/vs/, /apps/, /compare/, ...) — the v2-pages overlay copies over
+ * public/ at the end of the build.
+ * ============================================================ */
+{
+  const sectionCtx = {
+    /* core emitters */
+    write, page, reg,
+    /* escaping + text */
+    esc, attr, fitTitle, fitDesc, fmt, art,
+    /* constants */
+    SITE, WHOP, GH,
+    /* layout + jsonld helpers */
+    crumbs, ORG_LD, ldJson, pricePair, shotFrame,
+    /* catalog */
+    allProducts, availableProducts, upcomingProducts, bySlug,
+    products, products51, extras, comingSoon,
+    desktopProducts, webProducts, DESKTOP_SLUGS, AVAILABLE_SLUGS, DEMOS,
+    BUNDLE, bundleValue, bundleSavings, localCheckout,
+    /* slugs that actually get an on-site /checkout/<slug>/ page (Whop plan
+       exists) — mirrors the rule in the checkout section below; sections must
+       never link /checkout/<slug>/ for off-site-checkout apps (wispertalk…). */
+    checkoutSlugs: new Set(allProducts
+      .filter(p => (whopLinks[p.slug] && whopLinks[p.slug].planId) || /whop\.com\/checkout\/plan_[A-Za-z0-9]+/.test(p.buyUrl || ''))
+      .map(p => p.slug)),
+    /* media */
+    hasShot, hasBox, hasClip, ytId, ytIdRaw, youtubeVideos: ytVideos,
+    videoLd, videoLdScript,
+    /* content collections (declared above) */
+    posts, seoPosts,
+    /* factory data + schema generators */
+    matrix: require('./src/seo-matrix.js'),
+    sales: require('./src/sales-data.js'),
+    schema: require('./src/seo/schema.js'),
+  };
+  const SECTIONS_DIR = path.join(ROOT, 'src', 'sections');
+  if (fs.existsSync(SECTIONS_DIR)) {
+    const sectionFiles = fs.readdirSync(SECTIONS_DIR).filter(f => f.endsWith('.js')).sort();
+    for (const f of sectionFiles) {
+      try {
+        require(path.join(SECTIONS_DIR, f))(sectionCtx);
+        console.log(`section ${f}: ok`);
+      } catch (err) {
+        throw new Error(`section module src/sections/${f} failed: ${err.message}`, { cause: err });
+      }
+    }
+  }
+}
+
+
+/* ============================================================
  * 7a-bis. /savings/ — the subscription audit calculator.
  * One tile per distinct competitor (icon from assets/complogos/, downloaded
  * 2026-07-21 via Google's favicon service — swap for Brandfetch API logos
@@ -1819,7 +1901,7 @@ function writeBlogPost({ slug, product, title, metaDesc, articleHtml, formula, f
   }));
   /* noindexed posts stay out of the sitemap but stay on the /blog/ hub and in
      the interlink pass — crawlable via links, just not submitted for indexing */
-  if (!noindex) reg(`/blog/${slug}/`);
+  if (!noindex) reg(`/blog/${slug}/`, 'blog');
   blogPostList.push({ slug, product, title, metaDesc });
 }
 
@@ -2123,8 +2205,209 @@ blogAppSlugs.forEach(productSlug => {
   (blogExtraComps[productSlug] || []).forEach(comp => blogPost6(ctx, comp));
 });
 
+/* ---------- catalog roundups: 5 long-form "pay-once tools" posts ----------
+   Together these five articles link EVERY product page in the catalog (104
+   apps), each app in exactly one category. Slugs follow
+   /blog/<category>-pay-once-tools/. Apps not yet launched are linked but
+   marked "coming soon" — never oversold. */
+const ROUNDUP_POSTS = []; // { slug, title, metaDesc } — for the /blog/ hub top section
+const roundupPrice = slug => {
+  const t = tierCheckouts[slug];
+  if (t && t.prices && t.prices.lifetime != null) return t.prices.lifetime;
+  const w = whopLinks[slug];
+  if (w && w.price != null) return w.price;
+  return bySlug[slug].price;
+};
+const ROUNDUPS = [
+  {
+    slug: 'video-audio-media-pay-once-tools',
+    title: '20 Video, Audio & Media Tools You Buy Once (2026)',
+    metaDesc: '20 video, audio and media tools you buy once — screen recording, captions, transcription, compression and design. One-time prices, no subscriptions.',
+    intro: 'Video and audio tools are where subscriptions sting the most: caption apps, screen recorders, voice tools and podcast hosts all charge monthly for work your own machine can do. The 20 tools below cover recording, transcription, captions, compression, voiceover and design — each one a single payment, most with MIT source on GitHub. Most of them ship as desktop apps, so your footage and audio never leave your hard drive. Every price on this page is the whole price.',
+    choose: [
+      'Start with the job you do weekly — a recorder, captioner or transcriber you use daily pays for itself within a month or two of the subscription it replaces.',
+      'Prefer the desktop apps (Captionly, WhisperDesk, BloomRecorder) when footage is client-confidential — nothing leaves the machine, ever.',
+      'Switching mid-project? Read the linked comparison pages first — each one maps the competitor’s feature set honestly, including what it still does better.',
+    ],
+    faq: [
+      ['Do desktop media apps need a powerful GPU?', 'No. The AI features — background removal, transcription, captions — are tuned to run on ordinary CPUs, and the models ship inside the installer. A batch just takes a few seconds per file instead of a credit per file.'],
+      ['What happens to my files with pay-once media tools?', 'Nothing. The desktop apps in this category process everything locally and make no network calls. Your footage, audio and images stay on your own disk — which is the whole point.'],
+      ['Is a one-time purchase really “lifetime”?', 'Yes. There is no license server to phone home and no renewal date; the app keeps working offline, forever. Updates to the packaged installer are included.'],
+      ['Can I still share videos without a cloud link?', 'Yes — export MP4 or GIF and share it however you already share files. And if you specifically need a podcast feed and player pages, Castport covers hosting without the per-month meter.'],
+    ],
+    apps: ['captionly', 'bloomrecorder', 'voicebarn', 'cutaway', 'castport', 'reelsnag', 'memeforge', 'clip-pipeline', 'shrinkray', 'wispertalk', 'overlayr', 'signboard', 'snapfleet', 'iconforge', 'paletteforge', 'mockcraft', 'postcraft', 'cardsmith', 'slidecraft', 'whisperdesk'],
+  },
+  {
+    slug: 'productivity-business-ops-pay-once-tools',
+    title: '21 Productivity & Business Tools You Buy Once (2026)',
+    metaDesc: '21 productivity and business ops tools with one-time pricing — invoicing, scheduling, time tracking, receipts, hiring and shifts. Pay once, own forever.',
+    intro: 'The average small business rents its calendar, its invoicing, its time tracking and even its org chart — a stack of monthly bills for software that mostly shuffles records around. These 21 apps run the back office for a one-time price: scheduling, billing, receipts, shifts, hiring, onboarding and more. Most are self-hosted web apps, so client and employee data stays on your own server instead of a vendor’s. Buy once and the ops budget stops creeping up every year.',
+    choose: [
+      'Pick the biggest bill first — invoicing, scheduling and time tracking are usually the largest recurring line items in a small-business stack.',
+      'Self-hosted web apps need a cheap VPS; if you’d rather not run one, start with the desktop apps in the list (OrgTree, Snapreceipt, Streakly).',
+      'If three or more of these apply, the $997 everything bundle covers the whole catalog and usually beats buying the big licenses à la carte.',
+    ],
+    faq: [
+      ['What does “self-hosted” mean for a business app?', 'The app runs on a cheap VPS you control instead of the vendor’s cloud. Setup is a one-time job; after that your client, invoice and scheduling data lives on your own server, under your own backups.'],
+      ['Can these really replace tools like FreshBooks or Calendly?', 'For the core jobs — invoicing, scheduling, time tracking, receipts, shift planning — yes. Where a competitor still wins (very large teams, deep integrations), the per-app comparison pages say so plainly.'],
+      ['Do I pay per employee or per seat?', 'No. Every price here is a flat one-time payment, whether two people use the tool or twenty. There is no per-seat multiplier to outgrow.'],
+      ['What if an app I want is marked “coming soon”?', 'It is in final release prep and launches without the price changing. The $997 bundle includes every catalog app, so bundle owners get each one the day it ships.'],
+    ],
+    apps: ['boardly', 'ledgerly', 'billcraft', 'bookslot', 'formforge', 'timevault', 'orgtree', 'snapreceipt', 'hirestack', 'shiftly', 'punchcard', 'roster', 'renewcheck', 'streakly', 'deepdesk', 'ledgerlitehome', 'rampcheck', 'doortracker', 'famping', 'eventcraft', 'remindly'],
+  },
+  {
+    slug: 'marketing-social-seo-pay-once-tools',
+    title: '21 Marketing, Social & SEO Tools You Buy Once (2026)',
+    metaDesc: '21 marketing, social and SEO tools you buy once — social scheduling, email campaigns, rank tracking, links, reviews and analytics. No monthly meter.',
+    intro: 'Marketing SaaS is priced like a tax on growth: per channel, per contact, per keyword, per seat. This roundup collects 21 pay-once tools for social scheduling, email campaigns, rank tracking, link management, QR codes, reviews and analytics. They replace metered plans with software you host or install yourself — one receipt, no per-channel multipliers. If your marketing stack costs more every year for doing the same job, start here.',
+    choose: [
+      'Match the tool to the channel you actually use — one scheduler you open every day beats a rented suite you log into twice a month.',
+      'Self-hosted analytics and rank tracking keep your traffic and keyword strategy off third-party clouds (and out of their training data).',
+      'Watch the “typical competitor cost” column for per-channel and per-contact pricing — that multiplier is exactly what a one-time price kills.',
+    ],
+    faq: [
+      ['Will a pay-once tool keep up with platform changes?', 'The apps are actively maintained and updates are included in the one-time price. Because most are self-hosted or open source, you are never waiting on a vendor’s pricing-tier decisions either.'],
+      ['Is self-hosted analytics as useful as Plausible or GA?', 'Statfox tracks the same core metrics — pageviews, referrers, popular pages — without cookies or consent banners, and your traffic data never leaves your server.'],
+      ['Why are competitor costs so much higher for marketing tools?', 'Marketing SaaS usually meters the thing that grows — channels, contacts, keywords, seats. A one-time price has no multiplier, so the gap widens every month your audience grows.'],
+      ['Can I migrate my existing subscribers, links or posts?', 'Yes — import and export are standard across these apps, and the per-app pages and FAQs cover the specifics for each tool.'],
+    ],
+    apps: ['postbird', 'postdock', 'serpdeck', 'linkleaf', 'scantrail', 'statfox', 'utmcraft', 'reflink', 'hearback', 'bravowall', 'starstack', 'pulsecheck', 'askback', 'citewatch', 'chatterbox', 'splitpoint', 'queuecraft', 'redirectly', 'trimly', 'chatlet', 'listcraft'],
+  },
+  {
+    slug: 'documents-writing-signatures-pay-once-tools',
+    title: '21 Writing, Docs & Signature Tools You Buy Once (2026)',
+    metaDesc: '21 document, writing and e-signature tools with one-time prices — PDF, OCR, contracts, proposals, resumes and publishing. Pay once, sign forever.',
+    intro: 'Documents are the original subscription trap: PDF editors, e-signature platforms and proposal tools charge monthly to handle files you already own. These 21 apps cover PDFs, OCR, contracts, signatures, resumes, pitches, changelogs and publishing for a flat one-time price. Several run fully offline, so contracts and sensitive paperwork never touch a third-party server. Pay once, sign forever.',
+    choose: [
+      'If the paperwork is confidential — contracts, HR documents, client records — prefer the offline desktop apps; nothing is uploaded, ever.',
+      'Check signature and record-keeping requirements for your jurisdiction; the e-signature tools here cover standard ESIGN/eIDAS-style workflows.',
+      'Before cancelling a vendor, open the linked comparison page for your current tool and check feature parity line by line.',
+    ],
+    faq: [
+      ['Are pay-once e-signatures legally valid?', 'The signature tools here produce signed PDFs with audit trails suitable for standard ESIGN/UETA and eIDAS-style workflows — the Inkseal compliance page on this site walks through the details.'],
+      ['Do the PDF and OCR tools work offline?', 'Yes — the desktop apps in this category (PDFsmith, Textract, Quillpad) run entirely on your machine. Documents never leave your disk, which matters for contracts and client paperwork.'],
+      ['What if I need a feature the one-time app lacks?', 'Each app’s comparison page lists exactly what the subscription competitor still does better. For most document jobs — merge, sign, convert, publish — parity is already there.'],
+      ['Can I use these for commercial client work?', 'Yes — one payment, no per-seat or per-document fees, and most ship MIT source, so you can even build and modify them yourself.'],
+    ],
+    apps: ['pdfsmith', 'textract', 'inkpress', 'inkseal', 'quillpad', 'shipnotes', 'docwell', 'docsmithapi', 'resumecraft', 'pitchcraft', 'contractly', 'quotewell', 'sigcraft', 'feedloft', 'droplink', 'lessonforge', 'quizcraft', 'forumly', 'voicebox', 'viral-invoice', 'menuly'],
+  },
+  {
+    slug: 'developer-it-admin-pay-once-tools',
+    title: '21 Developer & IT Admin Tools You Buy Once (2026)',
+    metaDesc: '21 developer and IT admin tools you buy once — uptime, cron, SSL, logs, backups, secrets and status pages. Self-hosted, one-time pricing.',
+    intro: 'Dev tooling has quietly become a rental market: monitoring, secrets managers, backups, status pages and snippet libraries all bill monthly. These 21 tools cover uptime, cron, SSL, logs, backups, licensing, link infrastructure and incident pages for a one-time price. Most are self-hosted — which for infrastructure tooling is the point, because your monitoring should not depend on another company’s uptime. Own the tool, own the alert.',
+    choose: [
+      'Self-hosting is the default here — a $5 VPS runs most of these; weigh that one line item against the subscription you are cancelling.',
+      'Prioritize the tools that page you: uptime, cron and certificate monitors earn their keep the first outage they catch.',
+      'Most of these ship MIT source on GitHub, so you can audit the exact code that watches your infrastructure before you deploy it.',
+    ],
+    faq: [
+      ['What do I need to self-host these tools?', 'A small VPS (or a homelab box) and about ten minutes per app. Docker-based setups are the norm, and each product page documents the exact steps.'],
+      ['Is self-hosted monitoring reliable if my server goes down?', 'Run the monitor on separate infrastructure from what it watches — a $5 VPS in another region is the standard pattern, and it still costs less than one month of most monitoring subscriptions.'],
+      ['Are source-available dev tools safe to run in production?', 'Most ship MIT-licensed source you can audit before deploying — the opposite of a black-box agent. The secrets tools (Vaultly, Secretbox) encrypt at rest; details are on each product page.'],
+      ['What happens when a “coming soon” dev tool launches?', 'It flips to available on this site and joins the bundle automatically. Bundle owners get every catalog app, including future launches, at no extra cost.'],
+    ],
+    apps: ['upwatch', 'pingcron', 'hookscope', 'wrangle', 'vaultkeeper', 'hawkwatch', 'keymaster', 'snipvault', 'upkeepstatus', 'vaultly', 'keyloop', 'secretbox', 'certwatch', 'logbin', 'clickmap', 'maptrail', 'linkguard', 'billoop', 'syncvault', 'deskly', 'clientdesk'],
+  },
+];
+
+/* Guard: the five lists must partition the catalog exactly — every one of the
+   104 apps in exactly one roundup. Throws at build time, not after deploy. */
+{
+  const flat = ROUNDUPS.flatMap(r => r.apps);
+  const seen = new Set();
+  for (const s of flat) {
+    if (!bySlug[s]) throw new Error('roundup references unknown slug: ' + s);
+    if (seen.has(s)) throw new Error('slug in two roundups: ' + s);
+    seen.add(s);
+  }
+  const missing = allProducts.map(p => p.slug).filter(s => !seen.has(s));
+  if (missing.length) throw new Error('slugs missing from roundups: ' + missing.join(', '));
+}
+
+const compPostSlugsForRoundup = new Set(posts.map(x => x.slug));
+ROUNDUPS.forEach(cat => {
+  const soonNote = ' <span style="font-size:0.8em;font-weight:500;color:var(--ink-soft);">· coming soon</span>';
+  const appSection = slug => {
+    const p = bySlug[slug];
+    const avail = AVAILABLE_SLUGS.has(slug);
+    const price = roundupPrice(slug);
+    const compSlug = `${slugify(p.competitor)}-alternative`;
+    const hasComp = compPostSlugsForRoundup.has(compSlug);
+    const feat = p.features.slice(0, 2)
+      .map(f => `<li>${esc(f[0])} <strong>${esc(f[1])}</strong> — ${esc(f[2])}</li>`).join('\n            ');
+    return `
+          <h3>${p.icon} <a href="/${p.slug}/">${esc(p.brand)}</a>${avail ? '' : soonNote}</h3>
+          <p>${esc(p.oneliner)}</p>
+          <ul>
+            ${feat}
+          </ul>
+          <p>Replaces ${esc(p.competitor)} (${esc(p.compPrice)}) — ${esc(p.brand)} is <span class="price-fig" style="font-family:var(--mono);">$${price}</span>, once.${avail ? '' : ` ${esc(p.brand)} is in final release prep — it joins the catalog (and the ${fmt(BUNDLE.price)} bundle) at launch, at the same one-time price.`}</p>
+          <p><a href="/${p.slug}/">See ${esc(p.brand)} &rarr;</a>${hasComp ? ` &middot; <a href="/comparison/${compSlug}/">the ${esc(p.competitor)} alternative comparison</a>` : ''}</p>`;
+  };
+
+  const nAvail = cat.apps.filter(s => AVAILABLE_SLUGS.has(s)).length;
+  const tableRows = cat.apps.map(slug => {
+    const p = bySlug[slug];
+    const avail = AVAILABLE_SLUGS.has(slug);
+    return `<tr><td class="us"><a href="/${p.slug}/">${p.icon} ${esc(p.brand)}</a>${avail ? '' : soonNote}</td><td>${esc(p.competitor)}</td><td>${esc(p.compPrice)}</td><td><span class="price-fig">$${roundupPrice(slug)}</span> once</td></tr>`;
+  }).join('\n              ');
+
+  const others = ROUNDUPS.filter(r => r.slug !== cat.slug)
+    .map(r => `<a href="/blog/${r.slug}/">${esc(r.title)}</a>`).join(' &middot; ');
+
+  const articleHtml = `
+          <p>${esc(cat.intro)}</p>
+          <p>${nAvail} of the ${cat.apps.length} are available to buy today; the rest are marked “coming soon” and join the catalog — and the <a href="/${BUNDLE.slug}/">${fmt(BUNDLE.price)} bundle</a> — as they ship.</p>
+
+          <h2>The ${cat.apps.length} tools, side by side</h2>
+          <div class="tbl-wrap">
+            <table class="receipt">
+              <thead><tr><th>App</th><th>Replaces</th><th>Typical competitor cost</th><th>One-time price</th></tr></thead>
+              <tbody>
+              ${tableRows}
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The tools, one by one</h2>
+          ${cat.apps.map(appSection).join('\n')}
+
+          <h2>How to choose</h2>
+          <ul>
+            ${cat.choose.map(c => `<li>${esc(c)}</li>`).join('\n            ')}
+          </ul>
+
+          <h2>Frequently asked questions</h2>
+          ${cat.faq.map(q => `<p><strong>${esc(q[0])}</strong><br>${esc(q[1])}</p>`).join('\n          ')}
+
+          <h2>More pay-once suites</h2>
+          <p>This is one of five roundups covering the whole ${allProducts.length}-app OneTimeSuite catalog. The other four: ${others}.</p>`;
+
+  writeBlogPost({
+    slug: cat.slug,
+    product: null,
+    formula: 'catalog-roundup',
+    title: cat.title,
+    metaDesc: cat.metaDesc,
+    articleHtml,
+    faq: cat.faq,
+  });
+  ROUNDUP_POSTS.push({ slug: cat.slug, title: cat.title, metaDesc: cat.metaDesc });
+});
+
 /* ---------- /blog/ hub ---------- */
 (function blogHub() {
+  /* The 5 catalog roundups lead the hub — they're the strongest posts and
+     together they link every product page. */
+  const roundupBlock = ROUNDUP_POSTS.length ? `
+      <div style="margin-bottom:2.4rem;">
+        <h2 style="font-size:1.3rem;margin-bottom:0.9rem;">🧭 Catalog roundups <span class="mono-note">&mdash; all ${allProducts.length} pay-once apps, grouped by job</span></h2>
+        <div class="post-list">
+          ${ROUNDUP_POSTS.map(x => `<a href="/blog/${x.slug}/"><h3>${esc(x.title)}</h3><p>${esc(x.metaDesc)}</p></a>`).join('\n          ')}
+        </div>
+      </div>` : '';
+
   const groups = blogAppSlugs.map(slug => {
     const p = bySlug[slug];
     if (!p) return '';
@@ -2150,7 +2433,7 @@ blogAppSlugs.forEach(productSlug => {
     </section>
 
     <section aria-label="All blog posts">
-      <div class="wrap">${groups || '<p>New posts are on the way.</p>'}
+      <div class="wrap">${roundupBlock}${groups || '<p>New posts are on the way.</p>'}
       </div>
     </section>
 
@@ -2273,10 +2556,22 @@ write('admin', require('./src/admin-page.js'));
 fs.writeFileSync(path.join(OUT, 'robots.txt'),
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\nSitemap: ${SITE}/video-sitemap.xml\n`, 'utf8');
 
-fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
+/* Split sitemaps: one urlset per reg() set (pages/apps/blog/vs) plus a
+ * sitemap index at sitemap.xml that also references the video sitemap.
+ * Empty sets are skipped; video-sitemap.xml is written separately below. */
+const sitemapBody = list =>
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  urls.map(u => `  <url><loc>${SITE}${u}</loc></url>`).join('\n') +
-  `\n</urlset>\n`, 'utf8');
+  list.map(u => `  <url><loc>${SITE}${u}</loc></url>`).join('\n') +
+  `\n</urlset>\n`;
+const sitemapSets = Object.keys(urlSets).filter(k => urlSets[k].length);
+for (const k of sitemapSets) {
+  fs.writeFileSync(path.join(OUT, `sitemap-${k}.xml`), sitemapBody(urlSets[k]), 'utf8');
+}
+fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  sitemapSets.map(k => `  <sitemap><loc>${SITE}/sitemap-${k}.xml</loc></sitemap>`).join('\n') +
+  `\n  <sitemap><loc>${SITE}/video-sitemap.xml</loc></sitemap>\n</sitemapindex>\n`, 'utf8');
+console.log(`sitemap index: ${sitemapSets.map(k => `${k}=${urlSets[k].length}`).join(' ')} + video-sitemap.xml`);
 
 /* rss.xml — all blog content, newest batch first */
 const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

@@ -6,6 +6,23 @@ import { Check, X, ChevronDown, ArrowRight, Zap, Monitor, Server, BadgeCheck, Do
 
 const EASE = [0.22, 1, 0.36, 1];
 
+/* Shared chrome — mirrors NAV/FOOTER/WHOP in ../build.js. Keep in sync. */
+const WHOP = 'https://whop.com/benjisaiempire';
+const DASHBOARD = 'https://dashboard.onetimesuite.com/';
+const GITHUB = 'https://github.com/bensblueprints';
+const BUNDLE_SLUG = 'onetime-suite-bundle';
+
+const NAV_LINKS = [
+  ['Available now', '/#available'],
+  ['Apps', '/apps/'],
+  ['Compare', '/vs/'],
+  ['Solve', '/solve/'],
+  ['Calculator', '/calculator/'],
+  ['The bundle', `/${BUNDLE_SLUG}/`],
+  ['Webinar', '/webinar/'],
+  ['Blog', '/blog/'],
+];
+
 /** Scroll-reveal wrapper. data-reveal lets a <noscript> rule force visibility. */
 function Reveal({ children, delay = 0, y = 24, className = '' }) {
   const reduce = useReducedMotion();
@@ -58,26 +75,43 @@ function CellValue({ value, us }) {
 
 /* ---------------------------------------------------------------- sections */
 
-function Header({ p }) {
+function Header() {
   return (
     <header className="relative z-10 border-b border-line bg-paper/80 backdrop-blur">
+      <input type="checkbox" id="navtoggle" className="peer hidden" aria-hidden="true" />
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <a href="/" className="font-display text-lg font-extrabold tracking-tight">
           OneTime<span className="text-sticker">Suite</span>
         </a>
-        <nav className="hidden items-center gap-6 font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft sm:flex">
-          <a className="hover:text-ink" href="#features">Features</a>
-          <a className="hover:text-ink" href={`#vs-${p.competitorSlug}`}>vs {p.competitor}</a>
-          <a className="hover:text-ink" href="#pricing">Pricing</a>
-          <a className="hover:text-ink" href="#faq">FAQ</a>
+        <nav aria-label="Main navigation" className="hidden items-center gap-5 font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft lg:flex">
+          {NAV_LINKS.map(([label, href]) => (
+            <a key={href} className="hover:text-ink" href={href}>{label}</a>
+          ))}
+          <a className="hover:text-ink" href={DASHBOARD} rel="noopener">Log in</a>
         </nav>
-        <a
-          href={p.buyUrl}
-          className="rounded-full bg-ink px-4 py-1.5 font-mono text-xs font-bold text-paper transition-colors hover:bg-sticker"
-        >
-          Get {p.brand}
-        </a>
+        <div className="flex items-center gap-3">
+          <a
+            href={WHOP}
+            rel="noopener"
+            className="rounded-full bg-ink px-4 py-1.5 font-mono text-xs font-bold text-paper transition-colors hover:bg-sticker"
+          >
+            Buy on Whop
+          </a>
+          <label htmlFor="navtoggle" aria-label="Menu" className="flex h-9 w-9 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-line lg:hidden">
+            <span className="block h-0.5 w-4 bg-ink" />
+            <span className="block h-0.5 w-4 bg-ink" />
+            <span className="block h-0.5 w-4 bg-ink" />
+          </label>
+        </div>
       </div>
+      <nav aria-label="Mobile navigation" className="hidden border-t border-line px-5 py-4 peer-checked:block lg:hidden">
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft">
+          {NAV_LINKS.map(([label, href]) => (
+            <a key={href} className="hover:text-ink" href={href}>{label}</a>
+          ))}
+          <a className="hover:text-ink" href={DASHBOARD} rel="noopener">Log in</a>
+        </div>
+      </nav>
     </header>
   );
 }
@@ -553,15 +587,100 @@ function FinalCta({ p }) {
           </a>
         </div>
       </Reveal>
-      <footer className="mx-auto mt-10 max-w-3xl text-center font-mono text-xs text-ink-soft">
-        <a href="/" className="hover:text-sticker">OneTimeSuite</a> · pay once, own it forever ·{' '}
-        {p.repo && (
-          <a href={`https://github.com/bensblueprints/${p.repo}`} className="underline underline-offset-2 hover:text-sticker">
-            source on GitHub
-          </a>
-        )}
-      </footer>
     </section>
+  );
+}
+
+function Footer({ p }) {
+  const s = p.site || {};
+  const cols = [
+    {
+      title: 'Apps',
+      links: [
+        ['All apps directory', '/apps/'],
+        [`Available now (${s.available})`, '/#available'],
+        [`Coming soon (${s.comingSoon})`, '/#coming-soon'],
+        ['Browse by category', '/categories/'],
+        [`OneTimeSuite Complete — $997`, `/${BUNDLE_SLUG}/`],
+      ],
+    },
+    {
+      title: 'Compare',
+      links: [
+        ['Versus pages', '/vs/'],
+        ['Price comparisons', '/compare/'],
+        ['Alternatives A–Z', '/alternatives/'],
+        ['Comparison posts', '/comparison/'],
+        ['Loom alternative', '/loom-alternative/'],
+        ['Wispr Flow alternative', '/wispr-flow-alternative/'],
+        ['Blog', '/blog/'],
+      ],
+    },
+    {
+      title: 'The suite',
+      links: [
+        ['Watch the webinar', '/webinar/'],
+        ['Savings calculator', '/calculator/'],
+        ['Price tracker', '/price-tracker/'],
+        ['Solve a problem', '/solve/'],
+        ['Research', '/research/'],
+        ['The manifesto', '/manifesto/'],
+        ['Subscription graveyard', '/graveyard/'],
+        ['User stacks', '/stacks/'],
+        ['Events', '/events/'],
+        ['Press kit', '/press/'],
+      ],
+    },
+    {
+      title: 'Get it',
+      links: [
+        ['Buy on Whop', WHOP, true],
+        ['Log in — your library', DASHBOARD, true],
+        ['Source on GitHub', GITHUB, true],
+        ['Savings snapshot', '/savings/'],
+      ],
+    },
+    {
+      title: 'Legal',
+      links: [
+        ['Terms of use', '/terms/'],
+        ['Privacy', '/privacy/'],
+        ['E-signature compliance', '/inkseal/compliance/'],
+      ],
+    },
+  ];
+  return (
+    <footer className="relative z-10 border-t border-line bg-card">
+      <div className="mx-auto max-w-6xl px-5 py-14">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          <div className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
+            <a href="/" className="font-display text-lg font-extrabold tracking-tight">
+              OneTime<span className="text-sticker">Suite</span>
+            </a>
+            <p className="mt-4 text-sm leading-relaxed text-ink-soft">
+              {s.totalApps} apps that replace subscription SaaS. Pay once, own forever. Almost all of them are MIT source on GitHub — build them yourself if you'd rather.
+            </p>
+          </div>
+          {cols.map(c => (
+            <div key={c.title}>
+              <h2 className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-ink">{c.title}</h2>
+              <div className="mt-4 flex flex-col gap-2.5 text-sm text-ink-soft">
+                {c.links.map(([label, href, ext]) => (
+                  <a key={label} href={href} {...(ext ? { rel: 'noopener' } : {})} className="hover:text-sticker">{label}</a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6 font-mono text-xs text-ink-soft">
+          <span>
+            © 2026 OneTimeSuite · by{' '}
+            <a href="https://advancedmarketing.co" rel="noopener" className="underline underline-offset-2 hover:text-sticker">Advanced Marketing</a>
+          </span>
+          <span>Pay once. Own it forever.</span>
+        </div>
+      </div>
+    </footer>
   );
 }
 
@@ -570,7 +689,7 @@ function FinalCta({ p }) {
 export default function ProductPage({ product }) {
   return (
     <MotionConfig reducedMotion="user">
-      <Header p={product} />
+      <Header />
       <Breadcrumb p={product} />
       <main className="relative z-[1]">
         <Hero p={product} />
@@ -584,6 +703,7 @@ export default function ProductPage({ product }) {
         <Related p={product} />
         <FinalCta p={product} />
       </main>
+      <Footer p={product} />
     </MotionConfig>
   );
 }

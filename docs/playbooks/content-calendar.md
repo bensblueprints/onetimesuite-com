@@ -9,11 +9,11 @@
 
 ### 1. App drop
 **Formula:** New app name + what it replaces + one feature + price vs competitor yearly cost + link.
-> **Fill-in example:** "App [N] of 102: **Bookslot** — the Calendly you actually own. Timezone-correct booking pages with email + ICS invites, self-hosted. Calendly is ~$120/yr. Bookslot is $39, once. Free MIT MVP on GitHub. onetimesuite.com/bookslot/"
+> **Fill-in example:** "App [N] of 102: **Bookslot** — the Calendly you actually own. Timezone-correct booking pages with email + ICS invites, self-hosted. Calendly is ~$120/yr. Bookslot is $99, once. Free MIT MVP on GitHub. onetimesuite.com/bookslot/"
 
 ### 2. Subscription roast
 **Formula:** One competitor's real yearly cost (with "as of [date]") + the absurdity framed honestly + the alternative. Never misquote.
-> **Fill-in example:** "Typeform charges $29/mo for forms — that's ~$348/yr, as of [date], to ask people questions. Formforge does Typeform-style forms with unlimited responses and CSV export, self-hosted, for $39. Once. The roast writes itself."
+> **Fill-in example:** "Typeform charges $29/mo for forms — that's ~$348/yr, as of [date], to ask people questions. Formforge does Typeform-style forms with unlimited responses and CSV export, self-hosted, for $99. Once. The roast writes itself."
 
 ### 3. Behind-the-build
 **Formula:** What got built/fixed today + one real technical or business detail + what's next.
@@ -35,7 +35,7 @@
 |---|---|---|---|
 | 1 | X + LinkedIn | Text post | App drop: BloomRecorder $29 vs Loom ~$180/yr |
 | 2 | Shorts/TikTok/Reels/LinkedIn/X | 60s video | BloomRecorder script (`video-scripts.md` #1) |
-| 3 | X + LinkedIn | Text post | Subscription roast: Typeform ~$348/yr vs Formforge $39 |
+| 3 | X + LinkedIn | Text post | Subscription roast: Typeform ~$348/yr vs Formforge $99 |
 | 4 | Shorts/TikTok/Reels/LinkedIn/X | 60s video | Bookslot script (#2) |
 | 5 | X + LinkedIn | Text post | Behind-the-build: day [N]/100 progress |
 | 6 | WhatsApp focus | Voice note | Weekend casual + next-week preview |
@@ -56,7 +56,7 @@
 | 21 | X + LinkedIn | Text post | Event recap / stack math: 8 everyday tools ≈ $1,668/yr (sourced) |
 | 22 | X + LinkedIn | Text post | App drop: WhisperDesk $39 vs Otter.ai ~$204/yr |
 | 23 | Shorts/TikTok/Reels/LinkedIn/X | 60s video | Cutaway script (#7) |
-| 24 | X + LinkedIn | Text post | Subscription roast: Buffer ~$360/yr (5 channels) vs PostDock $49 |
+| 24 | X + LinkedIn | Text post | Subscription roast: Buffer ~$360/yr (5 channels) vs PostDock $129 |
 | 25 | Shorts/TikTok/Reels/LinkedIn/X | 60s video | WhisperDesk script (#8) |
 | 26 | X + LinkedIn | Text post | Behind-the-build: shipping an app a day — what breaks |
 | 27 | WhatsApp focus | Reminder | Webinar reminder + casual Saturday post |

@@ -38,8 +38,8 @@ Target: authors of articles like "Best screen recorders", "Loom alternatives", "
 | App | Replaces | Price | Competitor cost (verify before sending) |
 |---|---|---|---|
 | BloomRecorder | Loom | $29 once | $15/user/mo (~$180/yr) |
-| Bookslot | Calendly | $39 once | $10/user/mo (~$120/yr) |
-| Formforge | Typeform | $39 once | $29/mo (~$348/yr) |
+| Bookslot | Calendly | $99 once | $10/user/mo (~$120/yr) |
+| Formforge | Typeform | $99 once | $29/mo (~$348/yr) |
 | WhisperDesk | Otter.ai | $39 once | $16.99/mo (~$204/yr) |
 | Linkleaf | Linktree | $19 once | $5–9/mo (~$84/yr) |
 
@@ -55,7 +55,7 @@ Target: organizers of events the founder is attending (see `event-playbook.md`).
 >
 > I'm attending [Event] in [City] on [date] — [how you know them / ticket ref / mutual connection].
 >
-> I run OneTime Suite: 102 pay-once apps that replace common SaaS subscriptions (a Calendly you own for $39, a Loom replacement for $29, that kind of thing). I'd like to write a practical guest post for your attendee newsletter/blog: **"The 20-minute subscription audit: what a typical [founder/creator/agency] stack costs per year, and which tools now have pay-once alternatives."**
+> I run OneTime Suite: 102 pay-once apps that replace common SaaS subscriptions (a Calendly you own for $99, a Loom replacement for $29, that kind of thing). I'd like to write a practical guest post for your attendee newsletter/blog: **"The 20-minute subscription audit: what a typical [founder/creator/agency] stack costs per year, and which tools now have pay-once alternatives."**
 >
 > It would use real, sourced prices with dates — e.g. Typeform ~$348/yr, Loom ~$180/yr, Otter.ai ~$204/yr as of [date] — and it's useful even to readers who never buy anything from me: every app also has a free MIT-licensed MVP on GitHub.
 >
@@ -75,7 +75,7 @@ Target: indie hacker / bootstrapping / SaaS-critique podcasts.
 >
 > [Genuine listener note — name a specific episode and what you took from it.]
 >
-> Pitch for [Podcast]: I'm building **102 apps in 100 days**, each one a pay-once replacement for a common SaaS subscription — $15–$99 each, no accounts with us, desktop apps run 100% locally, web apps self-host on a $5 VPS. The whole suite starts at $97 and the price rises $1 with every sale, capped at $997 during the build.
+> Pitch for [Podcast]: I'm building **102 apps in 100 days**, each one a pay-once replacement for a common SaaS subscription — $15–$149 each, no accounts with us, desktop apps run 100% locally, web apps self-host on a $5 VPS. The whole suite starts at $97 and the price rises $1 with every sale, capped at $997 during the build.
 >
 > [65] apps are live as of today. Every app ships with a free MIT-licensed MVP on GitHub so people can verify the tool is real before paying. Angles we could dig into:
 >
@@ -99,7 +99,7 @@ Target: indie hacker / bootstrapping / SaaS-critique podcasts.
 | **G2** | Verified business profile, product category, pricing info, screenshots; reviews must come from real users | Never incentivize or script reviews. Add `[N]` products only after real users exist who can review. |
 | **Capterra** | Vendor account, product listing with pricing/deployment details | Same review rules as G2 (same network). Fill deployment accurately: self-hosted / desktop. |
 | **SaaSHub** | Product listing + alternatives mapping | List each app against its README "Replaces" target. |
-| **StackShare** | Tool profile; gets pulled into stacks | Most relevant for dev tools (Wrangle $15, Hookscope $24, Pingcron $29, Vaultkeeper $39). |
+| **StackShare** | Tool profile; gets pulled into stacks | Most relevant for dev tools (Wrangle $15, Hookscope $69, Pingcron $79, Vaultkeeper $99). |
 | **Indie Hackers** | Community account; product/milestone posts | Post milestones with real numbers only (apps shipped, sales count from `sales-data.js`). Participate in threads before posting your own. No drive-by links. |
 
 Submission hygiene: same description accuracy everywhere (prices per README table), one account, real founder identity, update listings when prices change.

@@ -79,7 +79,9 @@ section + section { border-top: 1px solid var(--line); }
   font-family: var(--display); font-weight: 800; font-size: 1.18rem;
   color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
   margin-right: auto; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 0.55rem;
 }
+.wordmark-mark { height: 34px; width: auto; display: block; }
 .wordmark .tm { color: var(--price); }
 .site-nav a.nav-link { color: var(--ink); text-decoration: none; font-size: 0.92rem; font-weight: 500; }
 .site-nav a.nav-link:hover { color: var(--accent); }

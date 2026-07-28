@@ -7,7 +7,7 @@
 
 ## Ground rules
 
-- Every price, app name and feature in public content must match the README table (e.g. BloomRecorder $29, Bookslot $39, Linkleaf $19, WisperTalk $49).
+- Every price, app name and feature in public content must match the README table (e.g. BloomRecorder $29, Bookslot $99, Linkleaf $19, WisperTalk $49).
 - Never invent sales figures, user counts or testimonials. Use real numbers or say nothing.
 - Bundle mechanics are fixed per `src/sales-data.js`: starts at **$97**, **+$1 per sale**, caps at **$997** during the 100-day build, then **$1,997** once all apps ship. Individual apps are always sold separately at `onetimesuite.com/apps/`.
 - Where a tactic risks a platform ban (Reddit, HN, directories), follow the legitimacy rules in `outreach-templates.md` — genuine participation first, disclose you're the maker, one thread per community.
@@ -61,7 +61,7 @@ Goal: turn the factory on — volume video, launch moments, research as a traffi
 ### Week 5 (Days 31–37): Video factory
 
 - [ ] Establish the batch cadence: one afternoon per week, 10 Shorts per session, using the script template + thumbnail spec in `video-scripts.md`.
-- [ ] Write 10 new scripts for the next tier of apps (pull names/prices from the README table — e.g. Trimly $29 vs Bitly, Statfox $49 vs Plausible, Boardly $19 vs Trello, Postbird $59 vs Mailchimp, Castport $39 vs Transistor).
+- [ ] Write 10 new scripts for the next tier of apps (pull names/prices from the README table — e.g. Trimly $79 vs Bitly, Statfox $129 vs Plausible, Boardly $49 vs Trello, Postbird $149 vs Mailchimp, Castport $99 vs Transistor).
 - [ ] Batch-record session #2; schedule 1/day.
 
 ### Week 6 (Days 38–44): Product Hunt launches

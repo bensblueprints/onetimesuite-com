@@ -29,13 +29,13 @@ Rules: real app footage only (no mockups), on-screen price line visible from 15s
 - **45–55 Proof:** "Unlimited length, MP4 and GIF export, and every file lands in a folder on your own disk. The core is free and MIT-licensed on GitHub."
 - **55–60 CTA:** "BloomRecorder, $29 once — onetimesuite.com/bloomrecorder/. Free MVP linked too."
 
-### 2. Bookslot ($39 once vs Calendly ~$120/yr)
+### 2. Bookslot ($99 once vs Calendly ~$120/yr)
 
-- **0–3 Hook:** "Calendly costs $120 a year — per person. Mine cost $39, total, forever."
+- **0–3 Hook:** "Calendly costs $120 a year — per person. Mine cost $99, total, forever."
 - **3–15 Problem:** "It's a booking link. It checks a calendar and sends an invite. That is not a $120-a-year problem."
 - **15–45 Demo:** Screen recording: Bookslot booking page → pick a slot in a different timezone (show the timezone-correct conversion) → book → email + ICS invite arrives. On-screen: "Self-hosted — your page, your data."
 - **45–55 Proof:** "Timezone-correct booking with email and calendar invites, on a server you own. Free MIT MVP on GitHub if you want the basics free."
-- **55–60 CTA:** "Bookslot, $39 once — onetimesuite.com/bookslot/."
+- **55–60 CTA:** "Bookslot, $99 once — onetimesuite.com/bookslot/."
 
 ### 3. Linkleaf ($19 once vs Linktree ~$84/yr)
 
@@ -93,13 +93,13 @@ Rules: real app footage only (no mockups), on-screen price line visible from 15s
 - **45–55 Proof:** "A thousand photos in one pass, no upload limits, everything stays on your disk. Free MIT MVP on GitHub."
 - **55–60 CTA:** "Shrinkray, $19 once — onetimesuite.com/shrinkray/."
 
-### 10. Upwatch ($39 once vs UptimeRobot ~$96/yr)
+### 10. Upwatch ($99 once vs UptimeRobot ~$96/yr)
 
-- **0–3 Hook:** "UptimeRobot costs ~$96 a year to tell you your site is down. This does it for $39, once — with a status page included."
+- **0–3 Hook:** "UptimeRobot costs ~$96 a year to tell you your site is down. This does it for $99, once — with a status page included."
 - **3–15 Problem:** "Downtime alerts are a cron job and a webhook. You're renting a cron job."
 - **15–45 Demo:** Screen recording: Upwatch dashboard → add an HTTP check → simulate a failed check → alert fires → show the branded 90-day public status page. On-screen: "Checks, incidents, alerts, status page — on your own box."
 - **45–55 Proof:** "Self-hosted, so your monitoring doesn't depend on the company you're monitoring against. Free MIT MVP on GitHub."
-- **55–60 CTA:** "Upwatch, $39 once — onetimesuite.com/upwatch/."
+- **55–60 CTA:** "Upwatch, $99 once — onetimesuite.com/upwatch/."
 
 ---
 

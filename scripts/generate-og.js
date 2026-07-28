@@ -68,7 +68,7 @@ function pageMeta(rel) {
 
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
 
-function cardHtml({ title, kicker, price }, cutoutUrl) {
+function cardHtml({ title, kicker, price }, cutoutUrl, logoUrl) {
   const size = title.length > 72 ? 52 : title.length > 44 ? 60 : 70;
   return `<!DOCTYPE html><html><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,10 +81,7 @@ function cardHtml({ title, kicker, price }, cutoutUrl) {
   .accent { position:absolute; left:20px; right:20px; bottom:20px; height:12px;
             background:#e8420c; border-radius:0 0 16px 16px; }
   .content { position:absolute; left:64px; top:58px; width:600px; z-index:2; }
-  .brand { font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:24px;
-           letter-spacing:0.08em; display:flex; align-items:center; gap:14px; }
-  .brand .mark { width:40px; height:40px; background:#e8420c; border-radius:9px; color:#fff;
-                 display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; }
+  .brand img { height:52px; width:auto; display:block; }
   .kicker { font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:19px;
             text-transform:uppercase; letter-spacing:0.14em; color:#4b4e55;
             border:1.5px solid #17191d; border-radius:7px; display:inline-block;
@@ -105,7 +102,7 @@ function cardHtml({ title, kicker, price }, cutoutUrl) {
 </style></head><body>
   <div class="frame"></div>
   <div class="content">
-    <div class="brand"><span class="mark">$1</span>ONETIMESUITE.COM</div>
+    <div class="brand"><img src="${logoUrl}"></div>
     <span class="kicker">${esc(kicker)}</span>
     <h1>${esc(title)}</h1>
   </div>
@@ -123,6 +120,8 @@ function cardHtml({ title, kicker, price }, cutoutUrl) {
   const manifestPath = path.join(OUT, 'manifest.json');
   const manifest = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, 'utf8')) : {};
   const cutoutUrl = 'data:image/png;base64,' + fs.readFileSync(CUTOUT).toString('base64');
+  const LOGO = path.join(ROOT, 'assets', 'og-src', 'ots-logo-nav.png');
+  const logoUrl = 'data:image/png;base64,' + fs.readFileSync(LOGO).toString('base64');
 
   /* collect pages */
   const pages = [];
@@ -145,7 +144,7 @@ function cardHtml({ title, kicker, price }, cutoutUrl) {
       .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
       .replace(/&lt;/g, '<').replace(/&gt;/g, '>');
     const meta = pageMeta(rel);
-    const hash = crypto.createHash('md5').update(JSON.stringify([title, meta, 3])).digest('hex').slice(0, 12);
+    const hash = crypto.createHash('md5').update(JSON.stringify([title, meta, 4])).digest('hex').slice(0, 12);
     const outFile = path.join(OUT, key + '.jpg');
     if (process.env.OG_FILTER && !key.includes(process.env.OG_FILTER)) continue;
     if (!FORCE && manifest[key] === hash && fs.existsSync(outFile)) continue;
@@ -160,7 +159,7 @@ function cardHtml({ title, kicker, price }, cutoutUrl) {
   const page = await ctx.newPage();
   let done = 0;
   for (const j of jobs) {
-    await page.setContent(cardHtml({ title: j.title, ...j.meta }, cutoutUrl), { waitUntil: 'networkidle' });
+    await page.setContent(cardHtml({ title: j.title, ...j.meta }, cutoutUrl, logoUrl), { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: j.outFile, type: 'jpeg', quality: 84 });
     manifest[j.key] = j.hash;

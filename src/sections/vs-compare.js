@@ -6,6 +6,11 @@
  *   /alternatives/<competitor>/       one page per competitor, card per app
  *   /vs/  /compare/  /alternatives/   hub pages grouped by competitor category
  *
+ * Plus curated extra competitors (src/extra-competitors.js): /vs/ and
+ * /alternatives/ pages rendered from custom whyUs/theirsWins/note copy
+ * (NOT p.compRows/p.payback, which reference the app's original competitor).
+ * Extra competitors get NO /compare/ page — pricing there is less certain.
+ *
  * All pricing facts come from product data (p.price, p.compPrice, p.compYr);
  * the SUITE price is derived from ctx.sales and appears only next to the
  * bundle mention. No ratings, no testimonials, deterministic output only.
@@ -38,6 +43,30 @@ module.exports = function (ctx) {
       pairs.push({ p, comp, pairSlug });
     }
   }
+
+  /* ---------- extra competitors (curated, src/extra-competitors.js) ----------
+   * Dedupe rule: skip any extra whose slug already exists in the matrix, and
+   * skip any pair route already emitted above. */
+  const extraCompetitors = require('../extra-competitors.js');
+  const matrixSlugs = new Set(competitors.map(c => c.slug));
+  const extras = extraCompetitors
+    .filter(c => c && c.slug && !matrixSlugs.has(c.slug))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const extraPairs = [];       // [{ p, comp, pairSlug, whyUs, theirsWins }]
+  for (const comp of extras) {
+    for (const app of [...comp.apps].sort((a, b) => a.slug.localeCompare(b.slug))) {
+      const p = bySlug[app.slug];
+      if (!p) continue;
+      const pairSlug = `${app.slug}-vs-${comp.slug}`;
+      if (seenPair.has(pairSlug)) continue;   // deterministic dupe — skip
+      seenPair.add(pairSlug);
+      extraPairs.push({ p, comp, pairSlug, whyUs: app.whyUs, theirsWins: app.theirsWins });
+    }
+  }
+  /* app slug -> first ORIGINAL pair slug, for linking extra /vs pages to the
+     existing /compare/ pricing page of the app's own competitor. */
+  const origPairByApp = {};
+  for (const { p, pairSlug } of pairs) if (!(p.slug in origPairByApp)) origPairByApp[p.slug] = pairSlug;
 
   /* ---------- shared helpers ---------- */
 
@@ -77,6 +106,14 @@ module.exports = function (ctx) {
             <p>${esc(a)}</p>
           </div>`).join('\n          ');
   }
+
+  /* Extra-competitor price helpers — pricing is "from $X" list data, so every
+     figure is phrased conservatively and derived only from priceMo/priceYr. */
+  const extraMoText = comp => (comp.priceMo != null ? `from $${comp.priceMo}/mo` : null);
+  const extraYr = comp => (comp.priceYr != null ? comp.priceYr
+    : (comp.priceMo != null ? Math.round(comp.priceMo * 12 * 100) / 100 : null));
+  const extraPriceText = comp => extraMoText(comp)
+    || (comp.priceYr != null ? `from ${fmt(comp.priceYr)}/yr` : 'usage-based or quote-based pricing');
 
   /* ============================================================
    * 1. /vs/<app>-vs-<competitor>/ — the honest head-to-head
@@ -154,6 +191,119 @@ module.exports = function (ctx) {
               ${buyBtn(p)}
               <a class="btn btn-ghost" href="/${p.slug}/">${esc(p.brand)} product page</a>
               <a class="btn btn-ghost" href="/compare/${pairSlug}/">Pricing breakdown</a>
+              <a class="btn btn-ghost" href="/alternatives/${comp.slug}/">More ${esc(comp.name)} alternatives</a>
+            </div>
+            ${bundleNote(p)}
+          </div>
+        </article>
+      </div>
+    </section>`;
+
+    write(`vs/${pairSlug}`, page({
+      title,
+      desc,
+      canonical: url,
+      ogType: 'article',
+      jsonld: [
+        schema.articleLd({ title: h1, desc, url, datePublished: DATE }),
+        schema.faqPageLd(faqPairs),
+        schema.softwareApp(p, url),
+        crumbs([['OneTimeSuite', `${SITE}/`], ['Comparisons', `${SITE}/vs/`], [`${p.brand} vs ${comp.name}`, url]]),
+      ],
+      body,
+    }));
+    reg(`/vs/${pairSlug}/`, 'vs');
+  }
+
+  /* ============================================================
+   * 1b. /vs/<app>-vs-<extra-competitor>/ — curated overlap pages
+   * Same layout as section 1, but the table + win/lose sections come from
+   * the pairing's whyUs/theirsWins/note copy — p.compRows/p.payback reference
+   * the app's ORIGINAL competitor and must not leak onto these pages.
+   * ============================================================ */
+  for (const { p, comp, pairSlug, whyUs, theirsWins } of extraPairs) {
+    const url = `${SITE}/vs/${pairSlug}/`;
+    const h1 = `${p.brand} vs ${comp.name} (2026): One-Time ${catLabel(comp.category)} Alternative`;
+    const title = `${p.brand} vs ${comp.name}: pay-once alternative (2026)`;
+    const priceText = extraPriceText(comp);
+    const desc = `Can ${p.brand} replace part of ${comp.name}? Honest overlap, where ${comp.name} still wins, and what $${p.price} once saves against ${priceText}.`;
+    const faqPairs = pricingFaq(p, 4);
+    const effYr = extraYr(comp);
+    const feats = (p.features || []).slice(0, 2).map(f =>
+      `<li><strong>${esc(f[1])}.</strong> ${esc(f[2])}</li>`).join('\n            ');
+    const runsOn = p.kind === 'web' ? 'Your own server (self-hosted)' : 'Your own machine';
+    const origCompare = origPairByApp[p.slug];
+
+    const tableRows = [
+      `<tr><td>Price</td><td class="us"><span class="price-fig">$${p.price} once</span></td><td>${esc(priceText)}</td></tr>`,
+      `<tr><td>Where it runs</td><td class="us">${runsOn}</td><td>Vendor cloud (hosted service)</td></tr>`,
+      `<tr><td>Renewal</td><td class="us">None — the license never expires</td><td>${effYr != null ? 'Recurring — access ends when you stop paying' : 'Usage-based — cost scales with use'}</td></tr>`,
+      effYr != null
+        ? `<tr class="total"><td>5-year cost</td><td class="us"><span class="price-fig">$${p.price}</span></td><td>~${fmt(effYr * 5)}</td></tr>`
+        : '',
+    ].filter(Boolean).join('\n              ');
+
+    const mathBlock = effYr != null
+      ? `<p>${esc(comp.name)} lists ${esc(priceText)}${comp.priceYr == null && comp.priceMo != null ? ` — roughly ${fmt(effYr)} per year` : ''}. ${esc(p.brand)} is $${p.price}, paid once:</p>
+          <ul>
+            <li>After 1 year: ${esc(p.brand)} has cost you $${p.price} total — ${esc(comp.name)} has cost ~${fmt(effYr)}.</li>
+            <li>After 3 years: ${esc(p.brand)} is still $${p.price} — the subscription is at ~${fmt(effYr * 3)}.</li>
+            <li>After 5 years: ${esc(p.brand)} is still $${p.price} — the subscription is at ~${fmt(effYr * 5)}.</li>
+          </ul>`
+      : `<p>${esc(comp.name)} does not publish a flat rate — its cost scales with your usage or sits behind a sales quote, so it never flattens. ${esc(p.brand)} is $${p.price}, paid once: the whole price, known up front, whether you use it for a month or a decade.</p>`;
+
+    const body = `
+    <section class="hero" aria-label="Comparison" style="padding-bottom:2.5rem;">
+      <div class="wrap-narrow">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/vs/">Comparisons</a> / ${esc(p.brand)} vs ${esc(comp.name)}</nav>
+        <span class="stamp">Honest comparison · 2026</span>
+        <h1 style="font-size:clamp(1.9rem,4.4vw,3rem);">${esc(h1)}</h1>
+      </div>
+    </section>
+
+    <section aria-label="Comparison body" style="padding-top:2.5rem;">
+      <div class="wrap-narrow">
+        <article class="post-body">
+          <h2>Quick answer</h2>
+          <p>Yes — for the part of ${esc(comp.name)} covered on this page, ${esc(p.brand)} is a one-time-purchase alternative. It costs $${p.price} once, while ${esc(comp.name)} lists ${esc(priceText)}. ${esc(p.oneliner || p.tagline || '')} It is not a 1:1 replacement for everything ${esc(comp.name)} does — the honest limits are spelled out below.</p>
+
+          <p class="stamp blue">The verdict</p>
+          <p><strong>Switch to ${esc(p.brand)} if</strong> the slice of ${esc(comp.name)} you actually pay for is the slice ${esc(p.brand)} covers — and a $${p.price} one-time price beats ${esc(priceText)} for as long as you use it.</p>
+          <p><strong>Stay with ${esc(comp.name)} if</strong> this sounds like you — ${esc(theirsWins)}</p>
+
+          <h2>Head to head</h2>
+          <div class="tbl-wrap">
+            <table class="receipt">
+              <thead><tr><th></th><th class="us">${esc(p.brand)}</th><th>${esc(comp.name)}</th></tr></thead>
+              <tbody>
+              ${tableRows}
+              </tbody>
+            </table>
+          </div>
+          <p class="mono-note">About ${esc(comp.name)}: ${esc(comp.note)}</p>
+
+          <h2>Where ${esc(comp.name)} still wins</h2>
+          <p>${esc(theirsWins)}</p>
+
+          <h2>Where ${esc(p.brand)} wins</h2>
+          <p>${esc(whyUs)}</p>
+          <ul>
+            <li><strong>Price, permanently.</strong> $${p.price} once versus ${esc(priceText)} for as long as you use it. There is no renewal, no seat count and no tier gate.</li>
+            ${feats}
+          </ul>
+
+          <h2>The math</h2>
+          ${mathBlock}
+
+          <h2>Common questions</h2>
+          ${faqHtml(faqPairs)}
+
+          <div class="cta-card">
+            <h3>Try ${esc(p.brand)} — $${p.price}, one time</h3>
+            <div class="btn-row">
+              ${buyBtn(p)}
+              <a class="btn btn-ghost" href="/${p.slug}/">${esc(p.brand)} product page</a>
+              ${origCompare ? `<a class="btn btn-ghost" href="/compare/${origCompare}/">${esc(p.brand)} pricing breakdown</a>` : ''}
               <a class="btn btn-ghost" href="/alternatives/${comp.slug}/">More ${esc(comp.name)} alternatives</a>
             </div>
             ${bundleNote(p)}
@@ -344,20 +494,109 @@ module.exports = function (ctx) {
   }
 
   /* ============================================================
+   * 3b. /alternatives/<extra-competitor>/ — curated roundups
+   * Same layout as section 3, cards carry the pairing's whyUs blurb and the
+   * "why people leave" copy uses the competitor's note + list-price facts.
+   * ============================================================ */
+  const emittedAlt = new Set(competitors.map(c => c.slug));
+  for (const comp of extras) {
+    if (emittedAlt.has(comp.slug)) continue;   // route already exists — skip
+    emittedAlt.add(comp.slug);
+    const apps = comp.apps.map(a => ({ p: bySlug[a.slug], whyUs: a.whyUs }))
+      .filter(x => x.p)
+      .sort((a, b) => a.p.brand.localeCompare(b.p.brand));
+    if (!apps.length) continue;
+    const url = `${SITE}/alternatives/${comp.slug}/`;
+    const h1 = `Best ${comp.name} alternatives you can buy once (2026)`;
+    const title = `${comp.name} alternatives you buy once (2026)`;
+    const desc = `The best pay-once ${comp.name} alternatives in 2026 — ${apps.length} app${apps.length === 1 ? '' : 's'} you buy once and own forever, with honest overlap notes and head-to-head comparisons.`;
+    const leaveMo = extraMoText(comp);
+    const leaveYr = extraYr(comp);
+
+    const cards = apps.map(({ p, whyUs }) => `<div class="p-card">
+            <h3>${p.icon ? `${p.icon} ` : ''}${esc(p.brand)}</h3>
+            <p>${esc(p.oneliner || p.tagline || '')}</p>
+            <p>${esc(whyUs)}</p>
+            <p class="price-fig">$${p.price} once</p>
+            <p><a class="link" href="/${p.slug}/">Product page</a> · <a class="link" href="/vs/${p.slug}-vs-${comp.slug}/">${esc(p.brand)} vs ${esc(comp.name)}</a></p>
+          </div>`).join('\n          ');
+
+    const altFaq = [
+      [`Is there a one-time-purchase alternative to ${comp.name}?`,
+        `Yes — ${apps.map(({ p }) => `${p.brand} ($${p.price} once)`).join(', ')}. Each covers a genuine slice of what ${comp.name} charges for, and none of them has a renewal.`],
+      [`How much does ${comp.name} cost?`,
+        `${comp.note}${leaveYr != null ? ` Taken at face value, that is roughly ${fmt(leaveYr)} per year — ${fmt(leaveYr * 5)} over five.` : ''} The alternatives on this page are single payments, so their cost never grows.`],
+      [`Do these tools replace everything ${comp.name} does?`,
+        `No — each one replaces the specific slice described in its card above, and the head-to-head page spells out where ${comp.name} still wins. Read the pairing before you cancel anything.`],
+    ];
+
+    const body = `
+    <section class="hero center" aria-label="${attr(comp.name)} alternatives" style="padding-bottom:2.5rem;">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / <a href="/alternatives/">Alternatives</a> / ${esc(comp.name)}</nav>
+        <span class="stamp">${apps.length} pay-once alternative${apps.length === 1 ? '' : 's'} · 2026</span>
+        <h1>${esc(h1)}</h1>
+        <p class="lead">${esc(comp.note)}</p>
+      </div>
+    </section>
+
+    <section aria-label="Alternative apps">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="stamp blue">The lineup</span>
+          <h2>${apps.length === 1 ? 'The pay-once app' : `${apps.length} pay-once apps`} that replace${apps.length === 1 ? 's' : ''} part of ${esc(comp.name)}</h2>
+        </div>
+        <div class="card-grid">
+          ${cards}
+        </div>
+
+        <div class="wrap-narrow" style="margin-top:3rem;">
+          <article class="post-body">
+            <h2>Why people leave ${esc(comp.name)}</h2>
+            <p>${esc(comp.note)} ${leaveYr != null
+              ? `That is roughly ${fmt(leaveYr)} per year${leaveMo ? '' : ' once annualized'} — about ${fmt(leaveYr * 5)} over five years — and access stops the moment you cancel: the fee is for permission, not for ongoing work done on your behalf.`
+              : 'The cost never flattens: it scales with your usage, your list or your revenue, forever.'} The tools above do their slice of the job on your own hardware or your own server, so the cost is fixed at the sticker price.</p>
+
+            <h2>Common questions</h2>
+            ${faqHtml(altFaq)}
+
+            <p style="font-size:0.9rem;">Looking at one specific app? Read the head-to-head: ${apps.map(({ p }) => `<a href="/vs/${p.slug}-vs-${comp.slug}/">${esc(p.brand)} vs ${esc(comp.name)}</a>`).join(' · ')}.</p>
+          </article>
+        </div>
+      </div>
+    </section>`;
+
+    write(`alternatives/${comp.slug}`, page({
+      title,
+      desc,
+      canonical: url,
+      jsonld: [
+        schema.itemListLd({ name: h1, url, items: apps.map(({ p }) => [p.brand, `${SITE}/${p.slug}/`]) }),
+        schema.faqPageLd(altFaq),
+        crumbs([['OneTimeSuite', `${SITE}/`], ['Alternatives', `${SITE}/alternatives/`], [comp.name, url]]),
+      ],
+      body,
+    }));
+    reg(`/alternatives/${comp.slug}/`, 'vs');
+  }
+
+  /* ============================================================
    * 4. hub pages: /vs/ /compare/ /alternatives/
    * ============================================================ */
-  function groupPairsByCategory() {
+  const allPairs = pairs.concat(extraPairs);        // /vs/ hub only — extras get no /compare/ page
+  const allComps = competitors.concat(extras);      // /alternatives/ hub
+  function groupPairsByCategory(list) {
     const map = new Map(); // categorySlug -> pairs[]
-    for (const pair of pairs) {
+    for (const pair of list) {
       const c = pair.comp.category || 'other';
       if (!map.has(c)) map.set(c, []);
       map.get(c).push(pair);
     }
     return [...map.entries()].sort((a, b) => catLabel(a[0]).localeCompare(catLabel(b[0])));
   }
-  function groupCompsByCategory() {
+  function groupCompsByCategory(list) {
     const map = new Map(); // categorySlug -> competitors[]
-    for (const comp of competitors) {
+    for (const comp of list) {
       const c = comp.category || 'other';
       if (!map.has(c)) map.set(c, []);
       map.get(c).push(comp);
@@ -367,14 +606,14 @@ module.exports = function (ctx) {
 
   /* /vs/ hub */
   {
-    const groups = groupPairsByCategory();
+    const groups = groupPairsByCategory(allPairs);
     const body = `
     <section class="hero center">
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / Comparisons</nav>
         <span class="stamp">vs</span>
         <h1>Pay-once software, compared head to head</h1>
-        <p class="lead">${pairs.length} honest comparisons between subscription incumbents and the one-time-purchase apps that replace them — real prices, real feature tables, no affiliate fluff.</p>
+        <p class="lead">${allPairs.length} honest comparisons between subscription incumbents and the one-time-purchase apps that replace them — real prices, real feature tables, no affiliate fluff.</p>
       </div>
     </section>
     <section aria-label="All comparisons">
@@ -392,10 +631,10 @@ module.exports = function (ctx) {
     </section>`;
     write('vs', page({
       title: 'Pay-once software vs subscriptions — comparisons',
-      desc: `Honest head-to-head comparisons of subscription tools vs one-time-purchase alternatives — ${pairs.length} matchups with real prices, feature tables and 5-year cost math.`,
+      desc: `Honest head-to-head comparisons of subscription tools vs one-time-purchase alternatives — ${allPairs.length} matchups with real prices, feature tables and 5-year cost math.`,
       canonical: `${SITE}/vs/`,
       jsonld: [
-        schema.itemListLd({ name: 'Pay-once software comparisons', url: `${SITE}/vs/`, items: pairs.map(({ p, comp, pairSlug }) => [`${p.brand} vs ${comp.name}`, `${SITE}/vs/${pairSlug}/`]) }),
+        schema.itemListLd({ name: 'Pay-once software comparisons', url: `${SITE}/vs/`, items: allPairs.map(({ p, comp, pairSlug }) => [`${p.brand} vs ${comp.name}`, `${SITE}/vs/${pairSlug}/`]) }),
         crumbs([['OneTimeSuite', `${SITE}/`], ['Comparisons', `${SITE}/vs/`]]),
       ],
       body,
@@ -405,7 +644,7 @@ module.exports = function (ctx) {
 
   /* /compare/ hub */
   {
-    const groups = groupPairsByCategory();
+    const groups = groupPairsByCategory(pairs);
     const body = `
     <section class="hero center">
       <div class="wrap">
@@ -442,14 +681,14 @@ module.exports = function (ctx) {
 
   /* /alternatives/ hub */
   {
-    const groups = groupCompsByCategory();
+    const groups = groupCompsByCategory(allComps);
     const body = `
     <section class="hero center">
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/">OneTimeSuite</a> / Alternatives</nav>
         <span class="stamp">alternatives</span>
         <h1>Pay-once alternatives to subscription software</h1>
-        <p class="lead">${competitors.length} subscription tools, each with pay-once alternatives you buy once and own forever. Pick the tool you are renting and see what owning looks like.</p>
+        <p class="lead">${allComps.length} subscription tools, each with pay-once alternatives you buy once and own forever. Pick the tool you are renting and see what owning looks like.</p>
       </div>
     </section>
     <section aria-label="All alternatives">
@@ -466,10 +705,10 @@ module.exports = function (ctx) {
     </section>`;
     write('alternatives', page({
       title: 'Pay-once alternatives to subscription software',
-      desc: `Browse pay-once alternatives to ${competitors.length} subscription tools — apps you buy once and own forever, grouped by category with real prices.`,
+      desc: `Browse pay-once alternatives to ${allComps.length} subscription tools — apps you buy once and own forever, grouped by category with real prices.`,
       canonical: `${SITE}/alternatives/`,
       jsonld: [
-        schema.itemListLd({ name: 'Subscription software alternatives', url: `${SITE}/alternatives/`, items: competitors.map(comp => [`${comp.name} alternatives`, `${SITE}/alternatives/${comp.slug}/`]) }),
+        schema.itemListLd({ name: 'Subscription software alternatives', url: `${SITE}/alternatives/`, items: allComps.map(comp => [`${comp.name} alternatives`, `${SITE}/alternatives/${comp.slug}/`]) }),
         crumbs([['OneTimeSuite', `${SITE}/`], ['Alternatives', `${SITE}/alternatives/`]]),
       ],
       body,

@@ -35,17 +35,17 @@
 
 **3:00 — Captionly.** Replaces Submagic. Local Whisper auto-captions with karaoke word highlighting, burned in with ffmpeg — nothing uploaded. Submagic runs about $216 a year. Captionly is **$34, once**.
 
-**3:30 — Bookslot.** Replaces Calendly. Your own booking page — timezone-correct, with email and calendar invites, on your own server. Calendly is $120 a year per user. Bookslot is **$39, once**.
+**3:30 — Bookslot.** Replaces Calendly. Your own booking page — timezone-correct, with email and calendar invites, on your own server. Calendly is $120 a year per user. Bookslot is **$99, once**.
 
 **4:00 — Linkleaf.** Replaces Linktree. A self-hosted link-in-bio with themes, link scheduling, email capture and analytics. Linktree charges up to $84 a year. Linkleaf is **$19, once** — and it's your domain, your data.
 
-**4:30 — Formforge.** Replaces Typeform. Beautiful forms with unlimited responses, file uploads and CSV export — self-hosted. Typeform is $348 a year. Formforge is **$39, once**. Unlimited is the point.
+**4:30 — Formforge.** Replaces Typeform. Beautiful forms with unlimited responses, file uploads and CSV export — self-hosted. Typeform is $348 a year. Formforge is **$99, once**. Unlimited is the point.
 
-**5:00 — PostDock.** Replaces Buffer. Social scheduling with a composer, queue, content recycling and webhooks — your API keys, your data. Buffer runs about $360 a year for five channels. PostDock is **$49, once**.
+**5:00 — PostDock.** Replaces Buffer. Social scheduling with a composer, queue, content recycling and webhooks — your API keys, your data. Buffer runs about $360 a year for five channels. PostDock is **$129, once**.
 
-**5:30 — Billcraft.** Replaces FreshBooks. Clients, invoices, PDFs, share links and recurring billing — on hardware you control. FreshBooks is $228 a year. Billcraft is **$39, once**.
+**5:30 — Billcraft.** Replaces FreshBooks. Clients, invoices, PDFs, share links and recurring billing — on hardware you control. FreshBooks is $228 a year. Billcraft is **$99, once**.
 
-**6:00 — Upwatch.** Replaces UptimeRobot. Uptime checks, an incident log, alerts, and a branded 90-day status page — on your own box. UptimeRobot is about $96 a year. Upwatch is **$39, once**.
+**6:00 — Upwatch.** Replaces UptimeRobot. Uptime checks, an incident log, alerts, and a branded 90-day status page — on your own box. UptimeRobot is about $96 a year. Upwatch is **$99, once**.
 
 **6:30 — PDFsmith.** Replaces SmallPDF. Merge, split, rotate, watermark, convert — offline. Your documents never get uploaded to anyone's server. SmallPDF is about $144 a year. PDFsmith is **$29, once**.
 
@@ -55,7 +55,7 @@
 
 [B-ROLL: grid of all 12 app icons, prices under each]
 
-> Twelve tools. Rented, that's roughly **$2,200** a year. Bought once, that's **$428** — total, forever. And those are just twelve of the 102.
+> Twelve tools. Rented, that's roughly **$2,200** a year. Bought once, that's **$748** — total, forever. And those are just twelve of the 102.
 
 ## 8:00–10:00 — The deal, exactly as it is
 
@@ -99,5 +99,5 @@
 
 - The 12 demo segments are modular: swap any app in/out as new apps ship, keeping the 30-second format (name → what it replaces → one feature → price vs competitor).
 - Re-verify every competitor price on the live pricing page within a week of recording; if one moved, adjust the line and the running total ($1,668) accordingly.
-- Keep the total math honest: the 12 one-time prices sum to **$428** (29+49+34+39+19+39+49+39+39+29+39+24). Their competitors' yearly costs sum to **~$2,232** (180+144+216+120+84+348+360+228+96+144+204+108, using the conservative Wispr Flow annual figure). Update both the spoken line ("$2,200 a year / $428 once") and these notes if you swap apps.
+- Keep the total math honest: the 12 one-time prices sum to **$748** (29+49+34+99+19+99+129+99+99+29+39+24). Their competitors' yearly costs sum to **~$2,232** (180+144+216+120+84+348+360+228+96+144+204+108, using the conservative Wispr Flow annual figure). Update both the spoken line ("$2,200 a year / $748 once") and these notes if you swap apps.
 - The WhatsApp → webinar funnel uses the UTM convention from `event-playbook.md` when promoted at events.

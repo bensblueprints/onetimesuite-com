@@ -21,7 +21,7 @@ onetimesuite.com/webinar/?utm_source=event&utm_medium=qr&utm_campaign=<event-slu
 
 - [ ] **Create the event page** at `onetimesuite.com/events/<slug>/` — event data lives in `src/events-data.js` (add the event there: name, city, dates, slug, talk/demo details; the /events section renders from it). Include: what you'll be demoing, where to find you, and the WhatsApp join link.
 - [ ] **Post "heading to X"** on X and LinkedIn (template):
-  > "I'll be at [Event] in [City] on [dates]. I'm the person demoing 102 pay-once apps — a $29 Loom replacement, a $39 Calendly you own, and 100 more. If you're going and you're tired of renting software, come find me. onetimesuite.com/events/<slug>/"
+  > "I'll be at [Event] in [City] on [dates]. I'm the person demoing 102 pay-once apps — a $29 Loom replacement, a $99 Calendly you own, and 100 more. If you're going and you're tired of renting software, come find me. onetimesuite.com/events/<slug>/"
 - [ ] **Email the organizer the guest-post offer** — use template (b) in `outreach-templates.md`. Offer the "20-minute subscription audit" attendee post with real, sourced prices. Send it early enough to make their newsletter cycle.
 - [ ] **Print the WhatsApp QR invite cards** (spec below) and charge the demo laptop/phone.
 - [ ] **Pre-load the 30-second demos** for the 5 strongest apps (BloomRecorder, Bookslot, Linkleaf, WisperTalk, Captionly) — offline copies in case venue wifi dies.
@@ -34,7 +34,7 @@ onetimesuite.com/webinar/?utm_source=event&utm_medium=qr&utm_campaign=<event-slu
 |---|---|
 | Size | Business-card (85×55mm), matte — survives a pocket |
 | Front | WhatsApp QR code (join link), "102 apps. Pay once. Own them forever." + onetimesuite.com |
-| Back | Three line hook: "Loom $180/yr → BloomRecorder $29 once · Calendly $120/yr → Bookslot $39 once · Typeform $348/yr → Formforge $39 once" + webinar QR (`/webinar/` with the event UTM) |
+| Back | Three line hook: "Loom $180/yr → BloomRecorder $29 once · Calendly $120/yr → Bookslot $99 once · Typeform $348/yr → Formforge $99 once" + webinar QR (`/webinar/` with the event UTM) |
 | Rule | The QR goes to the **WhatsApp group**, not a sales page — the group is the funnel |
 
 ### Photo-with-permission posts

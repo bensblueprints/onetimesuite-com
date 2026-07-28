@@ -355,7 +355,7 @@ const POST_TABLE = {
 const NAV = `
   <nav class="site-nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="/">OneTime<span class="tm">Suite</span></a>
+      <a class="wordmark" href="/"><img class="wordmark-mark" src="/ots-mark.png" alt="" width="30" height="34">OneTime<span class="tm">Suite</span></a>
       <input type="checkbox" id="navtoggle" class="nav-toggle" aria-hidden="true">
       <label for="navtoggle" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></label>
       <div class="nav-links">
@@ -378,7 +378,7 @@ const FOOTER = `
     <div class="wrap">
       <div class="cols">
         <div>
-          <a class="wordmark" href="/" style="margin:0 0 0.8rem;display:inline-block;">OneTime<span class="tm">Suite</span></a>
+          <a class="wordmark" href="/" style="margin:0 0 0.8rem;display:inline-flex;"><img class="wordmark-mark" src="/ots-mark.png" alt="" width="30" height="34">OneTime<span class="tm">Suite</span></a>
           <p class="blurb">${allProducts.length} apps that replace subscription SaaS. Pay once, own forever. Almost all of them are MIT source on GitHub — build them yourself if you'd rather.</p>
         </div>
         <div>
@@ -3039,6 +3039,9 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       html = html.replace(/<meta property="og:title" content="([^"]*)"\s*\/?>/, (m, t) => m.replace(t, fitTitle(t)));
       html = html.replace(/<meta name="description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
       html = html.replace(/<meta property="og:description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
+      /* brand mark in the v2 header/footer wordmarks (logo left of the words) */
+      html = html.replace(/(<a href="\/" class="[^"]*font-extrabold[^"]*"[^>]*>)(OneTime<span)/g,
+        `$1<img src="/ots-mark.png" alt="" style="height:30px;width:auto;display:inline-block;vertical-align:-8px;margin-right:9px;">$2`);
       /* social-share thumbnail (assets/og) — v2 pages ship without one */
       if (!html.includes('property="og:image"') && html.includes('</head>')) {
         const rel = path.relative(OUT, path.dirname(fp)).replace(/\\/g, '/');

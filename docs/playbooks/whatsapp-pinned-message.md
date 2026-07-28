@@ -1,7 +1,7 @@
 # WhatsApp Pinned Group Message
 
 **What this is:** the final pinned message for the OneTime Suite WhatsApp group — the in-person crew funneled in from events.
-**How to use it:** paste the message below (between the rules) into the group and pin it. Before pasting: update the live-app count where marked, paste the webinar link, and sign with the founder's real name. Verified under WhatsApp's limits — the message body is ~2,320 characters, so it pins cleanly.
+**How to use it:** paste the message below (between the rules) into the group and pin it. Before pasting: update the live-app count where marked, paste the webinar link, and sign with the founder's real name. Verified under WhatsApp's limits — the message body is ~2,343 characters, so it pins cleanly.
 
 <!-- FOUNDER: update the app count below ("65 of 102") every time a new app ships. -->
 <!-- FOUNDER: replace [PASTE WEBINAR LINK] and [YOUR NAME] before pinning. -->
@@ -19,18 +19,18 @@ A taste — 15 of them:
 🎥 BloomRecorder — local screen/camera recorder (vs Loom) — $29
 🎙️ WisperTalk — lifetime AI dictation, Win+Mac (vs Wispr Flow) — $49
 💬 Captionly — local auto-captions, karaoke highlight (vs Submagic) — $34
-📅 Bookslot — booking pages you own (vs Calendly) — $39
+📅 Bookslot — booking pages you own (vs Calendly) — $99
 🌿 Linkleaf — self-hosted link-in-bio (vs Linktree) — $19
-📝 Formforge — forms with unlimited responses (vs Typeform) — $39
-📣 PostDock — social scheduling, your API keys (vs Buffer) — $49
-🧾 Billcraft — invoicing + recurring billing (vs FreshBooks) — $39
-📡 Upwatch — uptime checks + status page (vs UptimeRobot) — $39
+📝 Formforge — forms with unlimited responses (vs Typeform) — $99
+📣 PostDock — social scheduling, your API keys (vs Buffer) — $129
+🧾 Billcraft — invoicing + recurring billing (vs FreshBooks) — $99
+📡 Upwatch — uptime checks + status page (vs UptimeRobot) — $99
 📄 PDFsmith — merge/split/convert PDFs offline (vs SmallPDF) — $29
 🎧 WhisperDesk — unlimited local transcription (vs Otter.ai) — $39
 🪄 Cutaway — local AI background removal (vs remove.bg) — $24
 🗜️ Shrinkray — batch image compression, no limits (vs TinyPNG Pro) — $19
-🔗 Trimly — branded short links on your domain (vs Bitly) — $29
-📊 Statfox — cookie-free web analytics (vs Plausible) — $49
+🔗 Trimly — branded short links on your domain (vs Bitly) — $79
+📊 Statfox — cookie-free web analytics (vs Plausible) — $129
 
 **The bundle** — every app, one payment: it started at $97 and goes *up* $1 with every sale, capped at $997 during the 100-day build, then $1,997 once all apps ship. Today's price is always live at onetimesuite.com/price-tracker/. Only need one or two tools? Every app is sold separately at onetimesuite.com/apps/ — no bundle required.
 

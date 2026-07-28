@@ -437,7 +437,9 @@ function Downloads({ p }) {
           kicker="Downloads"
           title={d.title || 'Two installers, one team'}
           sub={d.sub
-            ? d.sub.replace('{version}', version)
+            // Before a release exists there is no version, so drop the
+            // "Version  —" stub rather than print an empty number.
+            ? (version ? d.sub.replace('{version}', version) : d.sub.replace(/^Version \{version\} — /, ''))
             : `Version ${version} — the host edition runs on one machine, the member edition on everyone else's.`}
         />
         <div className="grid gap-5 sm:grid-cols-2">
@@ -450,6 +452,14 @@ function Downloads({ p }) {
                 </div>
                 <p className="mb-5 text-sm leading-relaxed text-ink-soft">{ed.role}</p>
                 <div className="mt-auto flex flex-col gap-2">
+                  {/* Desktop apps get this section before their installers exist,
+                      so say so rather than render dead buttons. */}
+                  {!ed.assets.win && !ed.assets.macArm && !ed.assets.mac && (
+                    <span className="font-mono text-xs text-ink-soft">
+                      Installers are being published — check back shortly, or see{' '}
+                      <a href={`https://github.com/${d.repo}/releases`} className="underline underline-offset-2 hover:text-sticker">GitHub releases</a>.
+                    </span>
+                  )}
                   {ed.assets.win && (
                     <a href={ed.assets.win} className={`${linkBase} bg-ink text-paper hover:bg-sticker`}>
                       <Download className="h-4 w-4" aria-hidden="true" /> Windows (.exe)

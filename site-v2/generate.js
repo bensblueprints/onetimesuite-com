@@ -212,6 +212,35 @@ catalogMeta.forEach(m => { m.isDesktop = DESKTOP_SLUGS.has(m.slug); });
 const OWN_CHECKOUT = new Set(['wispertalk', 'bloomrecorder']);
 const WHOP = 'https://whop.com/benjisaiempire';
 
+/* Every desktop app gets a Downloads section, whether or not its installers are
+   published yet. The section resolves assets from <repo>-releases/releases/latest
+   at page load, so a page starts as "installers coming soon" and turns into real
+   buttons the moment that release exists — no site edit, no redeploy.
+   Apps that predate the -releases convention are listed here. */
+const RELEASES_REPO_OVERRIDES = {
+  wispertalk: 'wispertalk-releases',
+  bloomrecorder: 'bloomrecorder-releases',
+  orgtree: 'wholeteam-mvp',
+};
+
+function autoDownloads(p) {
+  if (!DESKTOP_SLUGS.has(p.slug)) return null; // web/self-hosted apps have no installer
+  const repo = RELEASES_REPO_OVERRIDES[p.slug] || (p.repo ? `${String(p.repo).replace(/-mvp$/, '')}-releases` : null);
+  if (!repo) return null;
+  return {
+    repo: `bensblueprints/${repo}`,
+    version: '',
+    title: `Download ${p.brand}`,
+    sub: 'Version {version} — install, then sign in with Whop. Your purchase unlocks it; there is no licence key to enter.',
+    editions: [{
+      key: 'app',
+      name: p.brand,
+      role: 'Windows and macOS. Buy once, download any time — this page always links the current build.',
+      assets: {},
+    }],
+  };
+}
+
 /* Published installer releases (public -mvp repos) + in-browser demos. */
 const RELEASE_URLS = {
   captionly: 'https://github.com/bensblueprints/video-clip-captioner-mvp/releases/tag/v1.0.0',
@@ -264,7 +293,7 @@ function normalize(p) {
     steps: pair(p.steps, ['title', 'desc']),
     faq: pair(p.faq, ['q', 'a']),
     payback: p.payback || null,
-    downloads: p.downloads || null,
+    downloads: p.downloads || autoDownloads(p),
     site: SITE_META,
     siteLinks: siteLinksFor(p),
   };

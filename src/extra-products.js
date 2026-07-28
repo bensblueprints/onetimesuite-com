@@ -137,7 +137,7 @@ module.exports = [
     // so a new release shows up here without touching this file.
     downloads: {
       repo: 'bensblueprints/wispertalk-releases',
-      version: '1.1.3',
+      version: '1.2.0',
       title: 'Download WisperTalk',
       sub: 'Version {version} — install, then click “Sign in with Whop”. Your purchase unlocks the app; there is no license key to enter.',
       editions: [
@@ -146,9 +146,11 @@ module.exports = [
           name: 'WisperTalk',
           role: 'Windows and macOS. Hold your hotkey anywhere, speak, release — clean text lands at your cursor.',
           assets: {
-            win: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.1.3/WisperTalk.Setup.1.1.3.exe',
-            mac: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.1.3/WisperTalk-1.1.3.dmg',
-            macArm: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.1.3/WisperTalk-1.1.3-arm64.dmg',
+            win: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.2.0/WisperTalk.Setup.1.2.0.exe',
+            // Mac build is Apple Silicon only, so both keys point at the arm64
+            // DMG rather than 404ing on a universal build that isn't produced.
+            mac: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.2.0/WisperTalk-1.2.0-arm64.dmg',
+            macArm: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.2.0/WisperTalk-1.2.0-arm64.dmg',
           },
         },
       ],

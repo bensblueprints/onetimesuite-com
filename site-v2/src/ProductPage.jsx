@@ -435,8 +435,10 @@ function Downloads({ p }) {
       <div className="mx-auto max-w-4xl">
         <SectionHeading
           kicker="Downloads"
-          title="Two installers, one team"
-          sub={`Version ${version} — the host edition runs on one machine, the member edition on everyone else's.`}
+          title={d.title || 'Two installers, one team'}
+          sub={d.sub
+            ? d.sub.replace('{version}', version)
+            : `Version ${version} — the host edition runs on one machine, the member edition on everyone else's.`}
         />
         <div className="grid gap-5 sm:grid-cols-2">
           {editions.map((ed, i) => (

@@ -112,6 +112,26 @@ module.exports = [
       ['/wispr-flow-alternative/', 'Wispr Flow alternative'],
       ['/wispertalk-vs-wispr-flow/', 'WisperTalk vs Wispr Flow'],
     ],
+    // Asset URLs and version are refreshed at page load from the releases repo,
+    // so a new release shows up here without touching this file.
+    downloads: {
+      repo: 'bensblueprints/wispertalk-releases',
+      version: '1.1.3',
+      title: 'Download WisperTalk',
+      sub: 'Version {version} — install, then click “Sign in with Whop”. Your purchase unlocks the app; there is no license key to enter.',
+      editions: [
+        {
+          key: 'app',
+          name: 'WisperTalk',
+          role: 'Windows and macOS. Hold your hotkey anywhere, speak, release — clean text lands at your cursor.',
+          assets: {
+            win: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.1.3/WisperTalk.Setup.1.1.3.exe',
+            mac: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.1.3/WisperTalk-1.1.3.dmg',
+            macArm: 'https://github.com/bensblueprints/wispertalk-releases/releases/download/v1.1.3/WisperTalk-1.1.3-arm64.dmg',
+          },
+        },
+      ],
+    },
   },
   {
     slug: 'clip-pipeline',

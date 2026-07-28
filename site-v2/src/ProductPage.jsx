@@ -80,7 +80,8 @@ function Header() {
     <header className="relative z-10 border-b border-line bg-paper/80 backdrop-blur">
       <input type="checkbox" id="navtoggle" className="peer hidden" aria-hidden="true" />
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <a href="/" className="font-display text-lg font-extrabold tracking-tight">
+        <a href="/" className="flex items-center gap-2 font-display text-lg font-extrabold tracking-tight">
+          <img src="/ots-mark.png" alt="" className="h-[30px] w-auto" />
           OneTime<span className="text-sticker">Suite</span>
         </a>
         <nav aria-label="Main navigation" className="hidden items-center gap-5 font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft lg:flex">
@@ -720,7 +721,8 @@ function Footer({ p }) {
       <div className="mx-auto max-w-6xl px-5 py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <div className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
-            <a href="/" className="font-display text-lg font-extrabold tracking-tight">
+            <a href="/" className="inline-flex items-center gap-2 font-display text-lg font-extrabold tracking-tight">
+              <img src="/ots-mark.png" alt="" className="h-[30px] w-auto" />
               OneTime<span className="text-sticker">Suite</span>
             </a>
             <p className="mt-4 text-sm leading-relaxed text-ink-soft">

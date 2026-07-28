@@ -550,7 +550,6 @@ function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, r
   <meta name="twitter:image" content="${ogImg}">` : ''}
   <meta name="twitter:card" content="${ogImg ? 'summary_large_image' : 'summary'}">
   <link rel="alternate" type="application/rss+xml" title="OneTimeSuite — Pay-Once vs Subscription" href="/rss.xml">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e8420c'/%3E%3Ctext x='50' y='68' font-size='52' font-family='monospace' font-weight='700' fill='white' text-anchor='middle'%3E%241%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -3039,9 +3038,6 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       html = html.replace(/<meta property="og:title" content="([^"]*)"\s*\/?>/, (m, t) => m.replace(t, fitTitle(t)));
       html = html.replace(/<meta name="description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
       html = html.replace(/<meta property="og:description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
-      /* brand mark in the v2 header/footer wordmarks (logo left of the words) */
-      html = html.replace(/(<a href="\/" class="[^"]*font-extrabold[^"]*"[^>]*>)(OneTime<span)/g,
-        `$1<img src="/ots-mark.png" alt="" style="height:30px;width:auto;display:inline-block;vertical-align:-8px;margin-right:9px;">$2`);
       /* social-share thumbnail (assets/og) — v2 pages ship without one */
       if (!html.includes('property="og:image"') && html.includes('</head>')) {
         const rel = path.relative(OUT, path.dirname(fp)).replace(/\\/g, '/');

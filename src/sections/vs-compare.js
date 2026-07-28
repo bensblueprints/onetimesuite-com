@@ -307,6 +307,10 @@ module.exports = function (ctx) {
 
     <section aria-label="Alternative apps">
       <div class="wrap">
+        <div class="section-head">
+          <span class="stamp blue">The lineup</span>
+          <h2>${apps.length === 1 ? 'The pay-once app' : `${apps.length} pay-once apps`} that replace${apps.length === 1 ? 's' : ''} ${esc(comp.name)}</h2>
+        </div>
         <div class="card-grid">
           ${cards}
         </div>

@@ -425,6 +425,10 @@ module.exports = function (ctx) {
 
     <section aria-label="All categories">
       <div class="wrap">
+        <div class="section-head">
+          <span class="stamp blue">Categories</span>
+          <h2>Pick a category</h2>
+        </div>
         <div class="post-list">
           ${catCards}
         </div>

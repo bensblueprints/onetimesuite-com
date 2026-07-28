@@ -354,7 +354,7 @@ module.exports = function (ctx) {
       <div class="wrap-narrow">
         <div class="cta-card" style="text-align:center;">
           <span class="stamp">Announcements land here first</span>
-          <h3>Where I'll be next</h3>
+          <h2 style="font-size:1.25rem;font-weight:600;letter-spacing:-0.005em;margin-bottom:0.4rem;">Where I'll be next</h2>
           <p>No events on the calendar yet — when a talk, meetup or demo table is confirmed it appears here with full details. Want a live demo of the suite at your event? Email ${esc(CONTACT)} or join the list and mention your event.</p>
           ${leadForm({ source: 'events', button: 'Notify me about events', note: 'Event announcements only. No spam, unsubscribe anytime.' })}
         </div>
@@ -529,6 +529,10 @@ module.exports = function (ctx) {
 
     <section aria-label="Headline numbers" style="padding-top:2.5rem;">
       <div class="wrap">
+        <div class="section-head">
+          <span class="stamp blue">Headline numbers</span>
+          <h2>The bill, in four figures</h2>
+        </div>
         <div class="steps">
           <div class="step"><span class="n">PRICED TOOLS</span><h3 class="price-fig">${priced.length}</h3><p>competitors in the catalog with a numeric listed $/yr price.</p></div>
           <div class="step"><span class="n">AVERAGE</span><h3 class="price-fig">${fmt(avg)}/yr</h3><p>mean yearly subscription cost across those tools.</p></div>
@@ -615,6 +619,10 @@ module.exports = function (ctx) {
 
     <section aria-label="The numbers" style="padding-top:2.5rem;">
       <div class="wrap">
+        <div class="section-head">
+          <span class="stamp blue">The numbers</span>
+          <h2>The catalog as it stands</h2>
+        </div>
         <div class="steps">
           <div class="step"><span class="n">IN THE CATALOG</span><h3 class="price-fig">${allProducts.length}</h3><p>apps listed in the suite catalog right now.</p></div>
           <div class="step"><span class="n">AVAILABLE NOW</span><h3 class="price-fig">${availableProducts.length}</h3><p>apps you can buy and download today; the rest are in build.</p></div>
@@ -688,6 +696,10 @@ module.exports = function (ctx) {
 
     <section aria-label="Reports">
       <div class="wrap">
+        <div class="section-head">
+          <span class="stamp blue">Reports</span>
+          <h2>The reports</h2>
+        </div>
         <div class="card-grid">
           <div class="p-card" style="padding:1.4rem;">
             <span class="stamp blue">Data report</span>

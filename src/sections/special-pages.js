@@ -437,6 +437,10 @@ module.exports = function (ctx) {
 
     <section aria-label="The graveyard">
       <div class="wrap">
+        <div class="section-head">
+          <span class="stamp">The graves</span>
+          <h2>${matrix.graveyard.length} tools, and when the meter started</h2>
+        </div>
         <div class="card-grid">${cards}
         </div>
         <p class="mono-note" style="margin-top:1rem;">Pricing-model history as publicly reported; linked products are ours.</p>

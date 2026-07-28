@@ -27,7 +27,7 @@
   .ad.side300{width:300px;height:250px}
   .wrap{max-width:1160px;margin:1.4rem auto;padding:0 1.2rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem;flex:0 0 250px;max-width:250px}
-  .panel h3{font-size:0.72rem;letter-spacing:0.12em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem 0.2rem}
+  .panel h3,.panel .panel-label{font-size:0.72rem;letter-spacing:0.12em;color:var(--soft);text-transform:uppercase;font-weight:700;margin:0 0 0.6rem 0.2rem}
   .tool{display:flex;align-items:center;gap:0.55rem;width:100%;background:transparent;border:1px solid transparent;border-radius:9px;padding:0.55rem 0.6rem;color:var(--soft);font:inherit;font-size:0.94rem;font-weight:600;text-align:left;cursor:pointer;transition:background .12s,color .12s,border-color .12s}
   .tool:hover{background:var(--panel2);color:var(--ink)}
   .tool.on{background:var(--panel2);border-color:var(--accent);color:var(--ink)}
@@ -73,7 +73,7 @@
 
 <div class="wrap">
   <div class="panel">
-    <h3>Tools</h3>
+    <p class="panel-label">Tools</p>
     <div class="tools-list" id="picker"></div>
   </div>
 

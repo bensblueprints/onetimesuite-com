@@ -154,6 +154,16 @@ function fitTitle(t, limit = 60) {
   const cut = base.slice(0, limit - 3);
   return cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,;:—–-]+$/, '') + '…';
 }
+/* Ellipsis-only variant: keeps as much of the differentiating tail as fits
+   instead of dropping the whole clause. Used when the clause cut collides
+   with another page's title (e.g. "X vs Y: <angle A>" and "X vs Y: <angle B>"
+   both collapsing to "X vs Y"). */
+function fitTitleKeepTail(t, limit = 60) {
+  t = String(t).replace(/\s+/g, ' ').trim().replace(/\s*\|\s*OneTimeSuite( Blog)?\s*$/, '');
+  if (t.length <= limit) return t;
+  const cut = t.slice(0, limit - 3);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,;:—–-]+$/, '') + '…';
+}
 function fitDesc(d, limit = 160) {
   d = String(d).replace(/\s+/g, ' ').trim();
   if (d.length > limit) {
@@ -473,12 +483,23 @@ const crumbs = items => ({
   })),
 });
 
+/* Clamped-title registry (title -> canonical). If two different pages would
+   clamp to the same title, the later one falls back to the ellipsis cut so the
+   differentiating clause survives (2026-07-29 audit: 5 blog/vs pairs). */
+const seenTitles = new Map();
 function page({ title, desc, canonical, ogType = 'website', jsonld = [], body, robots = 'index, follow' }) {
   /* Reserve room for HTML-entity expansion (esc/attr below) so the escaped
      form in the HTML source is what actually meets the length limits. */
   const tMargin = (String(title).match(/&/g) || []).length * 4;
   const dMargin = (String(desc).match(/&/g) || []).length * 4 + (String(desc).match(/"/g) || []).length * 5;
+  const rawTitle = title;
   title = fitTitle(title, 60 - tMargin);
+  if (seenTitles.has(title) && seenTitles.get(title) !== canonical) {
+    const alt = fitTitleKeepTail(rawTitle, 60 - tMargin);
+    if (!seenTitles.has(alt) || seenTitles.get(alt) === canonical) title = alt;
+    else console.warn('DUPLICATE TITLE (unresolved):', title, canonical);
+  }
+  seenTitles.set(title, canonical);
   desc = fitDesc(desc, 160 - dMargin);
   /* ldJson escapes `<` as < so no value (FAQ answers, headlines) can
      ever break out of the script block with a literal "</script>". */

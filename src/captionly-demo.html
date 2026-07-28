@@ -53,7 +53,7 @@ main{flex:1;overflow:hidden}
 .snap-guides .guide.active{background:var(--accent);box-shadow:0 0 6px var(--accent)}
 .drag-hint{margin-top:-4px}
 .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
-.panel h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+.panel h3,.panel h2.panel-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;font-weight:bold}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .controls{display:flex;flex-direction:column;gap:10px}
 .controls label{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
@@ -157,7 +157,7 @@ main{flex:1;overflow:hidden}
         <div class="drag-hint muted small">Drag the caption in the preview to place it anywhere — the export matches exactly.</div>
 
         <div class="panel">
-          <h3>Captions</h3>
+          <h2 class="panel-label">Captions</h2>
           <div class="row">
             <label class="muted small" style="display:flex;align-items:center;gap:6px">Model
               <select id="modelSel" class="select">

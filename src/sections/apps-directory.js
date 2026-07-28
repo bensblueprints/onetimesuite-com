@@ -316,7 +316,10 @@ module.exports = function (ctx) {
 
       write(`apps/${p.slug}/for/${per.slug}`, page({
         title: `${p.brand} for ${per.name} | OneTimeSuite`,
-        desc: mkDesc(`${p.oneliner}`, [` Why ${per.name.toLowerCase()} pick ${p.brand}: $${p.price} once instead of ${p.competitor} at ${p.compPrice}.`, ' Workflow, cost math and FAQ.']),
+        /* Persona leads the description so it stays unique per page even when
+           a long oneliner leaves no room for the extras (2026-07-29 audit:
+           identical descriptions across an app's persona pages). */
+        desc: mkDesc(`${p.brand} for ${per.name.toLowerCase()}: ${decap(p.oneliner)}`, [` $${p.price} once instead of ${p.competitor} at ${p.compPrice}.`, ' Workflow, cost math and FAQ.']),
         canonical: `${SITE}/apps/${p.slug}/for/${per.slug}/`,
         jsonld: [
           schema.articleLd({
@@ -510,6 +513,10 @@ module.exports = function (ctx) {
 
     <section aria-label="Release notes">
       <div class="wrap-narrow">
+        <div class="section-head">
+          <span class="stamp blue">Release notes</span>
+          <h2>Version history</h2>
+        </div>
         ${entriesHtml}
         <p class="mono-note" style="margin-top:1.6rem;"><a class="link" href="/apps/${p.slug}/">Back to the ${esc(p.brand)} profile &rarr;</a> &nbsp;·&nbsp; <a class="link" href="/${p.slug}/">Full product page &rarr;</a></p>
       </div>

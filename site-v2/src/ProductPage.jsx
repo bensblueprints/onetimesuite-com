@@ -569,6 +569,60 @@ function Related({ p }) {
   );
 }
 
+function SiteLinks({ p }) {
+  const sl = p.siteLinks;
+  if (!sl) return null;
+  const groups = [
+    sl.vs && {
+      title: 'Compare',
+      links: [
+        [`${p.brand} vs ${sl.compName}`, sl.vs],
+        [`${p.brand} vs ${sl.compName} — the price math`, sl.compare],
+        [`More ${sl.compName} alternatives`, sl.alternatives],
+      ],
+    },
+    {
+      title: 'App profile',
+      links: [
+        [`${p.brand} profile`, sl.profile],
+        ['Updates & changelog', sl.updates],
+        ...(sl.category ? [[sl.category.name, sl.category.url]] : []),
+      ],
+    },
+    { title: 'For you', links: sl.personas.map(per => [`${p.brand} for ${per.name}`, per.url]) },
+    { title: 'Platforms', links: sl.platforms.map(pl => [`${p.brand} on ${pl.name}`, pl.url]) },
+    sl.solve.length > 0 && { title: 'Solves', links: sl.solve.map(pr => [pr.title, pr.url]) },
+  ].filter(Boolean);
+  return (
+    <section aria-label={`More about ${p.brand}`} data-sitelinks="" className="relative px-5 py-20">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          kicker="Dig deeper"
+          title={`More about ${p.brand}`}
+          sub="Every page we publish about this app — comparisons, personas, platforms and the problems it solves."
+        />
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {groups.map(g => (
+            <div key={g.title}>
+              <h3 className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-ink">{g.title}</h3>
+              <ul className="mt-3 flex flex-col gap-2 text-sm text-ink-soft">
+                {g.links.map(([label, href]) => (
+                  <li key={href}><a href={href} className="hover:text-sticker">{label}</a></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p className="mt-10 text-center font-mono text-xs text-ink-soft">
+          <a href="/calculator/" className="underline underline-offset-2 hover:text-sticker">Savings calculator</a>
+          {' · '}
+          <a href="/webinar/" className="underline underline-offset-2 hover:text-sticker">Watch the webinar</a>
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function FinalCta({ p }) {
   return (
     <section className="relative px-5 pb-24 pt-8">
@@ -703,6 +757,7 @@ export default function ProductPage({ product }) {
         <Steps p={product} />
         <Faq p={product} />
         <Related p={product} />
+        <SiteLinks p={product} />
         <FinalCta p={product} />
       </main>
       <Footer p={product} />

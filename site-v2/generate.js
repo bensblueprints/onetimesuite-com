@@ -66,6 +66,50 @@ const SITE_META = {
   comingSoon: allProducts.length - availableCount + comingSoon.length,
 };
 
+/* ---------- per-app satellite link sets (mirror src/sections/*) ---------- */
+const matrix = require(path.join(REPO, 'src', 'seo-matrix.js'));
+
+/* slug -> category slug (first category that claims the app — same as
+   seo-matrix.js and sections/apps-directory.js). */
+const categoryByApp = {};
+for (const c of matrix.categories) for (const s of c.appSlugs) if (!(s in categoryByApp)) categoryByApp[s] = c.slug;
+const categoryBySlug = Object.fromEntries(matrix.categories.map(c => [c.slug, c]));
+
+/* Canonical competitor per app: first name-sorted competitor entry whose apps
+   list contains the slug — mirrors vs-compare.js's pair iteration order. */
+const matrixCompetitors = [...(matrix.competitors || [])].sort((a, b) => a.name.localeCompare(b.name));
+const compForApp = slug => matrixCompetitors.find(c => c.apps.includes(slug)) || null;
+
+/* personasFor / platformsFor — exact mirrors of sections/apps-directory.js. */
+const broadestPersonas = [...matrix.personas]
+  .sort((a, b) => ((matrix.personaCategoryFit[b.slug] || []).length - (matrix.personaCategoryFit[a.slug] || []).length)
+    || a.slug.localeCompare(b.slug))
+  .slice(0, 2);
+const personasForApp = slug => {
+  const cat = categoryByApp[slug];
+  if (!cat) return broadestPersonas;
+  return matrix.personas.filter(per => (matrix.personaCategoryFit[per.slug] || []).includes(cat)).slice(0, 4);
+};
+const platformsForApp = p => (p.kind ? matrix.platforms.filter(pl => (pl.kinds || []).includes(p.kind)) : matrix.platforms);
+
+/** All satellite SEO pages that exist for a product, root-relative. */
+function siteLinksFor(p) {
+  const comp = compForApp(p.slug);
+  const cat = categoryByApp[p.slug] ? categoryBySlug[categoryByApp[p.slug]] : null;
+  return {
+    vs: comp ? `/vs/${p.slug}-vs-${comp.slug}/` : null,
+    compare: comp ? `/compare/${p.slug}-vs-${comp.slug}/` : null,
+    alternatives: comp ? `/alternatives/${comp.slug}/` : null,
+    compName: comp ? comp.name : null,
+    profile: `/apps/${p.slug}/`,
+    updates: `/apps/${p.slug}/updates/`,
+    personas: personasForApp(p.slug).map(per => ({ slug: per.slug, name: per.name, url: `/apps/${p.slug}/for/${per.slug}/` })),
+    platforms: platformsForApp(p).map(pl => ({ slug: pl.slug, name: pl.name, url: `/apps/${p.slug}/on/${pl.slug}/` })),
+    solve: matrix.problems.filter(pr => pr.appSlugs.includes(p.slug)).map(pr => ({ slug: pr.slug, title: pr.title, url: `/solve/${pr.slug}/` })),
+    category: cat ? { slug: cat.slug, name: cat.name, url: `/categories/${cat.slug}/` } : null,
+  };
+}
+
 /* Related-tools picks: prefer apps competing with the same SaaS, else the
    same desktop/web kind. Deterministic — walk catalog order starting just
    after the current product and wrap around, so the same input always
@@ -222,6 +266,7 @@ function normalize(p) {
     payback: p.payback || null,
     downloads: p.downloads || null,
     site: SITE_META,
+    siteLinks: siteLinksFor(p),
   };
 }
 

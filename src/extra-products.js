@@ -62,6 +62,27 @@ module.exports = [
       ['/open-source-loom-alternative/', 'Open-source Loom alternative'],
       ['/vidyard-alternative/', 'Vidyard alternative'],
     ],
+    // Points at the installers repo, NOT bloomrecorder-mvp (that one only ever
+    // held the old v1.0.0 MVP build). Asset URLs and the version are refreshed
+    // from releases/latest at page load, so new releases appear automatically.
+    downloads: {
+      repo: 'bensblueprints/bloomrecorder-releases',
+      version: '2.0.0',
+      title: 'Download BloomRecorder',
+      sub: 'Version {version} — install, then click “Sign in with Whop”. Your purchase unlocks it; there is no licence key to enter.',
+      editions: [
+        {
+          key: 'app',
+          name: 'BloomRecorder',
+          role: 'Windows and macOS. Multi-camera recording, the angle editor, and batch 9:16 conversion.',
+          assets: {
+            win: 'https://github.com/bensblueprints/bloomrecorder-releases/releases/download/v2.0.0/BloomRecorder.Setup.2.0.0.exe',
+            mac: 'https://github.com/bensblueprints/bloomrecorder-releases/releases/download/v2.0.0/BloomRecorder-2.0.0-arm64.dmg',
+            macArm: 'https://github.com/bensblueprints/bloomrecorder-releases/releases/download/v2.0.0/BloomRecorder-2.0.0-arm64.dmg',
+          },
+        },
+      ],
+    },
   },
   {
     slug: 'wispertalk',

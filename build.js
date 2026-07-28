@@ -771,6 +771,182 @@ function reg(relPath, set = 'pages') { urls.push(relPath); (urlSets[set] ||= [])
   reg('/');
 })();
 
+/* ---------- shared data, hoisted above the product generator ----------
+   slugify, blogAppSlugs, blogExtraComps and ROUNDUPS were originally defined
+   down in the blog section (§7b) — the "Everything about {Brand}" cluster
+   section below needs them while the v1 product pages are generated. */
+const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-+|-+$)/g, '');
+
+const blogAppSlugs = fs.readdirSync(path.join(ROOT, 'src'))
+  .filter(f => /^blog-chunk\d+\.js$/.test(f))
+  .sort()
+  .flatMap(f => require(path.join(ROOT, 'src', f)));
+
+/* --- researched extra competitors (src/blog-competitors.js, optional):
+   { productSlug: [{ name, price, yr3 }] } — verified pricing from the
+   2026-07-21 competitor-research pass. Each entry yields one extra
+   "<competitor> alternative" post via blogPost6. --- */
+const BLOG_COMP_FILE = path.join(ROOT, 'src', 'blog-competitors.js');
+const blogExtraComps = fs.existsSync(BLOG_COMP_FILE) ? require(BLOG_COMP_FILE) : {};
+
+/* ---------- catalog roundups: 5 long-form "pay-once tools" posts ----------
+   Together these five articles link EVERY product page in the catalog (104
+   apps), each app in exactly one category. Slugs follow
+   /blog/<category>-pay-once-tools/. Apps not yet launched are linked but
+   marked "coming soon" — never oversold. */
+const ROUNDUPS = [
+  {
+    slug: 'video-audio-media-pay-once-tools',
+    title: '20 Video, Audio & Media Tools You Buy Once (2026)',
+    metaDesc: '20 video, audio and media tools you buy once — screen recording, captions, transcription, compression and design. One-time prices, no subscriptions.',
+    intro: 'Video and audio tools are where subscriptions sting the most: caption apps, screen recorders, voice tools and podcast hosts all charge monthly for work your own machine can do. The 20 tools below cover recording, transcription, captions, compression, voiceover and design — each one a single payment, most with MIT source on GitHub. Most of them ship as desktop apps, so your footage and audio never leave your hard drive. Every price on this page is the whole price.',
+    choose: [
+      'Start with the job you do weekly — a recorder, captioner or transcriber you use daily pays for itself within a month or two of the subscription it replaces.',
+      'Prefer the desktop apps (Captionly, WhisperDesk, BloomRecorder) when footage is client-confidential — nothing leaves the machine, ever.',
+      'Switching mid-project? Read the linked comparison pages first — each one maps the competitor’s feature set honestly, including what it still does better.',
+    ],
+    faq: [
+      ['Do desktop media apps need a powerful GPU?', 'No. The AI features — background removal, transcription, captions — are tuned to run on ordinary CPUs, and the models ship inside the installer. A batch just takes a few seconds per file instead of a credit per file.'],
+      ['What happens to my files with pay-once media tools?', 'Nothing. The desktop apps in this category process everything locally and make no network calls. Your footage, audio and images stay on your own disk — which is the whole point.'],
+      ['Is a one-time purchase really “lifetime”?', 'Yes. There is no license server to phone home and no renewal date; the app keeps working offline, forever. Updates to the packaged installer are included.'],
+      ['Can I still share videos without a cloud link?', 'Yes — export MP4 or GIF and share it however you already share files. And if you specifically need a podcast feed and player pages, Castport covers hosting without the per-month meter.'],
+    ],
+    apps: ['captionly', 'bloomrecorder', 'voicebarn', 'cutaway', 'castport', 'reelsnag', 'memeforge', 'clip-pipeline', 'shrinkray', 'wispertalk', 'overlayr', 'signboard', 'snapfleet', 'iconforge', 'paletteforge', 'mockcraft', 'postcraft', 'cardsmith', 'slidecraft', 'whisperdesk'],
+  },
+  {
+    slug: 'productivity-business-ops-pay-once-tools',
+    title: '21 Productivity & Business Tools You Buy Once (2026)',
+    metaDesc: '21 productivity and business ops tools with one-time pricing — invoicing, scheduling, time tracking, receipts, hiring and shifts. Pay once, own forever.',
+    intro: 'The average small business rents its calendar, its invoicing, its time tracking and even its org chart — a stack of monthly bills for software that mostly shuffles records around. These 21 apps run the back office for a one-time price: scheduling, billing, receipts, shifts, hiring, onboarding and more. Most are self-hosted web apps, so client and employee data stays on your own server instead of a vendor’s. Buy once and the ops budget stops creeping up every year.',
+    choose: [
+      'Pick the biggest bill first — invoicing, scheduling and time tracking are usually the largest recurring line items in a small-business stack.',
+      'Self-hosted web apps need a cheap VPS; if you’d rather not run one, start with the desktop apps in the list (OrgTree, Snapreceipt, Streakly).',
+      'If three or more of these apply, the $997 everything bundle covers the whole catalog and usually beats buying the big licenses à la carte.',
+    ],
+    faq: [
+      ['What does “self-hosted” mean for a business app?', 'The app runs on a cheap VPS you control instead of the vendor’s cloud. Setup is a one-time job; after that your client, invoice and scheduling data lives on your own server, under your own backups.'],
+      ['Can these really replace tools like FreshBooks or Calendly?', 'For the core jobs — invoicing, scheduling, time tracking, receipts, shift planning — yes. Where a competitor still wins (very large teams, deep integrations), the per-app comparison pages say so plainly.'],
+      ['Do I pay per employee or per seat?', 'No. Every price here is a flat one-time payment, whether two people use the tool or twenty. There is no per-seat multiplier to outgrow.'],
+      ['What if an app I want is marked “coming soon”?', 'It is in final release prep and launches without the price changing. The $997 bundle includes every catalog app, so bundle owners get each one the day it ships.'],
+    ],
+    apps: ['boardly', 'ledgerly', 'billcraft', 'bookslot', 'formforge', 'timevault', 'orgtree', 'snapreceipt', 'hirestack', 'shiftly', 'punchcard', 'roster', 'renewcheck', 'streakly', 'deepdesk', 'ledgerlitehome', 'rampcheck', 'doortracker', 'famping', 'eventcraft', 'remindly'],
+  },
+  {
+    slug: 'marketing-social-seo-pay-once-tools',
+    title: '21 Marketing, Social & SEO Tools You Buy Once (2026)',
+    metaDesc: '21 marketing, social and SEO tools you buy once — social scheduling, email campaigns, rank tracking, links, reviews and analytics. No monthly meter.',
+    intro: 'Marketing SaaS is priced like a tax on growth: per channel, per contact, per keyword, per seat. This roundup collects 21 pay-once tools for social scheduling, email campaigns, rank tracking, link management, QR codes, reviews and analytics. They replace metered plans with software you host or install yourself — one receipt, no per-channel multipliers. If your marketing stack costs more every year for doing the same job, start here.',
+    choose: [
+      'Match the tool to the channel you actually use — one scheduler you open every day beats a rented suite you log into twice a month.',
+      'Self-hosted analytics and rank tracking keep your traffic and keyword strategy off third-party clouds (and out of their training data).',
+      'Watch the “typical competitor cost” column for per-channel and per-contact pricing — that multiplier is exactly what a one-time price kills.',
+    ],
+    faq: [
+      ['Will a pay-once tool keep up with platform changes?', 'The apps are actively maintained and updates are included in the one-time price. Because most are self-hosted or open source, you are never waiting on a vendor’s pricing-tier decisions either.'],
+      ['Is self-hosted analytics as useful as Plausible or GA?', 'Statfox tracks the same core metrics — pageviews, referrers, popular pages — without cookies or consent banners, and your traffic data never leaves your server.'],
+      ['Why are competitor costs so much higher for marketing tools?', 'Marketing SaaS usually meters the thing that grows — channels, contacts, keywords, seats. A one-time price has no multiplier, so the gap widens every month your audience grows.'],
+      ['Can I migrate my existing subscribers, links or posts?', 'Yes — import and export are standard across these apps, and the per-app pages and FAQs cover the specifics for each tool.'],
+    ],
+    apps: ['postbird', 'postdock', 'serpdeck', 'linkleaf', 'scantrail', 'statfox', 'utmcraft', 'reflink', 'hearback', 'bravowall', 'starstack', 'pulsecheck', 'askback', 'citewatch', 'chatterbox', 'splitpoint', 'queuecraft', 'redirectly', 'trimly', 'chatlet', 'listcraft'],
+  },
+  {
+    slug: 'documents-writing-signatures-pay-once-tools',
+    title: '21 Writing, Docs & Signature Tools You Buy Once (2026)',
+    metaDesc: '21 document, writing and e-signature tools with one-time prices — PDF, OCR, contracts, proposals, resumes and publishing. Pay once, sign forever.',
+    intro: 'Documents are the original subscription trap: PDF editors, e-signature platforms and proposal tools charge monthly to handle files you already own. These 21 apps cover PDFs, OCR, contracts, signatures, resumes, pitches, changelogs and publishing for a flat one-time price. Several run fully offline, so contracts and sensitive paperwork never touch a third-party server. Pay once, sign forever.',
+    choose: [
+      'If the paperwork is confidential — contracts, HR documents, client records — prefer the offline desktop apps; nothing is uploaded, ever.',
+      'Check signature and record-keeping requirements for your jurisdiction; the e-signature tools here cover standard ESIGN/eIDAS-style workflows.',
+      'Before cancelling a vendor, open the linked comparison page for your current tool and check feature parity line by line.',
+    ],
+    faq: [
+      ['Are pay-once e-signatures legally valid?', 'The signature tools here produce signed PDFs with audit trails suitable for standard ESIGN/UETA and eIDAS-style workflows — the Inkseal compliance page on this site walks through the details.'],
+      ['Do the PDF and OCR tools work offline?', 'Yes — the desktop apps in this category (PDFsmith, Textract, Quillpad) run entirely on your machine. Documents never leave your disk, which matters for contracts and client paperwork.'],
+      ['What if I need a feature the one-time app lacks?', 'Each app’s comparison page lists exactly what the subscription competitor still does better. For most document jobs — merge, sign, convert, publish — parity is already there.'],
+      ['Can I use these for commercial client work?', 'Yes — one payment, no per-seat or per-document fees, and most ship MIT source, so you can even build and modify them yourself.'],
+    ],
+    apps: ['pdfsmith', 'textract', 'inkpress', 'inkseal', 'quillpad', 'shipnotes', 'docwell', 'docsmithapi', 'resumecraft', 'pitchcraft', 'contractly', 'quotewell', 'sigcraft', 'feedloft', 'droplink', 'lessonforge', 'quizcraft', 'forumly', 'voicebox', 'viral-invoice', 'menuly'],
+  },
+  {
+    slug: 'developer-it-admin-pay-once-tools',
+    title: '21 Developer & IT Admin Tools You Buy Once (2026)',
+    metaDesc: '21 developer and IT admin tools you buy once — uptime, cron, SSL, logs, backups, secrets and status pages. Self-hosted, one-time pricing.',
+    intro: 'Dev tooling has quietly become a rental market: monitoring, secrets managers, backups, status pages and snippet libraries all bill monthly. These 21 tools cover uptime, cron, SSL, logs, backups, licensing, link infrastructure and incident pages for a one-time price. Most are self-hosted — which for infrastructure tooling is the point, because your monitoring should not depend on another company’s uptime. Own the tool, own the alert.',
+    choose: [
+      'Self-hosting is the default here — a $5 VPS runs most of these; weigh that one line item against the subscription you are cancelling.',
+      'Prioritize the tools that page you: uptime, cron and certificate monitors earn their keep the first outage they catch.',
+      'Most of these ship MIT source on GitHub, so you can audit the exact code that watches your infrastructure before you deploy it.',
+    ],
+    faq: [
+      ['What do I need to self-host these tools?', 'A small VPS (or a homelab box) and about ten minutes per app. Docker-based setups are the norm, and each product page documents the exact steps.'],
+      ['Is self-hosted monitoring reliable if my server goes down?', 'Run the monitor on separate infrastructure from what it watches — a $5 VPS in another region is the standard pattern, and it still costs less than one month of most monitoring subscriptions.'],
+      ['Are source-available dev tools safe to run in production?', 'Most ship MIT-licensed source you can audit before deploying — the opposite of a black-box agent. The secrets tools (Vaultly, Secretbox) encrypt at rest; details are on each product page.'],
+      ['What happens when a “coming soon” dev tool launches?', 'It flips to available on this site and joins the bundle automatically. Bundle owners get every catalog app, including future launches, at no extra cost.'],
+    ],
+    apps: ['upwatch', 'pingcron', 'hookscope', 'wrangle', 'vaultkeeper', 'hawkwatch', 'keymaster', 'snipvault', 'upkeepstatus', 'vaultly', 'keyloop', 'secretbox', 'certwatch', 'logbin', 'clickmap', 'maptrail', 'linkguard', 'billoop', 'syncvault', 'deskly', 'clientdesk'],
+  },
+];
+
+/* ---------- "Everything about {Brand}" content-cluster section ----------
+   Hub-and-spoke internal linking: every product page links its whole content
+   cluster — the blog posts, the /comparison/ page, the demo, the savings
+   calculator, the one catalog roundup the app appears in and the GitHub repo.
+   Shared by the v1 product generator (§2) and the v2 overlay pass (end of
+   file). Every spoke is guarded by the same condition that registered the
+   target page, so the section never links a 404. Self-contained inline styles
+   (paper/ink/orange palette) because v1 and v2 pages load different CSS. */
+const COMP_POST_SLUGS = new Set(posts.map(x => x.slug));
+const ROUNDUP_SHORT = {
+  'video-audio-media-pay-once-tools': 'video, audio &amp; media',
+  'productivity-business-ops-pay-once-tools': 'productivity &amp; business ops',
+  'marketing-social-seo-pay-once-tools': 'marketing, social &amp; SEO',
+  'documents-writing-signatures-pay-once-tools': 'writing, docs &amp; signatures',
+  'developer-it-admin-pay-once-tools': 'developer &amp; IT admin',
+};
+function productClusterSection(p) {
+  const compSlug = slugify(p.competitor);
+  const hasBlog = blogAppSlugs.includes(p.slug); // the 5-post blog cluster only exists for these
+  const compare = [];
+  if (hasBlog) compare.push(
+    [`/blog/${p.slug}-best-${compSlug}-alternative-2026/`, `Best ${esc(p.competitor)} alternative in 2026`],
+    [`/blog/${p.slug}-vs-${compSlug}-open-source-vs-subscription/`, `${esc(p.brand)} vs ${esc(p.competitor)}: open source vs subscription`],
+    [`/blog/${p.slug}-free-open-source-alternatives-to-${compSlug}/`, `Free &amp; open-source alternatives to ${esc(p.competitor)}`],
+    [`/blog/${p.slug}-${compSlug}-pricing-is-out-of-control/`, `${esc(p.competitor)} pricing: the 3-year math`],
+  );
+  if (COMP_POST_SLUGS.has(`${compSlug}-alternative`))
+    compare.push([`/comparison/${compSlug}-alternative/`, `The full ${esc(p.competitor)} comparison`]);
+  const guides = [];
+  if (hasBlog) {
+    guides.push([`/blog/${p.slug}-how-to-switch-from-${compSlug}/`, `How to switch from ${esc(p.competitor)}`]);
+    for (const comp of (blogExtraComps[p.slug] || [])) {
+      const cSlug = slugify(comp.name);
+      if (cSlug === compSlug) continue; // blogPost6 skips the primary competitor
+      guides.push([`/blog/${p.slug}-${cSlug}-alternative-pay-once/`, `${esc(comp.name)} alternative you pay for once`]);
+    }
+  }
+  const tools = [];
+  if (DEMOS.has(p.slug)) tools.push([`/${p.slug}/demo/`, `Try the free ${esc(p.brand)} demo`]);
+  tools.push(['/savings/', `See what ${esc(p.competitor)} costs you over 3 years`]);
+  const roundup = ROUNDUPS.find(r => r.apps.includes(p.slug));
+  if (roundup) tools.push([`/blog/${roundup.slug}/`, `See ${esc(p.brand)} in our ${ROUNDUP_SHORT[roundup.slug] || 'catalog'} roundup`]);
+  const source = (!p.closedSource && p.repo)
+    ? [[`${GH}/${p.repo}`, `Source on GitHub — bensblueprints/${p.repo}`, ' rel="noopener"']]
+    : [];
+
+  const group = (label, links) => links.length ? `
+        <div>
+          <h3 style="font-family:ui-monospace,monospace;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:#85888f;margin:0 0 0.55rem;">${label}</h3>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;gap:0.45rem;">
+            ${links.map(([href, text, rel]) => `<li><a href="${href}"${rel || ''} style="color:#2b4bdd;text-decoration:none;font-size:0.92rem;line-height:1.35;">${text}</a></li>`).join('\n            ')}
+          </ul>
+        </div>` : '';
+  return `<section class="content-cluster" aria-label="Everything about ${attr(p.brand)}" style="max-width:920px;margin:2.5rem auto;padding:1.5rem 1.4rem;background:#ffffff;border:1.5px solid #17191d;border-radius:12px;box-shadow:4px 4px 0 rgba(23,25,29,0.12);">
+      <h2 style="font-size:1.3rem;margin:0 0 1.1rem;color:#17191d;">Everything about ${esc(p.brand)} <span style="font-family:ui-monospace,monospace;font-size:0.72rem;font-weight:500;color:#e8420c;letter-spacing:0.06em;">&mdash; every page we have on it</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.4rem;">${group('Compare &amp; pricing', compare)}${group('Guides', guides)}${group('Try &amp; tools', tools)}${group('Source', source)}
+      </div>
+    </section>`;
+}
+
 /* ============================================================
  * 2. product pages  /<slug>/
  * ============================================================ */
@@ -901,6 +1077,12 @@ allProducts.forEach(p => {
             ...seoRelated.map(([href, label]) => `<a href="${href}">${esc(label)}</a>`),
           ].join('\n          ')}
         </div>` : ''}
+      </div>
+    </section>
+
+    <section aria-label="Everything about ${attr(p.brand)}">
+      <div class="wrap" style="max-width:960px;">
+        ${productClusterSection(p)}
       </div>
     </section>
 
@@ -1802,14 +1984,9 @@ posts.forEach(post => {
  * Data-driven, 5 posts/app, chunked like posts-1..6.js: drop a
  * src/blog-chunk<N>.js (module.exports = [productSlug, ...]) and its
  * 5 posts/app appear here automatically — no build.js edit needed.
+ * slugify, blogAppSlugs, blogExtraComps and ROUNDUPS are hoisted above §2 —
+ * the product-page cluster section needs them before the blog pass runs.
  * ============================================================ */
-const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-+|-+$)/g, '');
-
-const blogAppSlugs = fs.readdirSync(path.join(ROOT, 'src'))
-  .filter(f => /^blog-chunk\d+\.js$/.test(f))
-  .sort()
-  .flatMap(f => require(path.join(ROOT, 'src', f)));
-
 function blogBuyLink(p) {
   const whopLink = OWN_CHECKOUT.has(p.slug) ? null : whopLinks[p.slug];
   return (whopLink && whopLink.productUrl) || p.buyUrl || WHOP;
@@ -2140,13 +2317,6 @@ function blogPost5({ p, buy, repoUrl, compSlug, siblings }) {
   });
 }
 
-/* --- researched extra competitors (src/blog-competitors.js, optional):
-   { productSlug: [{ name, price, yr3 }] } — verified pricing from the
-   2026-07-21 competitor-research pass. Each entry yields one extra
-   "<competitor> alternative" post via blogPost6. --- */
-const BLOG_COMP_FILE = path.join(ROOT, 'src', 'blog-competitors.js');
-const blogExtraComps = fs.existsSync(BLOG_COMP_FILE) ? require(BLOG_COMP_FILE) : {};
-
 function blogPost6({ p, buy, repoUrl, compSlug }, comp) {
   const cSlug = slugify(comp.name);
   if (cSlug === compSlug) return; // primary competitor already has the 5-post cluster
@@ -2205,11 +2375,9 @@ blogAppSlugs.forEach(productSlug => {
   (blogExtraComps[productSlug] || []).forEach(comp => blogPost6(ctx, comp));
 });
 
-/* ---------- catalog roundups: 5 long-form "pay-once tools" posts ----------
-   Together these five articles link EVERY product page in the catalog (104
-   apps), each app in exactly one category. Slugs follow
-   /blog/<category>-pay-once-tools/. Apps not yet launched are linked but
-   marked "coming soon" — never oversold. */
+/* ---------- catalog roundups: the five ROUNDUPS posts (the ROUNDUPS array
+   itself is hoisted above §2 — the product-page cluster section links each
+   app's roundup, so it must exist before the v1 generator runs). ---------- */
 const ROUNDUP_POSTS = []; // { slug, title, metaDesc } — for the /blog/ hub top section
 const roundupPrice = slug => {
   const t = tierCheckouts[slug];
@@ -2218,99 +2386,6 @@ const roundupPrice = slug => {
   if (w && w.price != null) return w.price;
   return bySlug[slug].price;
 };
-const ROUNDUPS = [
-  {
-    slug: 'video-audio-media-pay-once-tools',
-    title: '20 Video, Audio & Media Tools You Buy Once (2026)',
-    metaDesc: '20 video, audio and media tools you buy once — screen recording, captions, transcription, compression and design. One-time prices, no subscriptions.',
-    intro: 'Video and audio tools are where subscriptions sting the most: caption apps, screen recorders, voice tools and podcast hosts all charge monthly for work your own machine can do. The 20 tools below cover recording, transcription, captions, compression, voiceover and design — each one a single payment, most with MIT source on GitHub. Most of them ship as desktop apps, so your footage and audio never leave your hard drive. Every price on this page is the whole price.',
-    choose: [
-      'Start with the job you do weekly — a recorder, captioner or transcriber you use daily pays for itself within a month or two of the subscription it replaces.',
-      'Prefer the desktop apps (Captionly, WhisperDesk, BloomRecorder) when footage is client-confidential — nothing leaves the machine, ever.',
-      'Switching mid-project? Read the linked comparison pages first — each one maps the competitor’s feature set honestly, including what it still does better.',
-    ],
-    faq: [
-      ['Do desktop media apps need a powerful GPU?', 'No. The AI features — background removal, transcription, captions — are tuned to run on ordinary CPUs, and the models ship inside the installer. A batch just takes a few seconds per file instead of a credit per file.'],
-      ['What happens to my files with pay-once media tools?', 'Nothing. The desktop apps in this category process everything locally and make no network calls. Your footage, audio and images stay on your own disk — which is the whole point.'],
-      ['Is a one-time purchase really “lifetime”?', 'Yes. There is no license server to phone home and no renewal date; the app keeps working offline, forever. Updates to the packaged installer are included.'],
-      ['Can I still share videos without a cloud link?', 'Yes — export MP4 or GIF and share it however you already share files. And if you specifically need a podcast feed and player pages, Castport covers hosting without the per-month meter.'],
-    ],
-    apps: ['captionly', 'bloomrecorder', 'voicebarn', 'cutaway', 'castport', 'reelsnag', 'memeforge', 'clip-pipeline', 'shrinkray', 'wispertalk', 'overlayr', 'signboard', 'snapfleet', 'iconforge', 'paletteforge', 'mockcraft', 'postcraft', 'cardsmith', 'slidecraft', 'whisperdesk'],
-  },
-  {
-    slug: 'productivity-business-ops-pay-once-tools',
-    title: '21 Productivity & Business Tools You Buy Once (2026)',
-    metaDesc: '21 productivity and business ops tools with one-time pricing — invoicing, scheduling, time tracking, receipts, hiring and shifts. Pay once, own forever.',
-    intro: 'The average small business rents its calendar, its invoicing, its time tracking and even its org chart — a stack of monthly bills for software that mostly shuffles records around. These 21 apps run the back office for a one-time price: scheduling, billing, receipts, shifts, hiring, onboarding and more. Most are self-hosted web apps, so client and employee data stays on your own server instead of a vendor’s. Buy once and the ops budget stops creeping up every year.',
-    choose: [
-      'Pick the biggest bill first — invoicing, scheduling and time tracking are usually the largest recurring line items in a small-business stack.',
-      'Self-hosted web apps need a cheap VPS; if you’d rather not run one, start with the desktop apps in the list (OrgTree, Snapreceipt, Streakly).',
-      'If three or more of these apply, the $997 everything bundle covers the whole catalog and usually beats buying the big licenses à la carte.',
-    ],
-    faq: [
-      ['What does “self-hosted” mean for a business app?', 'The app runs on a cheap VPS you control instead of the vendor’s cloud. Setup is a one-time job; after that your client, invoice and scheduling data lives on your own server, under your own backups.'],
-      ['Can these really replace tools like FreshBooks or Calendly?', 'For the core jobs — invoicing, scheduling, time tracking, receipts, shift planning — yes. Where a competitor still wins (very large teams, deep integrations), the per-app comparison pages say so plainly.'],
-      ['Do I pay per employee or per seat?', 'No. Every price here is a flat one-time payment, whether two people use the tool or twenty. There is no per-seat multiplier to outgrow.'],
-      ['What if an app I want is marked “coming soon”?', 'It is in final release prep and launches without the price changing. The $997 bundle includes every catalog app, so bundle owners get each one the day it ships.'],
-    ],
-    apps: ['boardly', 'ledgerly', 'billcraft', 'bookslot', 'formforge', 'timevault', 'orgtree', 'snapreceipt', 'hirestack', 'shiftly', 'punchcard', 'roster', 'renewcheck', 'streakly', 'deepdesk', 'ledgerlitehome', 'rampcheck', 'doortracker', 'famping', 'eventcraft', 'remindly'],
-  },
-  {
-    slug: 'marketing-social-seo-pay-once-tools',
-    title: '21 Marketing, Social & SEO Tools You Buy Once (2026)',
-    metaDesc: '21 marketing, social and SEO tools you buy once — social scheduling, email campaigns, rank tracking, links, reviews and analytics. No monthly meter.',
-    intro: 'Marketing SaaS is priced like a tax on growth: per channel, per contact, per keyword, per seat. This roundup collects 21 pay-once tools for social scheduling, email campaigns, rank tracking, link management, QR codes, reviews and analytics. They replace metered plans with software you host or install yourself — one receipt, no per-channel multipliers. If your marketing stack costs more every year for doing the same job, start here.',
-    choose: [
-      'Match the tool to the channel you actually use — one scheduler you open every day beats a rented suite you log into twice a month.',
-      'Self-hosted analytics and rank tracking keep your traffic and keyword strategy off third-party clouds (and out of their training data).',
-      'Watch the “typical competitor cost” column for per-channel and per-contact pricing — that multiplier is exactly what a one-time price kills.',
-    ],
-    faq: [
-      ['Will a pay-once tool keep up with platform changes?', 'The apps are actively maintained and updates are included in the one-time price. Because most are self-hosted or open source, you are never waiting on a vendor’s pricing-tier decisions either.'],
-      ['Is self-hosted analytics as useful as Plausible or GA?', 'Statfox tracks the same core metrics — pageviews, referrers, popular pages — without cookies or consent banners, and your traffic data never leaves your server.'],
-      ['Why are competitor costs so much higher for marketing tools?', 'Marketing SaaS usually meters the thing that grows — channels, contacts, keywords, seats. A one-time price has no multiplier, so the gap widens every month your audience grows.'],
-      ['Can I migrate my existing subscribers, links or posts?', 'Yes — import and export are standard across these apps, and the per-app pages and FAQs cover the specifics for each tool.'],
-    ],
-    apps: ['postbird', 'postdock', 'serpdeck', 'linkleaf', 'scantrail', 'statfox', 'utmcraft', 'reflink', 'hearback', 'bravowall', 'starstack', 'pulsecheck', 'askback', 'citewatch', 'chatterbox', 'splitpoint', 'queuecraft', 'redirectly', 'trimly', 'chatlet', 'listcraft'],
-  },
-  {
-    slug: 'documents-writing-signatures-pay-once-tools',
-    title: '21 Writing, Docs & Signature Tools You Buy Once (2026)',
-    metaDesc: '21 document, writing and e-signature tools with one-time prices — PDF, OCR, contracts, proposals, resumes and publishing. Pay once, sign forever.',
-    intro: 'Documents are the original subscription trap: PDF editors, e-signature platforms and proposal tools charge monthly to handle files you already own. These 21 apps cover PDFs, OCR, contracts, signatures, resumes, pitches, changelogs and publishing for a flat one-time price. Several run fully offline, so contracts and sensitive paperwork never touch a third-party server. Pay once, sign forever.',
-    choose: [
-      'If the paperwork is confidential — contracts, HR documents, client records — prefer the offline desktop apps; nothing is uploaded, ever.',
-      'Check signature and record-keeping requirements for your jurisdiction; the e-signature tools here cover standard ESIGN/eIDAS-style workflows.',
-      'Before cancelling a vendor, open the linked comparison page for your current tool and check feature parity line by line.',
-    ],
-    faq: [
-      ['Are pay-once e-signatures legally valid?', 'The signature tools here produce signed PDFs with audit trails suitable for standard ESIGN/UETA and eIDAS-style workflows — the Inkseal compliance page on this site walks through the details.'],
-      ['Do the PDF and OCR tools work offline?', 'Yes — the desktop apps in this category (PDFsmith, Textract, Quillpad) run entirely on your machine. Documents never leave your disk, which matters for contracts and client paperwork.'],
-      ['What if I need a feature the one-time app lacks?', 'Each app’s comparison page lists exactly what the subscription competitor still does better. For most document jobs — merge, sign, convert, publish — parity is already there.'],
-      ['Can I use these for commercial client work?', 'Yes — one payment, no per-seat or per-document fees, and most ship MIT source, so you can even build and modify them yourself.'],
-    ],
-    apps: ['pdfsmith', 'textract', 'inkpress', 'inkseal', 'quillpad', 'shipnotes', 'docwell', 'docsmithapi', 'resumecraft', 'pitchcraft', 'contractly', 'quotewell', 'sigcraft', 'feedloft', 'droplink', 'lessonforge', 'quizcraft', 'forumly', 'voicebox', 'viral-invoice', 'menuly'],
-  },
-  {
-    slug: 'developer-it-admin-pay-once-tools',
-    title: '21 Developer & IT Admin Tools You Buy Once (2026)',
-    metaDesc: '21 developer and IT admin tools you buy once — uptime, cron, SSL, logs, backups, secrets and status pages. Self-hosted, one-time pricing.',
-    intro: 'Dev tooling has quietly become a rental market: monitoring, secrets managers, backups, status pages and snippet libraries all bill monthly. These 21 tools cover uptime, cron, SSL, logs, backups, licensing, link infrastructure and incident pages for a one-time price. Most are self-hosted — which for infrastructure tooling is the point, because your monitoring should not depend on another company’s uptime. Own the tool, own the alert.',
-    choose: [
-      'Self-hosting is the default here — a $5 VPS runs most of these; weigh that one line item against the subscription you are cancelling.',
-      'Prioritize the tools that page you: uptime, cron and certificate monitors earn their keep the first outage they catch.',
-      'Most of these ship MIT source on GitHub, so you can audit the exact code that watches your infrastructure before you deploy it.',
-    ],
-    faq: [
-      ['What do I need to self-host these tools?', 'A small VPS (or a homelab box) and about ten minutes per app. Docker-based setups are the norm, and each product page documents the exact steps.'],
-      ['Is self-hosted monitoring reliable if my server goes down?', 'Run the monitor on separate infrastructure from what it watches — a $5 VPS in another region is the standard pattern, and it still costs less than one month of most monitoring subscriptions.'],
-      ['Are source-available dev tools safe to run in production?', 'Most ship MIT-licensed source you can audit before deploying — the opposite of a black-box agent. The secrets tools (Vaultly, Secretbox) encrypt at rest; details are on each product page.'],
-      ['What happens when a “coming soon” dev tool launches?', 'It flips to available on this site and joins the bundle automatically. Bundle owners get every catalog app, including future launches, at no extra cost.'],
-    ],
-    apps: ['upwatch', 'pingcron', 'hookscope', 'wrangle', 'vaultkeeper', 'hawkwatch', 'keymaster', 'snipvault', 'upkeepstatus', 'vaultly', 'keyloop', 'secretbox', 'certwatch', 'logbin', 'clickmap', 'maptrail', 'linkguard', 'billoop', 'syncvault', 'deskly', 'clientdesk'],
-  },
-];
-
 /* Guard: the five lists must partition the catalog exactly — every one of the
    104 apps in exactly one roundup. Throws at build time, not after deploy. */
 {
@@ -2890,24 +2965,15 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       if (!EMBED_BROKEN.has(id) || !slug || !hasClip(slug)) return m;
       return `<video controls preload="metadata" src="/assets/clips/${slug}.mp4" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;"></video>`;
     });
-  /* "From the blog" cluster links on each v2 product page (spiderweb pass):
-     injected before the footer of the page's root index.html only. */
-  const blogByProduct = {};
-  blogPostList.forEach(x => (blogByProduct[x.product] = blogByProduct[x.product] || []).push(x));
-  const injectBlogLinks = (html, slug) => {
-    const cluster = blogByProduct[slug];
-    if (!cluster || !cluster.length || html.includes('from-the-blog') || !html.includes('<footer')) return html;
-    const items = cluster.slice(0, 4)
-      .map(y => `<li><a href="/blog/${y.slug}/">${esc(y.title)}</a></li>`)
-      .join('\n        ');
-    const block = `<section class="from-the-blog" aria-label="From the blog" style="max-width:920px;margin:2.5rem auto;padding:0 1.2rem;">
-      <h2 style="font-size:1.25rem;margin-bottom:0.8rem;">From the blog</h2>
-      <ul style="display:grid;gap:0.5rem;list-style:none;padding:0;">
-        ${items}
-        <li><a href="/blog/">All posts &rarr;</a></li>
-      </ul>
-    </section>\n    `;
-    return html.replace('<footer', block + '<footer');
+  /* "Everything about {Brand}" content-cluster on each v2 product page —
+     the same section the v1 generator emits (shared productClusterSection),
+     injected before the footer of the page's root index.html only. Replaces
+     the old 4-link "From the blog" block with the full hub-and-spoke cluster:
+     blog posts, comparison page, demo, savings calculator, roundup, source. */
+  const injectCluster = (html, slug) => {
+    const p = anyBySlug[slug];
+    if (!p || html.includes('content-cluster') || !html.includes('<footer')) return html;
+    return html.replace('<footer', productClusterSection(p) + '\n    <footer');
   };
   const patchHtml = (dir, rootSlug) => {
     for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -2924,7 +2990,7 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       html = html.replace(/<meta property="og:title" content="([^"]*)"\s*\/?>/, (m, t) => m.replace(t, fitTitle(t)));
       html = html.replace(/<meta name="description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
       html = html.replace(/<meta property="og:description" content="([^"]*)"\s*\/?>/, (m, d) => m.replace(d, fitDesc(d)));
-      if (rootSlug && f.name === 'index.html') html = injectBlogLinks(html, rootSlug);
+      if (rootSlug && f.name === 'index.html') html = injectCluster(html, rootSlug);
       if (rootSlug && f.name === 'index.html') html = injectProductLd(html, rootSlug);
       if (!html.includes('rel="icon"') && html.includes('</head>')) {
         html = html.replace('</head>',
@@ -2953,6 +3019,6 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       patchHtml(path.join(OUT, entry), entry);
       n++;
     }
-    console.log(`v2 overlay: ${n} entries copied over public/ (video section hoisted, blog links injected, pixel ${PIXEL ? 'injected' : 'off'})`);
+    console.log(`v2 overlay: ${n} entries copied over public/ (video section hoisted, cluster sections injected, pixel ${PIXEL ? 'injected' : 'off'})`);
   }
 }

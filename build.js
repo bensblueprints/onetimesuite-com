@@ -88,6 +88,8 @@ const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'cap
   'boardly', 'bookslot', 'bravowall', 'castport', 'chatlet', 'chatterbox', 'docwell', 'doortracker', 'droplink', 'famping', 'formforge', 'hawkwatch',
   'hearback', 'hookscope', 'inkpress', 'inkseal', 'keymaster', 'ledgerly', 'overlayr', 'pingcron', 'postbird', 'queuecraft', 'serpdeck', 'shipnotes',
   'signboard', 'snapfleet', 'snipvault', 'statfox', 'timevault', 'upwatch', 'vaultkeeper', 'billcraft', 'trimly', 'cardsmith', 'postdock', 'scantrail',
+  /* 2026-07-29 — Bloom family desktop launches: */
+  'bloommeeting', 'bloomclipper',
 ]);
 const availableProducts = allProducts.filter(p => AVAILABLE_SLUGS.has(p.slug));
 const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
@@ -96,7 +98,7 @@ const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
   'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'orgtree', 'renewcheck',
-  'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk', 'clip-pipeline',
+  'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk', 'clip-pipeline', 'bloommeeting', 'bloomclipper',
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
 ]);
@@ -840,9 +842,9 @@ const blogExtraComps = fs.existsSync(BLOG_COMP_FILE) ? require(BLOG_COMP_FILE) :
 const ROUNDUPS = [
   {
     slug: 'video-audio-media-pay-once-tools',
-    title: '20 Video, Audio & Media Tools You Buy Once (2026)',
-    metaDesc: '20 video, audio and media tools you buy once — screen recording, captions, transcription, compression and design. One-time prices, no subscriptions.',
-    intro: 'Video and audio tools are where subscriptions sting the most: caption apps, screen recorders, voice tools and podcast hosts all charge monthly for work your own machine can do. The 20 tools below cover recording, transcription, captions, compression, voiceover and design — each one a single payment, most with MIT source on GitHub. Most of them ship as desktop apps, so your footage and audio never leave your hard drive. Every price on this page is the whole price.',
+    title: '22 Video, Audio & Media Tools You Buy Once (2026)',
+    metaDesc: '22 video, audio and media tools you buy once — screen recording, captions, transcription, compression and design. One-time prices, no subscriptions.',
+    intro: 'Video and audio tools are where subscriptions sting the most: caption apps, screen recorders, voice tools and podcast hosts all charge monthly for work your own machine can do. The 22 tools below cover recording, remote guests, clipping, transcription, captions, compression, voiceover and design — each one a single payment, most with MIT source on GitHub. Most of them ship as desktop apps, so your footage and audio never leave your hard drive. Every price on this page is the whole price.',
     choose: [
       'Start with the job you do weekly — a recorder, captioner or transcriber you use daily pays for itself within a month or two of the subscription it replaces.',
       'Prefer the desktop apps (Captionly, WhisperDesk, BloomRecorder) when footage is client-confidential — nothing leaves the machine, ever.',
@@ -854,7 +856,7 @@ const ROUNDUPS = [
       ['Is a one-time purchase really “lifetime”?', 'Yes. There is no license server to phone home and no renewal date; the app keeps working offline, forever. Updates to the packaged installer are included.'],
       ['Can I still share videos without a cloud link?', 'Yes — export MP4 or GIF and share it however you already share files. And if you specifically need a podcast feed and player pages, Castport covers hosting without the per-month meter.'],
     ],
-    apps: ['captionly', 'bloomrecorder', 'voicebarn', 'cutaway', 'castport', 'reelsnag', 'memeforge', 'clip-pipeline', 'shrinkray', 'wispertalk', 'overlayr', 'signboard', 'snapfleet', 'iconforge', 'paletteforge', 'mockcraft', 'postcraft', 'cardsmith', 'slidecraft', 'whisperdesk'],
+    apps: ['captionly', 'bloomrecorder', 'bloommeeting', 'bloomclipper', 'voicebarn', 'cutaway', 'castport', 'reelsnag', 'memeforge', 'clip-pipeline', 'shrinkray', 'wispertalk', 'overlayr', 'signboard', 'snapfleet', 'iconforge', 'paletteforge', 'mockcraft', 'postcraft', 'cardsmith', 'slidecraft', 'whisperdesk'],
   },
   {
     slug: 'productivity-business-ops-pay-once-tools',

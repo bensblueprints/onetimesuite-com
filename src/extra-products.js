@@ -5,8 +5,8 @@
  *   closedSource — true = paid, closed-source; never render GitHub/MIT copy
  *   stamp        — hero stamp text override
  *   seoRelated   — [path, label] pairs to the hand-written SEO posts
- * Both are desktop apps. They are NOT part of the $997 bundle math (that
- * receipt is the 56-app catalog).
+ * These are desktop apps (Viral Invoice excepted). They are NOT part of the
+ * $997 bundle math (that receipt is the 56-app catalog).
  */
 module.exports = [
   {
@@ -83,6 +83,110 @@ module.exports = [
         },
       ],
     },
+  },
+  {
+    slug: 'bloommeeting',
+    /* TODO plan link — swap for the plan_ checkout URL once the Whop product
+       ships a plan id (product page URL works today). */
+    buyUrl: 'https://whop.com/benjisaiempire/bloom-meeting',
+    brand: 'Bloom Meeting',
+    repo: 'bloommeeting',
+    price: 49,
+    icon: '🎧',
+    tagline: 'The Riverside replacement you buy once.',
+    oneliner: 'Record remote podcast guests in studio quality — guests join from a browser link, everyone records locally, per-person tracks, AI captions, auto-cut editing and RTMP streaming. $49, once.',
+    competitor: 'Riverside',
+    compPrice: '$15–29/mo',
+    compYr: 288,
+    heroLead: 'Riverside charges $15–29 a month, forever, and meters your recording hours. Bloom Meeting is the same core trick — the call carries the conversation while every participant records locally in studio quality — as a desktop app you buy once. Guests join from a browser link with nothing to install, their tracks upload during the call and collect into a synced take folder when the meeting ends, and the built-in toolkit transcribes, captions and auto-cuts the episode on your own machine. $49, once.',
+    features: [
+      ['🔗', 'Guests join from a browser link', 'Create a meeting and send one link — up to 4 guests plus the host, nothing to install on their end.'],
+      ['🎙️', 'Everyone records locally', 'The live call is only for conversation. Each participant records in studio quality on their own machine — 8 Mbps VP9 video plus separate lossless-leaning Opus audio — so a bad connection never ruins the take.'],
+      ['🎚️', 'Per-person synced tracks', 'Server-stamped start times and per-recorder clock offsets land in the take folder, so every track lines up on a timeline in post.'],
+      ['📦', 'Tracks collect automatically', 'Guest recordings chunk-upload to the relay during the call; ending the meeting gathers every participant\'s files into one auto-titled take folder.'],
+      ['📡', 'Go Live — RTMP streaming', 'Broadcast the composited meeting grid (speaker labels, solo/split/grid layouts) to Twitch or any RTMP server while you record.'],
+      ['🪄', 'Dynamic Edit — auto-cut episodes', 'Local Whisper transcribes each participant, then auto-cuts the episode — full-screen on the active speaker, split view on crosstalk — with per-segment manual override and a 1080p ffmpeg render.'],
+      ['💬', 'AI captions, fully local', 'Whisper runs on your machine — no cloud credits, no upload. Captions burn in with drag-to-position placement.'],
+      ['✂️', 'Full editing toolkit built in', 'Silence removal, Descript-style transcript editing, viral-reel auto-cuts and vertical 9:16 exports — the whole BloomRecorder toolkit ships inside.'],
+      ['🖥️', 'Solo recording too', 'Screen, camera or both, multi-camera takes and digital-zoom Scaled Angles — it replaces your screen recorder as well.'],
+      ['🔒', 'Your files, your hardware', 'Recordings live in take folders on your own disk. No account with us, no meter, no per-hour billing.'],
+    ],
+    compRows: [
+      ['Price', '$49 once', '$15–29/mo (~$180–348/yr, forever)'],
+      ['Recording hours', 'Unlimited', 'Metered by plan'],
+      ['Local per-participant recording', 'Yes — video + separate audio tracks', 'Yes'],
+      ['Guest join', 'Browser link, nothing to install', 'Browser link'],
+      ['Where recordings live', 'Take folders on your own disk', 'Their cloud'],
+      ['AI captions & transcription', 'Local Whisper — unlimited, offline', 'Cloud, plan-limited'],
+      ['Auto-cut speaker editing', 'Dynamic Edit included', 'Paid AI tier'],
+      ['RTMP live streaming', 'Included — Twitch or any RTMP server', 'Higher tiers'],
+      ['Source code', 'MIT, on GitHub', 'Closed'],
+    ],
+    payback: 'Bloom Meeting costs less than three months of Riverside Standard — after that, every remote session, caption pass and auto-cut episode is free, forever.',
+    steps: [
+      ['Buy once on Whop', 'One payment of $49 gets you the packaged installer. Or clone the MIT source and build it yourself for free.'],
+      ['Create a meeting, send the link', 'Guests open it in a browser — no install, no account. Talk like it\'s a normal call while everyone records locally in studio quality.'],
+      ['End the meeting, cut the episode', 'Tracks collect into a synced take folder. Run Dynamic Edit to auto-cut around the active speaker, add local Whisper captions, and export — 1080p episode or vertical reels.'],
+    ],
+    faq: [
+      ['Do my guests have to install anything?', 'No. Guests open a browser link — up to 4 guests plus the host. Only the host runs the desktop app.'],
+      ['What happens if the connection is bad during the call?', 'Nothing, to the recording. The live call only carries the conversation — each participant records locally on their own machine, so the tracks are studio quality even if the call stutters.'],
+      ['How do I get my guests\' recordings?', 'They upload in chunks to the relay server during the call. When you end the meeting, every participant\'s tracks collect into one take folder with per-recorder sync offsets, ready to line up in post.'],
+      ['Can it edit the episode for me?', 'Yes — Dynamic Edit transcribes each participant locally with Whisper and auto-cuts the episode: full-screen on the active speaker, split view on crosstalk. You can override any segment, then it renders 1080p via ffmpeg with offset-aligned audio.'],
+      ['Is the source code available?', 'Yes — Bloom Meeting is MIT-licensed at github.com/bensblueprints/bloommeeting. Buying the $49 package gets you the built installer and updates; building from source is free.'],
+      ['How is this different from BloomRecorder?', 'BloomRecorder records the machine it runs on. Bloom Meeting is built on the same toolkit and adds remote guests: browser links, local recording per participant, synced take collection, RTMP streaming and auto-cut multi-speaker editing.'],
+    ],
+  },
+  {
+    slug: 'bloomclipper',
+    /* TODO plan link — swap for the plan_ checkout URL once the Whop product
+       ships a plan id (product page URL works today). */
+    buyUrl: 'https://whop.com/benjisaiempire/bloom-clipper',
+    brand: 'Bloom Clipper',
+    repo: 'bloomclipper',
+    price: 29,
+    icon: '✂️',
+    tagline: 'The Opus Clip alternative you buy once.',
+    oneliner: 'Turn any landscape video into vertical 9:16 clips — cut timeline, resizable crop angles, live phone preview and interview split-stack mode, all 100% local. $29, once.',
+    competitor: 'Opus Clip',
+    compPrice: '$29/mo (Pro)',
+    compYr: 348,
+    heroLead: 'Opus Clip runs $29 a month, meters your upload minutes, and processes your footage in its cloud. Bloom Clipper does the job on your own machine for $29, once: load a podcast or any long-form recording, mark the cuts on the timeline, frame each one with a draggable aspect-locked crop — or two stacked boxes for interviews — watch the result live on a phone-shaped preview, and export ready-to-post 1080×1920 MP4s. No upload, no watermark, no credits.',
+    features: [
+      ['🎞️', 'Any source video', 'Open any MP4/WebM/MOV/MKV, or pick straight from your BloomRecorder and Bloom Meeting libraries with thumbnails.'],
+      ['✂️', 'Cut marking on a timeline', 'Scrub, set start/end, add the cut — every cut is an editable row you can tweak to the tenth of a second, preview in place, or delete.'],
+      ['🔲', 'Full 9:16 angle', 'One aspect-locked crop box over the source: drag to move, drag the corner to zoom, with a live zoom readout.'],
+      ['👥', 'Interview split-stack mode', 'Two aspect-locked 9:8 boxes — one per speaker — and the render stacks them to fill the vertical frame.'],
+      ['📱', 'Live phone preview', 'A phone mock shows exactly what the rendered 1080×1920 clip will look like, per cut, while you drag.'],
+      ['🎯', 'Per-cut angles', 'Every cut remembers its own mode and framing — switching Full/Half never loses your work.'],
+      ['💬', 'Local Whisper captions', 'Quantized Whisper runs on your machine and burns captions in with drag-to-position placement and 4 styles. No cloud, no credits.'],
+      ['🪄', 'AI editing toolkit', 'Remove Silences, Descript-style transcript editing, and a Make Viral Reels pass that finds hook moments — all fully offline.'],
+      ['📤', 'Ready-to-post exports', 'Every cut renders to a clips folder next to the source — 1080×1920 H.264 + AAC with faststart, per-clip progress, no watermark.'],
+      ['🔒', '100% local', 'Zero telemetry, zero network calls, zero accounts. Your footage never leaves your machine.'],
+    ],
+    compRows: [
+      ['Price', '$29 once', '$29/mo Pro (~$348/yr, forever)'],
+      ['Where footage is processed', 'Your own machine', 'Uploaded to their cloud'],
+      ['Upload minutes', 'Unlimited — it\'s your CPU', 'Metered per month'],
+      ['Framing control', 'Draggable aspect-locked crops + live phone preview', 'Auto AI framing'],
+      ['Interview split-stack', 'Yes — two 9:8 boxes, stacked', 'Limited'],
+      ['Captions', 'Local Whisper, 4 styles, burned in', 'Cloud, plan-limited'],
+      ['Watermark', 'Never', 'On free tier'],
+      ['Source code', 'MIT, on GitHub', 'Closed'],
+    ],
+    payback: 'One month of Opus Clip Pro costs the same as owning Bloom Clipper outright — every clip after the first month is pure savings.',
+    steps: [
+      ['Buy once on Whop', 'One payment of $29 gets you the packaged installer. Or clone the MIT source and build it yourself for free.'],
+      ['Mark your cuts and frame them', 'Load any landscape video, scrub the timeline, add cuts, then drag the aspect-locked crop — or stack two boxes for an interview — while the phone preview shows the final result live.'],
+      ['Export ready-to-post clips', 'Every cut renders to 1080×1920 H.264 with faststart, straight into a clips folder next to your source. Add local Whisper captions if you want them burned in.'],
+    ],
+    faq: [
+      ['Does my video get uploaded anywhere?', 'No. Bloom Clipper makes zero network calls — clipping, captions, silence removal and rendering all run locally via bundled ffmpeg and on-device Whisper.'],
+      ['How does the interview mode work?', 'Half 9:16 mode gives you two aspect-locked 9:8 crop boxes, one per speaker. The render crops and scales each to 1080×960 and stacks angle 1 on top of angle 2 to fill the 1080×1920 frame.'],
+      ['Can I control the framing, or is it auto-only?', 'You control it. Each cut has its own draggable, corner-zoomable crop with a live zoom readout, and the phone preview shows the exact rendered result while you drag. No AI guessing where the speaker is.'],
+      ['Is the source code available?', 'Yes — Bloom Clipper is MIT-licensed at github.com/bensblueprints/bloomclipper. Buying the $29 package gets you the built installer and updates; building from source is free.'],
+      ['Does it work with my BloomRecorder or Bloom Meeting recordings?', 'Yes — it lists videos from both libraries as clip sources automatically, thumbnails included. Any other MP4/WebM/MOV/MKV works too.'],
+    ],
   },
   {
     slug: 'wispertalk',

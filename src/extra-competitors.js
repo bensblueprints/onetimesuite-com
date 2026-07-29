@@ -447,6 +447,11 @@ module.exports = [
     note: 'Riverside records remote interviews in studio quality by capturing each participant locally. Standard plans list from $15/mo billed annually (about $180/yr), capped by recording hours.',
     apps: [
       {
+        slug: 'bloommeeting',
+        whyUs: 'Bloom Meeting is Riverside\'s core trick as a desktop app you buy once: guests join from a browser link with nothing to install, everyone records locally in studio quality, and the tracks collect into a synced take folder with per-person offsets when the meeting ends. Local Whisper captions, auto-cut Dynamic Edit and RTMP streaming are all included, with no recording-hour meter. $49 once.',
+        theirsWins: 'Riverside is a hosted platform: its cloud handles guest uploads, storage and team workflows with nothing to run yourself, supports larger guest counts, and its browser studio works when the host is on a machine without the app. If you want zero infrastructure and managed storage, Riverside is the smoother rental.',
+      },
+      {
         slug: 'bloomrecorder',
         whyUs: 'For solo recording — screen, camera or both — BloomRecorder captures locally in unlimited length with MP4 and GIF export, no cloud and no account, for $29 once. Recordings land in your folder the second you stop, not in a processing queue.',
         theirsWins: 'Riverside\'s reason to exist is remote guests: separate local tracks per participant, progressive upload, and a browser-based studio. BloomRecorder records the machine it runs on — it cannot capture a remote guest.',

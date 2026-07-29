@@ -32,7 +32,7 @@ const categories = [
   {
     slug: 'video-audio', name: 'Video & Audio',
     desc: 'Record, caption, transcribe and ship video and audio without a monthly bill — screen recorders, caption generators, transcription and podcast hosting you pay for once.',
-    appSlugs: ['bloomrecorder', 'captionly', 'clip-pipeline', 'wispertalk', 'whisperdesk', 'voicebarn', 'castport', 'reelsnag'],
+    appSlugs: ['bloomrecorder', 'bloommeeting', 'bloomclipper', 'captionly', 'clip-pipeline', 'wispertalk', 'whisperdesk', 'voicebarn', 'castport', 'reelsnag'],
   },
   {
     slug: 'business-ops', name: 'Business Operations',

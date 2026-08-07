@@ -52,7 +52,7 @@ module.exports = [
       'Stay with Pingdom if you need multi-region probes, scripted transaction checks or real-user monitoring — Upwatch does none of those; it checks HTTP from the single location where you run it. For contractual SLAs, that difference matters.',
       'Switch if you are paying enterprise-monitoring money for up/down awareness on client sites. Upwatch gives you 30-second HTTP checks, keyword assertions, incident history, webhook + email alerts and a branded public status page — self-hosted, $99 once.',
     ],
-    meetExtra: 'Upwatch runs as one Node process with SQLite — no cron, no Redis, no agents. Desktop mode for watching sites from your own machine, or Docker on a $5 VPS for a 24/7 public status page your clients can bookmark.',
+    meetExtra: 'Upwatch runs as one Node process with SQLite — no cron, no Redis, no agents. Docker Compose onto a $5 VPS and it watches your endpoints 24/7, with a public status page your clients can bookmark.',
   },
   {
     slug: 'statuscake-alternative', competitor: 'StatusCake', product: 'upwatch',

@@ -7,5 +7,5 @@
 module.exports = [
   'inkseal', 'keyloop', 'keymaster', 'ledgerlitehome', 'ledgerly', 'lessonforge',
   'linkguard', 'linkleaf', 'listcraft', 'logbin', 'maptrail', 'memeforge',
-  'menuly', 'mockcraft', 'orgtree', 'overlayr', 'paletteforge', 'pdfsmith',
+  'menuly', 'mockcraft', 'wholeteam', 'overlayr', 'paletteforge', 'pdfsmith',
 ];

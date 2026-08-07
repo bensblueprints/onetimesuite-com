@@ -37,7 +37,7 @@ const categories = [
   {
     slug: 'business-ops', name: 'Business Operations',
     desc: 'Helpdesks, scheduling, forms, HR and client management — the back-office SaaS stack, replaced with pay-once tools you host yourself.',
-    appSlugs: ['deskly', 'bookslot', 'boardly', 'chatlet', 'docwell', 'formforge', 'orgtree', 'hirestack', 'clientdesk', 'sigcraft', 'shiftly', 'roster'],
+    appSlugs: ['deskly', 'bookslot', 'boardly', 'chatlet', 'docwell', 'formforge', 'wholeteam', 'hirestack', 'clientdesk', 'sigcraft', 'shiftly', 'roster'],
   },
   {
     slug: 'marketing-seo', name: 'Marketing & SEO',

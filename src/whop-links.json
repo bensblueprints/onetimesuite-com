@@ -942,15 +942,15 @@
     "price": 15,
     "productUrl": "https://whop.com/benjisaiempire/memeforge-app"
   },
-  "orgtree": {
-    "route": "orgtree",
+  "wholeteam": {
+    "route": "wholeteam",
     "productId": "prod_gNs4rmqxP2ijw",
     "descriptionSet": true,
     "planId": "plan_0fSK0MjU750Wv",
     "checkoutUrl": "https://whop.com/checkout/plan_0fSK0MjU750Wv",
-    "title": "Orgtree — Build and maintain your org chart without a seat-priced diagram tool.",
+    "title": "WholeTeam — Build and maintain your org chart without a seat-priced diagram tool.",
     "price": 19,
-    "productUrl": "https://whop.com/benjisaiempire/orgtree"
+    "productUrl": "https://whop.com/benjisaiempire/wholeteam"
   },
   "renewcheck": {
     "route": "renewcheck",

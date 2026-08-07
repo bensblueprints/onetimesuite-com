@@ -88,7 +88,7 @@ live in.
 | 49 | **Door Tracker** | GPS pings every 5 minutes, auto-clustered stops with dwell time, so you can tell a knock from a drive-by. | Badger Maps | $129 | [door-tracker-mvp](https://github.com/bensblueprints/door-tracker-mvp) |
 | 50 | **FamPing** | 5-minute GPS pings, named-place geofence alerts, and a full day's path per family member — on your own server. | Life360 | $99 | [famping-mvp](https://github.com/bensblueprints/famping-mvp) |
 | 51 | **Memeforge** | Drag-drop meme captions, a built-in template library and custom fonts, instant PNG export — 100% offline. | Imgflip Pro | $15 | [memeforge-mvp](https://github.com/bensblueprints/memeforge-mvp) |
-| 52 | **Orgtree** | Drag-drop org chart builder with CSV import, auto-layout and PDF/PNG export — no login, no seats. | Lucidchart | $19 | [orgtree-mvp](https://github.com/bensblueprints/orgtree-mvp) |
+| 52 | **WholeTeam** | Drag-drop org chart builder with CSV import, auto-layout and PDF/PNG export — no login, no seats. | Lucidchart | $19 | [wholeteam-mvp](https://github.com/bensblueprints/wholeteam-mvp) |
 | 53 | **Renewcheck** | Manual subscription tracker with renewal reminders, spend totals and category breakdowns — your card numbers never touch a server. | Rocket Money | $15 | [renewcheck-mvp](https://github.com/bensblueprints/renewcheck-mvp) |
 | 54 | **Paletteforge** | Palette generator with lock/shuffle, contrast checking, and CSS/Tailwind/ASE export — fully offline. | Coolors Pro | $15 | [paletteforge-mvp](https://github.com/bensblueprints/paletteforge-mvp) |
 | 55 | **Iconforge** | Drop one image, get a full favicon + app-icon set (ICO, PNG, Apple touch, Android, PWA manifest) — zero uploads. | Iconscout | $15 | [iconforge-mvp](https://github.com/bensblueprints/iconforge-mvp) |

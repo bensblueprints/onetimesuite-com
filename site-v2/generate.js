@@ -51,7 +51,7 @@ const allProducts = [...products, ...products51, ...launched, ...extras];
    availableProducts / comingSoon in ../build.js. Keep in sync. */
 const launchedBrands = new Set(launched.map(l => l.brand.toLowerCase()));
 const comingSoon = require(path.join(REPO, 'src', 'coming-soon.js')).filter(p => !launchedBrands.has(p.brand.toLowerCase()));
-const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'orgtree', 'sigcraft',
+const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'wholeteam', 'sigcraft',
   'cutaway', 'contractly', 'deepdesk', 'docsmithapi', 'iconforge', 'keyloop', 'maptrail', 'memeforge', 'mockcraft', 'paletteforge', 'pdfsmith',
   'quillpad', 'quotewell', 'reelsnag', 'renewcheck', 'shrinkray', 'streakly', 'textract', 'voicebarn', 'whisperdesk', 'wrangle',
   'boardly', 'bookslot', 'bravowall', 'castport', 'chatlet', 'chatterbox', 'docwell', 'doortracker', 'droplink', 'famping', 'formforge', 'hawkwatch',
@@ -201,7 +201,7 @@ function jsonLd(p) {
 /* Desktop vs web — mirrors DESKTOP_SLUGS in ../build.js */
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
-  'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'orgtree', 'renewcheck',
+  'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'wholeteam', 'renewcheck',
   'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk',
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
@@ -220,7 +220,7 @@ const WHOP = 'https://whop.com/benjisaiempire';
 const RELEASES_REPO_OVERRIDES = {
   wispertalk: 'wispertalk-releases',
   bloomrecorder: 'bloomrecorder-releases',
-  orgtree: 'wholeteam-mvp',
+  wholeteam: 'wholeteam-mvp',
 };
 
 function autoDownloads(p) {

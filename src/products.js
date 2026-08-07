@@ -166,7 +166,7 @@ module.exports = [
     tagline: 'Self-hosted uptime monitoring + a beautiful public status page.',
     oneliner: 'HTTP checks, incident log, alerts and a branded 90-day status page — on your own box.',
     competitor: 'UptimeRobot', compPrice: '$8/mo', compYr: 96,
-    heroLead: 'UptimeRobot charges $8/mo. Pingdom starts at $10/mo. Both cap your monitors and keep billing you forever. Upwatch is the same core product — HTTP checks, incident tracking, alerting, a classic 90-day-bar status page — running on your own $5 VPS (or your desktop) with unlimited monitors and zero recurring fees.',
+    heroLead: 'UptimeRobot charges $8/mo. Pingdom starts at $10/mo. Both cap your monitors and keep billing you forever. Upwatch is the same core product — HTTP checks, incident tracking, alerting, a classic 90-day-bar status page — running on your own $5 VPS with unlimited monitors and zero recurring fees.',
     features: [
       ['🌐', 'HTTP(S) monitors', 'URL, interval from 30s to 15m, expected status code, optional keyword match.'],
       ['⚙️', 'In-process checker loop', 'No cron, no workers, no Redis — one Node process does everything.'],
@@ -175,7 +175,7 @@ module.exports = [
       ['🟢', 'Public status page', 'Clean branded page at /status — per-monitor badges, classic 90-day uptime bars, outage banner.'],
       ['🔔', 'Alerts on down + recovery', 'Slack/Discord-compatible JSON webhook and email via your own SMTP.'],
       ['🏢', 'Built for agencies', 'Monitor every client site from one box; hand clients a clean branded status page.'],
-      ['🖥️', 'Desktop or VPS', 'Run it as a desktop app, or deploy to a $5 VPS (Docker included) when it needs to be public.'],
+      ['🐳', 'Deploys in minutes', 'Docker Compose included — one command on any $5 VPS. Runs 24/7 so it catches outages while you sleep.'],
     ],
     compRows: [
       ['Price', '$99 once', 'UptimeRobot $8/mo ($96/yr) · Pingdom $10+/mo'],
@@ -763,7 +763,7 @@ module.exports = [
     tagline: 'The self-hosted Trello replacement — unlimited boards, your data in one SQLite file.',
     oneliner: 'Self-hosted kanban — drag & drop boards, checklists, labels, attachments, full JSON export.',
     competitor: 'Trello', compPrice: '$5/user/mo', compYr: 60,
-    heroLead: 'Trello charges $5 per user per month — a 10-person team pays $600 every year, forever, for lists with cards on them. Boardly is the same kanban workflow on your hardware: unlimited boards, as many people as your server allows, and your data in a single SQLite file you can copy, back up and export any time.',
+    heroLead: 'Trello charges $5 per user per month — a 10-person team pays $600 every year, forever, for lists with cards on them. Boardly is the same kanban workflow on your hardware: unlimited boards, unlimited cards, no per-seat meter, and your data in a single SQLite file you can copy, back up and export any time. It also speaks MCP, so Claude and other AI agents can read and update your boards directly.',
     features: [
       ['🗂️', 'Multiple boards', 'Color themes, emoji icons, starred favorites — organize work, clients or your whole life.'],
       ['✋', 'Drag & drop everything', 'Reorder lists, drag cards between lists — order persists exactly where you dropped it.'],
@@ -771,6 +771,7 @@ module.exports = [
       ['☑️', 'Checklists', 'With live progress bars right on the card front.'],
       ['📎', 'Attachments', 'Upload files straight onto cards — stored on your disk, with your limits, not a 250 MB plan cap.'],
       ['💬', 'Comments + activity log', 'Full history per card and per board.'],
+      ['🤖', 'Built-in MCP server', 'Point Claude (or any MCP client) at your board and it can create cards, tick checklists and move work through your pipeline — 22 tools, token-authenticated, off by default.'],
       ['🔎', 'Filter & search', 'By label, by due date (overdue / this week / none), plus full-text card search and keyboard shortcuts.'],
       ['📦', 'Full-fidelity export/import', 'One-click JSON round trip including attachment bytes — for backups or moving boards between installs. Archive instead of delete, restore anytime.'],
     ],
@@ -2047,12 +2048,12 @@ module.exports = [
     ],
   },
   {
-    slug: 'orgtree', brand: 'WholeTeam', repo: 'wholeteam-mvp', price: 19, icon: '🌳',
+    slug: 'wholeteam', brand: 'WholeTeam', repo: 'wholeteam-mvp', price: 19, icon: '🌳',
     stamp: 'Desktop app · Windows + macOS · Admin + Member editions',
     tagline: 'Org chart, team chat, file library and time clock — all on your own network.',
     oneliner: 'LAN-first team platform: drag-drop org chart with scenario planning, auto-generated department chat channels, shared file libraries and a PIN time clock. One payment covers your whole team.',
     competitor: 'Lucidchart', compPrice: '$7.95/mo', compYr: 95,
-    heroLead: 'Lucidchart charges $7.95/month per editor just to keep an org chart current — and it stops at the chart. WholeTeam (formerly Orgtree) puts the org chart, team chat with auto-generated department channels, per-department file libraries and a PIN time clock into one desktop app that runs entirely on your own network. Install WholeTeam Admin on the owner\'s machine and WholeTeam Member on everyone else\'s — $19 once, no seats, and your chats, files and hours never touch the cloud.',
+    heroLead: 'Lucidchart charges $7.95/month per editor just to keep an org chart current — and it stops at the chart. WholeTeam puts the org chart, team chat with auto-generated department channels, per-department file libraries and a PIN time clock into one desktop app that runs entirely on your own network. Install WholeTeam Admin on the owner\'s machine and WholeTeam Member on everyone else\'s — $19 once, no seats, and your chats, files and hours never touch the cloud.',
     features: [
       ['🌳', 'Drag-drop org chart', 'CSV import, auto-layout, drag to reparent, department color coding — plus scenario planning to model a reorg before you announce it.'],
       ['💬', 'Team chat, no server bill', 'Auto-generated department channels plus direct messages, hosted by the Admin machine on your LAN — no Slack subscription, no cloud.'],
@@ -2084,7 +2085,6 @@ module.exports = [
       ['Do I need a license per employee?', 'No — WholeTeam Admin is a one-time $19 purchase for the host machine, and employee Member installs are covered under the same purchase. There\'s no per-seat subscription.'],
       ['Does anything ever touch the cloud?', 'No. Chats, files and hours stay on your own network. Remote employees connect back to the Admin machine over Tailscale — a private, encrypted overlay network — not through a public cloud service.'],
       ['Is the activity tracking spyware?', 'No — there are no screenshots, no keylogging, no webcam. The activity % is idle-based only: it measures whether the machine was in use while clocked in, and it\'s visible to your admin, not to a third party.'],
-      ['Wasn\'t this called Orgtree?', 'Yes — WholeTeam is Orgtree grown up. The org chart builder is still here, now alongside team chat, department file libraries and the PIN time clock. Same one-time price.'],
       ['Is the source code available?', 'Yes — MIT source at github.com/bensblueprints/wholeteam-mvp. The $19 buys the packaged Admin + Member installers and updates.'],
     ],
     downloads: {

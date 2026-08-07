@@ -80,7 +80,7 @@ for (const p of extras) if (!bySlug[p.slug]) bySlug[p.slug] = p;
 
 /* Public launch state: only these are purchasable today — every other catalog
    app is shown as a caution-taped "Coming soon" card on the hub. */
-const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'orgtree', 'sigcraft',
+const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'captionly', 'clip-pipeline', 'viral-invoice', 'wholeteam', 'sigcraft',
   /* 2026-07-27 launch wave — 21 desktop apps (one-time price, matches Whop): */
   'cutaway', 'contractly', 'deepdesk', 'docsmithapi', 'iconforge', 'keyloop', 'maptrail', 'memeforge', 'mockcraft', 'paletteforge', 'pdfsmith',
   'quillpad', 'quotewell', 'reelsnag', 'renewcheck', 'shrinkray', 'streakly', 'textract', 'voicebarn', 'whisperdesk', 'wrangle',
@@ -90,6 +90,8 @@ const AVAILABLE_SLUGS = new Set(['bloomrecorder', 'wispertalk', 'linkleaf', 'cap
   'signboard', 'snapfleet', 'snipvault', 'statfox', 'timevault', 'upwatch', 'vaultkeeper', 'billcraft', 'trimly', 'cardsmith', 'postdock', 'scantrail',
   /* 2026-07-29 — Bloom family desktop launches: */
   'bloommeeting', 'bloomclipper',
+  /* 2026-08-07 — desktop launch wave (installers built, Whop plans live): */
+  'resumecraft', 'ledgerlitehome', 'postcraft', 'slidecraft', 'syncvault', 'snapreceipt',
 ]);
 const availableProducts = allProducts.filter(p => AVAILABLE_SLUGS.has(p.slug));
 const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
@@ -97,7 +99,7 @@ const upcomingProducts = allProducts.filter(p => !AVAILABLE_SLUGS.has(p.slug));
 /* Desktop (Electron, no server) vs web-hosted (self-hosted on your own VPS) */
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
-  'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'orgtree', 'renewcheck',
+  'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'wholeteam', 'renewcheck',
   'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk', 'clip-pipeline', 'bloommeeting', 'bloomclipper',
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
@@ -865,7 +867,7 @@ const ROUNDUPS = [
     intro: 'The average small business rents its calendar, its invoicing, its time tracking and even its org chart — a stack of monthly bills for software that mostly shuffles records around. These 21 apps run the back office for a one-time price: scheduling, billing, receipts, shifts, hiring, onboarding and more. Most are self-hosted web apps, so client and employee data stays on your own server instead of a vendor’s. Buy once and the ops budget stops creeping up every year.',
     choose: [
       'Pick the biggest bill first — invoicing, scheduling and time tracking are usually the largest recurring line items in a small-business stack.',
-      'Self-hosted web apps need a cheap VPS; if you’d rather not run one, start with the desktop apps in the list (OrgTree, Snapreceipt, Streakly).',
+      'Self-hosted web apps need a cheap VPS; if you’d rather not run one, start with the desktop apps in the list (WholeTeam, Snapreceipt, Streakly).',
       'If three or more of these apply, the $997 everything bundle covers the whole catalog and usually beats buying the big licenses à la carte.',
     ],
     faq: [
@@ -874,7 +876,7 @@ const ROUNDUPS = [
       ['Do I pay per employee or per seat?', 'No. Every price here is a flat one-time payment, whether two people use the tool or twenty. There is no per-seat multiplier to outgrow.'],
       ['What if an app I want is marked “coming soon”?', 'It is in final release prep and launches without the price changing. The $997 bundle includes every catalog app, so bundle owners get each one the day it ships.'],
     ],
-    apps: ['boardly', 'ledgerly', 'billcraft', 'bookslot', 'formforge', 'timevault', 'orgtree', 'snapreceipt', 'hirestack', 'shiftly', 'punchcard', 'roster', 'renewcheck', 'streakly', 'deepdesk', 'ledgerlitehome', 'rampcheck', 'doortracker', 'famping', 'eventcraft', 'remindly'],
+    apps: ['boardly', 'ledgerly', 'billcraft', 'bookslot', 'formforge', 'timevault', 'wholeteam', 'snapreceipt', 'hirestack', 'shiftly', 'punchcard', 'roster', 'renewcheck', 'streakly', 'deepdesk', 'ledgerlitehome', 'rampcheck', 'doortracker', 'famping', 'eventcraft', 'remindly'],
   },
   {
     slug: 'marketing-social-seo-pay-once-tools',
@@ -3078,4 +3080,119 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
     }
     console.log(`v2 overlay: ${n} entries copied over public/ (video section hoisted, cluster sections injected, pixel ${PIXEL ? 'injected' : 'off'})`);
   }
+}
+
+/* ==========================================================================
+ * server catalog — public/_data/catalog.json
+ *
+ * The set of apps a 100%-off webinar coupon may be minted against. Emitted at
+ * build time so it can never drift from AVAILABLE_SLUGS, and guarded so that a
+ * mistake fails the BUILD rather than showing up as a free bundle in prod.
+ *
+ * Whop plan id resolution, in order:
+ *   1. tier-checkouts.json .lifetimePlanId  — lifetime ONLY. A 100%-off promo
+ *      applied to a monthly plan is a free recurring subscription.
+ *   2. whop-links.json .planId
+ *   3. a plan id embedded in an extra product's buyUrl
+ * Anything unresolved must be listed in NO_WHOP_PLAN with a reason.
+ * ====================================================================== */
+{
+  const BUNDLE_PLAN_ID = 'plan_5Mv4jYmDfZH3a';
+
+  /* Live slugs that intentionally have no Whop plan and so cannot be given
+     away by a Whop promo code. Keep the reason — this list is load-bearing. */
+  const NO_WHOP_PLAN = {
+    wispertalk: 'sold off-Whop on wispertalk.com — a Whop promo code cannot apply',
+    bloommeeting: 'whop product page only, no plan id resolved yet',
+    bloomclipper: 'whop product page only, no plan id resolved yet',
+    'viral-invoice': 'whop product page only, no plan id resolved yet',
+  };
+
+  const planFromUrl = u => { const m = /\/checkout\/(plan_[A-Za-z0-9]+)/.exec(String(u || '')); return m ? m[1] : null; };
+
+  const rows = [];
+  const unresolved = [];
+
+  for (const p of allProducts) {
+    if (!AVAILABLE_SLUGS.has(p.slug)) continue;
+
+    const tc = tierCheckouts[p.slug];
+    const wl = whopLinks[p.slug];
+    let planId = null;
+    let price = p.price;
+
+    if (tc && tc.lifetimePlanId) {
+      planId = tc.lifetimePlanId;
+      if (tc.prices && tc.prices.lifetime != null) price = tc.prices.lifetime;
+    } else if (wl && wl.planId) {
+      planId = wl.planId;
+      if (wl.price != null) price = wl.price;
+    } else {
+      planId = planFromUrl(p.buyUrl);
+    }
+
+    if (!planId) {
+      if (!NO_WHOP_PLAN[p.slug]) unresolved.push(p.slug);
+      continue;
+    }
+    if (planId === BUNDLE_PLAN_ID) {
+      throw new Error(`catalog: the $997 bundle plan leaked into the coupon whitelist via "${p.slug}"`);
+    }
+    rows.push({
+      slug: p.slug,
+      brand: p.brand,
+      icon: p.icon || '',
+      price,
+      planId,
+      productId: (wl && wl.productId) || null,
+      kind: DESKTOP_SLUGS.has(p.slug) ? 'desktop' : 'web',
+      demo: DEMOS.has(p.slug),
+    });
+  }
+
+  if (unresolved.length) {
+    throw new Error(
+      `catalog: ${unresolved.length} available app(s) have no Whop plan and are not declared in ` +
+      `NO_WHOP_PLAN: ${unresolved.join(', ')}. Add the plan id, or declare why it has none.`);
+  }
+  if (rows.some(r => r.planId === BUNDLE_PLAN_ID)) throw new Error('catalog: bundle plan present after build');
+
+  const dir = path.join(OUT, '_data');
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'catalog.json'), JSON.stringify(rows, null, 1), 'utf8');
+
+  /* Marketing copy for the email sequence. Separate file from catalog.json so
+     the coupon path stays a small, auditable list of plan ids. Covers every
+     LIVE app (not just the coupon-eligible ones) — a spotlight email only
+     needs a product page to link to, not a Whop plan. */
+  const emailRows = allProducts
+    .filter(p => AVAILABLE_SLUGS.has(p.slug))
+    .map(p => ({
+      slug: p.slug,
+      brand: p.brand,
+      icon: p.icon || '',
+      price: p.price,
+      kind: DESKTOP_SLUGS.has(p.slug) ? 'desktop' : 'web',
+      demo: DEMOS.has(p.slug),
+      tagline: p.tagline || '',
+      oneliner: p.oneliner || p.tagline || '',
+      competitor: p.competitor || '',
+      compPrice: p.compPrice || '',
+      compYr: p.compYr || 0,
+      payback: p.payback || '',
+      features: (p.features || []).slice(0, 3).map(f => (Array.isArray(f) ? [f[1], f[2]] : [String(f), ''])),
+    }));
+  fs.writeFileSync(path.join(dir, 'email-catalog.json'), JSON.stringify(emailRows, null, 1), 'utf8');
+
+  const yearly = emailRows.reduce((s, r) => s + (r.compYr || 0), 0);
+  const once = emailRows.reduce((s, r) => s + r.price, 0);
+  fs.writeFileSync(path.join(dir, 'email-totals.json'), JSON.stringify({
+    liveCount: emailRows.length, onceTotal: once, competitorYearly: yearly,
+    bundlePrice: BUNDLE.price, bundleValue, bundleSavings,
+  }, null, 1), 'utf8');
+  console.log(`email catalog: ${emailRows.length} live app(s) · $${once} once vs $${yearly}/yr rented`);
+
+  const noPlan = Object.keys(NO_WHOP_PLAN).filter(s => AVAILABLE_SLUGS.has(s));
+  console.log(`server catalog: ${rows.length} coupon-eligible app(s) -> public/_data/catalog.json` +
+    ` · ${noPlan.length} live app(s) excluded (no Whop plan): ${noPlan.join(', ')}`);
 }

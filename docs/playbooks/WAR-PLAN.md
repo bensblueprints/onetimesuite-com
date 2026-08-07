@@ -24,7 +24,7 @@ Goal: nothing broken, everything measurable, first content shipped.
 - [ ] Check YouTube Studio for the 27 dead videos per `NEXT-UP.md` — if a batch action flipped them private, restore to unlisted/public and skip re-recording. List of the 27 slugs is in `NEXT-UP.md` §1.
 - [ ] Fix the 3 stale YouTube titles flagged in `NEXT-UP.md` (title quotes old price) in YouTube Studio **and** `src/youtube-videos.json`.
 - [ ] Run an end-to-end purchase test: buy one app on Whop with a real card, confirm delivery email, installer/download, and license/access work. Refund after. Document every snag.
-- [ ] Spot-check that each live landing page's price matches the live Whop price (the 8 pre-existing launches called out in `NEXT-UP.md` §2: SigCraft $15, BloomRecorder $29, WisperTalk $49, Linkleaf $19, Captionly $34, Clip Pipeline $49, Viral Invoice $99, Orgtree $19).
+- [ ] Spot-check that each live landing page's price matches the live Whop price (the 8 pre-existing launches called out in `NEXT-UP.md` §2: SigCraft $15, BloomRecorder $29, WisperTalk $49, Linkleaf $19, Captionly $34, Clip Pipeline $49, Viral Invoice $99, WholeTeam $19).
 - [ ] Confirm the price tracker and calculator pages render the current `salesCount` and bundle price correctly.
 - [ ] Set up one analytics baseline screenshot (GSC + site analytics) as the day-0 record.
 

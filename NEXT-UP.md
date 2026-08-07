@@ -57,7 +57,7 @@ All 57 newly launched apps had unlisted YouTube videos recorded in `src/youtube-
 
 Per-page checklist for all 65 live apps (do a pass page by page):
 
-- [ ] Price shown == live Whop price (done for the 57; **spot-check the 8 pre-existing launches**: sigcraft $15, bloomrecorder $29, wispertalk $49, linkleaf $19, captionly $34, clip-pipeline $49, viral-invoice $99, orgtree $19)
+- [ ] Price shown == live Whop price (done for the 57; **spot-check the 8 pre-existing launches**: sigcraft $15, bloomrecorder $29, wispertalk $49, linkleaf $19, captionly $34, clip-pipeline $49, viral-invoice $99, wholeteam $19)
 - [ ] Video embed plays (see §1 — 27 broken)
 - [ ] Buy button → `/checkout/<slug>/?plan=...` → Whop embed loads the right plan/price
 - [ ] FAQ / feature copy quotes the current price
@@ -107,7 +107,7 @@ Download source: GitHub Releases on each app's repo (see `repo` in `src/products
 - [ ] WhisperDesk — transcribe a video drop (TXT + SRT export)
 - [ ] Wrangle — core flow
 - [ ] Linkleaf — link-in-bio build + publish
-- [ ] WholeTeam (orgtree) — host + Member install, connect
+- [ ] WholeTeam (wholeteam) — host + Member install, connect
 - [ ] Clip Pipeline — pipeline run end-to-end
 
 ### Web/self-hosted apps (36 launched) — verify installer/launcher runs and the app comes up

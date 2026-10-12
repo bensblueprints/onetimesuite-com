@@ -96,7 +96,9 @@ export function createZoom(store, getConfig, { fetch: request = globalThis.fetch
       let response;
       try {
         response = await api('/users/' + encodeURIComponent(cfg.host_email) + '/meetings', {
-          method: 'POST', body: JSON.stringify({ topic, type: 2, start_time: input.start_at, duration: input.duration_minutes, timezone: 'Asia/Ho_Chi_Minh',
+          // Zoom requires whole-second UTC timestamps; fractional seconds can be
+          // interpreted as host-local time despite a trailing Z.
+          method: 'POST', body: JSON.stringify({ topic, type: 2, start_time: input.start_at.replace(/\.\d{3}Z$/, 'Z'), duration: input.duration_minutes, timezone: 'Asia/Ho_Chi_Minh',
             agenda: 'Website concept presentation. Please join seated at a computer or tablet. No purchase commitment.',
             settings: { use_pmi: false, waiting_room: true, join_before_host: false, mute_upon_entry: true, auto_recording: 'none', host_video: true, participant_video: false, meeting_authentication: false }
           })

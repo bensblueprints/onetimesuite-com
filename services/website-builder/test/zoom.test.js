@@ -43,6 +43,7 @@ test('Zoom creation is durable and idempotent, keeps host secrets private and en
   assert.equal(p.meetings.length, 1);
   const body = JSON.parse(p.calls.find(c => c.options.method === 'POST' && c.url.includes('/v2/')).options.body);
   assert.equal(body.settings.waiting_room, true); assert.equal(body.settings.use_pmi, false); assert.equal(body.timezone, 'Asia/Ho_Chi_Minh');
+  assert.match(body.start_time, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
   await assert.rejects(zoom.create('call-a', { ...args, start_at: new Date(time + 31 * 3600000).toISOString() }), /already has/);
   await assert.rejects(zoom.cancel('other-call', { meeting_id: first.meeting_id }), /does not own/);
   zoom.assertBooking('call-a', { ...first });

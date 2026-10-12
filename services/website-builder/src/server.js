@@ -5,10 +5,11 @@ import { fileURLToPath } from 'node:url';
 import { createHash, createHmac, timingSafeEqual, randomBytes, createCipheriv, createDecipheriv } from 'node:crypto';
 import { z } from 'zod';
 import { createStore } from './store.js';
-import { createAI } from './ai.js';
+import { createAI, providerConfig } from './ai.js';
 import { createWorker } from './worker.js';
 import { validateBrief, briefSchema } from './schema.js';
-import { renderSite, pages } from './render.js';
+import { renderSite, siteRoutes, escape } from './render.js';
+import { validatePageSet, mergeInventory } from './page-plan.js';
 
 const assets = resolve(dirname(fileURLToPath(import.meta.url)),'../public');
 const equal = (a,b) => { const aa=createHash('sha256').update(String(a)).digest(),bb=createHash('sha256').update(String(b)).digest();return timingSafeEqual(aa,bb); };
@@ -28,11 +29,11 @@ export function createApp(env = process.env, dependencies = {}) {
   const cryptoKey = createHash('sha256').update(secret).digest();
   function encrypt(value) { const iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',cryptoKey,iv),bytes=Buffer.concat([cipher.update(value,'utf8'),cipher.final()]);return Buffer.concat([iv,cipher.getAuthTag(),bytes]).toString('base64'); }
   function decrypt(value) { const b=Buffer.from(value,'base64'),cipher=createDecipheriv('aes-256-gcm',cryptoKey,b.subarray(0,12));cipher.setAuthTag(b.subarray(12,28));return Buffer.concat([cipher.update(b.subarray(28)),cipher.final()]).toString('utf8'); }
-  const saved = store.setting('kimi_key');
-  const aiEnv = { ...env, KIMI_API_KEY: saved ? decrypt(saved) : env.KIMI_API_KEY };
+  const saved = store.setting('kimi_key'),openaiSaved=store.setting('openai_key'),deepinfraSaved=store.setting('deepinfra_key');
+  const aiEnv = { ...env, DEEPINFRA_API_KEY:deepinfraSaved?decrypt(deepinfraSaved):env.DEEPINFRA_API_KEY, AI_PROVIDER:store.setting('ai_provider')||env.AI_PROVIDER||(deepinfraSaved?'deepinfra':saved?'kimi':'openai'), KIMI_API_KEY: saved ? decrypt(saved) : env.KIMI_API_KEY,OPENAI_API_KEY:openaiSaved?decrypt(openaiSaved):env.OPENAI_API_KEY };
   let ai = dependencies.ai || createAI(aiEnv);
-  const provider = { get configured(){return ai.configured;}, generate:(...args)=>ai.generate(...args), review:(...args)=>ai.review(...args) };
-  const worker = createWorker(store,provider,{maxPerDay:Number(env.MAX_BUILDS_PER_DAY)||20,...dependencies.worker});
+  const provider = new Proxy({}, {get:(_target,key)=>typeof ai[key]==='function'?ai[key].bind(ai):ai[key]});
+  const worker = createWorker(store,provider,{maxPerDay:Number(env.MAX_BUILDS_PER_DAY)||20,maxPages:Number(env.MAX_PAGES_PER_BUILD)||200,...dependencies.worker});
   const limits = new Map();
   const timer = env.WORKER_ENABLED === 'false' ? null : setInterval(()=>worker(),5000);
   timer?.unref();
@@ -93,29 +94,44 @@ export function createApp(env = process.env, dependencies = {}) {
       if(req.method==='POST'&&path==='/api/website-builder/logout'){checkOrigin(req);res.setHeader('Set-Cookie','studio_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');return send(res,200,{ok:true});}
       if(path.startsWith('/api/website-builder/admin/')){
         requireAdmin(req);if(req.method!=='GET')checkOrigin(req);
-        if(req.method==='GET'&&path.endsWith('/overview'))return send(res,200,{jobs:store.list(),provider:{configured:ai.configured,model:ai.model},paused:store.setting('paused')==='true',webhook_url:origin+'/api/website-builder/vapi'});
+        if(req.method==='GET'&&path.endsWith('/overview'))return send(res,200,{jobs:store.list(),provider:{configured:ai.configured,model:ai.model,name:ai.provider,label:ai.label,models:ai.models},max_pages:Number(env.MAX_PAGES_PER_BUILD)||200,paused:store.setting('paused')==='true',webhook_url:origin+'/api/website-builder/vapi'});
         if(req.method==='GET'&&path.endsWith('/tool'))return send(res,200,{type:'function',async:false,function:{name:'start_website_build',description:'Queue a website concept after explicit consent, completed discovery, confirmed budget of $500 plus $50/month if they love it, and successful confirmed calendar booking 24–48 hours from now. Never say the site is already built.',parameters:toolParameters},server:{url:origin+'/api/website-builder/vapi',timeoutSeconds:20},messages:[{type:'request-start',content:'I’m sending your brief to our website team.'}]});
         if(req.method==='POST'&&path.endsWith('/webhook-credential'))return send(res,200,{token:env.WEBHOOK_SECRET});
         if(req.method==='POST'&&path.endsWith('/provider')){
-          const data=await body(req);if(typeof data.api_key!=='string'||data.api_key.length<20||data.api_key.length>500)throw new Error('Enter a Kimi Open Platform API key');
-          const base=aiEnv.KIMI_BASE_URL||'https://api.moonshot.ai/v1';
-          const response=await fetch(base+'/models',{headers:{Authorization:`Bearer ${data.api_key}`},signal:AbortSignal.timeout(15000)});
-          if(!response.ok)throw new Error(`Kimi rejected the key (HTTP ${response.status})`);
-          const models=await response.json();if(!models.data?.some(x=>x.id===(aiEnv.KIMI_MODEL||'kimi-k3')))throw new Error('This Kimi account does not list kimi-k3');
-          store.setting('kimi_key',encrypt(data.api_key));aiEnv.KIMI_API_KEY=data.api_key;ai=createAI(aiEnv);return send(res,200,{configured:true,model:ai.model});
+          const data=await body(req);if(typeof data.api_key!=='string'||data.api_key.length<20||data.api_key.length>1000)throw new Error('Enter your provider API key');
+          if(store.db.prepare("SELECT count(*) n FROM jobs WHERE status='building'").get().n)throw new Error('Pause builds and wait for the current page to finish before changing provider');
+          const cfg=providerConfig({...aiEnv,AI_PROVIDER:data.provider||'openai'});
+          const response=await fetch(cfg.base+'/models',{headers:{Authorization:`Bearer ${data.api_key}`},signal:AbortSignal.timeout(15000)});
+          if(!response.ok)throw new Error(`${cfg.label} rejected the key (HTTP ${response.status})`);
+          const models=await response.json();for(const model of new Set([cfg.model,cfg.reviewModel,cfg.discoveryModel,cfg.chatModel].filter(Boolean)))if(!models.data?.some(x=>x.id===model))throw new Error(`This account does not list ${model}`);
+          if(cfg.provider==='deepinfra'){
+            const probe=await fetch(cfg.base+'/chat/completions',{method:'POST',headers:{Authorization:`Bearer ${data.api_key}`,'Content-Type':'application/json'},body:JSON.stringify({model:cfg.chatModel,messages:[{role:'user',content:'Reply ready.'}],max_tokens:16,reasoning_effort:'none'}),signal:AbortSignal.timeout(30000)});
+            if(!probe.ok)throw new Error(`DeepInfra authentication or billing check failed (HTTP ${probe.status})`);
+          }
+          store.setting(cfg.provider+'_key',encrypt(data.api_key));store.setting('ai_provider',cfg.provider);aiEnv.AI_PROVIDER=cfg.provider;aiEnv[cfg.provider.toUpperCase()+'_API_KEY']=data.api_key;ai=createAI(aiEnv);return send(res,200,{configured:true,model:ai.model});
         }
         if(req.method==='POST'&&path.endsWith('/pause')){const data=await body(req);store.setting('paused',data.paused?'true':'false');return send(res,200,{paused:!!data.paused});}
-        const match=path.match(/^\/api\/website-builder\/admin\/jobs\/([a-f0-9-]+)(?:\/(approve|retry|cancel|qualify|export))?$/);
+        const match=path.match(/^\/api\/website-builder\/admin\/jobs\/([a-f0-9-]+)(?:\/(approve|retry|cancel|qualify|export|coverage))?$/);
         if(match){const job=store.get(match[1]);if(!job)return send(res,404,{error:'Job not found'});
-          if(req.method==='GET'&&!match[2])return send(res,200,{job,events:store.events(job.id),messages:store.messages(job.id)});
+          if(req.method==='GET'&&!match[2])return send(res,200,{job,pages:store.pages(job.id),events:store.events(job.id),messages:store.messages(job.id)});
           if(req.method==='GET'&&match[2]==='export'){
             if(!job.spec)return send(res,409,{error:'No concept generated yet'});
-            res.setHeader('Content-Disposition',`attachment; filename="website-${job.id}.json"`);return send(res,200,{spec:job.spec,source:job.brief.website_url,review:job.review});
+            res.setHeader('Content-Disposition',`attachment; filename="website-${job.id}.json"`);return send(res,200,{spec:job.spec,inventory:job.inventory,pages:store.pages(job.id),source:job.brief.website_url,review:job.review});
           }
           if(req.method==='POST'){
             const action=match[2];
-            if(action==='approve'){
+            if(action==='coverage'){
+              if(job.status==='building'||!job.inventory)throw new Error('Coverage can be edited after source discovery finishes');
+              const input=z.object({services:z.string().max(20000),locations:z.string().max(30000),notes:z.string().trim().min(20).max(6000),confirmed:z.literal(true)}).parse(await body(req));
+              const source='operator-confirmation:'+job.id+':'+Date.now();
+              const parseLines=(text,max)=>{const lines=text.split('\n').map(s=>s.trim()).filter(Boolean);if(!lines.length||lines.length>max)throw new Error(`Enter between 1 and ${max} items`);return lines.map(line=>{const [name,...rest]=line.split('|'),summary=rest.join('|').trim();if(name.trim().length<2||name.trim().length>150||summary.length<15||summary.length>800)throw new Error('Each item needs a name and at least 15 characters of factual details, separated by |');return {name:name.trim(),summary,sources:[{url:source,quote:name.trim()+': '+summary}]};});};
+              const part={services:parseLines(input.services,100),locations:parseLines(input.locations,200),uncertainties:[]};
+              const text=[...part.services,...part.locations].map(x=>x.sources[0].quote).join('\n')+'\nOperator-confirmed coverage and restrictions: '+input.notes;
+              const evidence={...job.evidence,pages:[...(job.evidence?.pages||[]).filter(p=>!p.url.startsWith('operator-confirmation:')),{url:source,title:'Business-confirmed coverage',text}],warnings:[],incomplete:false,operator_confirmation:{at:new Date().toISOString(),notes:input.notes,previous_warnings:job.evidence?.warnings||[]}};
+              store.replaceCoverage(job.id,mergeInventory([part],evidence),evidence);store.event(job.id,'coverage_confirmed','Operator confirmed coverage; previous concept archived and rebuild queued');
+            }else if(action==='approve'){
               if(job.status!=='review'||!job.review?.passed||!job.review?.checks?.passed)throw new Error('Resolve review failures before approval');
+              if(job.inventory&&!validatePageSet(store.pages(job.id),job.inventory).passed)throw new Error('Resolve page review failures before approval');
               store.update(job.id,{status:'approved',approved_at:Date.now()});store.event(job.id,'approved','Human approved the concept for sharing');
             }else if(action==='retry'){
               if(!['failed','needs_attention'].includes(job.status))throw new Error('Only failed builds can be retried');
@@ -132,17 +148,20 @@ export function createApp(env = process.env, dependencies = {}) {
           }
         }
       }
-      const preview=path.match(/^\/website-previews\/([a-zA-Z0-9_-]{32})(?:\/(home|services|about|contact)?)?$/);
+      const preview=path.match(/^\/website-previews\/([a-zA-Z0-9_-]{32})(?:\/([a-z0-9./-]*))?$/);
       if(req.method==='GET'&&preview){
         const job=store.byToken(preview[1]);if(!job?.spec||job.status==='cancelled'||(!job.approved_at&&!session(req)))return send(res,404,{error:'Preview is not available'});
+        const pageRows=store.pages(job.id),page=(preview[2]||'home').replace(/\/$/,''),routes=siteRoutes(job.inventory,pageRows);
+        if(page==='sitemap.xml'){res.setHeader('X-Robots-Tag','noindex, nofollow');return send(res,200,`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map(p=>`<url><loc>${escape(origin+'/website-previews/'+job.preview_token+'/'+(p==='home'?'':p))}</loc></url>`).join('')}</urlset>`,'application/xml; charset=utf-8');}
+        if(!routes.includes(page))return send(res,404,{error:'Page not found'});
         res.setHeader('X-Robots-Tag','noindex, nofollow');res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'");
-        return send(res,200,renderSite(job.spec,{token:job.preview_token,page:preview[2]||'home',draft:!job.approved_at}),'text/html; charset=utf-8');
+        return send(res,200,renderSite(job.spec,{token:job.preview_token,page,draft:!job.approved_at,inventory:job.inventory,pageRows,origin}),'text/html; charset=utf-8');
       }
       const visitor=path.match(/^\/api\/website-builder\/previews\/([a-zA-Z0-9_-]{32})\/(chat|inquiry)$/);
       if(req.method==='POST'&&visitor){
         checkOrigin(req);const job=store.byToken(visitor[1]);if(!job?.spec||job.status==='cancelled'||(!job.approved_at&&!session(req)))return send(res,404,{error:'Preview is not available'});
         rate(req,visitor[1]+visitor[2],visitor[2]==='chat'?15:5);const data=await body(req);
-        if(visitor[2]==='chat'){const v=z.object({message:z.string().trim().min(1).max(1000)}).parse(data);return send(res,200,{answer:await ai.chat(job.spec,v.message)});}
+        if(visitor[2]==='chat'){const v=z.object({message:z.string().trim().min(1).max(1000),page:z.string().max(300).optional()}).parse(data),current=v.page&&store.page(job.id,v.page);return send(res,200,{answer:await ai.chat({...job.spec,service_areas:job.inventory?.locations.map(l=>({name:l.name,summary:l.summary})),current_page:current?.content},v.message)});}
         const v=z.object({name:z.string().trim().min(1).max(120),email:z.email().max(254),message:z.string().trim().min(1).max(4000)}).parse(data);store.message(job.id,v);return send(res,201,{saved:true});
       }
       send(res,404,{error:'Not found'});

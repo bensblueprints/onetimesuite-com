@@ -20,7 +20,10 @@ export function createStore(dir) {
     CREATE TABLE IF NOT EXISTS messages(id INTEGER PRIMARY KEY,job_id TEXT,at INTEGER,name TEXT,email TEXT,message TEXT);
     CREATE TABLE IF NOT EXISTS quota(day TEXT PRIMARY KEY,builds INTEGER NOT NULL DEFAULT 0);
     CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL);`);
-  const decode = r => r ? { ...r, brief: JSON.parse(r.brief), spec: r.spec && JSON.parse(r.spec), evidence: r.evidence && JSON.parse(r.evidence), review: r.review && JSON.parse(r.review) } : null;
+  if(!db.prepare('PRAGMA table_info(jobs)').all().some(c=>c.name==='inventory'))db.exec('ALTER TABLE jobs ADD COLUMN inventory TEXT');
+  db.exec(`CREATE TABLE IF NOT EXISTS concept_pages(job_id TEXT NOT NULL,path TEXT NOT NULL,plan TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'pending',content TEXT,review TEXT,PRIMARY KEY(job_id,path))`);
+  db.exec('CREATE TABLE IF NOT EXISTS revisions(id INTEGER PRIMARY KEY,job_id TEXT NOT NULL,at INTEGER NOT NULL,snapshot TEXT NOT NULL)');
+  const decode = r => r ? { ...r, brief: JSON.parse(r.brief), spec: r.spec && JSON.parse(r.spec), evidence: r.evidence && JSON.parse(r.evidence), review: r.review && JSON.parse(r.review),inventory:r.inventory&&JSON.parse(r.inventory) } : null;
   function event(id, kind, detail) { db.prepare('INSERT INTO events(job_id,at,kind,detail) VALUES(?,?,?,?)').run(id, Date.now(), kind, detail); }
   return {
     db, event,
@@ -41,10 +44,22 @@ export function createStore(dir) {
     byToken(token) { return decode(db.prepare('SELECT * FROM jobs WHERE preview_token=?').get(token)); },
     list() { return db.prepare('SELECT id FROM jobs ORDER BY created_at DESC LIMIT 200').all().map(r => this.get(r.id)); },
     update(id, fields) {
-      const allowed = new Set(['status','spec','evidence','review','error','approved_at','lease_until','next_attempt','brief']);
+      const allowed = new Set(['status','spec','evidence','review','error','approved_at','lease_until','next_attempt','brief','inventory']);
       const entries = Object.entries(fields).filter(([k]) => allowed.has(k));
       if (!entries.length) return;
-      db.prepare(`UPDATE jobs SET ${entries.map(([k]) => `${k}=?`).join(',')},updated_at=? WHERE id=?`).run(...entries.map(([k,v]) => ['spec','evidence','review','brief'].includes(k) && v !== null ? JSON.stringify(v) : v), Date.now(), id);
+      db.prepare(`UPDATE jobs SET ${entries.map(([k]) => `${k}=?`).join(',')},updated_at=? WHERE id=?`).run(...entries.map(([k,v]) => ['spec','evidence','review','brief','inventory'].includes(k) && v !== null ? JSON.stringify(v) : v), Date.now(), id);
+    },
+    plan(id,pages){db.exec('BEGIN IMMEDIATE');try{const insert=db.prepare('INSERT OR IGNORE INTO concept_pages(job_id,path,plan) VALUES(?,?,?)');for(const p of pages)insert.run(id,p.path,JSON.stringify(p));db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}},
+    pages(id){return db.prepare('SELECT * FROM concept_pages WHERE job_id=? ORDER BY path').all(id).map(p=>({...JSON.parse(p.plan),status:p.status,content:p.content&&JSON.parse(p.content),review:p.review&&JSON.parse(p.review)}));},
+    page(id,path){const p=db.prepare('SELECT * FROM concept_pages WHERE job_id=? AND path=?').get(id,path);return p?{...JSON.parse(p.plan),status:p.status,content:p.content&&JSON.parse(p.content),review:p.review&&JSON.parse(p.review)}:null;},
+    savePage(id,path,content,review){db.prepare('UPDATE concept_pages SET content=?,review=?,status=? WHERE job_id=? AND path=?').run(JSON.stringify(content),JSON.stringify(review),review.passed?'ready':'needs_attention',id,path);},
+    replaceCoverage(id,inventory,evidence){
+      db.exec('BEGIN IMMEDIATE');try{
+        db.prepare('INSERT INTO revisions(job_id,at,snapshot) VALUES(?,?,?)').run(id,Date.now(),JSON.stringify({job:this.get(id),pages:this.pages(id)}));
+        db.prepare('DELETE FROM concept_pages WHERE job_id=?').run(id);
+        this.update(id,{inventory,evidence,spec:null,review:null,status:'queued',approved_at:null,error:null,next_attempt:0,lease_until:0});
+        db.exec('COMMIT');
+      }catch(e){db.exec('ROLLBACK');throw e;}
     },
     claim(maxPerDay = 20) {
       const now = Date.now(), day = new Date().toISOString().slice(0,10);

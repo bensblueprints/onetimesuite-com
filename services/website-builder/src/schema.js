@@ -48,7 +48,7 @@ export const siteSchema = z.object({
   hero_copy: z.string().min(30).max(650),
   about: z.string().min(40).max(2000),
   theme: z.enum(['forest', 'navy', 'terracotta']),
-  services: z.array(z.object({ title: z.string().min(2).max(100), description: z.string().min(20).max(650) })).min(1).max(8),
+  services: z.array(z.object({ title: z.string().min(2).max(150), description: z.string().min(15).max(650) })).min(1).max(100),
   faqs: z.array(z.object({ question: z.string().min(5).max(200), answer: z.string().min(10).max(800) })).min(2).max(8),
   improvements: z.array(z.string().min(5).max(500)).min(2).max(12),
   needs_review: z.array(z.string().max(500)).max(20),

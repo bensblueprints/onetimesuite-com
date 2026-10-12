@@ -10,6 +10,7 @@ import { createWorker } from './worker.js';
 import { validateBrief, briefSchema } from './schema.js';
 import { renderSite, siteRoutes, escape } from './render.js';
 import { validatePageSet, mergeInventory } from './page-plan.js';
+import { createZoom, zoomConfigSchema, zoomTools } from './zoom.js';
 
 const assets = resolve(dirname(fileURLToPath(import.meta.url)),'../public');
 const equal = (a,b) => { const aa=createHash('sha256').update(String(a)).digest(),bb=createHash('sha256').update(String(b)).digest();return timingSafeEqual(aa,bb); };
@@ -29,6 +30,8 @@ export function createApp(env = process.env, dependencies = {}) {
   const cryptoKey = createHash('sha256').update(secret).digest();
   function encrypt(value) { const iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',cryptoKey,iv),bytes=Buffer.concat([cipher.update(value,'utf8'),cipher.final()]);return Buffer.concat([iv,cipher.getAuthTag(),bytes]).toString('base64'); }
   function decrypt(value) { const b=Buffer.from(value,'base64'),cipher=createDecipheriv('aes-256-gcm',cryptoKey,b.subarray(0,12));cipher.setAuthTag(b.subarray(12,28));return Buffer.concat([cipher.update(b.subarray(28)),cipher.final()]).toString('utf8'); }
+  const zoomConfig = () => { const saved=store.setting('zoom_config'); return saved?JSON.parse(decrypt(saved)):null; };
+  let zoom = createZoom(store,zoomConfig,dependencies.zoom);
   const saved = store.setting('kimi_key'),openaiSaved=store.setting('openai_key'),deepinfraSaved=store.setting('deepinfra_key');
   const aiEnv = { ...env, DEEPINFRA_API_KEY:deepinfraSaved?decrypt(deepinfraSaved):env.DEEPINFRA_API_KEY, AI_PROVIDER:store.setting('ai_provider')||env.AI_PROVIDER||(deepinfraSaved?'deepinfra':saved?'kimi':'openai'), KIMI_API_KEY: saved ? decrypt(saved) : env.KIMI_API_KEY,OPENAI_API_KEY:openaiSaved?decrypt(openaiSaved):env.OPENAI_API_KEY };
   let ai = dependencies.ai || createAI(aiEnv);
@@ -50,7 +53,7 @@ export function createApp(env = process.env, dependencies = {}) {
   function checkOrigin(req){if(req.headers.origin!==origin)throw Object.assign(new Error('Request origin is not allowed'),{status:403});}
   function send(res,status,data,type='application/json; charset=utf-8') {res.writeHead(status,{'Content-Type':type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'SAMEORIGIN','Permissions-Policy':'camera=(), microphone=(), geolocation=()'});res.end(type.startsWith('application/json')?JSON.stringify(data):data);}
   async function body(req){let size=0;const chunks=[];for await(const c of req){size+=c.length;if(size>65536)throw Object.assign(new Error('Request is too large'),{status:413});chunks.push(c);}try{return JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{throw Object.assign(new Error('Invalid JSON'),{status:400});}}
-  function publicJob(job){return {job_id:job.id,status:job.status,duplicate:false,message:job.status==='requested'?'Your request is saved. We will confirm the brief and presentation time.':'Build request accepted. The concept will be reviewed before sharing.'};}
+  function publicJob(job){const paused=store.setting('paused')==='true';return {job_id:job.id,status:job.status,duplicate:false,builds_paused:paused,message:job.status==='requested'?'Your request is saved. We will confirm the brief and presentation time.':paused?'The brief is saved, but production is paused. An operator must confirm the delivery time; do not promise the concept will be ready.':'Build request accepted. The concept will be reviewed before sharing.'};}
   function accept(args,source,key){const old=store.db.prepare('SELECT created_at FROM jobs WHERE dedupe_key=?').get(key);const brief=validateBrief(args,{requireAppointment:source!=='web',now:old?.created_at||Date.now()});const result=store.enqueue(brief,source,key,Number(env.MAX_PENDING_JOBS)||100);return {...publicJob(result.job),duplicate:result.duplicate};}
   const server = http.createServer(async(req,res)=>{
     try{
@@ -76,14 +79,20 @@ export function createApp(env = process.env, dependencies = {}) {
         if(!message||message.type!=='tool-calls')return send(res,200,{ignored:true});
         const calls=message.toolCallList;
         if(!Array.isArray(calls)||calls.length>5||!message.call?.id)throw new Error('Missing Vapi tool-call context');
-        const results=calls.map(call=>{
+        const results=[];
+        for(const call of calls){
           try{
-            if(call.function?.name!=='start_website_build')throw new Error('Unknown tool');
             const args=typeof call.function.arguments==='string'?JSON.parse(call.function.arguments):call.function.arguments;
-            const result=accept(args,'vapi',`vapi:${message.call.id}:website-build`);
-            return {toolCallId:call.id,result:JSON.stringify(result)};
-          }catch(e){return {toolCallId:call.id,error:e instanceof z.ZodError?'The brief is incomplete or invalid. Check required fields.':e.message};}
-        });return send(res,200,{results});
+            let result;
+            if(call.function?.name==='create_website_demo_zoom')result=await zoom.create(message.call.id,args,message.call.startedAt||message.call.createdAt);
+            else if(call.function?.name==='cancel_website_demo_zoom')result=await zoom.cancel(message.call.id,args);
+            else if(call.function?.name==='start_website_build'){
+              if(zoomConfig())zoom.assertBooking(message.call.id,args?.appointment);
+              result=accept(args,'vapi',`vapi:${message.call.id}:website-build`);
+            }else throw new Error('Unknown tool');
+            results.push({toolCallId:call.id,result:JSON.stringify(result)});
+          }catch(e){results.push({toolCallId:call.id,error:e instanceof z.ZodError?'The tool arguments are incomplete or invalid. Check required fields.':e.message});}
+        }return send(res,200,{results});
       }
       if(req.method==='POST'&&path==='/api/website-builder/login'){
         checkOrigin(req);rate(req,'login',12,15*60000);const data=await body(req);
@@ -97,6 +106,13 @@ export function createApp(env = process.env, dependencies = {}) {
         if(req.method==='GET'&&path.endsWith('/overview'))return send(res,200,{jobs:store.list(),provider:{configured:ai.configured,model:ai.model,name:ai.provider,label:ai.label,models:ai.models},max_pages:Number(env.MAX_PAGES_PER_BUILD)||200,paused:store.setting('paused')==='true',webhook_url:origin+'/api/website-builder/vapi'});
         if(req.method==='GET'&&path.endsWith('/tool'))return send(res,200,{type:'function',async:false,function:{name:'start_website_build',description:'Queue a website concept after explicit consent, completed discovery, confirmed budget of $500 plus $50/month if they love it, and successful confirmed calendar booking 24–48 hours from now. Never say the site is already built.',parameters:toolParameters},server:{url:origin+'/api/website-builder/vapi',timeoutSeconds:20},messages:[{type:'request-start',content:'I’m sending your brief to our website team.'}]});
         if(req.method==='POST'&&path.endsWith('/webhook-credential'))return send(res,200,{token:env.WEBHOOK_SECRET});
+        if(req.method==='GET'&&path.endsWith('/zoom-tools'))return send(res,200,zoomTools(origin));
+        if(req.method==='GET'&&path.endsWith('/zoom')){const cfg=zoomConfig();return send(res,200,{configured:!!cfg,host_email:cfg?.host_email,timezone:'Asia/Ho_Chi_Minh',meetings:store.db.prepare('SELECT call_id,state,created_at,updated_at FROM zoom_meetings ORDER BY created_at DESC LIMIT 100').all()});}
+        if(req.method==='POST'&&path.endsWith('/zoom')){
+          const cfg=zoomConfigSchema.parse(await body(req));
+          const candidate=createZoom(store,()=>cfg,dependencies.zoom);const result=await candidate.verify();
+          store.setting('zoom_config',encrypt(JSON.stringify(cfg)));zoom=candidate;return send(res,200,result);
+        }
         if(req.method==='POST'&&path.endsWith('/provider')){
           const data=await body(req);if(typeof data.api_key!=='string'||data.api_key.length<20||data.api_key.length>1000)throw new Error('Enter your provider API key');
           if(store.db.prepare("SELECT count(*) n FROM jobs WHERE status='building'").get().n)throw new Error('Pause builds and wait for the current page to finish before changing provider');

@@ -60,7 +60,7 @@ HTML checks cover headings, metadata, internal routes and executable-content iso
 
 ## Zoom
 
-The account owner has created a Zoom account. Zoom is separate from this site-building service and belongs in the Vapi appointment flow. The Vapi integrations catalog currently has no native Zoom entry; a real meeting-creation integration still needs to be configured. Once connected, create a real meeting before scheduling the calendar event and include its `join_url` in the event and build brief. For automated meeting creation, use a Zoom Server-to-Server OAuth app with only the required meeting scopes. Do not send a host `start_url` to prospects. Use the real `join_url`, and keep the existing calendar availability checks.
+The authenticated Vapi receiver now supports meeting creation and cancellation, encrypted Server-to-Server OAuth configuration, durable replay protection, timeout reconciliation, and call-scoped ownership checks. Connect and activate the Zoom app before attaching these tools to the assistant. The native calendar tool puts the real attendee join link in its supported `summary` field. See [VAPI-ZOOM.md](VAPI-ZOOM.md) for exact scopes, account setup, assistant sequencing, failure handling and internal validation.
 
 ## Verification and backup
 

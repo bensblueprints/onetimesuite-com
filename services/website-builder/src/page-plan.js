@@ -42,7 +42,8 @@ export function planPages(inventory){
 export function pageContext(plan,inventory,evidence){
   const service=inventory.services.find(s=>s.id===plan.service_id),location=inventory.locations.find(l=>l.id===plan.location_id);
   const urls=new Set([...(service?.sources||[]),...(location?.sources||[])].map(s=>s.url));
-  return {operator_confirmation:evidence.operator_confirmation||null,plan,service:service||null,location:location||null,available_services:plan.kind==='location'?inventory.services.map(s=>({name:s.name,summary:s.summary})):[],service_areas:plan.kind==='service'?inventory.locations.map(l=>l.name):[],evidence:evidence.pages.filter(p=>urls.has(p.url)).map(p=>({url:p.url,title:p.title,text:p.text})),uncertainties:inventory.uncertainties};
+  const contentPlan={path:plan.path,kind:plan.kind,title:plan.title,service_id:plan.service_id,location_id:plan.location_id};
+  return {operator_confirmation:evidence.operator_confirmation||null,plan:contentPlan,service:service||null,location:location||null,available_services:plan.kind==='location'?inventory.services.map(s=>({name:s.name,summary:s.summary})):[],service_areas:plan.kind==='service'?inventory.locations.map(l=>l.name):[],evidence:evidence.pages.filter(p=>urls.has(p.url)).map(p=>({url:p.url,title:p.title,text:p.text})),uncertainties:inventory.uncertainties};
 }
 function textOf(content){return [content.intro,...content.sections.map(s=>s.body),...content.faqs.map(f=>f.answer)].join(' ');}
 export function validatePageSet(pageRows,inventory){

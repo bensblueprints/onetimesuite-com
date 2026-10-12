@@ -11,7 +11,7 @@ import { createWorker } from '../src/worker.js';
 import { validateBrief } from '../src/schema.js';
 import { crawlSite, publicAddress, safeFetch } from '../src/crawl.js';
 import { renderSite, siteRoutes, validateRenderedSite } from '../src/render.js';
-import { planPages, mergeInventory, validatePageSet } from '../src/page-plan.js';
+import { planPages, mergeInventory, validatePageSet, pageContext } from '../src/page-plan.js';
 import { createAI } from '../src/ai.js';
 
 const brief=()=>({business_name:'Example Garden Studio',contact_name:'Test Owner',email:'owner@example.com',website_url:'https://example.com/',dislikes:'Make the services easier to understand.',requested_features:['AI assistant'],prospect_timezone:'America/New_York',consent_to_build:true,appointment:{event_id:'test-event',start_at:new Date(Date.now()+30*3600000).toISOString(),end_at:new Date(Date.now()+30.5*3600000).toISOString(),attendance_confirmed:true,invitation_received:true}});
@@ -123,4 +123,13 @@ test('HTTP webhook authentication, idempotency, admin sessions, CSRF and private
   assert.equal((await post('admin/jobs/'+j.id+'/coverage',{...correction,confirmed:false},{Cookie:cookie,Origin:env.PUBLIC_URL})).status,422);
   assert.equal((await post('admin/jobs/'+j.id+'/coverage',correction,{Cookie:cookie,Origin:env.PUBLIC_URL})).status,200);
   assert.equal((await fetch(base+nested)).status,404);assert.equal(app.store.get(j.id).inventory.locations.length,1);
+});
+
+
+test('content reviewers receive page intent and evidence without database workflow metadata',()=>{
+ const plan=planPages(inventory)[0];
+ const context=pageContext({...plan,status:'pending',review:{passed:false,issues:['Previous workflow state']},content:{internal:'previous draft'}},inventory,{pages:[]});
+ assert.deepEqual(context.plan,plan);
+ assert.equal(JSON.stringify(context).includes('Previous workflow state'),false);
+ assert.equal(context.plan.status,undefined);
 });

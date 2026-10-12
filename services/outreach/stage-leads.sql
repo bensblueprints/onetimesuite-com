@@ -34,19 +34,37 @@ CREATE TABLE IF NOT EXISTS ots_outreach.suppression (
 );
 -- Do not merge businesses on a shared phone/domain. Preserve catalog IDs.
 -- The calling export below chooses one reviewed record per phone separately.
+-- Legacy imports retain the scrape niche in industry, often with no category.
+-- It is valuable audience evidence, but does not verify the business type.
+CREATE OR REPLACE VIEW ots_outreach.fishing_matches AS
 WITH fishing AS (
   SELECT DISTINCT lead_id FROM catalog.lead_categories WHERE category_id='gcid:fishing_charter'
-), source AS (
-  SELECT l.id,
-    CASE WHEN l.name ~* '(fishing|angling|fly.fish).*(guide)|guide.*(fishing|angling|fly.fish)' THEN 'fishing_guides_review'
-         WHEN f.lead_id IS NOT NULL THEN 'fishing_charters' ELSE 'general' END AS cohort
+), evidence AS (
+  SELECT l.id AS lead_id,
+    array_remove(ARRAY[
+      CASE WHEN concat_ws(' ',l.name,l.website) ~* '(fish|angling|angler).*guide|guide.*(fish|angling|angler)' THEN 'name_or_website_guide' END,
+      CASE WHEN l.industry ~* '(^|[|])[[:space:]]*fishing guides?([[:space:]]*[|]|[[:space:]]*$)' THEN 'legacy_industry_guide' END,
+      CASE WHEN f.lead_id IS NOT NULL THEN 'canonical_fishing_charter' END,
+      CASE WHEN l.industry ~* '(^|[|])[[:space:]]*fishing charters?([[:space:]]*[|]|[[:space:]]*$)' THEN 'legacy_industry_charter' END,
+      CASE WHEN concat_ws(' ',l.name,l.website) ~* '(fish|angling|angler).*(charter|outfitt)|(charter|outfitt).*(fish|angling|angler)' THEN 'name_or_website_charter_outfitter' END
+    ],NULL) AS match_basis
   FROM catalog.leads l LEFT JOIN fishing f ON f.lead_id=l.id
+  WHERE NOT EXISTS(SELECT 1 FROM catalog.duplicates d WHERE d.lead_id=l.id)
+)
+SELECT lead_id,match_basis,
+       CASE WHEN match_basis && ARRAY['name_or_website_guide','legacy_industry_guide'] THEN 'fishing_guides_review'
+            ELSE 'fishing_charters' END AS cohort
+FROM evidence WHERE cardinality(match_basis)>0;
+WITH source AS (
+  SELECT l.id,coalesce(f.cohort,'general') AS cohort
+  FROM catalog.leads l LEFT JOIN ots_outreach.fishing_matches f ON f.lead_id=l.id
   WHERE NOT EXISTS(SELECT 1 FROM catalog.duplicates d WHERE d.lead_id=l.id)
 )
 INSERT INTO ots_outreach.audience(lead_id,cohort,priority)
 SELECT id,cohort,CASE cohort WHEN 'fishing_guides_review' THEN 10 WHEN 'fishing_charters' THEN 20 ELSE 100 END
 FROM source
-ON CONFLICT(lead_id) DO UPDATE SET cohort=excluded.cohort,priority=excluded.priority;
+ON CONFLICT(lead_id) DO UPDATE SET cohort=excluded.cohort,priority=excluded.priority
+WHERE audience.cohort IS DISTINCT FROM excluded.cohort OR audience.priority IS DISTINCT FROM excluded.priority;
 CREATE INDEX IF NOT EXISTS audience_priority ON ots_outreach.audience(priority,lead_id);
 CREATE OR REPLACE VIEW ots_outreach.review_queue AS
 SELECT a.*, l.name AS business_name,l.website,l.platform,l.country,l.state AS source_state,l.city,l.address,

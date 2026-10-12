@@ -37,6 +37,14 @@ In Vapi, create a Bearer credential named **OneTimeSuite Website Automation**, u
 
 ## Validation
 
+### Deployment status, 2026-10-12
+
+The dedicated credential is saved in Vapi and selected on all three webhook tools (v3). Assistant `792f58a0-2ed1-4ccd-aee7-7b61ee4f4c7c` was published as v6 with all six tools. The native calendar-create tool is v2 and uses `Asia/Saigon`: Vapi's UI rejects `Asia/Ho_Chi_Minh`, although both identify Vietnam time. Zoom continues using `Asia/Ho_Chi_Minh`. Preserve subsequent owner prompt edits; this file is not permission to overwrite them.
+
+Live authenticated Zoom creation, exact time, duplicate replay and cancellation passed. The internal Google Calendar invitation test is still outstanding. A payment card is now present, but Vapi's chat panel requires a **completed payment/credit purchase** before allowing testing. No outbound-capable phone number is connected; the free Vapi number dialog explicitly says new-account numbers are inbound-only. No campaign or customer call has been created.
+
+Lead staging is documented in `../outreach/README.md`. The AI builder remains paused until a complete provider-backed build succeeds; the earlier full test was interrupted by DeepInfra capacity errors.
+
 `npm test` includes synthetic OAuth, meeting creation, replay/concurrency/restart protection, timeout reconciliation, cancellation ownership, time-window validation, credential encryption, HTTP authentication and CSRF checks. It makes no calls, sends no invitations, and creates no real meetings.
 
 Before launch, create a clearly named internal-only future Zoom meeting, verify the returned link and time, and cancel it using the same call context. Verify an internal Google Calendar invitation contains the real Zoom link. Do not use customer contact details for the test. A live Zoom test is separate from full assistant/campaign validation and from the AI builder's provider capacity.

@@ -1,0 +1,28 @@
+services:
+  studio:
+    build: .
+    image: onetimesuite-website-studio:1.0.0
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - studio-data:/data
+    ports:
+      - 127.0.0.1:3180:3180
+    networks:
+      - default
+      - coolify
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      - traefik.http.services.ots-studio.loadbalancer.server.port=3180
+      - traefik.http.routers.ots-studio.rule=Host(`onetimesuite.com`) && (Path(`/website`) || Path(`/website/`) || PathPrefix(`/free-website`) || PathPrefix(`/website-studio`) || PathPrefix(`/website-previews`) || PathPrefix(`/api/website-builder`))
+      - traefik.http.routers.ots-studio.entrypoints=https
+      - traefik.http.routers.ots-studio.tls=true
+      - traefik.http.routers.ots-studio.tls.certresolver=letsencrypt
+      - traefik.http.routers.ots-studio.priority=200
+      - traefik.http.routers.ots-studio.service=ots-studio
+networks:
+  coolify:
+    external: true
+volumes:
+  studio-data:

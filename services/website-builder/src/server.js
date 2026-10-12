@@ -11,6 +11,7 @@ import { validateBrief, briefSchema } from './schema.js';
 import { renderSite, siteRoutes, escape } from './render.js';
 import { validatePageSet, mergeInventory } from './page-plan.js';
 import { createZoom, zoomConfigSchema, zoomTools } from './zoom.js';
+import { createOutreach } from './outreach.js';
 
 const assets = resolve(dirname(fileURLToPath(import.meta.url)),'../public');
 const equal = (a,b) => { const aa=createHash('sha256').update(String(a)).digest(),bb=createHash('sha256').update(String(b)).digest();return timingSafeEqual(aa,bb); };
@@ -26,6 +27,7 @@ export function createApp(env = process.env, dependencies = {}) {
   toolParameters.properties.consent_to_build.description='Must be true after explicit agreement to a free concept.';
   toolParameters.properties.appointment.properties.attendance_confirmed.description='Must be true after the prospect confirms attendance and ability to view the screen.';
   const store = dependencies.store || createStore(env.DATA_DIR || './data');
+  const outreach = createOutreach(store);
   const secret = env.SESSION_SECRET;
   const cryptoKey = createHash('sha256').update(secret).digest();
   function encrypt(value) { const iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',cryptoKey,iv),bytes=Buffer.concat([cipher.update(value,'utf8'),cipher.final()]);return Buffer.concat([iv,cipher.getAuthTag(),bytes]).toString('base64'); }
@@ -75,18 +77,23 @@ export function createApp(env = process.env, dependencies = {}) {
       }
       if(req.method==='POST'&&path==='/api/website-builder/vapi'){
         if(!equal(req.headers.authorization||'',`Bearer ${env.WEBHOOK_SECRET}`))return send(res,401,{error:'Invalid webhook credentials'});
-        rate(req,'vapi',500);const data=await body(req),message=data.message;
+        rate(req,'vapi',6000);const data=await body(req),message=data.message;
+        if(message?.type==='campaign.predial')return send(res,200,outreach.predial(message));
+        if(message?.type==='campaign.event')return send(res,200,outreach.event(message));
         if(!message||message.type!=='tool-calls')return send(res,200,{ignored:true});
         const calls=message.toolCallList;
         if(!Array.isArray(calls)||calls.length>5||!message.call?.id)throw new Error('Missing Vapi tool-call context');
         const results=[];
         for(const call of calls){
           try{
-            const args=typeof call.function.arguments==='string'?JSON.parse(call.function.arguments):call.function.arguments;
+            const name=call.function?.name||call.name;
+            const raw=call.function?.arguments??call.parameters;
+            const args=typeof raw==='string'?JSON.parse(raw):raw;
             let result;
-            if(call.function?.name==='create_website_demo_zoom')result=await zoom.create(message.call.id,args,message.call.startedAt||message.call.createdAt);
-            else if(call.function?.name==='cancel_website_demo_zoom')result=await zoom.cancel(message.call.id,args);
-            else if(call.function?.name==='start_website_build'){
+            if(name==='record_website_do_not_call')result=outreach.suppress(message.call,args);
+            else if(name==='create_website_demo_zoom')result=await zoom.create(message.call.id,args,message.call.startedAt||message.call.createdAt);
+            else if(name==='cancel_website_demo_zoom')result=await zoom.cancel(message.call.id,args);
+            else if(name==='start_website_build'){
               if(zoomConfig())zoom.assertBooking(message.call.id,args?.appointment);
               result=accept(args,'vapi',`vapi:${message.call.id}:website-build`,message.call.startedAt||message.call.createdAt);
             }else throw new Error('Unknown tool');
@@ -103,6 +110,11 @@ export function createApp(env = process.env, dependencies = {}) {
       if(req.method==='POST'&&path==='/api/website-builder/logout'){checkOrigin(req);res.setHeader('Set-Cookie','studio_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');return send(res,200,{ok:true});}
       if(path.startsWith('/api/website-builder/admin/')){
         requireAdmin(req);if(req.method!=='GET')checkOrigin(req);
+        if(req.method==='GET'&&path.endsWith('/outreach'))return send(res,200,outreach.summary());
+        if(req.method==='GET'&&path.endsWith('/outreach/suppressions'))return send(res,200,outreach.suppressions());
+        if(req.method==='POST'&&path.endsWith('/outreach/contacts'))return send(res,200,outreach.importContacts(await body(req)));
+        if(req.method==='POST'&&path.endsWith('/outreach/campaigns'))return send(res,200,outreach.register(await body(req)));
+        if(req.method==='POST'&&path.endsWith('/outreach/pause'))return send(res,200,outreach.pause(await body(req)));
         if(req.method==='GET'&&path.endsWith('/overview'))return send(res,200,{jobs:store.list(),provider:{configured:ai.configured,model:ai.model,name:ai.provider,label:ai.label,models:ai.models},max_pages:Number(env.MAX_PAGES_PER_BUILD)||200,paused:store.setting('paused')==='true',webhook_url:origin+'/api/website-builder/vapi'});
         if(req.method==='GET'&&path.endsWith('/tool'))return send(res,200,{type:'function',async:false,function:{name:'start_website_build',description:'Queue a website concept after explicit consent, completed discovery, confirmed workable pricing of $500 plus $50/month OR $100/month with no setup fee, payable only if they love the concept and choose to proceed, and successful confirmed calendar booking 24–48 hours from now. Never say the site is already built.',parameters:toolParameters},server:{url:origin+'/api/website-builder/vapi',timeoutSeconds:20},messages:[{type:'request-start',content:'I’m sending your brief to our website team.'}]});
         if(req.method==='POST'&&path.endsWith('/webhook-credential'))return send(res,200,{token:env.WEBHOOK_SECRET});

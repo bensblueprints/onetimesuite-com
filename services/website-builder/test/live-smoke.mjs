@@ -1,9 +1,9 @@
 import {loadEnvFile} from 'node:process';
-import {mkdtempSync,writeFileSync,mkdirSync} from 'node:fs';
+import {mkdtempSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {randomBytes} from 'node:crypto';
 import {createApp} from '../src/server.js';
-loadEnvFile('.env');mkdirSync('test-output',{recursive:true});
+if(existsSync('.env'))loadEnvFile('.env');mkdirSync('test-output',{recursive:true});
 const dir=mkdtempSync(resolve('test-output/live-'));
 const evidence={pages:[{url:'https://example.com/',title:'Demonstration Garden Studio ? synthetic QA fixture',text:`Demonstration Garden Studio provides Garden planning in Northfield. Garden planning covers measuring the garden, understanding how the customer uses the space, drawing a layout and selecting a planting approach. The planning process starts with a customer supplying photographs, approximate dimensions and priorities. A designer then reviews circulation, seating, planting beds and maintenance preferences. The finished planning document includes a proposed layout and a list of decisions to confirm before implementation. The studio provides design advice; it does not install plants, build patios or perform landscaping work. It does not publish fixed pricing or guarantee completion dates. Customers should contact the team to discuss scope. All Garden planning services are available throughout Northfield. Northfield clients receive an initial site visit to record access, light and existing planting. A later design discussion can take place remotely. The Northfield service area includes private residential gardens; commercial grounds are outside its scope. In Northfield, customers should prepare information about shared access and boundary permissions before the visit. The local consultation identifies site-specific constraints rather than assuming every property has the same conditions. The business has no public office or showroom in Northfield. No street address should be displayed. About the studio: it helps homeowners organize their outdoor space around everyday use, with clear drawings and practical questions. Please use the inquiry form to arrange a conversation. `}],warnings:[]};
 const env={...process.env,SESSION_SECRET:randomBytes(32).toString('hex'),WEBHOOK_SECRET:randomBytes(32).toString('hex'),PUBLIC_URL:'http://localhost:3181',DATA_DIR:dir,WORKER_ENABLED:'false'};
@@ -15,4 +15,4 @@ await app.tick();if(app.store.get(job.id).status==='queued'){console.log('TRANSI
 writeFileSync(resolve(dir,'result.json'),JSON.stringify({job:result,pages},null,2));
 console.log(JSON.stringify({status:result.status,error:result.error,review:result.review?.issues,page_count:result.review?.page_count,models:app.store.setting('ai_provider')||'deepinfra'}));
 // Local-only fixture: expose it for visual QA, never a production job.
-if(result.spec){app.store.update(job.id,{approved_at:Date.now()});app.server.listen(3181,'127.0.0.1',()=>console.log('LOCAL_FIXTURE http://localhost:3181/website-previews/'+job.preview_token+'/'));}else app.close();
+if(process.env.QA_PREVIEW==='true'&&result.spec){app.store.update(job.id,{approved_at:Date.now()});app.server.listen(3181,'127.0.0.1',()=>console.log('LOCAL_FIXTURE http://localhost:3181/website-previews/'+job.preview_token+'/'));}else {app.close();process.exitCode=result.status==='review'&&result.review?.passed?0:1;}

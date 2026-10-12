@@ -8,6 +8,33 @@ The initial 5,811-record fishing audience was undercounted: 25,054 canonical `Fi
 
 All records start held. Calling defaults are weekdays 09:00–17:00 in the business's verified IANA timezone. Source scrape cities can be wrong and must not be used blindly to infer location. Missing timezone/eligibility evidence, invalid US phone, suppression, missing budgets, or a paused setting excludes a record from the candidate view. Shared phone numbers are deduplicated for outreach without merging source businesses. International leads are retained but require country-specific normalization and eligibility rules before export.
 
-This is staging, not a working campaign scheduler. Before enabling calls, connect an outbound-capable Vapi number, complete the internal calendar/Zoom test and full AI build, record eligibility evidence and budget, and implement a dispatcher with atomic spending reservations, phone-level call history/opt-outs and an immediate pre-dial business-hours check. Do not merely unpause the settings or upload the entire review queue as a live campaign. Vapi campaign contact CSVs are limited to 10,000 rows per file.
+The SQL is staging, not a campaign scheduler. The Website Studio now has a separate authenticated pre-dial receiver, phone-level opt-outs and per-contact attempt tracking. Do not merely unpause the SQL settings or upload the entire review queue as a live campaign. The SQL budgets are still required by its reviewed-candidate view. Vapi campaign contact CSVs are limited to 10,000 rows per file.
+
+## First 500 calls: 250 per offer
+
+The owner requested two distinct campaign groups, superseding the earlier single-call two-option pitch:
+
+- A: $500 once plus $50/month. Assistant `73eb0c0d-ccbb-4bdd-94d9-8d5627d4668d`.
+- B: $100/month with no setup fee. Assistant `b8615bbd-891b-4cf8-918c-525c4f06d81f`.
+
+Both assistants are published v2 with seven tools, a 600-second call limit, and the same free concept/payment-only-on-acceptance terms. Optional Facebook/Google Ads follow the website and are separately scoped. The two dedicated prompt files are under `services/website-builder/`.
+
+Purchased Twilio number `+14109703064` is imported and active in Vapi as `59d34435-26c2-444a-9898-36610e7a291e`. Import changed Twilio VoiceUrl and StatusCallback; both were immediately restored to their previous values. Existing ElevenLabs inbound voice and SMS routing is preserved. Do not assign an inbound Vapi assistant or re-import the number casually: those actions may replace the routing. Vapi outbound calls must specify the campaign assistant explicitly.
+
+`src/outreach.js` in Website Studio stores the approved first batch in SQLite independently of the Hetzner source catalog. It defaults to paused and accepts at most 250 unique US numbers per offer, with one phone across both offers. Import requires documented eligibility and a verified IANA timezone with evidence; it does not derive either from scraped labels. Unknown campaigns, unknown phones, other-offer contacts, suppressed numbers, repeated attempts with a different contact ID, weekends and hours outside 09:00–17:00 are rejected immediately before dialing. DST is evaluated using the named timezone. Paused website production also stops pre-dial eligibility. Terminal outcomes cannot be overwritten by late dispatched events.
+
+Admin API, under `/api/website-builder/admin/`, requires the existing authenticated studio session and same-origin header for writes:
+
+- `GET outreach`: counts, pause state and registered campaign IDs.
+- `POST outreach/contacts`: array of `{phone,country:"US",lead_id,variant,timezone,timezone_evidence,eligibility_verified:true,eligibility_evidence}`. Verify country separately: a +1 number alone does not establish a US business. Import small chunks below the 64 KB request limit. Oversized groups roll back atomically.
+- `POST outreach/campaigns`: `{id: actualVapiCampaignUuid, variant: "a" | "b"}`.
+- `POST outreach/pause`: `{paused: boolean}`. Default is paused.
+- `GET outreach/suppressions`: authoritative opt-outs for these campaigns; mirror them into `ots_outreach.suppression` before future exports. Never clear a suppression on re-import.
+
+Vapi campaigns must use `https://onetimesuite.com/api/website-builder/vapi` with the existing OneTimeSuite Website Automation credential, `predialPlan: {enabled: true}`, and contact outcome server events. The API accepts both nested function arguments and Vapi's flat name/parameters tool-call format. `record_website_do_not_call` uses the authenticated call's customer number, not an LLM-provided phone, and is attached to both assistants.
+
+Creating a Vapi campaign starts or schedules it; there is no draft state. Only after funding, documented eligibility, verified locations, the complete builder test and an internal calendar invitation test: select exactly 500 unique eligible phones, assign 250 to each offer, import to the receiver, and construct scheduled campaigns with a future start time. Register returned campaign IDs before the start, include the blocking pre-dial hook and then enable the receiver. Group scheduling by timezone and keep the immediate per-contact timezone check. The account currently has four concurrent lines. Vapi retries capacity-constrained contacts for up to one hour, so use small scheduled batches within each offer group and reconcile outcomes before proceeding; do not assume a 250-contact upload means 250 completed calls. Do not automatically recreate a campaign or reset a reserved attempt after an uncertain API outcome. Reconcile actual call records first. Failed/skipped prospects do not count as completed calls.
+
+As of 2026-10-12, no campaign has been created and no prospect calls were made. Vapi's API returned HTTP 402 `subscription_frozen` with a -$0.10 balance despite Twilio holding $18.75; the accounts are funded separately. Source leads still lack recorded automated-call eligibility. The full builder and native calendar invitation are separate readiness checks; connecting a number does not establish their success.
 
 Use the existing private SSH alias `hetzner` and PostgreSQL container `gmaps-scraper-suite-postgres-1`, database `leadscraper`, role `scraper`. No credentials or lead exports belong in Git or Boardly.

@@ -18,7 +18,7 @@ In Vapi, create a Bearer credential named **OneTimeSuite Website Automation**, u
 
 ## Required assistant booking sequence
 
-1. Complete discovery, confirm consent to a free concept, and confirm that $500 plus $50/month would be workable if the prospect chooses to proceed. The concept itself has no purchase obligation. Never guarantee revenue, ranking or delivery before the builder confirms readiness.
+1. Complete discovery, confirm consent to a free concept, and confirm that either $500 plus $50/month or $100/month with no setup fee would be workable only if the prospect loves the concept and chooses to proceed. Both cover the agreed managed website, hosting and live AI chat. Facebook/Google Ads and other marketing are optional services discussed separately after the website is built. The concept itself has no purchase obligation. Never guarantee revenue, ranking or delivery before the builder confirms readiness.
 2. Confirm name, email by read-back, business website, IANA timezone, and a seated screen-viewing appointment. Host timezone is `Asia/Ho_Chi_Minh`. Offer a 30-minute slot 24–48 hours after the call starts; account for the prospect's local date and daylight saving time.
 3. Call `check_website_demo_availability` for the exact interval. Do not book a busy slot. Obtain the prospect's agreement to the exact local date/time.
 4. Call `create_website_demo_zoom` with `business_name`, `start_at` (ISO timestamp with offset), `duration_minutes: 30`, `prospect_timezone`, and `attendance_confirmed: true`. Wait for a successful `join_url`; never invent or substitute a personal meeting URL.
@@ -38,6 +38,10 @@ In Vapi, create a Bearer credential named **OneTimeSuite Website Automation**, u
 ## Validation
 
 ### Deployment status, 2026-10-12
+
+Latest fishing campaign: dedicated assistant **Fishing Guides — Website Offer**, `799ec748-e025-4d21-b42a-f9719c22d4bb`, published v3 with all six tools. Its prompt is `vapi-fishing-assistant-prompt.txt`; it preserves the source assistant's current Grok/ElevenLabs voice-model configuration without modifying that source assistant's prompt. The free concept has no purchase obligation. Only after acceptance: $500 plus $50/month OR $100/month with no setup fee. Both cover the agreed managed website, hosting and AI chat. Optional Facebook/Google Ads are discussed separately after the website. The build tool is now v4 with both payment options, and the live landing page matches. No A/B split is configured: these are alternatives presented to the same prospect.
+
+The owner later changed the source assistant to v8. Its earlier v6 publication below is historical. Latest account check: no connected phone number, credit balance -$0.10. Calling remains paused pending an outbound-capable number, funded credits, a daily spending limit, verified audience eligibility/timezones and completed booking/build validation. Publishing an assistant does not schedule or place calls.
 
 The dedicated credential is saved in Vapi and selected on all three webhook tools (v3). Assistant `792f58a0-2ed1-4ccd-aee7-7b61ee4f4c7c` was published as v6 with all six tools. The native calendar-create tool is v2 and uses `Asia/Saigon`: Vapi's UI rejects `Asia/Ho_Chi_Minh`, although both identify Vietnam time. Zoom continues using `Asia/Ho_Chi_Minh`. Preserve subsequent owner prompt edits; this file is not permission to overwrite them.
 

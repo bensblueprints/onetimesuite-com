@@ -38,3 +38,6 @@ Creating a Vapi campaign starts or schedules it; there is no draft state. Only a
 As of 2026-10-12, no campaign has been created and no prospect calls were made. Vapi's API returned HTTP 402 `subscription_frozen` with a -$0.10 balance despite Twilio holding $18.75; the accounts are funded separately. Source leads still lack recorded automated-call eligibility. The full builder and native calendar invitation are separate readiness checks; connecting a number does not establish their success.
 
 Use the existing private SSH alias `hetzner` and PostgreSQL container `gmaps-scraper-suite-postgres-1`, database `leadscraper`, role `scraper`. No credentials or lead exports belong in Git or Boardly.
+
+
+Readiness update: the complete DeepInfra eight-page synthetic build passed after fixing internal workflow metadata in page-review context and false flags for intentionally omitted optional details. Grounded visitor chat and generated-site navigation also passed. Website production is now enabled; outreach remains paused with zero imported eligible contacts and zero registered campaigns. The native Google Calendar invitation test is still blocked by Vapi funding. Latest fixes are in commit 615a141.

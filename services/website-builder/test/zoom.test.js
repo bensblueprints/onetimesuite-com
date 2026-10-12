@@ -89,6 +89,20 @@ test('authenticated Vapi Zoom tools use per-call ownership; admin stores credent
   assert.equal((await post('vapi', payload)).status, 401);
   const result = await (await post('vapi', payload, { Authorization: 'Bearer ' + env.WEBHOOK_SECRET })).json();
   assert.equal(result.results[0].toolCallId, 'tool-test'); assert.equal(JSON.parse(result.results[0].result).status, 'created');
+  const earlierCall = new Date(Date.now() - 10 * 60000).toISOString();
+  const boundaryArgs = { ...input(Date.now()), start_at: new Date(Date.parse(earlierCall) + 24 * 3600000).toISOString() };
+  payload.message.call = { id: 'call-boundary', startedAt: earlierCall };
+  payload.message.toolCallList[0].function.arguments = boundaryArgs;
+  const boundary = JSON.parse((await (await post('vapi', payload, { Authorization: 'Bearer ' + env.WEBHOOK_SECRET })).json()).results[0].result);
+  app.store.setting('paused', 'true');
+  payload.message.toolCallList[0].function = { name: 'start_website_build', arguments: {
+    business_name: 'Example Plumbing', website_url: 'https://example.com', contact_name: 'Test Owner', email: 'owner@example.com',
+    dislikes: 'The existing service pages are difficult to navigate.', requested_features: [], current_lead_sources: 'Referrals',
+    prospect_timezone: 'America/New_York', consent_to_build: true,
+    appointment: { event_id: 'internal-test-calendar-event', start_at: boundary.start_at, end_at: boundary.end_at, join_url: boundary.join_url, attendance_confirmed: true, invitation_received: true }
+  } };
+  const queued = JSON.parse((await (await post('vapi', payload, { Authorization: 'Bearer ' + env.WEBHOOK_SECRET })).json()).results[0].result);
+  assert.equal(queued.status, 'queued'); assert.equal(queued.builds_paused, true);
   payload.message.toolCallList[0].function = { name: 'start_website_build', arguments: { appointment: { join_url: 'https://zoom.us/j/99999999999' } } };
   const invalid = await (await post('vapi', payload, { Authorization: 'Bearer ' + env.WEBHOOK_SECRET })).json(); assert.match(invalid.results[0].error, /successful Zoom join link/);
 });

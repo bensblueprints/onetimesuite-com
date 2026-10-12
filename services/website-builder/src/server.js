@@ -54,7 +54,7 @@ export function createApp(env = process.env, dependencies = {}) {
   function send(res,status,data,type='application/json; charset=utf-8') {res.writeHead(status,{'Content-Type':type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'SAMEORIGIN','Permissions-Policy':'camera=(), microphone=(), geolocation=()'});res.end(type.startsWith('application/json')?JSON.stringify(data):data);}
   async function body(req){let size=0;const chunks=[];for await(const c of req){size+=c.length;if(size>65536)throw Object.assign(new Error('Request is too large'),{status:413});chunks.push(c);}try{return JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{throw Object.assign(new Error('Invalid JSON'),{status:400});}}
   function publicJob(job){const paused=store.setting('paused')==='true';return {job_id:job.id,status:job.status,duplicate:false,builds_paused:paused,message:job.status==='requested'?'Your request is saved. We will confirm the brief and presentation time.':paused?'The brief is saved, but production is paused. An operator must confirm the delivery time; do not promise the concept will be ready.':'Build request accepted. The concept will be reviewed before sharing.'};}
-  function accept(args,source,key){const old=store.db.prepare('SELECT created_at FROM jobs WHERE dedupe_key=?').get(key);const brief=validateBrief(args,{requireAppointment:source!=='web',now:old?.created_at||Date.now()});const result=store.enqueue(brief,source,key,Number(env.MAX_PENDING_JOBS)||100);return {...publicJob(result.job),duplicate:result.duplicate};}
+  function accept(args,source,key,callStartedAt){const old=store.db.prepare('SELECT created_at FROM jobs WHERE dedupe_key=?').get(key);const reference=callStartedAt?Date.parse(callStartedAt):old?.created_at||Date.now();if(!Number.isFinite(reference)||reference>Date.now()+60000)throw new Error('Invalid call start time');const brief=validateBrief(args,{requireAppointment:source!=='web',now:reference});const result=store.enqueue(brief,source,key,Number(env.MAX_PENDING_JOBS)||100);return {...publicJob(result.job),duplicate:result.duplicate};}
   const server = http.createServer(async(req,res)=>{
     try{
       const u=new URL(req.url,'http://localhost'),path=u.pathname;
@@ -88,7 +88,7 @@ export function createApp(env = process.env, dependencies = {}) {
             else if(call.function?.name==='cancel_website_demo_zoom')result=await zoom.cancel(message.call.id,args);
             else if(call.function?.name==='start_website_build'){
               if(zoomConfig())zoom.assertBooking(message.call.id,args?.appointment);
-              result=accept(args,'vapi',`vapi:${message.call.id}:website-build`);
+              result=accept(args,'vapi',`vapi:${message.call.id}:website-build`,message.call.startedAt||message.call.createdAt);
             }else throw new Error('Unknown tool');
             results.push({toolCallId:call.id,result:JSON.stringify(result)});
           }catch(e){results.push({toolCallId:call.id,error:e instanceof z.ZodError?'The tool arguments are incomplete or invalid. Check required fields.':e.message});}

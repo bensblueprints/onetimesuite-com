@@ -84,7 +84,7 @@ export function createZoom(store, getConfig, { fetch: request = globalThis.fetch
       }
       const reference = callStartedAt ? Date.parse(callStartedAt) : old?.created_at || now();
       const start = Date.parse(input.start_at), hours = (start - reference) / 3600000;
-      if (!Number.isFinite(reference) || hours < 24 || hours > 48 || start <= now()) throw new Error('Select an available meeting 24–48 hours after the call starts.');
+      if (!Number.isFinite(reference) || reference > now() + 60000 || hours < 24 || hours > 48 || start <= now()) throw new Error('Select an available meeting 24–48 hours after the call starts.');
       const active = store.db.prepare("SELECT booking_key FROM zoom_meetings WHERE call_id=? AND state NOT IN ('cancelled','failed') AND booking_key<>?").get(callId, key);
       if (active) throw new Error('This call already has a Zoom booking. Cancel it before choosing another time.');
       if (!old) store.db.prepare('INSERT INTO zoom_meetings VALUES(?,?,?,?,?,?,?,?)').run(key, callId, payload, marker, 'creating', now(), now(), null);

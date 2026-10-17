@@ -221,6 +221,7 @@ const RELEASES_REPO_OVERRIDES = {
   wispertalk: 'wispertalk-releases',
   bloomrecorder: 'bloomrecorder-releases',
   wholeteam: 'wholeteam-mvp',
+  snapreceipt: 'receipt-scanner-expense-mvp',
 };
 
 function autoDownloads(p) {

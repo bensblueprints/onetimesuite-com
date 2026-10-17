@@ -1542,7 +1542,7 @@ module.exports = [
       ['🚗', 'Mileage log', 'Date, purpose, miles and a configurable cents-per-mile rate, with reimbursement auto-calculated to the cent.'],
       ['⚠️', 'Uncertainty flags', 'If the OCR passes disagree, the photo is too low quality, or the receipt math doesn\'t add up, you get a warning — in the review form, on the dashboard, in the CSV and in the PDF.'],
       ['☁️', 'Optional cloud OCR', 'Sign in with ChatGPT to read handwritten invoices against your own Plus/Pro plan — no API key or billing setup — or plug in OpenAI and Doubao (ByteDance) API keys. Off by default; an image leaves your machine only when you click the button.'],
-      ['🔒', 'Private by design', 'SQLite file on your disk, receipt images copied into your app data folder, and zero network calls at runtime unless you explicitly fire a cloud scan yourself.'],
+      ['🔒', 'Private by design', 'SQLite file on your disk, receipt images copied into your app data folder, and zero network calls at runtime. The AI connection is optional — data is only transmitted if you connect a provider yourself.'],
     ],
     compRows: [
       ['Price', '$19 once', '$5–$9/user/mo'],
@@ -1563,6 +1563,7 @@ module.exports = [
       ['Is it really free on GitHub?', 'Yes — Snapreceipt is MIT-licensed at github.com/bensblueprints/receipt-scanner-expense-mvp. The $19 buys the 1-click Windows installer; building from source is free.'],
       ['Do my receipt images get uploaded?', 'Not by default. OCR is 100% local and nothing auto-saves. Two optional exceptions you control: a one-time ~11 MB OCR language-data download at install, and the optional cloud OCR button (ChatGPT plan or your own OpenAI/Doubao key) which sends that one image only when you click it.'],
       ['Can it read handwritten invoices?', 'Local OCR reads print, not handwriting — a hard limit of any on-device engine. For handwriting, connect your ChatGPT account (Plus/Pro) or an OpenAI/Doubao API key and use the cloud button on that scan.'],
+      ['Is the AI connection optional?', 'Completely optional, and off by default. Snapreceipt never connects to any AI service on its own — the local OCR engine runs on your machine out of the box and works fully offline. A receipt image is only transmitted if you explicitly connect a provider (Sign in with ChatGPT, or your own OpenAI/Doubao API key) and click the cloud scan button on that receipt. Until you connect one yourself, every document stays on your disk — that\'s what keeps your documents secure.'],
       ['Does the OCR always get it right?', 'Not always, and we\'d rather say so. Extraction is a prefill you review — and when the scanner is unsure (passes disagree, low-quality photo, math that doesn\'t add up) the app flags it in amber so you know exactly what to double-check before you click Save.'],
     ],
   },

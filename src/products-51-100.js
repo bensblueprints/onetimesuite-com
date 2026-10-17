@@ -1534,13 +1534,15 @@ module.exports = [
     competitor: 'Expensify', compPrice: '$5–$9/user/mo', compYr: 60,
     heroLead: 'Expensify is $5–$9 per user every month, forever, and your receipts live on their servers. Snapreceipt reads receipts with OCR that runs entirely on your machine, prefills the vendor, date, total and tax, and lets you review before anything saves. $19, once. No image or text ever leaves your machine.',
     features: [
-      ['📥', 'Import anything', 'Drag and drop images, use the file picker, or point a watched folder at your phone-sync directory to land photos in a review inbox.'],
-      ['🔍', 'Local OCR auto-extract', 'tesseract.js runs entirely on-disk to pull vendor, date, total and tax as an editable prefill you review before saving.'],
+      ['📥', 'Import anything', 'Drag and drop images, use the file picker, or point a watched folder at your phone-sync directory. JPEG, PNG, WebP, AVIF and iPhone HEIC — even mislabeled files — with EXIF auto-rotation.'],
+      ['🔍', 'Multi-pass local OCR', 'tesseract.js scans every receipt three ways, entirely on-disk, and votes per field: vendor/merchant, date, total, tax, subtotal, line items and bank or card network — an editable prefill you review before saving.'],
       ['🏷️', 'Categories + project tags', 'A bundled category list plus your own, with free-form project and client tags for billable-expense tracking.'],
-      ['📊', 'Reports', 'Spend by category and by month, filterable, with all math in exact integer cents.'],
+      ['📊', 'Reports', 'Spend by category and by month, filterable, with Subtotal, Tax and Total columns and all math in exact integer cents.'],
       ['📤', 'Exports', 'RFC 4180 CSV for your accountant and a PDF expense report with receipt thumbnails embedded.'],
       ['🚗', 'Mileage log', 'Date, purpose, miles and a configurable cents-per-mile rate, with reimbursement auto-calculated to the cent.'],
-      ['🔒', 'Private by design', 'SQLite file on your disk, receipt images copied into your app data folder, and zero network calls at runtime.'],
+      ['⚠️', 'Uncertainty flags', 'If the OCR passes disagree, the photo is too low quality, or the receipt math doesn\'t add up, you get a warning — in the review form, on the dashboard, in the CSV and in the PDF.'],
+      ['☁️', 'Optional cloud OCR', 'Sign in with ChatGPT to read handwritten invoices against your own Plus/Pro plan — no API key or billing setup — or plug in OpenAI and Doubao (ByteDance) API keys. Off by default; an image leaves your machine only when you click the button.'],
+      ['🔒', 'Private by design', 'SQLite file on your disk, receipt images copied into your app data folder, and zero network calls at runtime unless you explicitly fire a cloud scan yourself.'],
     ],
     compRows: [
       ['Price', '$19 once', '$5–$9/user/mo'],
@@ -1559,8 +1561,9 @@ module.exports = [
     ],
     faq: [
       ['Is it really free on GitHub?', 'Yes — Snapreceipt is MIT-licensed at github.com/bensblueprints/receipt-scanner-expense-mvp. The $19 buys the 1-click Windows installer; building from source is free.'],
-      ['Do my receipt images get uploaded?', 'No. OCR is 100% local, nothing auto-saves, and the only network access is a one-time ~11 MB download of the English OCR language data during install. After that it\'s fully offline.'],
-      ['Does the OCR always get it right?', 'Not always, and we\'d rather say so. Extraction is a prefill you review — a wrong guess is just something you fix in the form before you click Save.'],
+      ['Do my receipt images get uploaded?', 'Not by default. OCR is 100% local and nothing auto-saves. Two optional exceptions you control: a one-time ~11 MB OCR language-data download at install, and the optional cloud OCR button (ChatGPT plan or your own OpenAI/Doubao key) which sends that one image only when you click it.'],
+      ['Can it read handwritten invoices?', 'Local OCR reads print, not handwriting — a hard limit of any on-device engine. For handwriting, connect your ChatGPT account (Plus/Pro) or an OpenAI/Doubao API key and use the cloud button on that scan.'],
+      ['Does the OCR always get it right?', 'Not always, and we\'d rather say so. Extraction is a prefill you review — and when the scanner is unsure (passes disagree, low-quality photo, math that doesn\'t add up) the app flags it in amber so you know exactly what to double-check before you click Save.'],
     ],
   },
   {

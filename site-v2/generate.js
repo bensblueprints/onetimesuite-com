@@ -202,7 +202,7 @@ function jsonLd(p) {
 const DESKTOP_SLUGS = new Set([
   'pdfsmith', 'cutaway', 'whisperdesk', 'shrinkray', 'clipdeck', 'sigcraft', 'streakly', 'deepdesk',
   'quillpad', 'wrangle', 'reelsnag', 'voicebarn', 'textract', 'memeforge', 'wholeteam', 'renewcheck',
-  'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk',
+  'paletteforge', 'iconforge', 'bloomrecorder', 'wispertalk', 'clip-pipeline',
   ...launched.filter(l => l.kind === 'desktop').map(l => l.slug),
   ...products51.filter(p => p.kind === 'desktop').map(p => p.slug),
 ]);

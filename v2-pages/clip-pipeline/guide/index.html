@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clip Pipeline User Guide — install, settings, and every step</title>
+<meta name="description" content="Screenshots and a step-by-step guide to Clip Pipeline: install, settings, the full pipeline, Skip controls, no-AI workflow, YouTube Clipper captions, clip counts and lengths, exports and troubleshooting." />
+<link rel="canonical" href="https://onetimesuite.com/clip-pipeline/guide/" />
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f4f5f2; --raised:#ffffff; --ink:#17191d; --ink-soft:#4b4e55; --ink-faint:#85888f;
+    --price:#e8420c; --line:#d8dad4; --blue:#2b4bdd; --mint:#0f7a55;
+    --display:"Bricolage Grotesque",system-ui,sans-serif; --body:"Instrument Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:90px}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.65;font-size:17px}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline;text-underline-offset:3px}
+  img{max-width:100%;height:auto}
+  .top{position:sticky;top:0;z-index:20;background:rgba(244,245,242,.94);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--ink)}
+  .top .inner{max-width:1180px;margin:0 auto;padding:.7rem 1.2rem;display:flex;align-items:center;gap:1rem}
+  .brand{display:flex;align-items:center;gap:.55rem;font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink)}
+  .brand img{height:30px;width:auto}
+  .brand span{color:var(--price)}
+  .top .product{font-family:var(--mono);font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);border-left:1px solid var(--line);padding-left:1rem}
+  .top .actions{margin-left:auto;display:flex;gap:.5rem}
+  .btn{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.78rem;font-weight:700;padding:.55rem .9rem;border-radius:999px;border:1.5px solid var(--ink);background:var(--raised);color:var(--ink)}
+  .btn.primary{background:var(--price);border-color:var(--price);color:#fff}
+  .btn:hover{text-decoration:none;transform:translateY(-1px)}
+  .hero{max-width:1180px;margin:0 auto;padding:3.2rem 1.2rem 1.6rem}
+  .kicker{font-family:var(--mono);font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--price)}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,4.4vw,3.3rem);line-height:1.04;letter-spacing:-.035em;margin:.6rem 0 1rem;max-width:900px}
+  .lede{font-size:1.08rem;color:var(--ink-soft);max-width:760px;margin:0 0 1.2rem}
+  .meta{font-family:var(--mono);font-size:.75rem;color:var(--ink-faint);display:flex;flex-wrap:wrap;gap:.4rem 1rem}
+  .layout{max-width:1180px;margin:0 auto;padding:1rem 1.2rem 4rem;display:grid;grid-template-columns:235px minmax(0,1fr);gap:2.4rem}
+  .toc{position:sticky;top:82px;align-self:start;border:1.5px solid var(--ink);border-radius:12px;background:var(--raised);padding:1rem;box-shadow:4px 4px 0 rgba(23,25,29,.1)}
+  .toc h2{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .6rem}
+  .toc ol{list-style:none;margin:0;padding:0;display:grid;gap:.35rem;font-size:.84rem}
+  .toc li a{color:var(--ink-soft);display:block;padding:.18rem 0}
+  .toc li a:hover{color:var(--price);text-decoration:none}
+  main{min-width:0}
+  section{margin:0 0 3rem;scroll-margin-top:90px}
+  h2{font-family:var(--display);font-weight:800;font-size:1.65rem;letter-spacing:-.02em;margin:0 0 .7rem;padding-top:.2rem}
+  h3{font-family:var(--display);font-weight:700;font-size:1.12rem;margin:1.5rem 0 .5rem}
+  p{margin:.5rem 0 .8rem}
+  ul,ol{margin:.5rem 0 .9rem;padding-left:1.25rem}
+  li{margin:.25rem 0}
+  .card{border:1.5px solid var(--ink);border-radius:12px;background:var(--raised);box-shadow:5px 5px 0 rgba(23,25,29,.1);padding:1.1rem 1.2rem;margin:1rem 0}
+  .note{border-left:4px solid var(--price);background:#fff7f2;padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:1rem 0;font-size:.95rem}
+  .note strong{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--price)}
+  figure{margin:1.2rem 0 1.8rem}
+  figure img{display:block;width:100%;border:1.5px solid var(--ink);border-radius:10px;box-shadow:6px 6px 0 rgba(23,25,29,.14);background:#09090b}
+  figcaption{font-family:var(--mono);font-size:.74rem;line-height:1.5;color:var(--ink-faint);margin-top:.5rem}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  table{width:100%;border-collapse:collapse;margin:1rem 0 1.4rem;font-size:.9rem;background:var(--raised);border:1.5px solid var(--ink);border-radius:10px;overflow:hidden}
+  th,td{text-align:left;vertical-align:top;padding:.6rem .7rem;border-bottom:1px solid var(--line)}
+  th{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);background:#eceee9}
+  tr:last-child td{border-bottom:0}
+  td:first-child{font-weight:600;min-width:150px}
+  code,.mono{font-family:var(--mono);font-size:.85em}
+  code{background:#e9ebe5;border:1px solid var(--line);border-radius:5px;padding:.06rem .3rem}
+  .pill{display:inline-block;font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.16rem .5rem;border-radius:999px;border:1px solid var(--line);color:var(--ink-faint);background:#f1f2ed}
+  .pill.ok{color:var(--mint);border-color:#b9d9cb;background:#eef8f2}
+  .pill.soon{color:#9a6400;border-color:#ecd39a;background:#fff8e6}
+  .steps{counter-reset:step;display:grid;gap:.7rem;margin:1rem 0}
+  .steps li{list-style:none;position:relative;padding:.75rem .9rem .75rem 3rem;background:var(--raised);border:1.5px solid var(--line);border-radius:10px}
+  .steps li::before{counter-increment:step;content:counter(step);position:absolute;left:.75rem;top:.7rem;width:1.55rem;height:1.55rem;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--mono);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+  .cta{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.3rem 0}
+  footer{border-top:1.5px solid var(--ink);padding:2rem 1.2rem;background:var(--raised)}
+  footer .inner{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.8rem 1.5rem;align-items:center;font-family:var(--mono);font-size:.75rem;color:var(--ink-faint)}
+  footer .inner a{color:var(--ink-soft)}
+  @media (max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static}.grid2{grid-template-columns:1fr}}
+  @media (max-width:620px){body{font-size:16px}.top .product{display:none}.hero{padding-top:2rem}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <a class="brand" href="/"><img src="/ots-mark.png" alt="" />OneTime<span>Suite</span></a>
+    <span class="product">Clip Pipeline · User Guide</span>
+    <div class="actions">
+      <a class="btn" href="/clip-pipeline/">Product page</a>
+      <a class="btn primary" href="/clip-pipeline/#downloads">Download</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="kicker">User guide · updated October 2026</div>
+  <h1>Everything in Clip Pipeline, with screenshots.</h1>
+  <p class="lede">Install it, run the pipeline, use the no-AI path, and set up the YouTube Clipper. Every step, every setting, and what it changes — explained below.</p>
+  <div class="meta">
+    <span>Release v1.0.0</span><span>App version 0.1.0</span><span>Windows · Apple Silicon macOS</span>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contents">
+    <h2>On this page</h2>
+    <ol>
+      <li><a href="#quickstart">1. Quick start</a></li>
+      <li><a href="#main">2. The main window</a></li>
+      <li><a href="#pipeline">3. The pipeline</a></li>
+      <li><a href="#settings">4. Settings</a></li>
+      <li><a href="#api-keys">API keys</a></li>
+      <li><a href="#exports">Exports</a></li>
+      <li><a href="#captions">Caption removal</a></li>
+      <li><a href="#cookies">Platform cookies</a></li>
+      <li><a href="#youtube">5. YouTube Clipper</a></li>
+      <li><a href="#noai">6. No-AI workflow</a></li>
+      <li><a href="#files">7. Files &amp; troubleshooting</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="quickstart">
+      <h2>1. Quick start</h2>
+      <p><strong>Windows:</strong> run the installer and follow the wizard. <strong>macOS:</strong> open the DMG, drag Clip Pipeline to Applications, then right-click → Open the first time (the build is unsigned).</p>
+      <p>The installer is self-contained: ffmpeg, Node, yt-dlp, and a portable faster-whisper engine are inside. You do not need Python, ffmpeg, or Node installed separately.</p>
+      <ol class="steps">
+        <li><strong>Install and launch.</strong> A new job is created automatically.</li>
+        <li><strong>Optional: open Settings.</strong> Add a Groq key for rewriting and AI moment scoring. Skip it if you want the no-AI path.</li>
+        <li><strong>Paste a video URL</strong>, or click <strong>Open Local Video</strong> to work on a file you already have.</li>
+        <li><strong>Click Run All</strong> for the full pipeline, or run individual steps. Steps you do not want can be skipped.</li>
+        <li><strong>Find the result</strong> in the job folder, or in the local export folder you choose in Settings.</li>
+      </ol>
+      <div class="cta">
+        <a class="btn primary" href="/clip-pipeline/#downloads">Download for Windows</a>
+        <a class="btn" href="/clip-pipeline/#downloads">Download for macOS</a>
+      </div>
+    </section>
+
+    <section id="main">
+      <h2>2. The main window</h2>
+      <figure>
+        <img src="img/01-main-window.png" alt="Clip Pipeline main window showing the URL bar, Single Video and Entire Profile modes, Run All, pipeline steps with Skip and Run buttons, and the Activity Log." loading="lazy" />
+        <figcaption>The main window. Top: source bar and run controls. Centre: the pipeline steps. Right: the live Activity Log. In this screenshot four optional heavy steps are pre-skipped, so Run All shows “4 skipped.”</figcaption>
+      </figure>
+      <table>
+        <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Single Video</td><td>Paste one video URL (YouTube, Instagram, Facebook, TikTok) and run the pipeline on it.</td></tr>
+          <tr><td>Entire Profile</td><td>Paste a creator profile or page URL to scan and bulk-download everything, then process the batch.</td></tr>
+          <tr><td>New Job</td><td>Starts a clean job folder. The current job stays in History.</td></tr>
+          <tr><td>Open Local Video</td><td>Uses a video already on your disk and skips Download Video.</td></tr>
+          <tr><td>Run All</td><td>Runs every enabled step in order. The label shows how many steps are skipped.</td></tr>
+          <tr><td>Activity Log</td><td>Live output from downloads, transcription, rendering and every other step.</td></tr>
+          <tr><td>Header links</td><td><strong>YouTube Clipper</strong>, <strong>AI Images</strong>, <strong>History</strong> and <strong>Settings</strong>.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="pipeline">
+      <h2>3. The pipeline</h2>
+      <figure>
+        <img src="img/02-pipeline-steps.png" alt="Clip Pipeline steps 4 to 6, showing Generate Voice, Remove Original Captions with a method selector, and skipped optional steps." loading="lazy" />
+        <figcaption>The step cards. Each has <strong>Skip</strong> and <strong>Run</strong>. Skipped cards turn amber and are excluded from Run All; manual Run still works. The simple caption removal runs on ffmpeg and needs no extra engine.</figcaption>
+      </figure>
+      <table>
+        <thead><tr><th>Step</th><th>What it does</th><th>Needs</th></tr></thead>
+        <tbody>
+          <tr><td>1. Download Video</td><td>Downloads the source, merges video + audio, saves <code>source.mp4</code>.</td><td>Bundled yt-dlp + Node</td></tr>
+          <tr><td>2. Extract Captions</td><td>Transcribes the original audio with word timestamps.</td><td>Groq key or local Whisper</td></tr>
+          <tr><td>3. Rewrite Script</td><td>Rewrites the transcript into a tighter short-form script.</td><td>Groq key; otherwise the transcript is used</td></tr>
+          <tr><td>4. Generate Voice</td><td>Speaks the script with ElevenLabs, a local Qwen voice, or the built-in system voice.</td><td>ElevenLabs key, Qwen engine, or nothing</td></tr>
+          <tr><td>5. Remove Original Captions</td><td>Blurs, delogos or crops the caption band using ffmpeg.</td><td>Bundled ffmpeg only</td></tr>
+          <tr><td>6. Analyze Scenes</td><td>Finds scenes, crossfades and zoom moves.</td><td>Optional VSR engine</td></tr>
+          <tr><td>7. Remove Captions &amp; Recreate Images</td><td>Rebuilds clean scene backgrounds and saves stills.</td><td>Optional VSR engine</td></tr>
+          <tr><td>8. Regenerate Images (AI)</td><td>Creates new artwork per scene.</td><td>Optional ComfyUI engine</td></tr>
+          <tr><td>9. Rebuild Video</td><td>Rebuilds the video from clean images with push-ins and crossfades.</td><td>Optional VSR engine</td></tr>
+          <tr><td>10. Assemble with New Voice</td><td>Merges the clean video and the new voiceover, retiming if needed.</td><td>Bundled ffmpeg</td></tr>
+          <tr><td>11. Attach New Captions</td><td>Burns word-synced captions onto the final clip.</td><td>Groq timestamps or local Whisper</td></tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Skip tip</strong> The heavy VSR/ComfyUI steps are pre-skipped when those engines are not installed. The core workflow still completes through steps 1–5, 10 and 11.</div>
+      <p>Transcript and Script boxes let you paste your own text. Paste a transcript and skip Extract Captions; paste a script and skip Rewrite Script; or skip Rewrite with a transcript present and the transcript becomes the spoken script.</p>
+    </section>
+
+    <section id="settings">
+      <h2>4. Settings</h2>
+      <p>Open <strong>Settings</strong> from the header. Everything below is stored in the app settings file and applies to the next job.</p>
+
+      <section id="api-keys">
+        <h3>API keys and engines</h3>
+        <figure>
+          <img src="img/03-settings-api-keys.png" alt="Clip Pipeline Settings showing Groq API key, Kinetra Studio key, transcription engine, YouTube Data API key, clips per video, ElevenLabs key, voice engine, voiceover voice and Groq chat model." loading="lazy" />
+          <figcaption>Settings → API keys and engines. Keys are masked. Every key here is optional for the basic workflow; the local Whisper engine and built-in system voice work without them.</figcaption>
+        </figure>
+        <table>
+          <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Groq API key</td><td>Groq Whisper transcription, script rewriting, and YouTube Clipper moment scoring. Without it, the app uses local Whisper and fallbacks.</td></tr>
+            <tr><td>Kinetra Studio API key</td><td>Reserved for the AI Images engine. Kinetra key creation lives in Kinetra Studio → Account → API Keys.</td></tr>
+            <tr><td>Extra Groq keys</td><td>A pool of keys; the pipeline rotates to the next key when one is rate-limited.</td></tr>
+            <tr><td>Transcription engine</td><td><strong>Groq Whisper</strong> (cloud, rate-limited) or <strong>faster-whisper (local)</strong> using the bundled engine.</td></tr>
+            <tr><td>Local Whisper model</td><td><code>tiny</code> (~75 MB), <code>small</code> (~466 MB, default), <code>medium</code> (~1.5 GB), <code>large-v3</code> (~3 GB). Downloads once and is cached.</td></tr>
+            <tr><td>YouTube Data API key</td><td>Only for YouTube Clipper’s “Find viral videos to clip” discovery. Clipping a pasted URL does not need it.</td></tr>
+            <tr><td>Clips per video</td><td>1–30 clips in the YouTube Clipper. The same control is in the Clipper panel.</td></tr>
+            <tr><td>ElevenLabs API key</td><td>Cloud voiceover. Optional; the built-in system voice is free.</td></tr>
+            <tr><td>Voice engine</td><td><strong>ElevenLabs</strong>, <strong>Qwen3-TTS</strong> (local GPU clone), or <strong>Built-in system voice</strong> (free, no key).</td></tr>
+            <tr><td>Voiceover voice</td><td>The ElevenLabs voice ID. The list loads from your account when a key is set.</td></tr>
+            <tr><td>Groq chat model</td><td>Model used for rewriting and moment scoring. Defaults to a current model; the clipper also tries fallback models.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="exports">
+        <h3>Exports</h3>
+        <figure>
+          <img src="img/04-settings-exports.png" alt="Clip Pipeline Settings showing the Local export folder with Choose and Open buttons, plus a Google Drive export Coming soon notice." loading="lazy" />
+          <figcaption>Choose a local export folder. Finished pipeline clips and YouTube Clipper outputs are copied there automatically. Google Drive export is coming soon.</figcaption>
+        </figure>
+        <p><strong>Choose</strong> opens a folder picker. <strong>Open</strong> opens the current folder. Leave it blank to keep clips only in the job folder. The folder is created if it does not exist.</p>
+      </section>
+
+      <section id="captions">
+        <h3>Caption removal</h3>
+        <figure>
+          <img src="img/05-settings-caption-removal.png" alt="Clip Pipeline Caption Removal settings showing Method, Burn captions checkbox, Region x y w h fields, and the Script Rewrite Prompt." loading="lazy" />
+          <figcaption>Caption Removal settings. The default method is a safe blur over the bottom caption band. The region fields are fractions of the frame.</figcaption>
+        </figure>
+        <table>
+          <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Blur the caption band</td><td>Fast ffmpeg box blur. Safe default for most clips.</td></tr>
+            <tr><td>Delogo region</td><td>ffmpeg interpolation over the caption area. Best on simple backgrounds.</td></tr>
+            <tr><td>Crop the caption band off</td><td>Removes the band entirely; changes the output aspect ratio.</td></tr>
+            <tr><td>Rebuild / Still Clipper / GPU MAX / GPU inpaint / AI inpaint</td><td>Optional heavier engines. These require the VSR/torch or OpenCV setup and are not bundled; leave the step skipped if you have not installed them.</td></tr>
+            <tr><td>Burn new captions</td><td>Burns word-by-word captions timed to the new voiceover onto the final clip.</td></tr>
+            <tr><td>Region x / y / w / h</td><td>Caption band as fractions of the frame (0–1). Default covers the bottom ~27% where captions usually sit.</td></tr>
+            <tr><td>Script Rewrite Prompt</td><td>The system prompt used by Rewrite Script. Edit it to change tone, length or format.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="cookies">
+        <h3>Platform cookies</h3>
+        <figure>
+          <img src="img/06-settings-cookies.png" alt="Clip Pipeline Platform Cookies settings showing cookie source and Import file or Paste buttons for Instagram, Facebook, YouTube and TikTok." loading="lazy" />
+          <figcaption>Cookie source and per-platform cookie import. Needed when Instagram or Facebook blocks a download behind a login.</figcaption>
+        </figure>
+        <p>Export a <code>cookies.txt</code> from a logged-in browser, then use <strong>Import file</strong> or <strong>Paste</strong> for that platform. Cookie source can also read live cookies from a closed Chrome profile. Cookies are stored locally in the app data folder.</p>
+      </section>
+    </section>
+
+    <section id="youtube">
+      <h2>5. YouTube Clipper</h2>
+      <figure>
+        <img src="img/07-youtube-clipper-controls.png" alt="YouTube Clipper panel with URL, clip length 30 seconds, Clips 8, Burn captions checked, colour picker, position slider at 42 percent, and the four clipper engine steps." loading="lazy" />
+        <figcaption>The YouTube Clipper. The controls row sets clip count, caption burn-in, caption colour, and vertical caption position. Clip length sets the target duration for each clip.</figcaption>
+      </figure>
+      <table>
+        <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Video URL</td><td>The YouTube video to clip. The title is fetched without an API key.</td></tr>
+          <tr><td>Clip length</td><td>15s, 30s or 60s. AI moments are clamped to this length; the fixed fallback uses it exactly.</td></tr>
+          <tr><td>Clips</td><td>1–30. The AI is asked for this many moments; remaining slots are filled with fixed clips if it returns fewer.</td></tr>
+          <tr><td>Burn captions</td><td>On: word captions are burned into both outputs. Off: clean exports with no captions.</td></tr>
+          <tr><td>Colour</td><td>Caption text colour. The default is white; the outline stays dark for legibility.</td></tr>
+          <tr><td>Position</td><td>Vertical caption position from 10% to 90% of the frame. Default 42%.</td></tr>
+          <tr><td>Clip it</td><td>Runs download → transcribe → find moments → cut clips.</td></tr>
+        </tbody>
+      </table>
+      <p>The clipper engine shows four stages: <strong>Download Video</strong>, <strong>Transcribe</strong>, <strong>Find Viral Moments</strong>, and <strong>Cut Clips</strong>. Qwen is tried first for moment scoring; other models are fallbacks. If AI finds nothing, it cuts fixed-length clips rather than failing.</p>
+      <figure>
+        <img src="img/08-youtube-clipper-results.png" alt="YouTube Clipper results showing completed engine stages, one viral clip card with a vertical preview, score 78, 19 seconds, and Vertical and Original buttons." loading="lazy" />
+        <figcaption>Results. Each moment renders as a vertical 9:16 clip and an original-aspect clip. Use <strong>Vertical</strong> / <strong>Original</strong> to open them, or <strong>Open folder</strong> for the whole job.</figcaption>
+      </figure>
+      <p><strong>Find viral videos to clip</strong> (collapsible at the bottom) needs a YouTube Data API key. It is optional; pasting a URL works without it.</p>
+    </section>
+
+    <section id="noai">
+      <h2>6. No-AI workflow</h2>
+      <p>Clip Pipeline is usable with no AI account. The bundled local Whisper engine and the built-in system voice cover transcription and voiceover.</p>
+      <ol class="steps">
+        <li><strong>Transcription:</strong> with no Groq key, Extract Captions switches to local Whisper automatically. Download the model once; later runs use the cache.</li>
+        <li><strong>Script:</strong> Rewrite Script falls back to the transcript when no Groq key is set. You can also paste your own script and skip Rewrite.</li>
+        <li><strong>Voice:</strong> choose <strong>Built-in system voice</strong> in Settings. No key, no account; the OS voice speaks the script.</li>
+        <li><strong>Captions:</strong> Attach New Captions uses local Whisper word timestamps when Groq is unavailable.</li>
+        <li><strong>YouTube Clipper:</strong> no Groq key means fixed-length clip selection. No YouTube API key means use a pasted URL instead of discovery.</li>
+        <li><strong>Caption removal:</strong> step 5 uses ffmpeg blur/delogo/crop. No VSR or ComfyUI needed.</li>
+      </ol>
+      <div class="note"><strong>What is optional</strong> Groq, ElevenLabs, the YouTube Data API key, VSR (GPU rebuild/inpaint), ComfyUI (AI image regeneration), and rclone/Google Drive. The app skips the heavy steps automatically when their engines are missing.</div>
+    </section>
+
+    <section id="files">
+      <h2>7. Files and troubleshooting</h2>
+      <h3>Where files live</h3>
+      <table>
+        <thead><tr><th>Item</th><th>Location</th></tr></thead>
+        <tbody>
+          <tr><td>Jobs</td><td><code>Videos/ClipPipeline</code> (Windows) or <code>Movies/ClipPipeline</code> (macOS)</td></tr>
+          <tr><td>Settings</td><td><code>%APPDATA%\clip-pipeline\settings.json</code> (Windows) or <code>~/Library/Application Support/clip-pipeline/settings.json</code> (macOS)</td></tr>
+          <tr><td>Exports</td><td>The folder chosen in Settings → Exports</td></tr>
+          <tr><td>API keys</td><td>In the settings file, in plain text. Treat the file as sensitive.</td></tr>
+        </tbody>
+      </table>
+      <h3>Common issues</h3>
+      <table>
+        <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>App still shows an old build</td><td>Close every Clip Pipeline window and relaunch. A running window keeps the old code until restarted.</td></tr>
+          <tr><td>Local transcription is slow the first time</td><td>The model downloads once. Use <code>tiny</code> or <code>small</code> for speed; watch the Activity Log for progress.</td></tr>
+          <tr><td>YouTube download fails (403)</td><td>Use the <strong>Update downloader</strong> banner when it appears; the app checks yt-dlp on launch. For logged-in videos, import cookies.</td></tr>
+          <tr><td>Groq <code>model_not_found</code></td><td>The configured model was retired. The app migrates to a current default; moment scoring also tries fallback models.</td></tr>
+          <tr><td>Groq <code>json_validate_failed</code></td><td>The model returned malformed JSON. The clipper retries and falls back to fixed-length clips.</td></tr>
+          <tr><td>Rebuild or AI Images fails</td><td>Those steps need VSR/ComfyUI, which are not bundled. Leave them skipped, or point <code>CLIP_PIPELINE_VSR_DIR</code> / <code>CLIP_PIPELINE_COMFY_DIR</code> at your installs.</td></tr>
+          <tr><td>macOS says the app is damaged</td><td>The build is unsigned. Right-click the app → Open the first time; if needed, remove the quarantine flag in Finder.</td></tr>
+        </tbody>
+      </table>
+      <div class="cta">
+        <a class="btn primary" href="/clip-pipeline/#downloads">Download Clip Pipeline</a>
+        <a class="btn" href="/clip-pipeline/">Back to the product page</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="inner">
+    <span>© 2026 OneTimeSuite</span>
+    <a href="/clip-pipeline/">Clip Pipeline</a>
+    <a href="/clip-pipeline/#downloads">Downloads</a>
+    <a href="/terms/">Terms</a>
+    <a href="/privacy/">Privacy</a>
+    <span style="margin-left:auto">Screenshots from Clip Pipeline 0.1.0 · release v1.0.0</span>
+  </div>
+</footer>
+</body>
+</html>

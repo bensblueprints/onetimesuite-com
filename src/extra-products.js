@@ -308,6 +308,26 @@ module.exports = [
       ['Is the source code available?', 'Yes — Clip Pipeline is MIT-licensed at github.com/bensblueprints/clip-pipeline. Buying the $49 package gets you the built installer; building from source is free.'],
       ['Does it work for long-form-to-shorts too?', 'Yes — the YouTube Clipper mode turns one long video into multiple short, viral-scored vertical clips with captions burned in.'],
     ],
+    // Installers live on the source repo's Releases page. The release tag is
+    // v1.0.0 but the Electron build itself reports 0.1.0, which is why the
+    // asset filenames say 0.1.0 — keep them verbatim or the links 404.
+    downloads: {
+      repo: 'bensblueprints/clip-pipeline',
+      version: '1.0.0',
+      title: 'Download Clip Pipeline',
+      sub: 'Version {version} — install, then sign in with Whop. Your purchase unlocks it; there is no licence key to enter.',
+      editions: [
+        {
+          key: 'app',
+          name: 'Clip Pipeline',
+          role: 'Windows and macOS (Apple Silicon). Runs locally on your own machine — your GPU, your API keys, your files.',
+          assets: {
+            win: 'https://github.com/bensblueprints/clip-pipeline/releases/download/v1.0.0/ClipPipeline-Setup-0.1.0.exe',
+            macArm: 'https://github.com/bensblueprints/clip-pipeline/releases/download/v1.0.0/Clip.Pipeline-0.1.0-arm64.dmg',
+          },
+        },
+      ],
+    },
   },
   {
     slug: 'viral-invoice',

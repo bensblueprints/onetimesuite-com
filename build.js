@@ -3069,6 +3069,17 @@ console.log(`Done: 1 hub + ${allProducts.length} products + 1 bundle + 1 compari
       fs.writeFileSync(fp, html, 'utf8');
     }
   };
+  /* Clip Pipeline changelog: regenerate from the GitHub releases feed before
+     copying v2 pages. A network failure leaves the committed page untouched. */
+  try {
+    require('child_process').execFileSync(
+      process.execPath,
+      [path.join(__dirname, 'scripts', 'sync-clip-changelog.mjs')],
+      { stdio: 'inherit', timeout: 25000 }
+    );
+  } catch (err) {
+    console.warn(`clip-pipeline changelog sync skipped: ${err.message}`);
+  }
   const V2 = path.join(__dirname, 'v2-pages');
   if (fs.existsSync(V2)) {
     let n = 0;

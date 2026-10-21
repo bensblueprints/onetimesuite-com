@@ -1,0 +1,28 @@
+{
+  "repo": "bensblueprints/clip-pipeline",
+  "syncedAt": "2026-10-21T00:38:15.866Z",
+  "releases": [
+    {
+      "tag": "v1.0.0",
+      "name": "Clip Pipeline v1.0.0",
+      "date": "2026-07-19T11:10:00Z",
+      "url": "https://github.com/bensblueprints/clip-pipeline/releases/tag/v1.0.0",
+      "prerelease": false,
+      "body": "Windows installer and macOS Apple Silicon (arm64) DMG for Clip Pipeline.\n\nSelf-contained build:\n- Bundled ffmpeg (with libass), Node, yt-dlp and a portable faster-whisper engine. No separate Python, ffmpeg or Node install.\n- Local Whisper runs on CPU or an NVIDIA GPU. The model downloads once on first use (default small ~466 MB; tiny ~75 MB, medium ~1.5 GB, large-v3 ~3 GB).\n- Per-step Skip buttons: exclude any step from Run All; manual Run still works.\n- Exports: choose a local export folder in Settings; finished clips are copied there automatically. Google Drive export is coming soon.\n- YouTube Clipper:\n  - 1–30 clips per run and 15s / 30s / 60s clip length.\n  - Burn captions on/off, caption colour picker, and vertical caption position slider.\n  - Qwen-first Groq moment scoring with automatic model fallback; fixed-length fallback if AI finds nothing.\n- No-AI path: transcript-as-script, local caption timing, built-in system voice, and heuristic clip selection.\n- Heavy optional engines (VSR rebuild/inpaint, ComfyUI image regeneration) are skipped automatically when not installed.\n\nOptional keys: Groq for script rewriting and viral scoring, ElevenLabs for cloud voices, YouTube Data API for channel discovery.\n\nBundled ffmpeg is GPL; source and build information at ffmpeg.org.\n\nThe macOS build is unsigned. Right-click the app and choose Open the first time.\n\nSHA-256:\n- Windows: be3e727d3d00c992feaa5e9c97205ac9f078c13524a556c414000a66fc528c01\n- macOS: 2e3172a5907377f0d954bddf75fe43b34f2d9d5d763e4661346f5dc4764d4289\n",
+      "assets": [
+        {
+          "name": "Clip.Pipeline-0.1.0-arm64.dmg",
+          "size": 274079378,
+          "url": "https://github.com/bensblueprints/clip-pipeline/releases/download/v1.0.0/Clip.Pipeline-0.1.0-arm64.dmg",
+          "downloads": 2
+        },
+        {
+          "name": "ClipPipeline-Setup-0.1.0.exe",
+          "size": 265993128,
+          "url": "https://github.com/bensblueprints/clip-pipeline/releases/download/v1.0.0/ClipPipeline-Setup-0.1.0.exe",
+          "downloads": 3
+        }
+      ]
+    }
+  ]
+}

@@ -105,6 +105,7 @@
     <h2>On this page</h2>
     <ol>
       <li><a href="#quickstart">1. Quick start</a></li>
+      <li><a href="#groq">Get a free Groq API key</a></li>
       <li><a href="#main">2. The main window</a></li>
       <li><a href="#pipeline">3. The pipeline</a></li>
       <li><a href="#settings">4. Settings</a></li>
@@ -125,7 +126,7 @@
       <p>The installer is self-contained: ffmpeg, Node, yt-dlp, and a portable faster-whisper engine are inside. You do not need Python, ffmpeg, or Node installed separately.</p>
       <ol class="steps">
         <li><strong>Install and launch.</strong> A new job is created automatically.</li>
-        <li><strong>Optional: open Settings.</strong> Add a Groq key for rewriting and AI moment scoring. Skip it if you want the no-AI path.</li>
+        <li><strong>Get a free Groq API key.</strong> The full workflow needs one for script rewriting and AI moment scoring. <a href="#groq">Groq setup →</a> Skip it only if you want the no-AI fallbacks.</li>
         <li><strong>Paste a video URL</strong>, or click <strong>Open Local Video</strong> to work on a file you already have.</li>
         <li><strong>Click Run All</strong> for the full pipeline, or run individual steps. Steps you do not want can be skipped.</li>
         <li><strong>Find the result</strong> in the job folder, or in the local export folder you choose in Settings.</li>
@@ -134,6 +135,39 @@
         <a class="btn primary" href="/clip-pipeline/#downloads">Download for Windows</a>
         <a class="btn" href="/clip-pipeline/#downloads">Download for macOS</a>
       </div>
+    </section>
+
+    <section id="groq">
+      <h2>Get a free Groq API key <span class="pill ok">Start here</span></h2>
+      <p>The full workflow needs a free Groq API key. Script rewriting and YouTube Clipper’s AI viral-moment scoring both use Groq. Without a key, Clip Pipeline falls back to local Whisper, the transcript as the script, the built-in system voice, and fixed-length clips — usable, but not the full intended workflow.</p>
+      <div class="note"><strong>Free tier</strong> Groq’s free tier is enough to start and does not require a credit card. Rate limits apply; the app can rotate extra keys if you add them later.</div>
+
+      <h3>1. Create an account</h3>
+      <p>Open <a href="https://console.groq.com/" target="_blank" rel="noopener">console.groq.com</a>. Click <strong>Continue with Google</strong>, <strong>Continue with GitHub</strong>, <strong>Continue with SSO</strong>, or enter your email and click <strong>Continue with email</strong>. Complete the verification step.</p>
+      <figure>
+        <img src="img/09-groq-signup.png" alt="Groq Console sign-up and login screen with Continue with Google, GitHub, SSO and email options." loading="lazy" />
+        <figcaption>Groq Console sign-up / login. Any of the sign-in methods works; the free tier is available immediately.</figcaption>
+      </figure>
+
+      <h3>2. Open the API Keys page</h3>
+      <p>After signing in, open <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a>, or choose <strong>API Keys</strong> in the top navigation.</p>
+      <figure>
+        <img src="img/10-groq-api-keys.png" alt="Groq Console API Keys page with the Create API Key button." loading="lazy" />
+        <figcaption>The API Keys page. Click <strong>Create API Key</strong>. Existing keys are hidden from this documentation screenshot.</figcaption>
+      </figure>
+
+      <h3>3. Create the key</h3>
+      <ol class="steps">
+        <li>Click <strong>Create API Key</strong>.</li>
+        <li>Set <strong>Display Name</strong> to <code>Clip Pipeline</code>.</li>
+        <li>Leave <strong>Expiration</strong> at <strong>No expiration</strong>, or choose a rotation period you prefer.</li>
+        <li>Click <strong>Create</strong>. Copy the <code>gsk_…</code> key immediately — Groq shows it only once.</li>
+      </ol>
+
+      <h3>4. Paste it into Clip Pipeline</h3>
+      <p>Open Clip Pipeline → <strong>Settings</strong> → <strong>Groq API key</strong>, paste the key, then click <strong>Save Settings</strong>. The field is at the top of Settings; see the <a href="#api-keys">API keys section</a>. If you have more than one free key, add the extras under <strong>Extra Groq keys</strong> for automatic rotation.</p>
+      <div class="note"><strong>Keep it secret</strong> The key is stored in the app settings file. Do not share it or commit it. If it leaks, revoke it on the Groq API Keys page and create a new one.</div>
+      <p>With the key in place, Rewrite Script and Find Viral Moments work. If you hit a rate limit, add another free key; the pipeline rotates to it automatically.</p>
     </section>
 
     <section id="main">
@@ -190,12 +224,12 @@
         <h3>API keys and engines</h3>
         <figure>
           <img src="img/03-settings-api-keys.png" alt="Clip Pipeline Settings showing Groq API key, Kinetra Studio key, transcription engine, YouTube Data API key, clips per video, ElevenLabs key, voice engine, voiceover voice and Groq chat model." loading="lazy" />
-          <figcaption>Settings → API keys and engines. Keys are masked. Every key here is optional for the basic workflow; the local Whisper engine and built-in system voice work without them.</figcaption>
+          <figcaption>Settings → API keys and engines. Keys are masked. Groq is required for the full workflow; every other key is optional. The local Whisper engine and built-in system voice provide the no-AI fallback.</figcaption>
         </figure>
         <table>
           <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
           <tbody>
-            <tr><td>Groq API key</td><td>Groq Whisper transcription, script rewriting, and YouTube Clipper moment scoring. Without it, the app uses local Whisper and fallbacks.</td></tr>
+            <tr><td>Groq API key</td><td><strong>Required for the full workflow:</strong> script rewriting and YouTube Clipper AI moment scoring. Also used for Groq Whisper transcription if selected. Free tier available. Without it, the app uses local Whisper, transcript-as-script, and fixed-length clips.</td></tr>
             <tr><td>Kinetra Studio API key</td><td>Reserved for the AI Images engine. Kinetra key creation lives in Kinetra Studio → Account → API Keys.</td></tr>
             <tr><td>Extra Groq keys</td><td>A pool of keys; the pipeline rotates to the next key when one is rate-limited.</td></tr>
             <tr><td>Transcription engine</td><td><strong>Groq Whisper</strong> (cloud, rate-limited) or <strong>faster-whisper (local)</strong> using the bundled engine.</td></tr>
@@ -277,7 +311,7 @@
 
     <section id="noai">
       <h2>6. No-AI workflow</h2>
-      <p>Clip Pipeline is usable with no AI account. The bundled local Whisper engine and the built-in system voice cover transcription and voiceover.</p>
+      <p>Clip Pipeline has a no-AI fallback path: the bundled local Whisper engine and the built-in system voice cover transcription and voiceover. These are fallbacks, not the full workflow — for script rewriting and AI viral-moment scoring, add the <a href="#groq">free Groq API key</a>.</p>
       <ol class="steps">
         <li><strong>Transcription:</strong> with no Groq key, Extract Captions switches to local Whisper automatically. Download the model once; later runs use the cache.</li>
         <li><strong>Script:</strong> Rewrite Script falls back to the transcript when no Groq key is set. You can also paste your own script and skip Rewrite.</li>
